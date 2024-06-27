@@ -21,7 +21,7 @@ export default function HomeScreen() {
 
       <Button
         title="Go to settings"
-        onPress={() => router.push("/(tabs)/settings")}
+        onPress={() => router.replace("/(tabs)/settings")}
       />
       <Button title="Go to Event" onPress={() => router.push("/event")} />
       <Button
