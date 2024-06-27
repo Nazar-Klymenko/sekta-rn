@@ -40,6 +40,7 @@ export default function LoginScreen() {
         Forgot password?
       </Text>
       <Text style={styles.title}>prev:{prev}</Text>
+      <Text style={styles.title}>next:{next}</Text>
       <Button title="Cancel" onPress={handleCancel} />
     </View>
   );

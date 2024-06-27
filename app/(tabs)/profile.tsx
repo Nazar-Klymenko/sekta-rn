@@ -1,11 +1,20 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, Button } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { router } from "expo-router";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouterPush } from "@/hooks/useRouterPush";
 
 export default function ProfileScreen() {
+  const { user, isLoggedIn } = useAuth();
+  const routerPush = useRouterPush("/(tabs)/settings", {
+    next: "settings",
+    prev: "/",
+  });
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -19,6 +28,7 @@ export default function ProfileScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Profile!</ThemedText>
         <HelloWave />
+        <Button title="Go to settings" onPress={routerPush} />
       </ThemedView>
     </ParallaxScrollView>
   );

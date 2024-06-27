@@ -1,8 +1,7 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter, usePathname } from "expo-router";
-import { useNavigationTracker } from "@/hooks/useNavigationTracker";
+import { useRouter, usePathname, useLocalSearchParams } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 
 interface AuthGuardProps {
@@ -13,22 +12,20 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { isLoggedIn, isInitialized } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const { prevRoute } = useNavigationTracker();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (isInitialized && !isLoggedIn) {
-      router.push({
+      router.replace({
         pathname: "/(auth)/login",
         params: {
           next: pathname,
-          prev: prevRoute,
         },
       });
     } else if (isInitialized && isLoggedIn) {
       setIsChecking(false);
     }
-  }, [isInitialized, isLoggedIn, pathname, prevRoute, router]);
+  }, [isInitialized, isLoggedIn, pathname, router]);
 
   if (isChecking) {
     return (
