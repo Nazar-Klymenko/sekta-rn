@@ -9,5 +9,6 @@ export const useAuth = () => {
   return {
     ...context,
     isLoggedIn: !!context.user,
+    // isLoggedIn: true,
   };
 };
