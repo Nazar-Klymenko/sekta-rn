@@ -1,15 +1,35 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { next, prev } = useLocalSearchParams();
 
+  const signIn = async () => {
+    if (next) {
+      router.replace(decodeURIComponent(next as string));
+    } else {
+      router.replace("/(tabs)");
+    }
+  };
+
+  const handleCancel = () => {
+    if (prev) {
+      router.replace(decodeURIComponent(prev as string));
+    } else {
+      router.back();
+    }
+  };
   return (
     <View style={styles.container}>
+      {/* {navigation.canGoBack() && (
+        <Button title="Back" onPress={() => navigation.goBack()} />
+      )} */}
       <Text style={styles.title}>Login</Text>
       <TextInput style={styles.input} placeholder="Email" />
       <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      <Button title="Login" onPress={() => router.replace("/(tabs)")} />
+      <Button title="Login" onPress={signIn} />
       <Text style={styles.link} onPress={() => router.push("/(auth)/signup")}>
         Don't have an account? Sign up
       </Text>
@@ -19,6 +39,8 @@ export default function LoginScreen() {
       >
         Forgot password?
       </Text>
+      <Text style={styles.title}>prev:{prev}</Text>
+      <Button title="Cancel" onPress={handleCancel} />
     </View>
   );
 }

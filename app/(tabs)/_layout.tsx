@@ -1,9 +1,16 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import {
+  Redirect,
+  Tabs,
+  router,
+  useNavigation,
+  usePathname,
+} from "expo-router";
+import React, { useEffect } from "react";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -25,6 +32,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
+          href: null, // This prevents direct navigation
+          headerShown: true,
           title: "Settings",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="settings" color={color} />
@@ -34,6 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="play"
         options={{
+          headerShown: true,
           title: "Play",
           tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} />,
         }}
@@ -41,6 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
+          headerShown: true,
           title: "Profile",
           tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}

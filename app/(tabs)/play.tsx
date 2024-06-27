@@ -20,7 +20,7 @@ export default function PlayScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Play!</ThemedText>
         <HelloWave />
-        <Link href="/settings">settings!</Link>
+        <Link href="/login">login!</Link>
       </ThemedView>
     </ParallaxScrollView>
   );

@@ -1,28 +1,51 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { signUp } from "../../services/auth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function SignUpScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
+  const { setUser } = useAuth();
+
+  const handleSignUp = async () => {
+    try {
+      const user = await signUp(email, password);
+      setUser(user);
+      router.replace("/(tabs)");
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput style={styles.input} placeholder="Email" />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry />
       <TextInput
         style={styles.input}
-        placeholder="Confirm Password"
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={() => router.replace("/(tabs)")} />
-      <Text style={styles.link} onPress={() => router.push("/(auth)/login")}>
-        Already have an account? Log in
-      </Text>
+      <Button title="Sign Up" onPress={handleSignUp} />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  error: {
+    color: "red",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
