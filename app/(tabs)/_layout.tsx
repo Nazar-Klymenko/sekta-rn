@@ -30,17 +30,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
-        options={{
-          href: null, // This prevents direct navigation
-          headerShown: true,
-          title: "Settings",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="settings" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="play"
         options={{
           headerShown: true,
@@ -49,10 +38,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="(profile)"
         options={{
-          headerShown: true,
-          title: "Profile",
+          title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}
       />
