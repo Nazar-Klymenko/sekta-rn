@@ -1,12 +1,14 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
-
+import { signIn as fireSignIn } from "@/services/auth";
 export default function LoginScreen() {
   const router = useRouter();
-  const { next, prev } = useLocalSearchParams();
+  const { next } = useLocalSearchParams();
 
   const signIn = async () => {
+    fireSignIn("test-rn@gmail.com", "qwertyuiop");
+
     if (next) {
       router.replace(decodeURIComponent(next as string));
     } else {
@@ -14,18 +16,8 @@ export default function LoginScreen() {
     }
   };
 
-  const handleCancel = () => {
-    if (prev) {
-      router.replace(decodeURIComponent(prev as string));
-    } else {
-      router.back();
-    }
-  };
   return (
     <View style={styles.container}>
-      {/* {navigation.canGoBack() && (
-        <Button title="Back" onPress={() => navigation.goBack()} />
-      )} */}
       <Text style={styles.title}>Login</Text>
       <TextInput style={styles.input} placeholder="Email" />
       <TextInput style={styles.input} placeholder="Password" secureTextEntry />
@@ -39,9 +31,6 @@ export default function LoginScreen() {
       >
         Forgot password?
       </Text>
-      <Text style={styles.title}>prev:{prev}</Text>
-      <Text style={styles.title}>next:{next}</Text>
-      <Button title="Cancel" onPress={handleCancel} />
     </View>
   );
 }
