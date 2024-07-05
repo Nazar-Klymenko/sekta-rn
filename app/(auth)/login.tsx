@@ -1,20 +1,26 @@
 import React from "react";
+
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  Keyboard,
   View,
 } from "react-native";
-import { YStack, Text, Button, ScrollView, useTheme } from "tamagui";
-import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Input } from "@/components/form/Input";
-import { Link } from "expo-router";
+
 import { signIn } from "@/services/auth";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+
+import { Link } from "expo-router";
+import { FormProvider, useForm } from "react-hook-form";
+import { Button, ScrollView, Text, YStack, useTheme } from "tamagui";
+
+import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
+import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const loginSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),
