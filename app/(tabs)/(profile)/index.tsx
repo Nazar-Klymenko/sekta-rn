@@ -7,32 +7,13 @@ import {
   Text,
   Separator,
   Stack,
+  styled,
 } from "tamagui";
 import { ChevronRight, User } from "@tamagui/lucide-icons";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { signOut } from "@/services/auth";
-
-const MenuItem = ({
-  title,
-  onPress,
-}: {
-  title: string;
-  onPress: () => void;
-}) => (
-  <Stack
-    onPress={onPress}
-    pressStyle={{ backgroundColor: "$gray5" }}
-    paddingVertical="$2"
-    paddingHorizontal="$3"
-    borderRadius="$2"
-  >
-    <XStack alignItems="center" justifyContent="space-between">
-      <Text fontSize="$4">{title}</Text>
-      <ChevronRight size="$1" />
-    </XStack>
-  </Stack>
-);
+import { media } from "@tamagui/config/v3";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
@@ -42,17 +23,13 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
-  const routerPushSettings = useRouterPush("/(tabs)/settings", {
-    next: "settings",
-    prev: "/profile",
-  });
-  const routerPushLogin = useRouterPush("/(auth)/login", {
-    next: "/",
-    prev: "/",
-  });
+  const routerPushSettings = useRouterPush("/(tabs)/settings");
+
+  const routerPushLogin = useRouterPush("/(auth)/login");
+  const routerPushUsernameBridge = useRouterPush("/(auth)/username-bridge");
 
   return (
-    <YStack f={1} padding="$4" gap="$4">
+    <YStack f={1} padding="$4" gap="$4" backgroundColor="$background">
       <YStack alignItems="center" gap="$2">
         <Avatar circular size="$12">
           {user?.photoURL ? (
@@ -80,7 +57,15 @@ export default function ProfileScreen() {
       {isLoggedIn && (
         <YStack gap="$2">
           <SectionTitle>Account</SectionTitle>
-          <MenuItem title="Settings" onPress={routerPushSettings} />
+          <MenuItem
+            title="Settings"
+            onPress={() =>
+              routerPushSettings({
+                next: "settings",
+                prev: "/profile",
+              })
+            }
+          />
           <MenuItem
             title="Privacy"
             onPress={() => {
@@ -122,25 +107,64 @@ export default function ProfileScreen() {
             pressStyle={{ scale: 0.97 }}
             animation="quick"
           >
-            <Text fontSize="$5" fontWeight="bold">
+            <Text color="white" fontSize="$5" fontWeight="bold">
               Sign Out
             </Text>
           </Button>
         ) : (
-          <Button
-            size="$7"
-            height="$6"
-            theme="blue"
-            onPress={routerPushLogin}
-            pressStyle={{ scale: 0.97 }}
-            animation="quick"
-          >
-            <Text fontSize="$5" fontWeight="bold">
-              Log In
-            </Text>
-          </Button>
+          <YStack gap="$4">
+            <Button
+              size="$7"
+              height={50}
+              onPress={() => routerPushLogin()}
+              pressStyle={{ scale: 0.97 }}
+              animation="quick"
+            >
+              <Text fontSize="$5" fontWeight="bold">
+                Log In
+              </Text>
+            </Button>
+            <Button
+              size="$7"
+              height={50}
+              onPress={() => routerPushUsernameBridge()}
+              pressStyle={{ scale: 0.97 }}
+              animation="quick"
+            >
+              <Text fontSize="$5" fontWeight="bold">
+                Sign Up
+              </Text>
+            </Button>
+          </YStack>
         )}
       </YStack>
     </YStack>
   );
 }
+
+const ResponsiveStack = styled(Stack, {
+  hoverStyle: {
+    backgroundColor: "$gray5",
+    cursor: "pointer",
+  },
+  pressStyle: {
+    backgroundColor: "$gray5",
+  },
+  padding: "$4",
+  borderRadius: "$2",
+});
+
+const MenuItem = ({
+  title,
+  onPress,
+}: {
+  title: string;
+  onPress: () => void;
+}) => (
+  <ResponsiveStack onPress={onPress}>
+    <XStack alignItems="center" justifyContent="space-between">
+      <Text fontSize="$4">{title}</Text>
+      <ChevronRight size="$1" />
+    </XStack>
+  </ResponsiveStack>
+);

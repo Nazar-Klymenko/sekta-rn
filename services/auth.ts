@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { auth } from "./firebase";
 import {
   createUserWithEmailAndPassword,
@@ -34,7 +35,7 @@ export const signOut = async () => {
   try {
     await firebaseSignOut(auth);
     // Optionally, clear any additional stored data
-    // await AsyncStorage.removeItem('userToken');
+    await AsyncStorage.removeItem("userToken");
   } catch (error) {
     console.error("Logout error:", error);
     throw error;

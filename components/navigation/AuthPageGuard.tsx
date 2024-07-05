@@ -5,25 +5,23 @@ import { useRouter, usePathname, useLocalSearchParams } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 import { Stack } from "tamagui";
 
-interface AuthGuardProps {
+interface AuthPageGuardProps {
   children: React.ReactNode;
 }
 
-export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
+export const AuthPageGuard: React.FC<AuthPageGuardProps> = ({ children }) => {
   const { isLoggedIn, isInitialized } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
+  const { next = "/" } = useLocalSearchParams<{ next: string }>();
 
   useEffect(() => {
-    if (isInitialized && !isLoggedIn) {
+    if (isInitialized && isLoggedIn) {
       router.replace({
-        pathname: "/(auth)/login",
-        params: {
-          next: pathname,
-        },
+        pathname: `${next}`,
       });
-    } else if (isInitialized && isLoggedIn) {
+    } else if (isInitialized && !isLoggedIn) {
       setIsChecking(false);
     }
   }, [isInitialized, isLoggedIn, pathname, router]);

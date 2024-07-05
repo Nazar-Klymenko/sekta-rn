@@ -1,24 +1,17 @@
 // hooks/useRouterPush.ts
-import { useRouter } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
-type Params = {
-  [key: string]: string;
-};
+type Params = Record<string, string>;
 
-export const useRouterPush = (authRoute: string, unauthParams: Params) => {
+export const useRouterPush = (authRoute: string) => {
   const router = useRouter();
-  const { isLoggedIn } = useAuth();
+  const params = useLocalSearchParams();
 
-  const routerPush = () => {
-    if (isLoggedIn) {
-      router.push(authRoute);
-    } else {
-      router.push({
-        pathname: "/(auth)/login",
-        params: unauthParams,
-      });
-    }
+  const routerPush = (additionalParams?: Params) => {
+    router.push({
+      pathname: authRoute,
+      params: { ...params, ...additionalParams },
+    });
   };
 
   return routerPush;

@@ -1,25 +1,24 @@
-import {
-  Redirect,
-  Tabs,
-  router,
-  useNavigation,
-  usePathname,
-} from "expo-router";
-import React, { useEffect } from "react";
-
+import { Tabs } from "expo-router";
+import React from "react";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "tamagui";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.background.get(),
+        },
+        tabBarActiveTintColor: theme.color.get(),
+        tabBarInactiveTintColor: theme.gray9Light.get(),
+        headerStyle: {
+          backgroundColor: theme.background.get(),
+        },
+        headerTintColor: theme.color.get(),
       }}
     >
       <Tabs.Screen
@@ -42,6 +41,16 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="storybook"
+        options={{
+          title: "Storybook",
+          headerShown: true,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="shuffle-sharp" color={color} />
+          ),
         }}
       />
     </Tabs>

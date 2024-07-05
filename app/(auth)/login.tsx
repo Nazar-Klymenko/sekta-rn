@@ -1,60 +1,112 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useNavigation } from "@react-navigation/native";
-import { signIn as fireSignIn } from "@/services/auth";
+import React from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+} from "react-native";
+import { YStack, Text, Button, ScrollView, useTheme } from "tamagui";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Input } from "@/components/form/Input";
+import { Link } from "expo-router";
+import { signIn } from "@/services/auth";
+import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { PasswordInput } from "@/components/form/PasswordInput";
+
+const loginSchema = yup.object().shape({
+  email: yup.string().required("Email is required").email("Invalid email"),
+  password: yup.string().required("Password is required"),
+});
+type FormValues = yup.InferType<typeof loginSchema>;
+
 export default function LoginScreen() {
-  const router = useRouter();
-  const { next } = useLocalSearchParams();
+  const theme = useTheme();
 
-  const signIn = async () => {
-    fireSignIn("test-rn@gmail.com", "qwertyuiop");
+  const methods = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    if (next) {
-      router.replace(decodeURIComponent(next as string));
-    } else {
-      router.replace("/(tabs)");
-    }
+  const onSubmit = async (data: FormValues) => {
+    console.log(data);
+    await signIn(data.email, data.password);
+    // Handle login logic here
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input} placeholder="Email" />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      <Button title="Login" onPress={signIn} />
-      <Text style={styles.link} onPress={() => router.push("/(auth)/signup")}>
-        Don't have an account? Sign up
-      </Text>
-      <Text
-        style={styles.link}
-        onPress={() => router.push("/(auth)/forgot-password")}
+    <AuthPageGuard>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, backgroundColor: theme.background.get() }}
       >
-        Forgot password?
-      </Text>
-    </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              style={{ flex: 1 }}
+              contentContainerStyle={{ flexGrow: 1 }}
+              keyboardShouldPersistTaps="handled"
+            >
+              <FormProvider {...methods}>
+                <YStack f={1} padding="$4" gap="$4">
+                  <Text fontSize={24} fontWeight="bold" textAlign="center">
+                    Log In
+                  </Text>
+
+                  <Input
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                  />
+
+                  <PasswordInput
+                    name="password"
+                    label="Password"
+                    placeholder="Enter your password"
+                    secureTextEntry
+                  />
+                  <YStack alignItems="center" padding="$4" gap="$4">
+                    <Link href="/(auth)/forgot-password">
+                      <Text color="blue" textAlign="center">
+                        Forgot password?
+                      </Text>
+                    </Link>
+                  </YStack>
+                  <Button
+                    size="$7"
+                    height={50}
+                    pressStyle={{ scale: 0.97 }}
+                    animation="quick"
+                    onPress={methods.handleSubmit(onSubmit)}
+                  >
+                    <Text fontSize={20} fontWeight="bold">
+                      Log In
+                    </Text>
+                  </Button>
+
+                  <YStack alignItems="center" padding="$4" gap="$4">
+                    <Link href="/(auth)/signup">
+                      <Text textAlign="center">
+                        Don't have an account?
+                        <Text color="blue" textDecorationLine="underline">
+                          Sign Up
+                        </Text>
+                      </Text>
+                    </Link>
+                  </YStack>
+                </YStack>
+              </FormProvider>
+            </ScrollView>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </AuthPageGuard>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  link: {
-    color: "blue",
-    marginTop: 15,
-  },
-});
