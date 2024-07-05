@@ -1,14 +1,20 @@
 import React from "react";
+
 import { KeyboardAvoidingView, Platform } from "react-native";
-import { YStack, Text, Button, ScrollView, useTheme } from "tamagui";
-import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Input } from "@/components/form/Input";
+
 import { Link, useLocalSearchParams } from "expo-router";
-import { PasswordStrengthIndicator } from "@/components/form/PasswordStrengthIndicator";
+import { FormProvider, useForm } from "react-hook-form";
+import { Button, ScrollView, Text, YStack, useTheme } from "tamagui";
+
+import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
+import { PasswordStrengthIndicator } from "@/components/form/PasswordStrengthIndicator";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+
 const signUpSchema = yup.object().shape({
   username: yup
     .string()

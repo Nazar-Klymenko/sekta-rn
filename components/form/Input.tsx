@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { YStack, Label, Input as TamaguiInput, Text, useTheme } from "tamagui";
-import { useController, useFormContext } from "react-hook-form";
+
 import { TextInputProps } from "react-native";
+
+import { useController, useFormContext } from "react-hook-form";
+import { Label, Input as TamaguiInput, Text, YStack, useTheme } from "tamagui";
 
 interface InputProps extends TextInputProps {
   name: string;

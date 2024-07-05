@@ -1,19 +1,22 @@
-import React from "react";
-import {
-  YStack,
-  XStack,
-  Avatar,
-  Button,
-  Text,
-  Separator,
-  Stack,
-  styled,
-} from "tamagui";
+import { media } from "@tamagui/config/v3";
 import { ChevronRight, User } from "@tamagui/lucide-icons";
+
+import React from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { signOut } from "@/services/auth";
-import { media } from "@tamagui/config/v3";
+
+import {
+  Avatar,
+  Button,
+  Separator,
+  Stack,
+  Text,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">

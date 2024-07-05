@@ -1,5 +1,5 @@
 // hooks/useRouterPush.ts
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 type Params = Record<string, string>;
 

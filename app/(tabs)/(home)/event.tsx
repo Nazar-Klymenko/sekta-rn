@@ -1,5 +1,5 @@
-import { View, Text, useTheme } from "tamagui";
 import { useLocalSearchParams } from "expo-router";
+import { Text, View, useTheme } from "tamagui";
 
 export default function EventScreen() {
   const theme = useTheme();

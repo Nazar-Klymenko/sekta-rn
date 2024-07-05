@@ -1,7 +1,9 @@
-import { AuthGuard } from "@/components/navigation/AuthGuard";
 import { useAuth } from "@/hooks/useAuth";
+
 import { Redirect } from "expo-router";
-import { View, Text } from "tamagui";
+import { Text, View } from "tamagui";
+
+import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 export default function SettingsScreen() {
   const { isLoggedIn } = useAuth();

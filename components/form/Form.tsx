@@ -1,15 +1,18 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import React from "react";
+
 import { View } from "react-native";
+
 import {
-  useForm,
+  FieldValues,
   FormProvider,
   SubmitHandler,
-  FieldValues,
+  useForm,
   useFormContext,
 } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodSchema } from "zod";
 import { Button } from "tamagui";
+import { ZodSchema } from "zod";
 
 type FormProps<T extends FieldValues> = {
   schema: ZodSchema<T>;

@@ -1,18 +1,19 @@
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
 
 import { AuthProvider } from "@/context/AuthContext";
 import tamaguiConfig from "@/tamagui.config";
+
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import "react-native-reanimated";
 import {
   TamaguiProvider,
-  Theme,
   Stack as TamaguiStack,
   Text,
-  useTheme,
+  Theme,
   View,
+  useTheme,
 } from "tamagui";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.

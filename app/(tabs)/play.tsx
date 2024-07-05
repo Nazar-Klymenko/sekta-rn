@@ -1,21 +1,27 @@
-import React, { useState } from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
-import { YStack, Text, Button, Spinner, ScrollView, useTheme } from "tamagui";
-import {
-  Mail,
-  Phone,
-  Music2,
-  Youtube,
-  Instagram,
-  Facebook,
-  Calendar,
-} from "@tamagui/lucide-icons";
-import { useForm, FormProvider, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
-import { Input } from "@/components/form/Input";
+import {
+  Calendar,
+  Facebook,
+  Instagram,
+  Mail,
+  Music2,
+  Phone,
+  Youtube,
+} from "@tamagui/lucide-icons";
+
+import React, { useState } from "react";
+
+import { KeyboardAvoidingView, Platform } from "react-native";
+
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Button, ScrollView, Spinner, Text, YStack, useTheme } from "tamagui";
+
 import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Input } from "@/components/form/Input";
+import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
 
 const playSchema = yup.object({
   email: yup.string().email("Invalid email address").required(),

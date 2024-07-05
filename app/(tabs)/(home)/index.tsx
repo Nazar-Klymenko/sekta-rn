@@ -1,7 +1,8 @@
-import { View, Text, Button, useTheme } from "tamagui";
-import { useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
+
+import { useRouter } from "expo-router";
+import { Button, Text, View, useTheme } from "tamagui";
 
 export default function HomeScreen() {
   const theme = useTheme();

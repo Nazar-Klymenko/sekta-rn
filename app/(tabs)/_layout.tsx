@@ -1,7 +1,9 @@
-import { Tabs } from "expo-router";
 import React from "react";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+
+import { Tabs } from "expo-router";
 import { useTheme } from "tamagui";
+
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
   const theme = useTheme();

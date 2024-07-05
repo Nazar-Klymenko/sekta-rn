@@ -1,17 +1,22 @@
 import React from "react";
-import { ScrollView, Text, useTheme, Button, YStack } from "tamagui";
+
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  Keyboard,
   View,
 } from "react-native";
-import { useForm, FormProvider } from "react-hook-form";
+
 import { Link, useLocalSearchParams, useNavigation } from "expo-router";
-import { Input } from "@/components/form/Input";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
+import { Button, ScrollView, Text, YStack, useTheme } from "tamagui";
+
 import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Input } from "@/components/form/Input";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),

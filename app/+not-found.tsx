@@ -1,6 +1,7 @@
 import { Link, Stack } from "expo-router";
+import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
+
 import { ThemedText } from "@/components/ThemedText";
-import { XStack, Text, View, YStack, Button, styled, useTheme } from "tamagui";
 
 const StyledLink = styled(Button, {
   marginTop: "$4",

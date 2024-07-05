@@ -1,4 +1,4 @@
-import { XStack, Text, YStack, View } from "tamagui";
+import { Text, View, XStack, YStack } from "tamagui";
 
 export const PasswordStrengthIndicator = ({
   password,

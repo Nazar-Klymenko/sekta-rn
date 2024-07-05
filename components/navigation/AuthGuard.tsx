@@ -1,8 +1,11 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
+
+import { ActivityIndicator, View } from "react-native";
+
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter, usePathname, useLocalSearchParams } from "expo-router";
-import { View, ActivityIndicator } from "react-native";
+
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import { Stack } from "tamagui";
 
 interface AuthGuardProps {

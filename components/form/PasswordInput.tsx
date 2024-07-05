@@ -1,16 +1,19 @@
+import { Eye, EyeOff } from "@tamagui/lucide-icons";
+
 import React, { useState } from "react";
+
+import { TextInputProps } from "react-native";
+
+import { useController, useFormContext } from "react-hook-form";
 import {
-  YStack,
+  Button,
   Label,
   Input as TamaguiInput,
   Text,
-  useTheme,
   XStack,
-  Button,
+  YStack,
+  useTheme,
 } from "tamagui";
-import { useController, useFormContext } from "react-hook-form";
-import { TextInputProps } from "react-native";
-import { Eye, EyeOff } from "@tamagui/lucide-icons";
 
 interface InputProps extends TextInputProps {
   name: string;
