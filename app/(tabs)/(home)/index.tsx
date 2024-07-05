@@ -1,9 +1,11 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, useTheme } from "tamagui";
 import { useRouter } from "expo-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 
 export default function HomeScreen() {
+  const theme = useTheme();
+
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
   const routerPush = useRouterPush("/(tabs)/settings", {
@@ -19,16 +21,19 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      justifyContent="center"
+      alignItems="center"
+      flex={1}
+      backgroundColor="$background"
+    >
       <Text>Home Screen</Text>
       <Test></Test>
 
-      <Button title="Go to settings" onPress={routerPush} />
-      <Button title="Go to Event" onPress={() => router.push("/event")} />
-      <Button
-        title="Go to Event with ID"
-        onPress={() => router.push("/event?id=123")}
-      />
+      <Button onPress={() => router.push("/event")}>Go to Event</Button>
+      <Button onPress={() => router.push("/event?id=123")}>
+        Go to Event with ID
+      </Button>
     </View>
   );
 }

@@ -1,11 +1,17 @@
-import { View, Text } from "react-native";
+import { View, Text, useTheme } from "tamagui";
 import { useLocalSearchParams } from "expo-router";
 
 export default function EventScreen() {
+  const theme = useTheme();
   const { id } = useLocalSearchParams();
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      justifyContent="center"
+      alignItems="center"
+      flex={1}
+      backgroundColor="$background"
+    >
       <Text>Event Screen</Text>
       {id && <Text>Event ID: {id}</Text>}
     </View>
