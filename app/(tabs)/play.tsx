@@ -1,123 +1,148 @@
 import React, { useState } from "react";
-import {
-  YStack,
-  XStack,
-  Input,
-  Button,
-  Text,
-  Label,
-  Form,
-  Separator,
-} from "tamagui";
+import { KeyboardAvoidingView, Platform } from "react-native";
+import { YStack, Text, Button, Spinner, ScrollView, useTheme } from "tamagui";
 import {
   Mail,
   Phone,
-  Music,
+  Music2,
   Youtube,
   Instagram,
   Facebook,
+  Calendar,
 } from "@tamagui/lucide-icons";
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { useForm, FormProvider, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
+import { Input } from "@/components/form/Input";
+import * as yup from "yup";
 
-interface PortfolioLinkProps {
-  icon: any; // Adjust this type based on the icon component type you are using
-  placeholder: string;
-}
+const playSchema = yup.object({
+  email: yup.string().email("Invalid email address").required(),
+  phone: yup.string().optional(),
+  soundcloud: yup.string().optional(),
+  youtube: yup.string().optional(),
+  instagram: yup.string().optional(),
+  facebook: yup.string().optional(),
+  additionalInfo: yup.string().optional(),
+});
 
-const PortfolioLink: React.FC<PortfolioLinkProps> = ({
-  icon: Icon,
-  placeholder,
-}) => (
-  <XStack alignItems="center" gap="$2" marginBottom="$2">
-    <Icon size="$4" color="$gray10" />
-    <Input flex={1} placeholder={placeholder} />
-  </XStack>
-);
+type FormValues = yup.InferType<typeof playSchema>;
+
+const portfolioLinks = [
+  {
+    name: "instagram",
+    label: "Instagram",
+    icon: Instagram,
+    placeholder: "username",
+    prefix: true,
+  },
+  {
+    name: "soundcloud",
+    label: "Soundcloud",
+    icon: Music2,
+    placeholder: "https://soundcloud.com/",
+  },
+  {
+    name: "youtube",
+    label: "Youtube",
+    icon: Youtube,
+    placeholder: "https://www.youtube.com/",
+  },
+  {
+    name: "facebook",
+    label: "Facebook",
+    icon: Facebook,
+    placeholder: "https://www.facebook.com/",
+  },
+];
 
 export default function PlayScreen() {
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const theme = useTheme();
 
-  const handleSubmit = () => {
-    // Handle form submission
-    console.log("Form submitted", { email, phone });
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(playSchema),
+    defaultValues: {
+      email: "",
+      phone: "",
+      soundcloud: "",
+      youtube: "",
+      instagram: "",
+      facebook: "",
+      additionalInfo: "",
+    },
+  });
+
+  const onSubmit = async (data: FormValues) => {
+    console.log(data);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
   };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: theme.background.get() }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <YStack f={1} padding="$4" gap="$4">
+      <ScrollView>
+        <FormProvider {...methods}>
           <YStack f={1} padding="$4" gap="$4">
-            <Form onSubmit={handleSubmit} style={{ width: "100%" }}>
-              <YStack gap="$2" style={{ width: "100%" }}>
-                <Label htmlFor="email">Contact Email</Label>
-                <Input
-                  id="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChangeText={setEmail}
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  keyboardType="email-address"
-                  style={{ width: "100%" }}
-                />
-              </YStack>
+            <Text fontSize={24} fontWeight="bold" textAlign="center">
+              Let's Play! 🎵
+            </Text>
 
-              <YStack gap="$2" style={{ width: "100%" }}>
-                <XStack
-                  alignItems="center"
-                  gap="$0"
-                  justifyContent="space-between"
-                >
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Text fontSize="$2" color="$gray10">
-                    Optional
-                  </Text>
-                </XStack>
+            <Input
+              name="email"
+              label="Contact Email"
+              placeholder="email@gmail.com"
+            />
+            <Input
+              name="phone"
+              label="Phone Number (Optional)"
+              placeholder="577 925 024"
+            />
 
-                <Input
-                  id="phone"
-                  placeholder="Enter your phone number"
-                  value={phone}
-                  onChangeText={setPhone}
-                  keyboardType="phone-pad"
-                  style={{ width: "100%" }}
+            <Text fontSize={20} fontWeight="bold">
+              Portfolio Links (Optional)
+            </Text>
+            {portfolioLinks.map(
+              ({ name, icon, placeholder, prefix, label }) => (
+                <PortfolioLinkInput
+                  key={name}
+                  label={label}
+                  name={name}
+                  icon={icon}
+                  placeholder={placeholder}
+                  prefix={prefix}
                 />
-              </YStack>
-              <YStack paddingVertical="$4" gap="$2" style={{ width: "100%" }}>
-                <Text fontSize="$5" fontWeight="bold">
-                  Portfolio Links (Optional)
-                </Text>
-                <PortfolioLink icon={Music} placeholder="SoundCloud URL" />
-                <PortfolioLink icon={Youtube} placeholder="YouTube URL" />
-                <PortfolioLink icon={Instagram} placeholder="Instagram URL" />
-                <PortfolioLink icon={Facebook} placeholder="Facebook URL" />
-              </YStack>
-            </Form>
-          </YStack>
-          <YStack
-            justifyContent="flex-end"
-            marginTop="$4"
-            style={{ width: "100%" }}
-          >
+              )
+            )}
+
+            <Input
+              name="additionalInfo"
+              label="Additional Info"
+              multiline
+              textAlignVertical="top"
+              placeholder="Any additional information you'd like to share..."
+              numberOfLines={4}
+            />
+
             <Button
               size="$7"
-              height="$6"
-              theme="blue"
-              onPress={handleSubmit}
+              height={50}
               pressStyle={{ scale: 0.97 }}
               animation="quick"
-              style={{ width: "100%" }}
+              onPress={methods.handleSubmit(onSubmit)}
+              icon={
+                methods.formState.isSubmitting ? () => <Spinner /> : undefined
+              }
             >
-              <Text fontSize="$5" fontWeight="bold">
-                Submit
+              <Text fontSize={20} fontWeight="bold">
+                Let's Rock! 🎸
               </Text>
             </Button>
           </YStack>
-        </YStack>
+        </FormProvider>
       </ScrollView>
     </KeyboardAvoidingView>
   );
