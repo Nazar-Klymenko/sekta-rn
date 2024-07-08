@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
 
@@ -68,7 +69,7 @@ export default function StorybookScreen() {
   });
   return (
     <PageContainer>
-      <FormProvider {...methods}>
+      <Form methods={methods}>
         <Text fontSize={24} fontWeight="bold" textAlign="center">
           Let's Play! 🎵
         </Text>
@@ -76,11 +77,13 @@ export default function StorybookScreen() {
           Portfolio Links (Optional)
         </Text>
         <Input
+          id="storybook-email"
           name="email"
           label="Contact Email"
           placeholder="email@gmail.com"
         />
         <Input
+          id="storybook-phone"
           name="phone"
           label="Phone Number (Optional)"
           placeholder="577 925 024"
@@ -91,6 +94,7 @@ export default function StorybookScreen() {
         </Text>
         {portfolioLinks.map(({ name, icon, placeholder, prefix, label }) => (
           <PortfolioLinkInput
+            id={"storybook-" + name}
             key={name}
             name={name}
             label={label}
@@ -141,7 +145,7 @@ export default function StorybookScreen() {
             Let's Rock! 🎸
           </Text>
         </Button>
-      </FormProvider>
+      </Form>
     </PageContainer>
   );
 }

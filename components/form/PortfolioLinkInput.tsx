@@ -8,7 +8,6 @@ import {
   Text,
   XStack,
   YStack,
-  useTheme,
 } from "tamagui";
 
 interface PortfolioLinkInputProps {
@@ -17,6 +16,7 @@ interface PortfolioLinkInputProps {
   icon?: React.ElementType;
   placeholder: string;
   prefix?: boolean;
+  id: string;
 }
 
 export function PortfolioLinkInput({
@@ -25,6 +25,7 @@ export function PortfolioLinkInput({
   icon: Icon,
   placeholder,
   prefix,
+  id,
 }: PortfolioLinkInputProps) {
   const { control } = useFormContext();
   const {
@@ -36,13 +37,11 @@ export function PortfolioLinkInput({
   });
 
   const [isFocused, setIsFocused] = useState(false);
-  const theme = useTheme();
   const hasValue = field.value && field.value.length > 0;
-  const inputId = `input-${name}`;
 
   return (
     <YStack gap="$2">
-      <Label htmlFor={inputId}>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       <XStack alignItems="center" gap="$2">
         <Stack
           flexDirection="row"
@@ -63,7 +62,7 @@ export function PortfolioLinkInput({
             </Text>
           )}
           <TamaguiInput
-            id={inputId}
+            id={id}
             flex={1}
             placeholder={placeholder}
             value={field.value}
@@ -75,20 +74,18 @@ export function PortfolioLinkInput({
             onFocus={() => setIsFocused(true)}
             autoCapitalize="none"
             inputMode="url"
-            keyboardType="url"
             paddingLeft={prefix ? "$5" : "$2"}
             borderWidth={error || isFocused ? 2 : 1}
             focusStyle={{
               borderColor: error ? "$red10" : "$blue8",
             }}
+            ref={field.ref}
           />
         </Stack>
       </XStack>
-      {error && (
-        <Text color="$red10" fontSize="$2">
-          {error.message}
-        </Text>
-      )}
+      <Text color={error ? "$red10" : "$colorTransparent"} fontSize="$2">
+        {error ? error?.message : "*"}
+      </Text>
     </YStack>
   );
 }

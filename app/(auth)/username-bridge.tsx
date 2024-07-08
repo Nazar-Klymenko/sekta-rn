@@ -1,26 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
-
-import React from "react";
-
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import React, { useEffect } from "react";
 
 import { useRouterPush } from "@/hooks/useRouterPush";
 
 import { Link } from "expo-router";
-import { FormProvider, useForm } from "react-hook-form";
-import { Button, ScrollView, Text, YStack, useTheme } from "tamagui";
+import { useForm } from "react-hook-form";
+import { Text, YStack } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
@@ -28,21 +20,25 @@ const usernameBridgeSchema = yup.object().shape({
   username: yup
     .string()
     .required("Username is required")
-    .min(3, "Username must be at least 3 characters"),
+    .min(3, "Username must be at least 3 characters")
+    .max(18, "Username must be at most 18 characters")
+    .trim(),
 });
+
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
-export default function UsernameBridgecreen() {
-  const theme = useTheme();
-  const navigation = useNavigation();
-
-  const methods = useForm({
+export default function UsernameBridgeScreen() {
+  const methods = useForm<FormValues>({
     resolver: yupResolver(usernameBridgeSchema),
+    shouldFocusError: true,
     defaultValues: {
       username: "",
     },
   });
+
+  const { handleSubmit, setFocus, formState } = methods;
   const routerPushSignUp = useRouterPush("/(auth)/signup");
+
   const onSubmit = (data: FormValues) => {
     console.log(data);
     routerPushSignUp({
@@ -52,31 +48,28 @@ export default function UsernameBridgecreen() {
     });
   };
 
+  // useEffect(() => {
+  //   if (formState.errors.username) {
+  //     setTimeout(() => {
+  //       setFocus("username");
+  //     }, 100);
+  //   }
+  // }, [formState.errors, setFocus]);
+
   return (
     <AuthPageGuard>
       <PageContainer>
-        <FormProvider {...methods}>
+        <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Welcome! 👋
           </Text>
           <Input
+            id="username"
             name="username"
             label="Username"
             placeholder="Enter your username"
           />
-          <View style={{ marginTop: 20 }}>
-            <Button
-              size="$7"
-              height={50}
-              pressStyle={{ scale: 0.97 }}
-              animation="quick"
-              onPress={methods.handleSubmit(onSubmit)}
-            >
-              <Text fontSize={20} fontWeight="bold">
-                Next
-              </Text>
-            </Button>
-          </View>
+          <PrimaryButton text="Next" onPress={handleSubmit(onSubmit)} />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/(auth)/login">
               <Text textAlign="center">
@@ -84,7 +77,7 @@ export default function UsernameBridgecreen() {
               </Text>
             </Link>
           </YStack>
-        </FormProvider>
+        </Form>
       </PageContainer>
     </AuthPageGuard>
   );

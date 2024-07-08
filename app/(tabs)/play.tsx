@@ -21,6 +21,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
 
@@ -69,17 +70,18 @@ export default function PlayScreen() {
   const theme = useTheme();
 
   const methods = useForm<FormValues>({
-    resolver: yupResolver(playSchema),
-    defaultValues: {
-      email: "",
-      phone: "",
-      soundcloud: "",
-      youtube: "",
-      instagram: "",
-      facebook: "",
-      additionalInfo: "",
-    },
-  });
+      resolver: yupResolver(playSchema),
+      defaultValues: {
+        email: "",
+        phone: "",
+        soundcloud: "",
+        youtube: "",
+        instagram: "",
+        facebook: "",
+        additionalInfo: "",
+      },
+    }),
+    { handleSubmit, formState } = methods;
 
   const onSubmit = async (data: FormValues) => {
     console.log(data);
@@ -88,17 +90,19 @@ export default function PlayScreen() {
 
   return (
     <PageContainer>
-      <FormProvider {...methods}>
+      <Form methods={methods}>
         <Text fontSize={24} fontWeight="bold" textAlign="center">
           Let's Play! 🎵
         </Text>
 
         <Input
+          id="play-email"
           name="email"
           label="Contact Email"
           placeholder="email@gmail.com"
         />
         <Input
+          id="play-phone"
           name="phone"
           label="Phone Number (Optional)"
           placeholder="577 925 024"
@@ -107,18 +111,22 @@ export default function PlayScreen() {
         <Text fontSize={20} fontWeight="bold">
           Portfolio Links (Optional)
         </Text>
-        {portfolioLinks.map(({ name, icon, placeholder, prefix, label }) => (
-          <PortfolioLinkInput
-            key={name}
-            label={label}
-            name={name}
-            icon={icon}
-            placeholder={placeholder}
-            prefix={prefix}
-          />
-        ))}
+        {portfolioLinks.map(
+          ({ name, icon, placeholder, prefix, label }, idx) => (
+            <PortfolioLinkInput
+              id={"play-" + name}
+              key={idx}
+              label={label}
+              name={name}
+              icon={icon}
+              placeholder={placeholder}
+              prefix={prefix}
+            />
+          )
+        )}
 
         <Input
+          id="play-additional-info"
           name="additionalInfo"
           label="Additional Info"
           multiline
@@ -132,14 +140,14 @@ export default function PlayScreen() {
           height={50}
           pressStyle={{ scale: 0.97 }}
           animation="quick"
-          onPress={methods.handleSubmit(onSubmit)}
-          icon={methods.formState.isSubmitting ? () => <Spinner /> : undefined}
+          onPress={handleSubmit(onSubmit)}
+          icon={formState.isSubmitting ? () => <Spinner /> : undefined}
         >
           <Text fontSize={20} fontWeight="bold">
             Let's Rock! 🎸
           </Text>
         </Button>
-      </FormProvider>
+      </Form>
     </PageContainer>
   );
 }

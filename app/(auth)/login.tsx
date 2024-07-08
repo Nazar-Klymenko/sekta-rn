@@ -13,6 +13,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
@@ -47,16 +49,16 @@ export default function LoginScreen() {
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Log In
           </Text>
-
           <Input
+            id="login-email"
             name="email"
             label="Email"
             placeholder="Enter your email"
-            keyboardType="email-address"
+            inputMode="email"
             autoCapitalize="none"
           />
-
           <PasswordInput
+            id="login-password"
             name="password"
             label="Password"
             placeholder="Enter your password"
@@ -64,30 +66,21 @@ export default function LoginScreen() {
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/(auth)/forgot-password">
-              <Text color="blue" textAlign="center">
+              <Text color="$accentColor" textAlign="center">
                 Forgot password?
               </Text>
             </Link>
           </YStack>
-          <Button
-            size="$7"
-            height={50}
-            pressStyle={{ scale: 0.97 }}
-            animation="quick"
+          <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
-          >
-            <Text fontSize={20} fontWeight="bold">
-              Log In
-            </Text>
-          </Button>
+            text="Log in"
+          />
 
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/(auth)/signup">
+            <Link href="/(auth)/username-bridge">
               <Text textAlign="center">
                 Don't have an account?
-                <Text color="blue" textDecorationLine="underline">
-                  Sign Up
-                </Text>
+                <Text color="$accentColor"> Sign Up</Text>
               </Text>
             </Link>
           </YStack>

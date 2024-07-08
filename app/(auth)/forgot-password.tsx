@@ -53,10 +53,11 @@ export default function ForgotPasswordScreen() {
           </Text>
 
           <Input
+            id="forgot-password-email"
             name="email"
             label="Email"
             placeholder="Enter your email"
-            keyboardType="email-address"
+            inputMode="email"
             autoCapitalize="none"
           />
           <Button

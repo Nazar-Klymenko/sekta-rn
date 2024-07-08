@@ -47013,6 +47013,7 @@ var Text3 = (0, import_core59.styled)(import_core59.Text, {
 var import_core60 = require("@tamagui/core");
 
 // tamagui.config.ts
+var interFont = createInterFont();
 var tamaguiConfig = createTamagui(config);
 var tamagui_config_default = tamaguiConfig;
 // Annotate the CommonJS export names for ESM import in node:
