@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Redirect } from "expo-router";
 import { Text, View } from "tamagui";
 
+import { PageContainer } from "@/components/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 export default function SettingsScreen() {
@@ -10,12 +11,9 @@ export default function SettingsScreen() {
 
   return (
     <AuthGuard>
-      <View
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        backgroundColor="$background"
-      >
+      <PageContainer>
         <Text>Settings Screen</Text>
-      </View>
+      </PageContainer>
     </AuthGuard>
   );
 }

@@ -18,6 +18,8 @@ import {
   styled,
 } from "tamagui";
 
+import { PageContainer } from "@/components/PageContainer";
+
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
     {children}
@@ -32,7 +34,7 @@ export default function ProfileScreen() {
   const routerPushUsernameBridge = useRouterPush("/(auth)/username-bridge");
 
   return (
-    <YStack f={1} padding="$4" gap="$4" backgroundColor="$background">
+    <PageContainer>
       <YStack alignItems="center" gap="$2">
         <Avatar circular size="$12">
           {user?.photoURL ? (
@@ -141,7 +143,7 @@ export default function ProfileScreen() {
           </YStack>
         )}
       </YStack>
-    </YStack>
+    </PageContainer>
   );
 }
 

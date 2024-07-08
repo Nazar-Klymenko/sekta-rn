@@ -4,15 +4,14 @@ import { useRouterPush } from "@/hooks/useRouterPush";
 import { useRouter } from "expo-router";
 import { Button, Text, View, useTheme } from "tamagui";
 
+import { PageContainer } from "@/components/PageContainer";
+
 export default function HomeScreen() {
   const theme = useTheme();
 
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
-  const routerPush = useRouterPush("/(tabs)/settings", {
-    next: "settings",
-    prev: "/",
-  });
+
   const Test = () => {
     if (user) {
       return <Text>Welcome, {user.email}</Text>;
@@ -22,12 +21,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View
-      justifyContent="center"
-      alignItems="center"
-      flex={1}
-      backgroundColor="$background"
-    >
+    <PageContainer>
       <Text>Home Screen</Text>
       <Test></Test>
 
@@ -35,6 +29,6 @@ export default function HomeScreen() {
       <Button onPress={() => router.push("/event?id=123")}>
         Go to Event with ID
       </Button>
-    </View>
+    </PageContainer>
   );
 }

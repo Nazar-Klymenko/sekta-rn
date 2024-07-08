@@ -10,6 +10,7 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { PageContainer } from "@/components/PageContainer";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordStrengthIndicator } from "@/components/form/PasswordStrengthIndicator";
@@ -52,54 +53,48 @@ export default function SignupScreen() {
 
   return (
     <AuthPageGuard>
-      <ScrollView
-        style={{ flex: 1, backgroundColor: theme.background.get() }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <PageContainer>
         <FormProvider {...methods}>
-          <YStack f={1} padding="$4" gap="$4">
-            <Text fontSize={24} fontWeight="bold" textAlign="center">
+          <Text fontSize={24} fontWeight="bold" textAlign="center">
+            Sign Up
+          </Text>
+
+          <Input
+            name="email"
+            label="Email"
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <PasswordInput
+            name="password"
+            label="Password"
+            placeholder="Enter your password"
+            secureTextEntry
+          />
+          <PasswordStrengthIndicator password={methods.watch("password")} />
+
+          <Button
+            size="$7"
+            height={50}
+            pressStyle={{ scale: 0.97 }}
+            animation="quick"
+            onPress={methods.handleSubmit(onSubmit)}
+          >
+            <Text fontSize={20} fontWeight="bold">
               Sign Up
             </Text>
-
-            <Input
-              name="email"
-              label="Email"
-              placeholder="Enter your email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-
-            <PasswordInput
-              name="password"
-              label="Password"
-              placeholder="Enter your password"
-              secureTextEntry
-            />
-            <PasswordStrengthIndicator password={methods.watch("password")} />
-
-            <Button
-              size="$7"
-              height={50}
-              pressStyle={{ scale: 0.97 }}
-              animation="quick"
-              onPress={methods.handleSubmit(onSubmit)}
-            >
-              <Text fontSize={20} fontWeight="bold">
-                Sign Up
+          </Button>
+          <YStack alignItems="center" padding="$4" gap="$4">
+            <Link href="/(auth)/login">
+              <Text textAlign="center">
+                Already have an account? <Text color="blue">Log in</Text>
               </Text>
-            </Button>
-            <YStack alignItems="center" padding="$4" gap="$4">
-              <Link href="/(auth)/login">
-                <Text textAlign="center">
-                  Already have an account? <Text color="blue">Log in</Text>
-                </Text>
-              </Link>
-            </YStack>
+            </Link>
           </YStack>
         </FormProvider>
-      </ScrollView>
+      </PageContainer>
     </AuthPageGuard>
   );
 }

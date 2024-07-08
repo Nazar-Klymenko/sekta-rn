@@ -20,7 +20,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { PageContainer } from "@/components/PageContainer";
 import { Input } from "@/components/form/Input";
+import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const usernameBridgeSchema = yup.object().shape({
   username: yup
@@ -51,48 +53,39 @@ export default function UsernameBridgecreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: theme.background.get() }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
-          <ScrollView keyboardShouldPersistTaps="handled">
-            <FormProvider {...methods}>
-              <YStack f={1} padding="$4" gap="$4">
-                <Text fontSize={24} fontWeight="bold" textAlign="center">
-                  Welcome! 👋
-                </Text>
-                <Input
-                  name="username"
-                  label="Username"
-                  placeholder="Enter your username"
-                />
-                <View style={{ marginTop: 20 }}>
-                  <Button
-                    size="$7"
-                    height={50}
-                    pressStyle={{ scale: 0.97 }}
-                    animation="quick"
-                    onPress={methods.handleSubmit(onSubmit)}
-                  >
-                    <Text fontSize={20} fontWeight="bold">
-                      Next
-                    </Text>
-                  </Button>
-                </View>
-                <YStack alignItems="center" padding="$4" gap="$4">
-                  <Link href="/(auth)/login">
-                    <Text textAlign="center">
-                      Already have an account? <Text color="blue">Log in</Text>
-                    </Text>
-                  </Link>
-                </YStack>
-              </YStack>
-            </FormProvider>
-          </ScrollView>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    <AuthPageGuard>
+      <PageContainer>
+        <FormProvider {...methods}>
+          <Text fontSize={24} fontWeight="bold" textAlign="center">
+            Welcome! 👋
+          </Text>
+          <Input
+            name="username"
+            label="Username"
+            placeholder="Enter your username"
+          />
+          <View style={{ marginTop: 20 }}>
+            <Button
+              size="$7"
+              height={50}
+              pressStyle={{ scale: 0.97 }}
+              animation="quick"
+              onPress={methods.handleSubmit(onSubmit)}
+            >
+              <Text fontSize={20} fontWeight="bold">
+                Next
+              </Text>
+            </Button>
+          </View>
+          <YStack alignItems="center" padding="$4" gap="$4">
+            <Link href="/(auth)/login">
+              <Text textAlign="center">
+                Already have an account? <Text color="blue">Log in</Text>
+              </Text>
+            </Link>
+          </YStack>
+        </FormProvider>
+      </PageContainer>
+    </AuthPageGuard>
   );
 }

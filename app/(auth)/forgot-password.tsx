@@ -16,7 +16,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { PageContainer } from "@/components/PageContainer";
 import { Input } from "@/components/form/Input";
+import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),
@@ -38,48 +40,43 @@ export default function ForgotPasswordScreen() {
     console.log(data);
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: theme.background.get() }}
-    >
-      <ScrollView>
+    <AuthPageGuard>
+      <PageContainer>
         <FormProvider {...methods}>
-          <YStack f={1} padding="$4" gap="$4">
-            <Text
-              fontSize={24}
-              fontWeight="bold"
-              textAlign="center"
-              marginBottom="$4"
-            >
-              Forgot Password
-            </Text>
+          <Text
+            fontSize={24}
+            fontWeight="bold"
+            textAlign="center"
+            marginBottom="$4"
+          >
+            Forgot Password
+          </Text>
 
-            <Input
-              name="email"
-              label="Email"
-              placeholder="Enter your email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-            <Button
-              size="$7"
-              height={50}
-              onPress={() => {
-                alert("Password reset instructions sent to your email");
-              }}
-            >
-              <Text>Reset Password</Text>
-            </Button>
-            <YStack alignItems="center" padding="$4" gap="$4">
-              <Link href="/(auth)/login">
-                <Text color="blue" textAlign="center">
-                  Back to login
-                </Text>
-              </Link>
-            </YStack>
+          <Input
+            name="email"
+            label="Email"
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <Button
+            size="$7"
+            height={50}
+            onPress={() => {
+              alert("Password reset instructions sent to your email");
+            }}
+          >
+            <Text>Reset Password</Text>
+          </Button>
+          <YStack alignItems="center" padding="$4" gap="$4">
+            <Link href="/(auth)/login">
+              <Text color="blue" textAlign="center">
+                Back to login
+              </Text>
+            </Link>
           </YStack>
         </FormProvider>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </PageContainer>
+    </AuthPageGuard>
   );
 }

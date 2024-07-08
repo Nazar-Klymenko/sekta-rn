@@ -20,6 +20,7 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { PageContainer } from "@/components/PageContainer";
 import { Input } from "@/components/form/Input";
 import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
 
@@ -86,70 +87,59 @@ export default function PlayScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: theme.background.get() }}
-    >
-      <ScrollView>
-        <FormProvider {...methods}>
-          <YStack f={1} padding="$4" gap="$4">
-            <Text fontSize={24} fontWeight="bold" textAlign="center">
-              Let's Play! 🎵
-            </Text>
+    <PageContainer>
+      <FormProvider {...methods}>
+        <Text fontSize={24} fontWeight="bold" textAlign="center">
+          Let's Play! 🎵
+        </Text>
 
-            <Input
-              name="email"
-              label="Contact Email"
-              placeholder="email@gmail.com"
-            />
-            <Input
-              name="phone"
-              label="Phone Number (Optional)"
-              placeholder="577 925 024"
-            />
+        <Input
+          name="email"
+          label="Contact Email"
+          placeholder="email@gmail.com"
+        />
+        <Input
+          name="phone"
+          label="Phone Number (Optional)"
+          placeholder="577 925 024"
+        />
 
-            <Text fontSize={20} fontWeight="bold">
-              Portfolio Links (Optional)
-            </Text>
-            {portfolioLinks.map(
-              ({ name, icon, placeholder, prefix, label }) => (
-                <PortfolioLinkInput
-                  key={name}
-                  label={label}
-                  name={name}
-                  icon={icon}
-                  placeholder={placeholder}
-                  prefix={prefix}
-                />
-              )
-            )}
+        <Text fontSize={20} fontWeight="bold">
+          Portfolio Links (Optional)
+        </Text>
+        {portfolioLinks.map(({ name, icon, placeholder, prefix, label }) => (
+          <PortfolioLinkInput
+            key={name}
+            label={label}
+            name={name}
+            icon={icon}
+            placeholder={placeholder}
+            prefix={prefix}
+          />
+        ))}
 
-            <Input
-              name="additionalInfo"
-              label="Additional Info"
-              multiline
-              textAlignVertical="top"
-              placeholder="Any additional information you'd like to share..."
-              numberOfLines={4}
-            />
+        <Input
+          name="additionalInfo"
+          label="Additional Info"
+          multiline
+          textAlignVertical="top"
+          placeholder="Any additional information you'd like to share..."
+          numberOfLines={4}
+        />
 
-            <Button
-              size="$7"
-              height={50}
-              pressStyle={{ scale: 0.97 }}
-              animation="quick"
-              onPress={methods.handleSubmit(onSubmit)}
-              icon={
-                methods.formState.isSubmitting ? () => <Spinner /> : undefined
-              }
-            >
-              <Text fontSize={20} fontWeight="bold">
-                Let's Rock! 🎸
-              </Text>
-            </Button>
-          </YStack>
-        </FormProvider>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <Button
+          size="$7"
+          height={50}
+          pressStyle={{ scale: 0.97 }}
+          animation="quick"
+          onPress={methods.handleSubmit(onSubmit)}
+          icon={methods.formState.isSubmitting ? () => <Spinner /> : undefined}
+        >
+          <Text fontSize={20} fontWeight="bold">
+            Let's Rock! 🎸
+          </Text>
+        </Button>
+      </FormProvider>
+    </PageContainer>
   );
 }
