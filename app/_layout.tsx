@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
 import tamaguiConfig from "@/tamagui.config";
 
 import { useFonts } from "expo-font";
@@ -25,6 +26,31 @@ function LoadingScreen() {
     >
       <Text color="$color">Loading...</Text>
     </View>
+  );
+}
+
+function AppContent() {
+  const { themeColor } = useThemeContext();
+
+  return (
+    <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
+      <AuthProvider>
+        <Stack>
+          <Stack.Screen
+            name="(auth)"
+            options={{
+              headerShown: false,
+              animation: "fade_from_bottom",
+            }}
+          />
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false, animation: "fade_from_bottom" }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </AuthProvider>
+    </TamaguiProvider>
   );
 }
 
@@ -70,23 +96,8 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme="light">
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen
-            name="(auth)"
-            options={{
-              headerShown: false,
-              animation: "fade_from_bottom",
-            }}
-          />
-          <Stack.Screen
-            name="(tabs)"
-            options={{ headerShown: false, animation: "fade_from_bottom" }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </AuthProvider>
-    </TamaguiProvider>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

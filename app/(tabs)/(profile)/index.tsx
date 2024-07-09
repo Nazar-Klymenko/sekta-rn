@@ -1,24 +1,29 @@
 import { media } from "@tamagui/config/v3";
-import { ChevronRight, User } from "@tamagui/lucide-icons";
+import { ChevronRight, Moon, Sun, User } from "@tamagui/lucide-icons";
 
 import React from "react";
 
+import { useThemeContext } from "@/context/ThemeContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { signOut } from "@/services/auth";
 
 import {
+  AnimatePresence,
   Avatar,
   Button,
   Separator,
   Stack,
   Text,
+  Theme,
   XStack,
   YStack,
   styled,
+  useTheme,
 } from "tamagui";
 
 import { PageContainer } from "@/components/PageContainer";
+import { Switch } from "@/components/buttons/CustomSwitch";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
@@ -29,9 +34,11 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const routerPushSettings = useRouterPush("/(tabs)/settings");
-
   const routerPushLogin = useRouterPush("/(auth)/login");
   const routerPushUsernameBridge = useRouterPush("/(auth)/username-bridge");
+  const theme = useTheme();
+  const { themeColor, toggleTheme } = useThemeContext();
+  const isDarkMode = themeColor === "dark";
 
   return (
     <PageContainer>
@@ -79,6 +86,23 @@ export default function ProfileScreen() {
           />
         </YStack>
       )}
+
+      <YStack gap="$2">
+        <SectionTitle>Appearance</SectionTitle>
+        <XStack
+          alignItems="center"
+          justifyContent="space-between"
+          backgroundColor="$background"
+          padding="$4"
+          borderRadius="$2"
+        >
+          <XStack alignItems="center" gap="$2">
+            {isDarkMode ? <Moon size={24} /> : <Sun size={24} />}
+            <Text fontSize="$4">{isDarkMode ? "Dark Mode" : "Light Mode"}</Text>
+          </XStack>
+          <Switch checked={isDarkMode} onPress={toggleTheme} />
+        </XStack>
+      </YStack>
 
       <YStack gap="$2">
         <SectionTitle>Support</SectionTitle>
