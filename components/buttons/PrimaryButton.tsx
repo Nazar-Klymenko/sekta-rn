@@ -1,16 +1,18 @@
 import { GestureResponderEvent } from "react-native";
 
-import { Button, ButtonProps, Text, Theme } from "tamagui";
+import { Button, ButtonProps, Spinner, Text, Theme } from "tamagui";
 
 interface PrimaryButtonTypes extends ButtonProps {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
   text: string;
   htmlFor?: string;
+  isLoading?: boolean;
 }
 
 export const PrimaryButton = ({
   onPress,
   text,
+  isLoading,
   htmlFor,
   ...props
 }: PrimaryButtonTypes): JSX.Element => {
@@ -22,6 +24,8 @@ export const PrimaryButton = ({
         animation="quick"
         onPress={onPress}
         htmlFor={htmlFor}
+        icon={isLoading ? <Spinner /> : undefined}
+        disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
         {...props}
       >
         <Text fontSize={20} fontWeight="bold">

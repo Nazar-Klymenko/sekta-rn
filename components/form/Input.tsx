@@ -3,9 +3,15 @@ import React, { useState } from "react";
 import { TextInputProps } from "react-native";
 
 import { useController, useFormContext } from "react-hook-form";
-import { Label, Input as TamaguiInput, Text, YStack } from "tamagui";
+import {
+  Label,
+  Input as TamaguiInput,
+  InputProps as TamaguiInputProps,
+  Text,
+  YStack,
+} from "tamagui";
 
-interface InputProps extends TextInputProps {
+interface InputProps extends TamaguiInputProps {
   name: string;
   label: string;
   id: string;

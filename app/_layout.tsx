@@ -8,10 +8,12 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
 
 function LoadingScreen() {
   const theme = useTheme();
@@ -33,24 +35,26 @@ function AppContent() {
   const { themeColor } = useThemeContext();
 
   return (
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen
-            name="(auth)"
-            options={{
-              headerShown: false,
-              animation: "fade_from_bottom",
-            }}
-          />
-          <Stack.Screen
-            name="(tabs)"
-            options={{ headerShown: false, animation: "fade_from_bottom" }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </AuthProvider>
-    </TamaguiProvider>
+    <QueryClientProvider client={queryClient}>
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
+        <AuthProvider>
+          <Stack>
+            <Stack.Screen
+              name="(auth)"
+              options={{
+                headerShown: false,
+                animation: "fade_from_bottom",
+              }}
+            />
+            <Stack.Screen
+              name="(tabs)"
+              options={{ headerShown: false, animation: "fade_from_bottom" }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </AuthProvider>
+      </TamaguiProvider>
+    </QueryClientProvider>
   );
 }
 
