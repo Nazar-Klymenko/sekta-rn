@@ -3,10 +3,10 @@ import { ChevronRight, Moon, Sun, User } from "@tamagui/lucide-icons";
 
 import React from "react";
 
+import { signOut } from "@/api/auth";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
-import { signOut } from "@/services/auth";
 
 import {
   AnimatePresence,

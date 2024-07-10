@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
+import { queryUserByUsername } from "@/api/firestore";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
-import { queryUserByUsername } from "@/services/firestore";
 
 import { Link } from "expo-router";
 import { useForm } from "react-hook-form";

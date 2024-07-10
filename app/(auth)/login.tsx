@@ -1,12 +1,10 @@
 import React from "react";
 
-import { ScrollView } from "react-native";
-
-import { signIn } from "@/services/auth";
+import { useSignIn } from "@/hooks/useAuthOperations";
 
 import { Link } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, Text, YStack, useTheme } from "tamagui";
+import { Text, YStack, useTheme } from "tamagui";
 
 import * as yup from "yup";
 
@@ -14,7 +12,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
@@ -27,7 +24,7 @@ type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
   const theme = useTheme();
-
+  const signInMutation = useSignIn();
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -38,7 +35,8 @@ export default function LoginScreen() {
 
   const onSubmit = async (data: FormValues) => {
     console.log(data);
-    await signIn(data.email, data.password);
+    signInMutation.mutate({ email: data.email, password: data.password });
+
     // Handle login logic here
   };
 
@@ -74,7 +72,12 @@ export default function LoginScreen() {
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
             text="Log in"
+            isLoading={signInMutation.isLoading}
+            disabled={signInMutation.isLoading}
           />
+          {signInMutation.isError && (
+            <Text>Error: {signInMutation.error.message}</Text>
+          )}
 
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/(auth)/username-bridge">
