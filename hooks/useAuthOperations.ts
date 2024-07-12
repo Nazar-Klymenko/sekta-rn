@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 
 import { sendPasswordReset, signIn, signOut, signUp } from "@/api/auth";
 
+import { useRouter } from "expo-router";
 import { useMutation, useQueryClient } from "react-query";
 
 function isFirebaseError(error: unknown): error is FirebaseError {
@@ -16,12 +17,13 @@ function isFirebaseError(error: unknown): error is FirebaseError {
 }
 export const useSignUp = () => {
   const queryClient = useQueryClient();
+
   return useMutation<
     User,
     FirebaseError,
     { email: string; password: string; username: string }
   >(
-    ({
+    async ({
       email,
       password,
       username,
@@ -29,10 +31,17 @@ export const useSignUp = () => {
       email: string;
       password: string;
       username: string;
-    }) => signUp(email, password),
+    }) => {
+      const user = await signUp(email, password, username);
+      return user;
+    },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("user");
+      },
+      onError: (error) => {
+        console.error("Sign-up error:", error);
+        // Handle error (e.g., show error message to user)
       },
     }
   );

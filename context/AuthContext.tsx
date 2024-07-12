@@ -3,9 +3,9 @@ import { User } from "firebase/auth";
 
 import React, { ReactNode, createContext, useEffect } from "react";
 
-import { UseQueryResult, useQuery, useQueryClient } from "react-query";
+import { auth } from "@/services/firebase";
 
-import { auth } from "../services/firebase";
+import { UseQueryResult, useQuery, useQueryClient } from "react-query";
 
 type AuthContextType = {
   user: User | null;

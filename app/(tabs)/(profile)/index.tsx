@@ -7,6 +7,7 @@ import { signOut } from "@/api/auth";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
+import { useUserData } from "@/hooks/useUserData";
 
 import {
   AnimatePresence,
@@ -33,10 +34,11 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
+  const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
+
   const routerPushSettings = useRouterPush("/(tabs)/settings");
   const routerPushLogin = useRouterPush("/auth/login");
   const routerPushUsernameBridge = useRouterPush("/auth/username-bridge");
-  const theme = useTheme();
   const { themeColor, toggleTheme } = useThemeContext();
   const isDarkMode = themeColor === "dark";
 
@@ -57,10 +59,10 @@ export default function ProfileScreen() {
           )}
         </Avatar>
         <Text fontSize="$6" fontWeight="bold">
-          {user?.displayName || "Guest"}
+          {userData?.username || user?.displayName || "Guest"}
         </Text>
         <Text fontSize="$3" color="$gray10">
-          {user?.email || "Not logged in"}
+          {userData?.email || user?.email || "Not logged in"}
         </Text>
       </YStack>
 
