@@ -1,6 +1,8 @@
 import React from "react";
 
-import { Link, useLocalSearchParams } from "expo-router";
+import { useSignUp } from "@/hooks/useAuthOperations";
+
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { Text, YStack, useTheme } from "tamagui";
 
@@ -14,7 +16,6 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordRequirements } from "@/components/form/PasswordRequirements";
-import { PasswordStrengthIndicator } from "@/components/form/PasswordStrengthIndicator";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const signUpSchema = yup.object().shape({
@@ -43,23 +44,38 @@ type FormValues = yup.InferType<typeof signUpSchema>;
 
 export default function SignupScreen() {
   const theme = useTheme();
+  const router = useRouter();
   const { username = "" } = useLocalSearchParams<{ username: string }>();
 
   const methods = useForm<FormValues>({
-      resolver: yupResolver(signUpSchema),
-      shouldFocusError: true,
-      defaultValues: {
-        username: username,
-        email: "",
-        password: "",
-      },
-    }),
-    { handleSubmit, watch } = methods;
+    resolver: yupResolver(signUpSchema),
+    shouldFocusError: true,
+    defaultValues: {
+      username: username,
+      email: "",
+      password: "",
+    },
+  });
+  const { handleSubmit, watch } = methods;
+
+  const signUpMutation = useSignUp();
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form submitted:");
-    console.log("Form submitted:", data);
-    // Handle signup logic here
+    signUpMutation.mutate(
+      {
+        email: data.email,
+        password: data.password,
+        username: data.username,
+      },
+      {
+        onSuccess: () => {
+          router.replace("/(app)/(tabs)/(home)");
+        },
+        onError: () => {
+          alert("error");
+        },
+      }
+    );
   };
 
   return (
@@ -88,14 +104,25 @@ export default function SignupScreen() {
               secureTextEntry
             />
             <PasswordRequirements password={watch("password")} />
-            {/* <PasswordStrengthIndicator password={watch("password")} /> */}
           </YStack>
-          <PrimaryButton text="Sign up" onPress={handleSubmit(onSubmit)} />
+          <PrimaryButton
+            text="Sign up"
+            onPress={handleSubmit(onSubmit)}
+            isLoading={signUpMutation.isLoading}
+            disabled={signUpMutation.isLoading}
+          />
+
+          {signUpMutation.isError && (
+            <Text color="red" textAlign="center" marginTop="$2">
+              {signUpMutation.error?.message ||
+                "An error occurred during signup"}
+            </Text>
+          )}
 
           <YStack alignItems="center" padding="$4">
             <Link href="/(auth)/login">
               <Text textAlign="center">
-                Already have an account? <Text>Log in</Text>
+                Already have an account? <Text color="blue">Log in</Text>
               </Text>
             </Link>
           </YStack>

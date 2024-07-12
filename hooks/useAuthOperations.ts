@@ -1,7 +1,7 @@
 import { FirebaseError } from "firebase/app";
 import { User } from "firebase/auth";
 
-import { signIn, signOut, signUp } from "@/api/auth";
+import { sendPasswordReset, signIn, signOut, signUp } from "@/api/auth";
 
 import { useMutation, useQueryClient } from "react-query";
 
@@ -47,6 +47,11 @@ export const useSignIn = () => {
         queryClient.invalidateQueries("user");
       },
     }
+  );
+};
+export const useSendPasswordReset = () => {
+  return useMutation<void, FirebaseError, string>((email: string) =>
+    sendPasswordReset(email)
   );
 };
 

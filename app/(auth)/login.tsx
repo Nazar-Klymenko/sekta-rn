@@ -36,8 +36,6 @@ export default function LoginScreen() {
   const onSubmit = async (data: FormValues) => {
     console.log(data);
     signInMutation.mutate({ email: data.email, password: data.password });
-
-    // Handle login logic here
   };
 
   return (

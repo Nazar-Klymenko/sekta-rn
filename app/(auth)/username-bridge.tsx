@@ -51,8 +51,6 @@ export default function UsernameBridgeScreen() {
   } = useUsernameAvailability(username);
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
-    const check = await queryUserByUsername(data.username);
     try {
       const result = await checkAvailability();
       if (result.data) {

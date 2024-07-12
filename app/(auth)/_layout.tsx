@@ -45,6 +45,14 @@ export default function AuthLayout() {
           animation: "fade_from_bottom",
         }}
       />
+      <Stack.Screen
+        name="forgot-password-success"
+        options={{
+          headerShown: true,
+          title: "Password recovery email sent!",
+          animation: "fade_from_bottom",
+        }}
+      />
     </Stack>
   );
 }
