@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUserData } from "@/hooks/useUserData";
 
+import { router, useRouter } from "expo-router";
 import {
   AnimatePresence,
   Avatar,
@@ -25,6 +26,7 @@ import {
 
 import { PageContainer } from "@/components/PageContainer";
 import { Switch } from "@/components/buttons/CustomSwitch";
+import { LanguageSelect } from "@/components/form/LanguageSelect";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
@@ -36,11 +38,11 @@ export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
 
-  const routerPushSettings = useRouterPush("/(tabs)/settings");
   const routerPushLogin = useRouterPush("/auth/login");
   const routerPushUsernameBridge = useRouterPush("/auth/username-bridge");
   const { themeColor, toggleTheme } = useThemeContext();
   const isDarkMode = themeColor === "dark";
+  const router = useRouter();
 
   return (
     <PageContainer>
@@ -69,28 +71,38 @@ export default function ProfileScreen() {
       <Separator />
 
       {isLoggedIn && (
-        <YStack gap="$2">
-          <SectionTitle>Account</SectionTitle>
-          <MenuItem
-            title="Settings"
-            onPress={() =>
-              routerPushSettings({
-                next: "settings",
-                prev: "/profile",
-              })
-            }
-          />
-          <MenuItem
-            title="Privacy"
-            onPress={() => {
-              /* Handle privacy settings */
-            }}
-          />
-        </YStack>
+        <>
+          <YStack gap="$2">
+            <SectionTitle>Account</SectionTitle>
+            <MenuItem
+              title="Profile Information"
+              onPress={() => router.push("/profile/profile-information")}
+            />
+            <MenuItem
+              title="Change Password"
+              onPress={() => router.push("/profile/change-password")}
+            />
+            <MenuItem
+              title="Delete account"
+              onPress={() => router.push("/profile/delete-profile")}
+            />
+          </YStack>
+          <YStack gap="$2">
+            <SectionTitle>Notifications</SectionTitle>
+            <MenuItem
+              title="Push notifications"
+              onPress={() => router.push("/profile/push-notifications")}
+            />
+            <MenuItem
+              title="Email notifications"
+              onPress={() => router.push("/profile/email-notifications")}
+            />
+          </YStack>
+        </>
       )}
 
       <YStack gap="$2">
-        <SectionTitle>Appearance</SectionTitle>
+        <SectionTitle>Preferences</SectionTitle>
         <XStack
           alignItems="center"
           justifyContent="space-between"
@@ -104,21 +116,23 @@ export default function ProfileScreen() {
           </XStack>
           <Switch checked={isDarkMode} onPress={toggleTheme} />
         </XStack>
+
+        <LanguageSelect />
       </YStack>
 
       <YStack gap="$2">
         <SectionTitle>Support</SectionTitle>
         <MenuItem
-          title="Help Center"
-          onPress={() => {
-            /* Handle help center */
-          }}
+          title="Terms of Service"
+          onPress={() => router.push("/profile/tos")}
         />
         <MenuItem
-          title="Terms of Service"
-          onPress={() => {
-            /* Handle terms of service */
-          }}
+          title="Cookie policy"
+          onPress={() => router.push("/profile/cookie-policy")}
+        />
+        <MenuItem
+          title="Contact us"
+          onPress={() => router.push("/profile/contact")}
         />
       </YStack>
 

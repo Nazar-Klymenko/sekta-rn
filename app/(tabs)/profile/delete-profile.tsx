@@ -6,13 +6,13 @@ import { Text, View } from "tamagui";
 import { PageContainer } from "@/components/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
-export default function SettingsScreen() {
+export default function DeleteProfileScreen() {
   const { isLoggedIn } = useAuth();
 
   return (
     <AuthGuard>
       <PageContainer>
-        <Text>Settings Screen</Text>
+        <Text>DeleteProfileScreen</Text>
       </PageContainer>
     </AuthGuard>
   );

@@ -1,7 +1,13 @@
 import { FirebaseError } from "firebase/app";
 import { User } from "firebase/auth";
 
-import { sendPasswordReset, signIn, signOut, signUp } from "@/api/auth";
+import {
+  changePassword,
+  sendPasswordReset,
+  signIn,
+  signOut,
+  signUp,
+} from "@/api/auth";
 
 import { useRouter } from "expo-router";
 import { useMutation, useQueryClient } from "react-query";
@@ -58,6 +64,24 @@ export const useSignIn = () => {
     }
   );
 };
+export function useChangePassword() {
+  return useMutation<
+    void,
+    FirebaseError,
+    { currentPassword: string; newPassword: string }
+  >(
+    async ({
+      currentPassword,
+      newPassword,
+    }: {
+      currentPassword: string;
+      newPassword: string;
+    }) => {
+      await changePassword(currentPassword, newPassword);
+    }
+  );
+}
+
 export const useSendPasswordReset = () => {
   return useMutation<void, FirebaseError, string>((email: string) =>
     sendPasswordReset(email)

@@ -1,10 +1,13 @@
 // src/api/auth.ts
 import {
+  EmailAuthProvider,
   User,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  updatePassword,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -72,7 +75,20 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
     return null;
   }
 };
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string
+): Promise<void> => {
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error("No user is currently logged in");
+  }
 
+  const credential = EmailAuthProvider.credential(user.email!, currentPassword);
+  await reauthenticateWithCredential(user, credential);
+
+  await updatePassword(user, newPassword);
+};
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
