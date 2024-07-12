@@ -13,6 +13,8 @@ import React, { useState } from "react";
 
 import { KeyboardAvoidingView, Platform } from "react-native";
 
+import { usePlaySubmission } from "@/hooks/usePlay";
+
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { Button, ScrollView, Spinner, Text, YStack, useTheme } from "tamagui";
 
@@ -21,6 +23,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
@@ -83,18 +86,31 @@ export default function PlayScreen() {
     }),
     { handleSubmit, formState } = methods;
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-  };
+  const {
+    mutate: submitPlayInfo,
+    isLoading,
+    isError,
+    isSuccess,
+  } = usePlaySubmission();
 
+  const onSubmit = async (data: PlayData) => {
+    try {
+      submitPlayInfo(data);
+      console.log("Play info submitted successfully!");
+      methods.reset();
+    } catch (error) {
+      console.error("Error submitting play info:", error);
+    }
+  };
   return (
     <PageContainer>
       <Form methods={methods}>
-        <Text fontSize={24} fontWeight="bold" textAlign="center">
-          Let's Play! 🎵
+        <Text fontSize={24} fontWeight="bold">
+          Play a set at our venue! 🎵
         </Text>
-
+        <Text fontSize="$4">
+          Leave your information below and we will get in touch asap
+        </Text>
         <Input
           id="play-email"
           name="email"
@@ -107,7 +123,6 @@ export default function PlayScreen() {
           label="Phone Number (Optional)"
           placeholder="577 925 024"
         />
-
         <Text fontSize={20} fontWeight="bold">
           Portfolio Links (Optional)
         </Text>
@@ -124,29 +139,22 @@ export default function PlayScreen() {
             />
           )
         )}
-
         <Input
           id="play-additional-info"
           name="additionalInfo"
           label="Additional Info"
           multiline
-          textAlignVertical="top"
           placeholder="Any additional information you'd like to share..."
           numberOfLines={4}
         />
-
-        <Button
-          size="$7"
-          height={50}
-          pressStyle={{ scale: 0.97 }}
-          animation="quick"
+        <PrimaryButton
           onPress={handleSubmit(onSubmit)}
-          icon={formState.isSubmitting ? () => <Spinner /> : undefined}
-        >
-          <Text fontSize={20} fontWeight="bold">
-            Let's Rock! 🎸
-          </Text>
-        </Button>
+          text="Send application 🎸"
+          isLoading={isLoading}
+          disabled={isLoading}
+        />
+        {isError && <Text>Error submitting play info</Text>}
+        {isSuccess && <Text>Play info submitted successfully!</Text>}
       </Form>
     </PageContainer>
   );

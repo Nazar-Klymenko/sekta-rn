@@ -49,3 +49,13 @@ export const queryUserByUsername = async (username: string) => {
     return false;
   }
 };
+export const submitPlayInfo = async (data: PlayData) => {
+  try {
+    const docRef = await addDoc(collection(db, "play"), data);
+    console.log("Document written with ID: ", docRef.id);
+    return docRef.id; // Optionally return something if needed
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw new Error("Failed to submit play info");
+  }
+};
