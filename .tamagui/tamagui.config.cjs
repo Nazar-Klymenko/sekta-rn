@@ -944,6 +944,8 @@ var require_validStyleProps = __commonJS({
       gridColumnEnd: true,
       gridColumnGap: true,
       gridColumnStart: true,
+      gridTemplateColumns: true,
+      gridTemplateAreas: true,
       lineClamp: true,
       opacity: true,
       order: true,
@@ -1087,6 +1089,7 @@ var require_validStyleProps = __commonJS({
       caretColor: true,
       clipPath: true,
       contain: true,
+      containerType: true,
       content: true,
       cursor: true,
       filter: true,
@@ -18659,7 +18662,7 @@ var require_Text = __commonJS({
       pointerEvents: true
     });
     var pickProps = /* @__PURE__ */ __name((props) => (0, _pick.default)(props, forwardPropsList), "pickProps");
-    var Text4 = /* @__PURE__ */ React49.forwardRef((props, forwardedRef) => {
+    var Text5 = /* @__PURE__ */ React49.forwardRef((props, forwardedRef) => {
       var hrefAttrs = props.hrefAttrs, numberOfLines = props.numberOfLines, onClick = props.onClick, onLayout = props.onLayout, onPress = props.onPress, onMoveShouldSetResponder = props.onMoveShouldSetResponder, onMoveShouldSetResponderCapture = props.onMoveShouldSetResponderCapture, onResponderEnd = props.onResponderEnd, onResponderGrant = props.onResponderGrant, onResponderMove = props.onResponderMove, onResponderReject = props.onResponderReject, onResponderRelease = props.onResponderRelease, onResponderStart = props.onResponderStart, onResponderTerminate = props.onResponderTerminate, onResponderTerminationRequest = props.onResponderTerminationRequest, onScrollShouldSetResponder = props.onScrollShouldSetResponder, onScrollShouldSetResponderCapture = props.onScrollShouldSetResponderCapture, onSelectionChangeShouldSetResponder = props.onSelectionChangeShouldSetResponder, onSelectionChangeShouldSetResponderCapture = props.onSelectionChangeShouldSetResponderCapture, onStartShouldSetResponder = props.onStartShouldSetResponder, onStartShouldSetResponderCapture = props.onStartShouldSetResponderCapture, selectable = props.selectable, rest = (0, _objectWithoutPropertiesLoose2.default)(props, _excluded);
       if (selectable != null) {
         (0, _warnOnce.warnOnce)("selectable", "selectable prop is deprecated. Use styles.userSelect.");
@@ -18734,7 +18737,7 @@ var require_Text = __commonJS({
         value: true
       }, element);
     });
-    Text4.displayName = "Text";
+    Text5.displayName = "Text";
     var textStyle = {
       backgroundColor: "transparent",
       border: "0 solid black",
@@ -18784,7 +18787,7 @@ var require_Text = __commonJS({
         cursor: "pointer"
       }
     });
-    var _default = Text4;
+    var _default = Text5;
     exports2.default = _default;
     module2.exports = exports2.default;
   }
@@ -27981,22 +27984,22 @@ var setThemeInfo = /* @__PURE__ */ __name((theme, info) => {
 
 // node_modules/@tamagui/create-theme/dist/esm/createTheme.mjs
 var identityCache = /* @__PURE__ */ new Map();
-function createThemeWithPalettes(palettes2, defaultPalette, definition, options, name, skipCache = false) {
-  if (!palettes2[defaultPalette]) throw new Error(`No pallete: ${defaultPalette}`);
+function createThemeWithPalettes(palettes, defaultPalette, definition, options, name, skipCache = false) {
+  if (!palettes[defaultPalette]) throw new Error(`No pallete: ${defaultPalette}`);
   const newDef = {
     ...definition
   };
   for (const key in definition) {
     let val = definition[key];
     if (typeof val == "string" && val[0] === "$") {
-      const [altPaletteName$, altPaletteIndex] = val.split("."), altPaletteName = altPaletteName$.slice(1), parentName = defaultPalette.split("_")[0], altPalette = palettes2[altPaletteName] || palettes2[`${parentName}_${altPaletteName}`];
+      const [altPaletteName$, altPaletteIndex] = val.split("."), altPaletteName = altPaletteName$.slice(1), parentName = defaultPalette.split("_")[0], altPalette = palettes[altPaletteName] || palettes[`${parentName}_${altPaletteName}`];
       if (altPalette) {
         const next = getValue(altPalette, +altPaletteIndex);
         typeof next < "u" && (newDef[key] = next);
       }
     }
   }
-  return createTheme(palettes2[defaultPalette], newDef, options, name, skipCache);
+  return createTheme(palettes[defaultPalette], newDef, options, name, skipCache);
 }
 __name(createThemeWithPalettes, "createThemeWithPalettes");
 function createTheme(palette, definition, options, name, skipCache = false) {
@@ -28169,18 +28172,18 @@ var _ThemeBuilder = class _ThemeBuilder {
   constructor(state) {
     this.state = state;
   }
-  addPalettes(palettes2) {
+  addPalettes(palettes) {
     return this.state.palettes = {
       // as {} prevents generic string key merge messing up types
       ...this.state.palettes,
-      ...palettes2
+      ...palettes
     }, this;
   }
-  addTemplates(templates2) {
+  addTemplates(templates) {
     return this.state.templates = {
       // as {} prevents generic string key merge messing up types
       ...this.state.templates,
-      ...templates2
+      ...templates
     }, this;
   }
   addMasks(masks2) {
@@ -28470,7 +28473,7 @@ var color = {
   ...postfixObjKeys(lightColors, "Light"),
   ...postfixObjKeys(darkColors, "Dark")
 };
-var palettes = (() => {
+var defaultPalettes = (() => {
   const transparent = /* @__PURE__ */ __name((hsl, opacity = 0) => hsl.replace("%)", `%, ${opacity})`).replace("hsl(", "hsla("), "transparent"), getColorPalette = /* @__PURE__ */ __name((colors, accentColors) => {
     const colorPalette = Object.values(colors), colorI = colorPalette.length - 4, accentPalette = Object.values(accentColors), accentBackground = accentPalette[0], accentColor = accentPalette[accentPalette.length - 1];
     return [accentBackground, transparent(colorPalette[0], 0), transparent(colorPalette[0], 0.25), transparent(colorPalette[0], 0.5), transparent(colorPalette[0], 0.75), ...colorPalette, transparent(colorPalette[colorI], 0.75), transparent(colorPalette[colorI], 0.5), transparent(colorPalette[colorI], 0.25), transparent(colorPalette[colorI], 0), accentColor];
@@ -28487,142 +28490,143 @@ var palettes = (() => {
     ...colorPalettes
   };
 })();
-var getTemplates = /* @__PURE__ */ __name((scheme) => {
-  const isLight = scheme === "light", bgIndex = 5, lighten = isLight ? -1 : 1, darken = -lighten, borderColor = bgIndex + 3, base = {
-    accentBackground: 0,
-    accentColor: -0,
-    background0: 1,
-    background025: 2,
-    background05: 3,
-    background075: 4,
-    color1: bgIndex,
-    color2: bgIndex + 1,
-    color3: bgIndex + 2,
-    color4: bgIndex + 3,
-    color5: bgIndex + 4,
-    color6: bgIndex + 5,
-    color7: bgIndex + 6,
-    color8: bgIndex + 7,
-    color9: bgIndex + 8,
-    color10: bgIndex + 9,
-    color11: bgIndex + 10,
-    color12: bgIndex + 11,
-    color0: -1,
-    color025: -2,
-    color05: -3,
-    color075: -4,
-    // the background, color, etc keys here work like generics - they make it so you
-    // can publish components for others to use without mandating a specific color scale
-    // the @tamagui/button Button component looks for `$background`, so you set the
-    // dark_red_Button theme to have a stronger background than the dark_red theme.
-    background: bgIndex,
-    backgroundHover: bgIndex + lighten,
-    // always lighten on hover no matter the scheme
-    backgroundPress: bgIndex + darken,
-    // always darken on press no matter the theme
-    backgroundFocus: bgIndex + darken,
-    borderColor,
-    borderColorHover: borderColor + lighten,
-    borderColorPress: borderColor + darken,
-    borderColorFocus: borderColor,
-    color: -bgIndex,
-    colorHover: -bgIndex - 1,
-    colorPress: -bgIndex,
-    colorFocus: -bgIndex - 1,
-    colorTransparent: -1,
-    placeholderColor: -bgIndex - 3,
-    outlineColor: -2
-  }, surface12 = {
-    background: base.background + 1,
-    backgroundHover: base.backgroundHover + 1,
-    backgroundPress: base.backgroundPress + 1,
-    backgroundFocus: base.backgroundFocus + 1,
-    borderColor: base.borderColor + 1,
-    borderColorHover: base.borderColorHover + 1,
-    borderColorFocus: base.borderColorFocus + 1,
-    borderColorPress: base.borderColorPress + 1
-  }, surface22 = {
-    background: base.background + 2,
-    backgroundHover: base.backgroundHover + 2,
-    backgroundPress: base.backgroundPress + 2,
-    backgroundFocus: base.backgroundFocus + 2,
-    borderColor: base.borderColor + 2,
-    borderColorHover: base.borderColorHover + 2,
-    borderColorFocus: base.borderColorFocus + 2,
-    borderColorPress: base.borderColorPress + 2
-  }, surface32 = {
-    background: base.background + 3,
-    backgroundHover: base.backgroundHover + 3,
-    backgroundPress: base.backgroundPress + 3,
-    backgroundFocus: base.backgroundFocus + 3,
-    borderColor: base.borderColor + 3,
-    borderColorHover: base.borderColorHover + 3,
-    borderColorFocus: base.borderColorFocus + 3,
-    borderColorPress: base.borderColorPress + 3
-  }, surfaceActiveBg = {
-    background: base.background + 5,
-    backgroundHover: base.background + 5,
-    backgroundPress: base.backgroundPress + 5,
-    backgroundFocus: base.backgroundFocus + 5
-  }, surfaceActive = {
-    ...surfaceActiveBg,
-    // match border to background when active
-    borderColor: surfaceActiveBg.background,
-    borderColorHover: surfaceActiveBg.backgroundHover,
-    borderColorFocus: surfaceActiveBg.backgroundFocus,
-    borderColorPress: surfaceActiveBg.backgroundPress
-  }, inverseSurface12 = {
-    color: surface12.background,
-    colorHover: surface12.backgroundHover,
-    colorPress: surface12.backgroundPress,
-    colorFocus: surface12.backgroundFocus,
-    background: base.color,
-    backgroundHover: base.colorHover,
-    backgroundPress: base.colorPress,
-    backgroundFocus: base.colorFocus,
-    borderColor: base.color - 2,
-    borderColorHover: base.color - 3,
-    borderColorFocus: base.color - 4,
-    borderColorPress: base.color - 5
-  }, inverseActive = {
-    ...inverseSurface12,
-    background: base.color - 2,
-    backgroundHover: base.colorHover - 2,
-    backgroundPress: base.colorPress - 2,
-    backgroundFocus: base.colorFocus - 2,
-    borderColor: base.color - 2 - 2,
-    borderColorHover: base.color - 3 - 2,
-    borderColorFocus: base.color - 4 - 2,
-    borderColorPress: base.color - 5 - 2
-  }, alt1 = {
-    color: base.color - 1,
-    colorHover: base.colorHover - 1,
-    colorPress: base.colorPress - 1,
-    colorFocus: base.colorFocus - 1
-  }, alt2 = {
-    color: base.color - 2,
-    colorHover: base.colorHover - 2,
-    colorPress: base.colorPress - 2,
-    colorFocus: base.colorFocus - 2
-  };
+var getTemplates = /* @__PURE__ */ __name(() => {
+  const getBaseTemplates = /* @__PURE__ */ __name((scheme) => {
+    const isLight = scheme === "light", bgIndex = 5, lighten = isLight ? -1 : 1, darken = -lighten, borderColor = bgIndex + 3, base = {
+      accentBackground: 0,
+      accentColor: -0,
+      background0: 1,
+      background025: 2,
+      background05: 3,
+      background075: 4,
+      color1: bgIndex,
+      color2: bgIndex + 1,
+      color3: bgIndex + 2,
+      color4: bgIndex + 3,
+      color5: bgIndex + 4,
+      color6: bgIndex + 5,
+      color7: bgIndex + 6,
+      color8: bgIndex + 7,
+      color9: bgIndex + 8,
+      color10: bgIndex + 9,
+      color11: bgIndex + 10,
+      color12: bgIndex + 11,
+      color0: -1,
+      color025: -2,
+      color05: -3,
+      color075: -4,
+      // the background, color, etc keys here work like generics - they make it so you
+      // can publish components for others to use without mandating a specific color scale
+      // the @tamagui/button Button component looks for `$background`, so you set the
+      // dark_red_Button theme to have a stronger background than the dark_red theme.
+      background: bgIndex,
+      backgroundHover: bgIndex + lighten,
+      // always lighten on hover no matter the scheme
+      backgroundPress: bgIndex + darken,
+      // always darken on press no matter the theme
+      backgroundFocus: bgIndex + darken,
+      borderColor,
+      borderColorHover: borderColor + lighten,
+      borderColorPress: borderColor + darken,
+      borderColorFocus: borderColor,
+      color: -bgIndex,
+      colorHover: -bgIndex - 1,
+      colorPress: -bgIndex,
+      colorFocus: -bgIndex - 1,
+      colorTransparent: -1,
+      placeholderColor: -bgIndex - 3,
+      outlineColor: -2
+    }, surface12 = {
+      background: base.background + 1,
+      backgroundHover: base.backgroundHover + 1,
+      backgroundPress: base.backgroundPress + 1,
+      backgroundFocus: base.backgroundFocus + 1,
+      borderColor: base.borderColor + 1,
+      borderColorHover: base.borderColorHover + 1,
+      borderColorFocus: base.borderColorFocus + 1,
+      borderColorPress: base.borderColorPress + 1
+    }, surface22 = {
+      background: base.background + 2,
+      backgroundHover: base.backgroundHover + 2,
+      backgroundPress: base.backgroundPress + 2,
+      backgroundFocus: base.backgroundFocus + 2,
+      borderColor: base.borderColor + 2,
+      borderColorHover: base.borderColorHover + 2,
+      borderColorFocus: base.borderColorFocus + 2,
+      borderColorPress: base.borderColorPress + 2
+    }, surface32 = {
+      background: base.background + 3,
+      backgroundHover: base.backgroundHover + 3,
+      backgroundPress: base.backgroundPress + 3,
+      backgroundFocus: base.backgroundFocus + 3,
+      borderColor: base.borderColor + 3,
+      borderColorHover: base.borderColorHover + 3,
+      borderColorFocus: base.borderColorFocus + 3,
+      borderColorPress: base.borderColorPress + 3
+    }, surfaceActiveBg = {
+      background: base.background + 5,
+      backgroundHover: base.background + 5,
+      backgroundPress: base.backgroundPress + 5,
+      backgroundFocus: base.backgroundFocus + 5
+    }, surfaceActive = {
+      ...surfaceActiveBg,
+      // match border to background when active
+      borderColor: surfaceActiveBg.background,
+      borderColorHover: surfaceActiveBg.backgroundHover,
+      borderColorFocus: surfaceActiveBg.backgroundFocus,
+      borderColorPress: surfaceActiveBg.backgroundPress
+    }, inverseSurface12 = {
+      color: surface12.background,
+      colorHover: surface12.backgroundHover,
+      colorPress: surface12.backgroundPress,
+      colorFocus: surface12.backgroundFocus,
+      background: base.color,
+      backgroundHover: base.colorHover,
+      backgroundPress: base.colorPress,
+      backgroundFocus: base.colorFocus,
+      borderColor: base.color - 2,
+      borderColorHover: base.color - 3,
+      borderColorFocus: base.color - 4,
+      borderColorPress: base.color - 5
+    }, inverseActive = {
+      ...inverseSurface12,
+      background: base.color - 2,
+      backgroundHover: base.colorHover - 2,
+      backgroundPress: base.colorPress - 2,
+      backgroundFocus: base.colorFocus - 2,
+      borderColor: base.color - 2 - 2,
+      borderColorHover: base.color - 3 - 2,
+      borderColorFocus: base.color - 4 - 2,
+      borderColorPress: base.color - 5 - 2
+    }, alt1 = {
+      color: base.color - 1,
+      colorHover: base.colorHover - 1,
+      colorPress: base.colorPress - 1,
+      colorFocus: base.colorFocus - 1
+    }, alt2 = {
+      color: base.color - 2,
+      colorHover: base.colorHover - 2,
+      colorPress: base.colorPress - 2,
+      colorFocus: base.colorFocus - 2
+    };
+    return {
+      base,
+      alt1,
+      alt2,
+      surface1: surface12,
+      surface2: surface22,
+      surface3: surface32,
+      inverseSurface1: inverseSurface12,
+      inverseActive,
+      surfaceActive
+    };
+  }, "getBaseTemplates"), lightTemplates = getBaseTemplates("light"), darkTemplates = getBaseTemplates("dark");
   return {
-    base,
-    alt1,
-    alt2,
-    surface1: surface12,
-    surface2: surface22,
-    surface3: surface32,
-    inverseSurface1: inverseSurface12,
-    inverseActive,
-    surfaceActive
+    ...objectFromEntries2(objectKeys(lightTemplates).map((name) => [`light_${name}`, lightTemplates[name]])),
+    ...objectFromEntries2(objectKeys(darkTemplates).map((name) => [`dark_${name}`, darkTemplates[name]]))
   };
 }, "getTemplates");
-var lightTemplates = getTemplates("light");
-var darkTemplates = getTemplates("dark");
-var templates = {
-  ...objectFromEntries2(objectKeys(lightTemplates).map((name) => [`light_${name}`, lightTemplates[name]])),
-  ...objectFromEntries2(objectKeys(darkTemplates).map((name) => [`dark_${name}`, darkTemplates[name]]))
-};
+var defaultTemplates = getTemplates();
 var shadows = {
   light: {
     shadowColor: lightShadowColorStrong,
@@ -28686,7 +28690,63 @@ var surface3 = [{
   parent: "",
   template: "surface3"
 }];
-var themeBuilder = createThemeBuilder().addPalettes(palettes).addTemplates(templates).addThemes({
+var defaultComponentThemes = {
+  ListItem: {
+    template: "surface1"
+  },
+  SelectTrigger: surface1,
+  Card: surface1,
+  Button: surface3,
+  Checkbox: surface2,
+  Switch: surface2,
+  SwitchThumb: inverseSurface1,
+  TooltipContent: surface2,
+  Progress: {
+    template: "surface1"
+  },
+  RadioGroupItem: surface2,
+  TooltipArrow: {
+    template: "surface1"
+  },
+  SliderTrackActive: {
+    template: "surface3"
+  },
+  SliderTrack: {
+    template: "surface1"
+  },
+  SliderThumb: inverseSurface1,
+  Tooltip: inverseSurface1,
+  ProgressIndicator: inverseSurface1,
+  SheetOverlay: overlayThemeDefinitions,
+  DialogOverlay: overlayThemeDefinitions,
+  ModalOverlay: overlayThemeDefinitions,
+  Input: surface1,
+  TextArea: surface1
+};
+var defaultSubThemes = {
+  alt1: {
+    template: "alt1"
+  },
+  alt2: {
+    template: "alt2"
+  },
+  active: {
+    template: "surface3"
+  },
+  surface1: {
+    template: "surface1"
+  },
+  surface2: {
+    template: "surface2"
+  },
+  surface3: {
+    template: "surface3"
+  },
+  surface4: {
+    template: "surfaceActive"
+  }
+};
+var themeBuilder = createThemeBuilder().addPalettes(defaultPalettes).addTemplates(defaultTemplates).addThemes({
   light: {
     template: "base",
     palette: "light",
@@ -28730,61 +28790,7 @@ var themeBuilder = createThemeBuilder().addPalettes(palettes).addTemplates(templ
     palette: "gray",
     template: "base"
   }
-}).addChildThemes({
-  alt1: {
-    template: "alt1"
-  },
-  alt2: {
-    template: "alt2"
-  },
-  active: {
-    template: "surface3"
-  },
-  surface1: {
-    template: "surface1"
-  },
-  surface2: {
-    template: "surface2"
-  },
-  surface3: {
-    template: "surface3"
-  },
-  surface4: {
-    template: "surfaceActive"
-  }
-}).addComponentThemes({
-  ListItem: {
-    template: "surface1"
-  },
-  SelectTrigger: surface1,
-  Card: surface1,
-  Button: surface3,
-  Checkbox: surface2,
-  Switch: surface2,
-  SwitchThumb: inverseSurface1,
-  TooltipContent: surface2,
-  Progress: {
-    template: "surface1"
-  },
-  RadioGroupItem: surface2,
-  TooltipArrow: {
-    template: "surface1"
-  },
-  SliderTrackActive: {
-    template: "surface3"
-  },
-  SliderTrack: {
-    template: "surface1"
-  },
-  SliderThumb: inverseSurface1,
-  Tooltip: inverseSurface1,
-  ProgressIndicator: inverseSurface1,
-  SheetOverlay: overlayThemeDefinitions,
-  DialogOverlay: overlayThemeDefinitions,
-  ModalOverlay: overlayThemeDefinitions,
-  Input: surface1,
-  TextArea: surface1
-}, {
+}).addChildThemes(defaultSubThemes).addComponentThemes(defaultComponentThemes, {
   avoidNestingWithin: ["alt1", "alt2", "surface1", "surface2", "surface3", "surface4"]
 });
 var themesIn = themeBuilder.build();
@@ -29397,6 +29403,7 @@ __export(esm_exports2, {
   Nav: () => Nav,
   Overlay: () => Overlay,
   Paragraph: () => Paragraph,
+  ParentSheetContext: () => ParentSheetContext,
   Popover: () => Popover,
   PopoverAnchor: () => PopoverAnchor,
   PopoverArrow: () => PopoverArrow,
@@ -29441,7 +29448,9 @@ __export(esm_exports2, {
   SheetController: () => SheetController,
   SheetControllerContext: () => SheetControllerContext,
   SheetHandleFrame: () => SheetHandleFrame,
+  SheetInsideSheetContext: () => SheetInsideSheetContext,
   SheetOverlayFrame: () => SheetOverlayFrame,
+  SheetScrollView: () => SheetScrollView,
   SizableStack: () => SizableStack,
   SizableText: () => SizableText,
   Slider: () => Slider,
@@ -29468,7 +29477,7 @@ __export(esm_exports2, {
   SwitchThumb: () => SwitchThumb,
   Tabs: () => Tabs,
   TamaguiProvider: () => TamaguiProvider,
-  Text: () => Text3,
+  Text: () => Text4,
   TextArea: () => TextArea,
   TextAreaFrame: () => TextAreaFrame,
   Theme: () => import_core60.Theme,
@@ -29525,6 +29534,7 @@ __export(esm_exports2, {
   getFontSizeToken: () => getFontSizeToken,
   getFontSizeVariable: () => getFontSizeVariable,
   getMedia: () => import_core60.getMedia,
+  getNativeSheet: () => getNativeSheet,
   getShapeSize: () => getShapeSize,
   getStylesAtomic: () => import_core60.getStylesAtomic,
   getThemes: () => import_core60.getThemes,
@@ -29603,6 +29613,8 @@ __export(esm_exports2, {
   useSelectItemParentContext: () => useSelectItemParentContext,
   useSheet: () => useSheet,
   useSheetController: () => useSheetController,
+  useSheetOffscreenSize: () => useSheetOffscreenSize,
+  useSheetOpenState: () => useSheetOpenState,
   useStyle: () => import_core60.useStyle,
   useTabsContext: () => useTabsContext,
   useTheme: () => import_core60.useTheme,
@@ -29818,6 +29830,8 @@ var stylePropsUnitless = {
   gridColumnEnd: true,
   gridColumnGap: true,
   gridColumnStart: true,
+  gridTemplateColumns: true,
+  gridTemplateAreas: true,
   lineClamp: true,
   opacity: true,
   order: true,
@@ -29961,6 +29975,7 @@ var stylePropsView = {
   caretColor: true,
   clipPath: true,
   contain: true,
+  containerType: true,
   content: true,
   cursor: true,
   filter: true,
@@ -32124,6 +32139,10 @@ var import_jsx_runtime15 = require("react/jsx-runtime");
 var nativeSheets = {
   ios: null
 };
+function getNativeSheet(platform2) {
+  return nativeSheets[platform2];
+}
+__name(getNativeSheet, "getNativeSheet");
 function setupNativeSheet(platform2, Implementation) {
   platform2 === "ios" && (nativeSheets[platform2] = (props) => {
     const state = useSheetOpenState(props), providerProps = useSheetProviderProps(props, state), {
@@ -33384,7 +33403,7 @@ function useButton({
   textProps,
   ...propsIn
 }, {
-  Text: Text4 = Button2.Text
+  Text: Text5 = Button2.Text
 } = {
   Text: Button2.Text
 }) {
@@ -33414,7 +33433,7 @@ function useButton({
   })) * scaleIcon, getThemedIcon = useGetThemedIcon({
     size: iconSize,
     color: color2
-  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = space2 ?? (0, import_web13.getVariableValue)(iconSize) * scaleSpace, contents = noTextWrap ? [propsIn.children] : wrapChildrenInText(Text4, {
+  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = space2 ?? (0, import_web13.getVariableValue)(iconSize) * scaleSpace, contents = noTextWrap ? [propsIn.children] : wrapChildrenInText(Text5, {
     children: propsIn.children,
     fontFamily,
     fontSize,
@@ -33424,15 +33443,18 @@ function useButton({
     letterSpacing,
     ellipse,
     maxFontSizeMultiplier
-  }, Text4 === ButtonText && propsActive.unstyled !== true ? {
+  }, Text5 === ButtonText && propsActive.unstyled !== true ? {
     unstyled: process.env.TAMAGUI_HEADLESS === "1",
     size: size6
   } : void 0), inner2 = (0, import_web13.spacedChildren)({
     // a bit arbitrary but scaling to font size is necessary so long as button does
     space: spaceSize,
     spaceFlex,
+    ensureKeys: true,
     separator,
     direction: propsActive.flexDirection === "column" || propsActive.flexDirection === "column-reverse" ? "vertical" : "horizontal",
+    // for keys to stay the same we keep indices as similar a possible
+    // so even if icons are undefined we still pass them
     children: [themedIcon, ...contents, themedIconAfter]
   }), props = {
     size: size6,
@@ -34114,7 +34136,7 @@ function createGroup(verticalDefault) {
     } = activeProps, vertical = orientation === "vertical", [itemChildrenCount, setItemChildrenCount] = useControllableState({
       defaultProp: forceUseItem ? 1 : 0
     }), isUsingItems = itemChildrenCount > 0, radius2 = borderRadius ?? (size6 ? (0, import_core25.getVariableValue)((0, import_core25.getTokens)().radius[size6]) - 1 : void 0), disablePassBorderRadius = disablePassBorderRadiusProp ?? !(radius2 !== void 0), childrenArray = import_react37.Children.toArray(childrenProp), children = isUsingItems ? import_react37.Children.toArray(childrenProp).filter(import_react37.isValidElement) : childrenArray.map((child, i) => {
-      if (!(0, import_react37.isValidElement)(child)) return child;
+      if (!(0, import_react37.isValidElement)(child) || child.type === import_react37.Fragment) return child;
       const disabled = child.props.disabled ?? disabledProp, isFirst = i === 0, isLast = i === childrenArray.length - 1, radiusStyles = disablePassBorderRadius === true ? null : getBorderRadius({
         isFirst,
         isLast,
@@ -34131,7 +34153,6 @@ function createGroup(verticalDefault) {
     }), indexedChildren = (0, import_reforest.useIndexedChildren)((0, import_core25.spacedChildren)({
       direction: spaceDirection,
       separator,
-      // @ts-ignore
       space: space2,
       children
     })), onItemMount = import_react37.default.useCallback(() => setItemChildrenCount((prev) => prev + 1), []), onItemUnmount = import_react37.default.useCallback(() => setItemChildrenCount((prev) => prev - 1), []);
@@ -34169,13 +34190,13 @@ var GroupItem = (0, import_react37.forwardRef)((props, _ref) => {
   } = props, groupItemProps = useGroupItem({
     disabled: (0, import_react37.isValidElement)(children) ? children.props.disabled : void 0
   }, forcePlacement, __scopeGroup);
-  return (0, import_react37.isValidElement)(children) ? (0, import_core25.isTamaguiElement)(children) ? import_react37.default.cloneElement(children, groupItemProps) : import_react37.default.cloneElement(children, {
+  return !(0, import_react37.isValidElement)(children) || children.type === import_react37.Fragment ? children : (0, import_core25.isTamaguiElement)(children) ? import_react37.default.cloneElement(children, groupItemProps) : import_react37.default.cloneElement(children, {
     style: {
       // @ts-ignore
       ...(_a = children.props) == null ? void 0 : _a.style,
       ...groupItemProps
     }
-  }) : children;
+  });
 });
 var useGroupItem = /* @__PURE__ */ __name((childrenProps, forcePlacement, __scopeGroup) => {
   const treeIndex = (0, import_reforest.useIndex)(), context = useGroupContext("GroupItem", __scopeGroup);
@@ -34379,7 +34400,7 @@ var ListItemTitle = (0, import_web17.styled)(ListItemText, {
   name: "ListItemTitle"
 });
 var useListItem = /* @__PURE__ */ __name((propsIn, {
-  Text: Text4 = ListItemText,
+  Text: Text5 = ListItemText,
   Subtitle = ListItemSubtitle,
   Title = ListItemTitle
 } = {
@@ -34421,7 +34442,7 @@ var useListItem = /* @__PURE__ */ __name((propsIn, {
   }, size6 = props.size || "$true", iconSize = getFontSize(size6) * scaleIcon, getThemedIcon = useGetThemedIcon({
     size: iconSize,
     color: color2
-  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = (0, import_web17.getVariableValue)((0, import_web17.getTokens)().space[props.space] ?? iconSize) * scaleSpace, contents = wrapChildrenInText(Text4, textProps);
+  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = (0, import_web17.getVariableValue)((0, import_web17.getTokens)().space[props.space] ?? iconSize) * scaleSpace, contents = wrapChildrenInText(Text5, textProps);
   return {
     props: {
       ...rest,
@@ -35324,8 +35345,8 @@ function getNodeScroll(element) {
     };
   }
   return {
-    scrollLeft: element.pageXOffset,
-    scrollTop: element.pageYOffset
+    scrollLeft: element.scrollX,
+    scrollTop: element.scrollY
   };
 }
 __name(getNodeScroll, "getNodeScroll");
@@ -36316,9 +36337,9 @@ var PopperAnchor = YStack.extractable(React20.forwardRef(function(props, forward
     getReferenceProps,
     refs
   } = usePopperContext(__scopePopper), ref = React20.useRef(null), composedRefs = useComposedRefs(forwardedRef, ref, refs.setReference);
-  if (React20.useEffect(() => {
+  React20.useEffect(() => {
     virtualRef && refs.setReference(virtualRef.current);
-  }, [virtualRef]), virtualRef) return null;
+  }, [virtualRef]);
   const stackProps = {
     ref: composedRefs,
     ...anchorProps
@@ -38196,8 +38217,17 @@ var PopoverTrigger = React23.forwardRef(function(props, forwardedRef) {
     __scopePopover,
     ...rest
   } = props, context = usePopoverContext(__scopePopover), anchorTo = context.anchorTo, composedTriggerRef = useComposedRefs(forwardedRef, context.triggerRef);
+  if (!props.children) return null;
+  const trigger = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_core29.View, {
+    "aria-haspopup": "dialog",
+    "aria-expanded": context.open,
+    "data-state": getState3(context.open),
+    ...rest,
+    ref: composedTriggerRef,
+    onPress: composeEventHandlers(props.onPress, context.onOpenToggle)
+  });
   if (anchorTo) {
-    let virtualRef = {
+    const virtualRef = {
       current: {
         getBoundingClientRect: /* @__PURE__ */ __name(() => isWeb ? DOMRect.fromRect(anchorTo) : anchorTo, "getBoundingClientRect"),
         ...!isWeb && {
@@ -38208,18 +38238,10 @@ var PopoverTrigger = React23.forwardRef(function(props, forwardedRef) {
     };
     return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PopperAnchor, {
       virtualRef,
-      __scopePopper: __scopePopover || POPOVER_SCOPE
+      __scopePopper: __scopePopover || POPOVER_SCOPE,
+      children: trigger
     });
   }
-  if (!props.children) return null;
-  const trigger = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_core29.View, {
-    "aria-haspopup": "dialog",
-    "aria-expanded": context.open,
-    "data-state": getState3(context.open),
-    ...rest,
-    ref: composedTriggerRef,
-    onPress: composeEventHandlers(props.onPress, context.onOpenToggle)
-  });
   return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PopperAnchor, {
     __scopePopper: __scopePopover || POPOVER_SCOPE,
     asChild: true,
@@ -40994,8 +41016,8 @@ var FloatingOverlay = /* @__PURE__ */ React30.forwardRef(/* @__PURE__ */ __name(
     const scrollbarX = Math.round(document.documentElement.getBoundingClientRect().left) + document.documentElement.scrollLeft;
     const paddingProp = scrollbarX ? "paddingLeft" : "paddingRight";
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    const scrollX = bodyStyle.left ? parseFloat(bodyStyle.left) : window.pageXOffset;
-    const scrollY = bodyStyle.top ? parseFloat(bodyStyle.top) : window.pageYOffset;
+    const scrollX = bodyStyle.left ? parseFloat(bodyStyle.left) : window.scrollX;
+    const scrollY = bodyStyle.top ? parseFloat(bodyStyle.top) : window.scrollY;
     bodyStyle.overflow = "hidden";
     if (scrollbarWidth) {
       bodyStyle[paddingProp] = scrollbarWidth + "px";
@@ -43386,7 +43408,7 @@ var Select = withStaticProperties((props) => {
     selectedIndexRef.current = selectedIndex, activeIndexRef.current = activeIndex;
   });
   const shouldRenderWebNative = isWeb && (native === true || native === "web" || Array.isArray(native) && native.includes("web")), setActiveIndexDebounced = useDebounce((index8) => {
-    setActiveIndex((prev) => prev !== index8 && typeof index8 == "number" && activeIndexRef.current !== index8 ? (emitActiveIndex(index8), index8) : null);
+    setActiveIndex((prev) => prev !== index8 ? (typeof index8 == "number" && emitActiveIndex(index8), index8) : prev);
   }, 1, {}, []);
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(AdaptProvider, {
     children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(SelectItemParentProvider, {
@@ -43618,6 +43640,14 @@ var SliderImpl = React37.forwardRef((props, forwardedRef) => {
 
 // node_modules/@tamagui/slider/dist/esm/Slider.mjs
 var import_jsx_runtime50 = require("react/jsx-runtime");
+var activeSliderMeasureListeners = /* @__PURE__ */ new Set();
+isWeb && isClient && (process.env.TAMAGUI_DISABLE_SLIDER_INTERVAL || (setInterval == null ? void 0 : setInterval(
+  () => {
+    activeSliderMeasureListeners.forEach((cb) => cb());
+  },
+  // really doesn't need to be super often
+  1e3
+)));
 var SliderHorizontal = React38.forwardRef((props, forwardedRef) => {
   const {
     min: min2,
@@ -43646,7 +43676,26 @@ var SliderHorizontal = React38.forwardRef((props, forwardedRef) => {
       });
     });
   }, "measure");
-  return isClient && useOnDebouncedWindowResize(measure), /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SliderOrientationProvider, {
+  return isClient && (useOnDebouncedWindowResize(measure), React38.useEffect(() => {
+    const node = sliderRef.current;
+    if (!node) return;
+    let measureTm;
+    const debouncedMeasure = /* @__PURE__ */ __name(() => {
+      clearTimeout(measureTm), measureTm = setTimeout(() => {
+        measure();
+      }, 200);
+    }, "debouncedMeasure"), io = new IntersectionObserver((entries) => {
+      debouncedMeasure(), (entries == null ? void 0 : entries[0].isIntersecting) ? activeSliderMeasureListeners.add(debouncedMeasure) : activeSliderMeasureListeners.delete(debouncedMeasure);
+    }, {
+      root: null,
+      // Use the viewport as the container.
+      rootMargin: "0px",
+      threshold: [0, 0.5, 1]
+    });
+    return io.observe(node), () => {
+      activeSliderMeasureListeners.delete(debouncedMeasure), io.disconnect();
+    };
+  }, [])), /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SliderOrientationProvider, {
     scope: props.__scopeSlider,
     startEdge: isDirectionLTR ? "left" : "right",
     endEdge: isDirectionLTR ? "right" : "left",
@@ -43858,7 +43907,7 @@ var SliderThumb = React38.memo(SliderThumbFrame.styleable(function(props, forwar
     index: index8,
     size: sizeProp,
     ...thumbProps
-  } = props, context = useSliderContext(THUMB_NAME, __scopeSlider), orientation = useSliderOrientationContext(THUMB_NAME, __scopeSlider), [thumb, setThumb] = React38.useState(null), composedRefs = useComposedRefs(forwardedRef, (node) => setThumb(node)), value = context.values[index8], percent = value === void 0 ? 0 : convertValueToPercentage(value, context.min, context.max), label = getLabel(index8, context.values.length), sizeIn = sizeProp ?? context.size ?? "$true", [size6, setSize] = React38.useState(() => (0, import_core45.getVariableValue)(getThumbSize(sizeIn).width)), thumbInBoundsOffset = size6 ? getThumbInBoundsOffset(size6, percent, orientation.direction) : 0;
+  } = props, context = useSliderContext(THUMB_NAME, __scopeSlider), orientation = useSliderOrientationContext(THUMB_NAME, __scopeSlider), [thumb, setThumb] = React38.useState(null), composedRefs = useComposedRefs(forwardedRef, setThumb), value = context.values[index8], percent = value === void 0 ? 0 : convertValueToPercentage(value, context.min, context.max), label = getLabel(index8, context.values.length), sizeIn = sizeProp ?? context.size ?? "$true", [size6, setSize] = React38.useState(() => (0, import_core45.getVariableValue)(getThumbSize(sizeIn).width)), thumbInBoundsOffset = size6 ? getThumbInBoundsOffset(size6, percent, orientation.direction) : 0;
   React38.useEffect(() => {
     if (thumb) return context.thumbs.set(thumb, index8), () => {
       context.thumbs.delete(thumb);
@@ -46585,6 +46634,7 @@ var TooltipSimple = React47.forwardRef(({
   } catch {
   }
   const child = React47.Children.only(children), contents = /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(Tooltip2, {
+    disableRTL: true,
     offset: 15,
     restMs: 40,
     delay: 40,
@@ -46604,15 +46654,15 @@ var TooltipSimple = React47.forwardRef(({
       zIndex: 1e9,
       enterStyle: {
         x: 0,
-        y: -8,
+        y: -4,
         opacity: 0,
-        scale: 0.93
+        scale: 0.96
       },
       exitStyle: {
         x: 0,
-        y: -8,
+        y: -4,
         opacity: 0,
-        scale: 0.93
+        scale: 0.96
       },
       x: 0,
       scale: 1,
@@ -46673,7 +46723,7 @@ __name(useWindowDimensions, "useWindowDimensions");
 
 // node_modules/@tamagui/visually-hidden/dist/esm/VisuallyHidden.mjs
 var import_web21 = require("@tamagui/core");
-var VisuallyHidden = (0, import_web21.styled)(import_web21.Stack, {
+var VisuallyHidden = (0, import_web21.styled)(import_web21.Text, {
   position: "absolute",
   width: 1,
   height: 1,
@@ -46996,7 +47046,7 @@ var TextArea = TextAreaFrame.styleable((propsIn, forwardedRef) => {
 
 // node_modules/tamagui/dist/esm/views/Text.mjs
 var import_core59 = require("@tamagui/core");
-var Text3 = (0, import_core59.styled)(import_core59.Text, {
+var Text4 = (0, import_core59.styled)(import_core59.Text, {
   variants: {
     unstyled: {
       false: {

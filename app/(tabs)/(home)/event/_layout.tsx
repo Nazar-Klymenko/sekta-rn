@@ -9,21 +9,15 @@ export default function HomeLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="[id]"
         options={{
-          title: "Home",
           animation: "fade_from_bottom",
+          title: "Event",
           headerShown: true,
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
-        }}
-      />
-      <Stack.Screen
-        name="event"
-        options={{
-          headerShown: false, // This hides the header for the nested stack
         }}
       />
     </Stack>

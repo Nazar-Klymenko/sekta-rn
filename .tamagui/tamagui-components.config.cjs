@@ -944,6 +944,8 @@ var require_validStyleProps = __commonJS({
       gridColumnEnd: true,
       gridColumnGap: true,
       gridColumnStart: true,
+      gridTemplateColumns: true,
+      gridTemplateAreas: true,
       lineClamp: true,
       opacity: true,
       order: true,
@@ -1087,6 +1089,7 @@ var require_validStyleProps = __commonJS({
       caretColor: true,
       clipPath: true,
       contain: true,
+      containerType: true,
       content: true,
       cursor: true,
       filter: true,
@@ -18659,7 +18662,7 @@ var require_Text = __commonJS({
       pointerEvents: true
     });
     var pickProps = /* @__PURE__ */ __name((props) => (0, _pick.default)(props, forwardPropsList), "pickProps");
-    var Text4 = /* @__PURE__ */ React49.forwardRef((props, forwardedRef) => {
+    var Text5 = /* @__PURE__ */ React49.forwardRef((props, forwardedRef) => {
       var hrefAttrs = props.hrefAttrs, numberOfLines = props.numberOfLines, onClick = props.onClick, onLayout = props.onLayout, onPress = props.onPress, onMoveShouldSetResponder = props.onMoveShouldSetResponder, onMoveShouldSetResponderCapture = props.onMoveShouldSetResponderCapture, onResponderEnd = props.onResponderEnd, onResponderGrant = props.onResponderGrant, onResponderMove = props.onResponderMove, onResponderReject = props.onResponderReject, onResponderRelease = props.onResponderRelease, onResponderStart = props.onResponderStart, onResponderTerminate = props.onResponderTerminate, onResponderTerminationRequest = props.onResponderTerminationRequest, onScrollShouldSetResponder = props.onScrollShouldSetResponder, onScrollShouldSetResponderCapture = props.onScrollShouldSetResponderCapture, onSelectionChangeShouldSetResponder = props.onSelectionChangeShouldSetResponder, onSelectionChangeShouldSetResponderCapture = props.onSelectionChangeShouldSetResponderCapture, onStartShouldSetResponder = props.onStartShouldSetResponder, onStartShouldSetResponderCapture = props.onStartShouldSetResponderCapture, selectable = props.selectable, rest = (0, _objectWithoutPropertiesLoose2.default)(props, _excluded);
       if (selectable != null) {
         (0, _warnOnce.warnOnce)("selectable", "selectable prop is deprecated. Use styles.userSelect.");
@@ -18734,7 +18737,7 @@ var require_Text = __commonJS({
         value: true
       }, element);
     });
-    Text4.displayName = "Text";
+    Text5.displayName = "Text";
     var textStyle = {
       backgroundColor: "transparent",
       border: "0 solid black",
@@ -18784,7 +18787,7 @@ var require_Text = __commonJS({
         cursor: "pointer"
       }
     });
-    var _default = Text4;
+    var _default = Text5;
     exports2.default = _default;
     module2.exports = exports2.default;
   }
@@ -27701,6 +27704,7 @@ __export(esm_exports2, {
   Nav: () => Nav,
   Overlay: () => Overlay,
   Paragraph: () => Paragraph,
+  ParentSheetContext: () => ParentSheetContext,
   Popover: () => Popover,
   PopoverAnchor: () => PopoverAnchor,
   PopoverArrow: () => PopoverArrow,
@@ -27745,7 +27749,9 @@ __export(esm_exports2, {
   SheetController: () => SheetController,
   SheetControllerContext: () => SheetControllerContext,
   SheetHandleFrame: () => SheetHandleFrame,
+  SheetInsideSheetContext: () => SheetInsideSheetContext,
   SheetOverlayFrame: () => SheetOverlayFrame,
+  SheetScrollView: () => SheetScrollView,
   SizableStack: () => SizableStack,
   SizableText: () => SizableText,
   Slider: () => Slider,
@@ -27772,7 +27778,7 @@ __export(esm_exports2, {
   SwitchThumb: () => SwitchThumb,
   Tabs: () => Tabs,
   TamaguiProvider: () => TamaguiProvider,
-  Text: () => Text3,
+  Text: () => Text4,
   TextArea: () => TextArea,
   TextAreaFrame: () => TextAreaFrame,
   Theme: () => import_core58.Theme,
@@ -27829,6 +27835,7 @@ __export(esm_exports2, {
   getFontSizeToken: () => getFontSizeToken,
   getFontSizeVariable: () => getFontSizeVariable,
   getMedia: () => import_core58.getMedia,
+  getNativeSheet: () => getNativeSheet,
   getShapeSize: () => getShapeSize,
   getStylesAtomic: () => import_core58.getStylesAtomic,
   getThemes: () => import_core58.getThemes,
@@ -27907,6 +27914,8 @@ __export(esm_exports2, {
   useSelectItemParentContext: () => useSelectItemParentContext,
   useSheet: () => useSheet,
   useSheetController: () => useSheetController,
+  useSheetOffscreenSize: () => useSheetOffscreenSize,
+  useSheetOpenState: () => useSheetOpenState,
   useStyle: () => import_core58.useStyle,
   useTabsContext: () => useTabsContext,
   useTheme: () => import_core58.useTheme,
@@ -28137,6 +28146,8 @@ var stylePropsUnitless = {
   gridColumnEnd: true,
   gridColumnGap: true,
   gridColumnStart: true,
+  gridTemplateColumns: true,
+  gridTemplateAreas: true,
   lineClamp: true,
   opacity: true,
   order: true,
@@ -28280,6 +28291,7 @@ var stylePropsView = {
   caretColor: true,
   clipPath: true,
   contain: true,
+  containerType: true,
   content: true,
   cursor: true,
   filter: true,
@@ -30475,6 +30487,10 @@ var import_jsx_runtime15 = require("react/jsx-runtime");
 var nativeSheets = {
   ios: null
 };
+function getNativeSheet(platform2) {
+  return nativeSheets[platform2];
+}
+__name(getNativeSheet, "getNativeSheet");
 function setupNativeSheet(platform2, Implementation) {
   platform2 === "ios" && (nativeSheets[platform2] = (props) => {
     const state = useSheetOpenState(props), providerProps = useSheetProviderProps(props, state), {
@@ -31735,7 +31751,7 @@ function useButton({
   textProps,
   ...propsIn
 }, {
-  Text: Text4 = Button2.Text
+  Text: Text5 = Button2.Text
 } = {
   Text: Button2.Text
 }) {
@@ -31765,7 +31781,7 @@ function useButton({
   })) * scaleIcon, getThemedIcon = useGetThemedIcon({
     size: iconSize,
     color
-  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = space ?? (0, import_web9.getVariableValue)(iconSize) * scaleSpace, contents = noTextWrap ? [propsIn.children] : wrapChildrenInText(Text4, {
+  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = space ?? (0, import_web9.getVariableValue)(iconSize) * scaleSpace, contents = noTextWrap ? [propsIn.children] : wrapChildrenInText(Text5, {
     children: propsIn.children,
     fontFamily,
     fontSize,
@@ -31775,15 +31791,18 @@ function useButton({
     letterSpacing,
     ellipse,
     maxFontSizeMultiplier
-  }, Text4 === ButtonText && propsActive.unstyled !== true ? {
+  }, Text5 === ButtonText && propsActive.unstyled !== true ? {
     unstyled: process.env.TAMAGUI_HEADLESS === "1",
     size: size4
   } : void 0), inner2 = (0, import_web9.spacedChildren)({
     // a bit arbitrary but scaling to font size is necessary so long as button does
     space: spaceSize,
     spaceFlex,
+    ensureKeys: true,
     separator,
     direction: propsActive.flexDirection === "column" || propsActive.flexDirection === "column-reverse" ? "vertical" : "horizontal",
+    // for keys to stay the same we keep indices as similar a possible
+    // so even if icons are undefined we still pass them
     children: [themedIcon, ...contents, themedIconAfter]
   }), props = {
     size: size4,
@@ -32465,7 +32484,7 @@ function createGroup(verticalDefault) {
     } = activeProps, vertical = orientation === "vertical", [itemChildrenCount, setItemChildrenCount] = useControllableState({
       defaultProp: forceUseItem ? 1 : 0
     }), isUsingItems = itemChildrenCount > 0, radius = borderRadius ?? (size4 ? (0, import_core23.getVariableValue)((0, import_core23.getTokens)().radius[size4]) - 1 : void 0), disablePassBorderRadius = disablePassBorderRadiusProp ?? !(radius !== void 0), childrenArray = import_react36.Children.toArray(childrenProp), children = isUsingItems ? import_react36.Children.toArray(childrenProp).filter(import_react36.isValidElement) : childrenArray.map((child, i) => {
-      if (!(0, import_react36.isValidElement)(child)) return child;
+      if (!(0, import_react36.isValidElement)(child) || child.type === import_react36.Fragment) return child;
       const disabled = child.props.disabled ?? disabledProp, isFirst = i === 0, isLast = i === childrenArray.length - 1, radiusStyles = disablePassBorderRadius === true ? null : getBorderRadius({
         isFirst,
         isLast,
@@ -32482,7 +32501,6 @@ function createGroup(verticalDefault) {
     }), indexedChildren = (0, import_reforest.useIndexedChildren)((0, import_core23.spacedChildren)({
       direction: spaceDirection,
       separator,
-      // @ts-ignore
       space,
       children
     })), onItemMount = import_react36.default.useCallback(() => setItemChildrenCount((prev) => prev + 1), []), onItemUnmount = import_react36.default.useCallback(() => setItemChildrenCount((prev) => prev - 1), []);
@@ -32520,13 +32538,13 @@ var GroupItem = (0, import_react36.forwardRef)((props, _ref) => {
   } = props, groupItemProps = useGroupItem({
     disabled: (0, import_react36.isValidElement)(children) ? children.props.disabled : void 0
   }, forcePlacement, __scopeGroup);
-  return (0, import_react36.isValidElement)(children) ? (0, import_core23.isTamaguiElement)(children) ? import_react36.default.cloneElement(children, groupItemProps) : import_react36.default.cloneElement(children, {
+  return !(0, import_react36.isValidElement)(children) || children.type === import_react36.Fragment ? children : (0, import_core23.isTamaguiElement)(children) ? import_react36.default.cloneElement(children, groupItemProps) : import_react36.default.cloneElement(children, {
     style: {
       // @ts-ignore
       ...(_a = children.props) == null ? void 0 : _a.style,
       ...groupItemProps
     }
-  }) : children;
+  });
 });
 var useGroupItem = /* @__PURE__ */ __name((childrenProps, forcePlacement, __scopeGroup) => {
   const treeIndex = (0, import_reforest.useIndex)(), context = useGroupContext("GroupItem", __scopeGroup);
@@ -32742,7 +32760,7 @@ var ListItemTitle = (0, import_web14.styled)(ListItemText, {
   name: "ListItemTitle"
 });
 var useListItem = /* @__PURE__ */ __name((propsIn, {
-  Text: Text4 = ListItemText,
+  Text: Text5 = ListItemText,
   Subtitle = ListItemSubtitle,
   Title = ListItemTitle
 } = {
@@ -32784,7 +32802,7 @@ var useListItem = /* @__PURE__ */ __name((propsIn, {
   }, size4 = props.size || "$true", iconSize = getFontSize(size4) * scaleIcon, getThemedIcon = useGetThemedIcon({
     size: iconSize,
     color
-  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = (0, import_web14.getVariableValue)((0, import_web14.getTokens)().space[props.space] ?? iconSize) * scaleSpace, contents = wrapChildrenInText(Text4, textProps);
+  }), [themedIcon, themedIconAfter] = [icon, iconAfter].map(getThemedIcon), spaceSize = (0, import_web14.getVariableValue)((0, import_web14.getTokens)().space[props.space] ?? iconSize) * scaleSpace, contents = wrapChildrenInText(Text5, textProps);
   return {
     props: {
       ...rest,
@@ -33687,8 +33705,8 @@ function getNodeScroll(element) {
     };
   }
   return {
-    scrollLeft: element.pageXOffset,
-    scrollTop: element.pageYOffset
+    scrollLeft: element.scrollX,
+    scrollTop: element.scrollY
   };
 }
 __name(getNodeScroll, "getNodeScroll");
@@ -34679,9 +34697,9 @@ var PopperAnchor = YStack.extractable(React20.forwardRef(function(props, forward
     getReferenceProps,
     refs
   } = usePopperContext(__scopePopper), ref = React20.useRef(null), composedRefs = useComposedRefs(forwardedRef, ref, refs.setReference);
-  if (React20.useEffect(() => {
+  React20.useEffect(() => {
     virtualRef && refs.setReference(virtualRef.current);
-  }, [virtualRef]), virtualRef) return null;
+  }, [virtualRef]);
   const stackProps = {
     ref: composedRefs,
     ...anchorProps
@@ -36559,8 +36577,17 @@ var PopoverTrigger = React23.forwardRef(function(props, forwardedRef) {
     __scopePopover,
     ...rest
   } = props, context = usePopoverContext(__scopePopover), anchorTo = context.anchorTo, composedTriggerRef = useComposedRefs(forwardedRef, context.triggerRef);
+  if (!props.children) return null;
+  const trigger = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_core27.View, {
+    "aria-haspopup": "dialog",
+    "aria-expanded": context.open,
+    "data-state": getState3(context.open),
+    ...rest,
+    ref: composedTriggerRef,
+    onPress: composeEventHandlers(props.onPress, context.onOpenToggle)
+  });
   if (anchorTo) {
-    let virtualRef = {
+    const virtualRef = {
       current: {
         getBoundingClientRect: /* @__PURE__ */ __name(() => isWeb ? DOMRect.fromRect(anchorTo) : anchorTo, "getBoundingClientRect"),
         ...!isWeb && {
@@ -36571,18 +36598,10 @@ var PopoverTrigger = React23.forwardRef(function(props, forwardedRef) {
     };
     return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PopperAnchor, {
       virtualRef,
-      __scopePopper: __scopePopover || POPOVER_SCOPE
+      __scopePopper: __scopePopover || POPOVER_SCOPE,
+      children: trigger
     });
   }
-  if (!props.children) return null;
-  const trigger = /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_core27.View, {
-    "aria-haspopup": "dialog",
-    "aria-expanded": context.open,
-    "data-state": getState3(context.open),
-    ...rest,
-    ref: composedTriggerRef,
-    onPress: composeEventHandlers(props.onPress, context.onOpenToggle)
-  });
   return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(PopperAnchor, {
     __scopePopper: __scopePopover || POPOVER_SCOPE,
     asChild: true,
@@ -39357,8 +39376,8 @@ var FloatingOverlay = /* @__PURE__ */ React30.forwardRef(/* @__PURE__ */ __name(
     const scrollbarX = Math.round(document.documentElement.getBoundingClientRect().left) + document.documentElement.scrollLeft;
     const paddingProp = scrollbarX ? "paddingLeft" : "paddingRight";
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    const scrollX = bodyStyle.left ? parseFloat(bodyStyle.left) : window.pageXOffset;
-    const scrollY = bodyStyle.top ? parseFloat(bodyStyle.top) : window.pageYOffset;
+    const scrollX = bodyStyle.left ? parseFloat(bodyStyle.left) : window.scrollX;
+    const scrollY = bodyStyle.top ? parseFloat(bodyStyle.top) : window.scrollY;
     bodyStyle.overflow = "hidden";
     if (scrollbarWidth) {
       bodyStyle[paddingProp] = scrollbarWidth + "px";
@@ -41749,7 +41768,7 @@ var Select = withStaticProperties((props) => {
     selectedIndexRef.current = selectedIndex, activeIndexRef.current = activeIndex;
   });
   const shouldRenderWebNative = isWeb && (native === true || native === "web" || Array.isArray(native) && native.includes("web")), setActiveIndexDebounced = useDebounce((index8) => {
-    setActiveIndex((prev) => prev !== index8 && typeof index8 == "number" && activeIndexRef.current !== index8 ? (emitActiveIndex(index8), index8) : null);
+    setActiveIndex((prev) => prev !== index8 ? (typeof index8 == "number" && emitActiveIndex(index8), index8) : prev);
   }, 1, {}, []);
   return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(AdaptProvider, {
     children: /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(SelectItemParentProvider, {
@@ -41981,6 +42000,14 @@ var SliderImpl = React37.forwardRef((props, forwardedRef) => {
 
 // node_modules/@tamagui/slider/dist/esm/Slider.mjs
 var import_jsx_runtime50 = require("react/jsx-runtime");
+var activeSliderMeasureListeners = /* @__PURE__ */ new Set();
+isWeb && isClient && (process.env.TAMAGUI_DISABLE_SLIDER_INTERVAL || (setInterval == null ? void 0 : setInterval(
+  () => {
+    activeSliderMeasureListeners.forEach((cb) => cb());
+  },
+  // really doesn't need to be super often
+  1e3
+)));
 var SliderHorizontal = React38.forwardRef((props, forwardedRef) => {
   const {
     min: min2,
@@ -42009,7 +42036,26 @@ var SliderHorizontal = React38.forwardRef((props, forwardedRef) => {
       });
     });
   }, "measure");
-  return isClient && useOnDebouncedWindowResize(measure), /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SliderOrientationProvider, {
+  return isClient && (useOnDebouncedWindowResize(measure), React38.useEffect(() => {
+    const node = sliderRef.current;
+    if (!node) return;
+    let measureTm;
+    const debouncedMeasure = /* @__PURE__ */ __name(() => {
+      clearTimeout(measureTm), measureTm = setTimeout(() => {
+        measure();
+      }, 200);
+    }, "debouncedMeasure"), io = new IntersectionObserver((entries) => {
+      debouncedMeasure(), (entries == null ? void 0 : entries[0].isIntersecting) ? activeSliderMeasureListeners.add(debouncedMeasure) : activeSliderMeasureListeners.delete(debouncedMeasure);
+    }, {
+      root: null,
+      // Use the viewport as the container.
+      rootMargin: "0px",
+      threshold: [0, 0.5, 1]
+    });
+    return io.observe(node), () => {
+      activeSliderMeasureListeners.delete(debouncedMeasure), io.disconnect();
+    };
+  }, [])), /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SliderOrientationProvider, {
     scope: props.__scopeSlider,
     startEdge: isDirectionLTR ? "left" : "right",
     endEdge: isDirectionLTR ? "right" : "left",
@@ -42221,7 +42267,7 @@ var SliderThumb = React38.memo(SliderThumbFrame.styleable(function(props, forwar
     index: index8,
     size: sizeProp,
     ...thumbProps
-  } = props, context = useSliderContext(THUMB_NAME, __scopeSlider), orientation = useSliderOrientationContext(THUMB_NAME, __scopeSlider), [thumb, setThumb] = React38.useState(null), composedRefs = useComposedRefs(forwardedRef, (node) => setThumb(node)), value = context.values[index8], percent = value === void 0 ? 0 : convertValueToPercentage(value, context.min, context.max), label = getLabel(index8, context.values.length), sizeIn = sizeProp ?? context.size ?? "$true", [size4, setSize] = React38.useState(() => (0, import_core43.getVariableValue)(getThumbSize(sizeIn).width)), thumbInBoundsOffset = size4 ? getThumbInBoundsOffset(size4, percent, orientation.direction) : 0;
+  } = props, context = useSliderContext(THUMB_NAME, __scopeSlider), orientation = useSliderOrientationContext(THUMB_NAME, __scopeSlider), [thumb, setThumb] = React38.useState(null), composedRefs = useComposedRefs(forwardedRef, setThumb), value = context.values[index8], percent = value === void 0 ? 0 : convertValueToPercentage(value, context.min, context.max), label = getLabel(index8, context.values.length), sizeIn = sizeProp ?? context.size ?? "$true", [size4, setSize] = React38.useState(() => (0, import_core43.getVariableValue)(getThumbSize(sizeIn).width)), thumbInBoundsOffset = size4 ? getThumbInBoundsOffset(size4, percent, orientation.direction) : 0;
   React38.useEffect(() => {
     if (thumb) return context.thumbs.set(thumb, index8), () => {
       context.thumbs.delete(thumb);
@@ -44948,6 +44994,7 @@ var TooltipSimple = React47.forwardRef(({
   } catch {
   }
   const child = React47.Children.only(children), contents = /* @__PURE__ */ (0, import_jsx_runtime57.jsxs)(Tooltip2, {
+    disableRTL: true,
     offset: 15,
     restMs: 40,
     delay: 40,
@@ -44967,15 +45014,15 @@ var TooltipSimple = React47.forwardRef(({
       zIndex: 1e9,
       enterStyle: {
         x: 0,
-        y: -8,
+        y: -4,
         opacity: 0,
-        scale: 0.93
+        scale: 0.96
       },
       exitStyle: {
         x: 0,
-        y: -8,
+        y: -4,
         opacity: 0,
-        scale: 0.93
+        scale: 0.96
       },
       x: 0,
       scale: 1,
@@ -45036,7 +45083,7 @@ __name(useWindowDimensions, "useWindowDimensions");
 
 // node_modules/@tamagui/visually-hidden/dist/esm/VisuallyHidden.mjs
 var import_web18 = require("@tamagui/core");
-var VisuallyHidden = (0, import_web18.styled)(import_web18.Stack, {
+var VisuallyHidden = (0, import_web18.styled)(import_web18.Text, {
   position: "absolute",
   width: 1,
   height: 1,
@@ -45359,7 +45406,7 @@ var TextArea = TextAreaFrame.styleable((propsIn, forwardedRef) => {
 
 // node_modules/tamagui/dist/esm/views/Text.mjs
 var import_core57 = require("@tamagui/core");
-var Text3 = (0, import_core57.styled)(import_core57.Text, {
+var Text4 = (0, import_core57.styled)(import_core57.Text, {
   variants: {
     unstyled: {
       false: {
@@ -45465,6 +45512,7 @@ var import_core58 = require("@tamagui/core");
   Nav,
   Overlay,
   Paragraph,
+  ParentSheetContext,
   Popover,
   PopoverAnchor,
   PopoverArrow,
@@ -45509,7 +45557,9 @@ var import_core58 = require("@tamagui/core");
   SheetController,
   SheetControllerContext,
   SheetHandleFrame,
+  SheetInsideSheetContext,
   SheetOverlayFrame,
+  SheetScrollView,
   SizableStack,
   SizableText,
   Slider,
@@ -45593,6 +45643,7 @@ var import_core58 = require("@tamagui/core");
   getFontSizeToken,
   getFontSizeVariable,
   getMedia,
+  getNativeSheet,
   getShapeSize,
   getStylesAtomic,
   getThemes,
@@ -45671,6 +45722,8 @@ var import_core58 = require("@tamagui/core");
   useSelectItemParentContext,
   useSheet,
   useSheetController,
+  useSheetOffscreenSize,
+  useSheetOpenState,
   useStyle,
   useTabsContext,
   useTheme,
