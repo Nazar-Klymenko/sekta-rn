@@ -23,7 +23,7 @@ export default function HomeLayout() {
       <Stack.Screen
         name="event"
         options={{
-          headerShown: false, // This hides the header for the nested stack
+          headerShown: false,
         }}
       />
     </Stack>
