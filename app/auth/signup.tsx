@@ -120,7 +120,7 @@ export default function SignupScreen() {
           )}
 
           <YStack alignItems="center" padding="$4">
-            <Link href="/(auth)/login">
+            <Link href="/auth/login">
               <Text textAlign="center">
                 Already have an account? <Text color="blue">Log in</Text>
               </Text>

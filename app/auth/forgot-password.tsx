@@ -36,7 +36,7 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     sendPasswordResetMutation.mutate(data.email, {
       onSuccess: () => {
-        router.push("/(auth)/forgot-password-success");
+        router.push("/auth/forgot-password-success");
       },
     });
   };
@@ -79,7 +79,7 @@ export default function ForgotPasswordScreen() {
             </Text>
           )}
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/(auth)/login">
+            <Link href="/auth/login">
               <Text color="blue" textAlign="center">
                 Back to login
               </Text>

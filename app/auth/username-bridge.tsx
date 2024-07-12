@@ -31,7 +31,7 @@ const usernameBridgeSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
 export default function UsernameBridgeScreen() {
-  const routerPushSignUp = useRouterPush("/(auth)/signup");
+  const routerPushSignUp = useRouterPush("/auth/signup");
   const methods = useForm<FormValues>({
       resolver: yupResolver(usernameBridgeSchema),
       shouldFocusError: true,
@@ -56,7 +56,7 @@ export default function UsernameBridgeScreen() {
       if (result.data) {
         routerPushSignUp({
           next: "/",
-          prev: "/(auth)/username-bridge",
+          prev: "/auth/username-bridge",
           username: data.username,
         });
       } else {
@@ -90,7 +90,7 @@ export default function UsernameBridgeScreen() {
             disabled={isLoading}
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/(auth)/login">
+            <Link href="/auth/login">
               <Text textAlign="center">
                 Already have an account? <Text>Log in</Text>
               </Text>

@@ -34,8 +34,8 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const routerPushSettings = useRouterPush("/(tabs)/settings");
-  const routerPushLogin = useRouterPush("/(auth)/login");
-  const routerPushUsernameBridge = useRouterPush("/(auth)/username-bridge");
+  const routerPushLogin = useRouterPush("/auth/login");
+  const routerPushUsernameBridge = useRouterPush("/auth/username-bridge");
   const theme = useTheme();
   const { themeColor, toggleTheme } = useThemeContext();
   const isDarkMode = themeColor === "dark";

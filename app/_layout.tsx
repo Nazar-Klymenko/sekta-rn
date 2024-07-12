@@ -40,7 +40,7 @@ function AppContent() {
         <AuthProvider>
           <Stack>
             <Stack.Screen
-              name="(auth)"
+              name="auth"
               options={{
                 headerShown: false,
                 animation: "fade_from_bottom",

@@ -61,7 +61,7 @@ export default function LoginScreen() {
             secureTextEntry
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/(auth)/forgot-password">
+            <Link href="/auth/forgot-password">
               <Text color="$accentColor" textAlign="center">
                 Forgot password?
               </Text>
@@ -78,7 +78,7 @@ export default function LoginScreen() {
           )}
 
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/(auth)/username-bridge">
+            <Link href="/auth/username-bridge">
               <Text textAlign="center">
                 Don't have an account?
                 <Text color="$accentColor"> Sign Up</Text>

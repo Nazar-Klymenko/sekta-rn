@@ -13,7 +13,7 @@ export default function ForgotPasswordSuccessScreen() {
           password
         </Text>
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href="/(auth)/login">
+          <Link href="/auth/login">
             <Text textAlign="center">
               Or go back to
               <Text color="$accentColor"> login</Text>

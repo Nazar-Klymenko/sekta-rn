@@ -21,7 +21,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   useEffect(() => {
     if (isInitialized && !isLoggedIn) {
       router.replace({
-        pathname: "/(auth)/login",
+        pathname: "/auth/login",
         params: {
           next: pathname,
         },
