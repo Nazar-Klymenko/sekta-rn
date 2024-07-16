@@ -6,12 +6,13 @@ import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 
 import { Link } from "expo-router";
 import { useForm } from "react-hook-form";
-import { Text, YStack } from "tamagui";
+import { Text, XStack, YStack } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { HelloWave } from "@/components/HelloWave";
 import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
@@ -72,9 +73,12 @@ export default function UsernameBridgeScreen() {
     <AuthPageGuard>
       <PageContainer>
         <Form methods={methods}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
-            Welcome! 👋
-          </Text>
+          <XStack justifyContent="center">
+            <Text fontSize={24} fontWeight="bold" textAlign="center">
+              Welcome!{"  "}
+            </Text>
+            <HelloWave />
+          </XStack>
           <Input
             id="username"
             name="username"
@@ -92,7 +96,8 @@ export default function UsernameBridgeScreen() {
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/login">
               <Text textAlign="center">
-                Already have an account? <Text>Log in</Text>
+                Already have an account?
+                <Text color="$accentColor"> Log in</Text>
               </Text>
             </Link>
           </YStack>

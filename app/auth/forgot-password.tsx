@@ -80,7 +80,9 @@ export default function ForgotPasswordScreen() {
           )}
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/login">
-              <Text textAlign="center">Back to login</Text>
+              <Text color="$accentColor" textAlign="center">
+                Go back to login
+              </Text>
             </Link>
           </YStack>
         </FormProvider>

@@ -80,7 +80,7 @@ export default function SignupScreen() {
           router.replace("/(app)/(tabs)/(home)");
         },
         onError: () => {
-          alert("error");
+          // alert("error");
         },
       }
     );
@@ -119,14 +119,14 @@ export default function SignupScreen() {
           />
           <YStack>
             <Checkbox
-              name="agreeTos"
-              id="signup-agree-tos"
-              label="I agree to Sekta Selekta's Terms of service and Privacy Policy"
-            />
-            <Checkbox
               name="agreeEmail"
               id="agree-email"
-              label="I want to receive email notifications about new events"
+              label="I want to subscribe to newsletter to receive email notifications about new events"
+            />
+            <Checkbox
+              name="agreeTos"
+              id="signup-agree-tos"
+              label="I agree to Sekta Selekta's Terms of service and Privacy Policy*"
             />
           </YStack>
 
@@ -139,7 +139,8 @@ export default function SignupScreen() {
           <YStack alignItems="center" padding="$4">
             <Link href="/auth/login">
               <Text textAlign="center">
-                Already have an account? <Text color="blue">Log in</Text>
+                Already have an account?
+                <Text color="$accentColor"> Log in</Text>
               </Text>
             </Link>
           </YStack>

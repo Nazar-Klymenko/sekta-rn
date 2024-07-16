@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "generate-themes": "tamagui generate-themes ./theme/theme-builder.ts ./theme/theme-output.ts"
   },
   "jest": {
     "preset": "jest-expo"
@@ -22,6 +23,7 @@
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/babel-plugin": "^1.102.1",
+    "@tamagui/cli": "^1.102.2",
     "@tamagui/config": "^1.102.1",
     "@tamagui/lucide-icons": "^1.102.1",
     "@tamagui/metro-plugin": "^1.102.1",

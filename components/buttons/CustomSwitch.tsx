@@ -43,7 +43,9 @@ const Switch = ({
     <CustomSwitch
       onPress={onPress}
       animation="quick"
-      backgroundColor={checked ? theme.blue10.get() : theme.gray5.get()}
+      backgroundColor={
+        checked ? theme.accentColor.get() : theme.gray5Light.get()
+      }
     >
       <AnimatedThumb checked={checked} />
     </CustomSwitch>

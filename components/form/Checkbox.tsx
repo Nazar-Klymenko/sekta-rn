@@ -45,7 +45,7 @@ export function Checkbox({ name, label, id, ...props }: CustomCheckboxProps) {
         </TamaguiCheckbox>
         <Label htmlFor={id}>{label}</Label>
       </XStack>
-      <Text color={error ? "$red10" : "$colorTransparent"} fontSize="$2">
+      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
         {error ? error?.message : "*"}
       </Text>
     </YStack>

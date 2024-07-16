@@ -3272,15 +3272,15 @@ function __extends(d, b) {
   d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 function __rest(s, e) {
-  var t = {};
+  var t2 = {};
   for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-    t[p] = s[p];
+    t2[p] = s[p];
   if (s != null && typeof Object.getOwnPropertySymbols === "function")
     for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
       if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-        t[p[i]] = s[p[i]];
+        t2[p[i]] = s[p[i]];
     }
-  return t;
+  return t2;
 }
 function __decorate(decorators, target, key, desc) {
   var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3376,9 +3376,9 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 function __generator(thisArg, body) {
   var _ = { label: 0, sent: /* @__PURE__ */ __name(function() {
-    if (t[0] & 1) throw t[1];
-    return t[1];
-  }, "sent"), trys: [], ops: [] }, f, y, t, g;
+    if (t2[0] & 1) throw t2[1];
+    return t2[1];
+  }, "sent"), trys: [], ops: [] }, f, y, t2, g;
   return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
     return this;
   }), g;
@@ -3391,12 +3391,12 @@ function __generator(thisArg, body) {
   function step(op) {
     if (f) throw new TypeError("Generator is already executing.");
     while (g && (g = 0, op[0] && (_ = 0)), _) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
+      if (f = 1, y && (t2 = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t2 = y["return"]) && t2.call(y), 0) : y.next) && !(t2 = t2.call(y, op[1])).done) return t2;
+      if (y = 0, t2) op = [op[0] & 2, t2.value];
       switch (op[0]) {
         case 0:
         case 1:
-          t = op;
+          t2 = op;
           break;
         case 4:
           _.label++;
@@ -3411,25 +3411,25 @@ function __generator(thisArg, body) {
           _.trys.pop();
           continue;
         default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+          if (!(t2 = _.trys, t2 = t2.length > 0 && t2[t2.length - 1]) && (op[0] === 6 || op[0] === 2)) {
             _ = 0;
             continue;
           }
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+          if (op[0] === 3 && (!t2 || op[1] > t2[0] && op[1] < t2[3])) {
             _.label = op[1];
             break;
           }
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
+          if (op[0] === 6 && _.label < t2[1]) {
+            _.label = t2[1];
+            t2 = op;
             break;
           }
-          if (t && _.label < t[2]) {
-            _.label = t[2];
+          if (t2 && _.label < t2[2]) {
+            _.label = t2[2];
             _.ops.push(op);
             break;
           }
-          if (t[2]) _.ops.pop();
+          if (t2[2]) _.ops.pop();
           _.trys.pop();
           continue;
       }
@@ -3438,7 +3438,7 @@ function __generator(thisArg, body) {
       op = [6, e];
       y = 0;
     } finally {
-      f = t = 0;
+      f = t2 = 0;
     }
     if (op[0] & 5) throw op[1];
     return { value: op[0] ? op[1] : void 0, done: true };
@@ -3682,12 +3682,12 @@ var init_tslib_es6 = __esm({
     }, "extendStatics");
     __name(__extends, "__extends");
     __assign = /* @__PURE__ */ __name(function() {
-      __assign = Object.assign || /* @__PURE__ */ __name(function __assign2(t) {
+      __assign = Object.assign || /* @__PURE__ */ __name(function __assign2(t2) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
           s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t2[p] = s[p];
         }
-        return t;
+        return t2;
       }, "__assign");
       return __assign.apply(this, arguments);
     }, "__assign");
@@ -5228,15 +5228,15 @@ var require_typeof = __commonJS({
 var require_toPrimitive = __commonJS({
   "node_modules/@babel/runtime/helpers/toPrimitive.js"(exports2, module2) {
     var _typeof = require_typeof()["default"];
-    function toPrimitive(t, r) {
-      if ("object" != _typeof(t) || !t) return t;
-      var e = t[Symbol.toPrimitive];
+    function toPrimitive(t2, r) {
+      if ("object" != _typeof(t2) || !t2) return t2;
+      var e = t2[Symbol.toPrimitive];
       if (void 0 !== e) {
-        var i = e.call(t, r || "default");
+        var i = e.call(t2, r || "default");
         if ("object" != _typeof(i)) return i;
         throw new TypeError("@@toPrimitive must return a primitive value.");
       }
-      return ("string" === r ? String : Number)(t);
+      return ("string" === r ? String : Number)(t2);
     }
     __name(toPrimitive, "toPrimitive");
     module2.exports = toPrimitive, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
@@ -5248,8 +5248,8 @@ var require_toPropertyKey = __commonJS({
   "node_modules/@babel/runtime/helpers/toPropertyKey.js"(exports2, module2) {
     var _typeof = require_typeof()["default"];
     var toPrimitive = require_toPrimitive();
-    function toPropertyKey(t) {
-      var i = toPrimitive(t, "string");
+    function toPropertyKey(t2) {
+      var i = toPrimitive(t2, "string");
       return "symbol" == _typeof(i) ? i : i + "";
     }
     __name(toPropertyKey, "toPropertyKey");
@@ -5261,13 +5261,13 @@ var require_toPropertyKey = __commonJS({
 var require_defineProperty = __commonJS({
   "node_modules/@babel/runtime/helpers/defineProperty.js"(exports2, module2) {
     var toPropertyKey = require_toPropertyKey();
-    function _defineProperty(e, r, t) {
+    function _defineProperty(e, r, t2) {
       return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-        value: t,
+        value: t2,
         enumerable: true,
         configurable: true,
         writable: true
-      }) : e[r] = t, e;
+      }) : e[r] = t2, e;
     }
     __name(_defineProperty, "_defineProperty");
     module2.exports = _defineProperty, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
@@ -5279,23 +5279,23 @@ var require_objectSpread2 = __commonJS({
   "node_modules/@babel/runtime/helpers/objectSpread2.js"(exports2, module2) {
     var defineProperty = require_defineProperty();
     function ownKeys(e, r) {
-      var t = Object.keys(e);
+      var t2 = Object.keys(e);
       if (Object.getOwnPropertySymbols) {
         var o = Object.getOwnPropertySymbols(e);
         r && (o = o.filter(function(r2) {
           return Object.getOwnPropertyDescriptor(e, r2).enumerable;
-        })), t.push.apply(t, o);
+        })), t2.push.apply(t2, o);
       }
-      return t;
+      return t2;
     }
     __name(ownKeys, "ownKeys");
     function _objectSpread2(e) {
       for (var r = 1; r < arguments.length; r++) {
-        var t = null != arguments[r] ? arguments[r] : {};
-        r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
-          defineProperty(e, r2, t[r2]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
-          Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+        var t2 = null != arguments[r] ? arguments[r] : {};
+        r % 2 ? ownKeys(Object(t2), true).forEach(function(r2) {
+          defineProperty(e, r2, t2[r2]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t2)) : ownKeys(Object(t2)).forEach(function(r2) {
+          Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t2, r2));
         });
       }
       return e;
@@ -5310,12 +5310,12 @@ var require_objectWithoutPropertiesLoose = __commonJS({
   "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"(exports2, module2) {
     function _objectWithoutPropertiesLoose(r, e) {
       if (null == r) return {};
-      var t = {};
+      var t2 = {};
       for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
         if (e.indexOf(n) >= 0) continue;
-        t[n] = r[n];
+        t2[n] = r[n];
       }
-      return t;
+      return t2;
     }
     __name(_objectWithoutPropertiesLoose, "_objectWithoutPropertiesLoose");
     module2.exports = _objectWithoutPropertiesLoose, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
@@ -5520,21 +5520,21 @@ var require_normalize_colors = __commonJS({
       return null;
     }
     __name(normalizeColor, "normalizeColor");
-    function hue2rgb(p, q, t) {
-      if (t < 0) {
-        t += 1;
+    function hue2rgb(p, q, t2) {
+      if (t2 < 0) {
+        t2 += 1;
       }
-      if (t > 1) {
-        t -= 1;
+      if (t2 > 1) {
+        t2 -= 1;
       }
-      if (t < 1 / 6) {
-        return p + (q - p) * 6 * t;
+      if (t2 < 1 / 6) {
+        return p + (q - p) * 6 * t2;
       }
-      if (t < 1 / 2) {
+      if (t2 < 1 / 2) {
         return q;
       }
-      if (t < 2 / 3) {
-        return p + (q - p) * (2 / 3 - t) * 6;
+      if (t2 < 2 / 3) {
+        return p + (q - p) * (2 / 3 - t2) * 6;
       }
       return p;
     }
@@ -9383,9 +9383,9 @@ var require_interopRequireWildcard = __commonJS({
     var _typeof = require_typeof()["default"];
     function _getRequireWildcardCache(e) {
       if ("function" != typeof WeakMap) return null;
-      var r = /* @__PURE__ */ new WeakMap(), t = /* @__PURE__ */ new WeakMap();
+      var r = /* @__PURE__ */ new WeakMap(), t2 = /* @__PURE__ */ new WeakMap();
       return (_getRequireWildcardCache = /* @__PURE__ */ __name(function _getRequireWildcardCache2(e2) {
-        return e2 ? t : r;
+        return e2 ? t2 : r;
       }, "_getRequireWildcardCache"))(e);
     }
     __name(_getRequireWildcardCache, "_getRequireWildcardCache");
@@ -9394,8 +9394,8 @@ var require_interopRequireWildcard = __commonJS({
       if (null === e || "object" != _typeof(e) && "function" != typeof e) return {
         "default": e
       };
-      var t = _getRequireWildcardCache(r);
-      if (t && t.has(e)) return t.get(e);
+      var t2 = _getRequireWildcardCache(r);
+      if (t2 && t2.has(e)) return t2.get(e);
       var n = {
         __proto__: null
       }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
@@ -9403,7 +9403,7 @@ var require_interopRequireWildcard = __commonJS({
         var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
         i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
       }
-      return n["default"] = e, t && t.set(e, n), n;
+      return n["default"] = e, t2 && t2.set(e, n), n;
     }
     __name(_interopRequireWildcard, "_interopRequireWildcard");
     module2.exports = _interopRequireWildcard, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
@@ -10070,8 +10070,8 @@ var require_extends = __commonJS({
     function _extends2() {
       return module2.exports = _extends2 = Object.assign ? Object.assign.bind() : function(n) {
         for (var e = 1; e < arguments.length; e++) {
-          var t = arguments[e];
-          for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+          var t2 = arguments[e];
+          for (var r in t2) ({}).hasOwnProperty.call(t2, r) && (n[r] = t2[r]);
         }
         return n;
       }, module2.exports.__esModule = true, module2.exports["default"] = module2.exports, _extends2.apply(null, arguments);
@@ -11665,8 +11665,8 @@ var require_unsupportedIterableToArray = __commonJS({
     function _unsupportedIterableToArray(r, a) {
       if (r) {
         if ("string" == typeof r) return arrayLikeToArray(r, a);
-        var t = {}.toString.call(r).slice(8, -1);
-        return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? arrayLikeToArray(r, a) : void 0;
+        var t2 = {}.toString.call(r).slice(8, -1);
+        return "Object" === t2 && r.constructor && (t2 = r.constructor.name), "Map" === t2 || "Set" === t2 ? Array.from(r) : "Arguments" === t2 || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t2) ? arrayLikeToArray(r, a) : void 0;
       }
     }
     __name(_unsupportedIterableToArray, "_unsupportedIterableToArray");
@@ -11679,10 +11679,10 @@ var require_createForOfIteratorHelperLoose = __commonJS({
   "node_modules/@babel/runtime/helpers/createForOfIteratorHelperLoose.js"(exports2, module2) {
     var unsupportedIterableToArray = require_unsupportedIterableToArray();
     function _createForOfIteratorHelperLoose(r, e) {
-      var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-      if (t) return (t = t.call(r)).next.bind(t);
-      if (Array.isArray(r) || (t = unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
-        t && (r = t);
+      var t2 = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+      if (t2) return (t2 = t2.call(r)).next.bind(t2);
+      if (Array.isArray(r) || (t2 = unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {
+        t2 && (r = t2);
         var o = 0;
         return function() {
           return o >= r.length ? {
@@ -14207,8 +14207,8 @@ var require_VirtualizedList = __commonJS({
         this._nestedChildLists.forEach((childList) => {
           childList.recordInteraction();
         });
-        this._viewabilityTuples.forEach((t) => {
-          t.viewabilityHelper.recordInteraction();
+        this._viewabilityTuples.forEach((t2) => {
+          t2.viewabilityHelper.recordInteraction();
         });
         this._updateViewableItems(this.props, this.state.cellsAroundViewport);
       }
@@ -16418,7 +16418,7 @@ var require_AnimatedInterpolation = __commonJS({
     var _invariant = _interopRequireDefault(require_invariant());
     var _normalizeColors = _interopRequireDefault(require_normalize_colors());
     var __DEV__ = process.env.NODE_ENV !== "production";
-    var linear = /* @__PURE__ */ __name((t) => t, "linear");
+    var linear = /* @__PURE__ */ __name((t2) => t2, "linear");
     function createInterpolation(config2) {
       if (config2.outputRange && typeof config2.outputRange[0] === "string") {
         return createInterpolationFromStringOutputRange(config2);
@@ -19547,12 +19547,12 @@ var require_SpringConfig = __commonJS({
         return start + n * (end - start);
       }
       __name(projectNormal, "projectNormal");
-      function linearInterpolation(t, start, end) {
-        return t * end + (1 - t) * start;
+      function linearInterpolation(t2, start, end) {
+        return t2 * end + (1 - t2) * start;
       }
       __name(linearInterpolation, "linearInterpolation");
-      function quadraticOutInterpolation(t, start, end) {
-        return linearInterpolation(2 * t - t * t, start, end);
+      function quadraticOutInterpolation(t2, start, end) {
+        return linearInterpolation(2 * t2 - t2 * t2, start, end);
       }
       __name(quadraticOutInterpolation, "quadraticOutInterpolation");
       function b3Friction1(x) {
@@ -20012,15 +20012,15 @@ var require_SpringAnimation = __commonJS({
         var x0 = this._toValue - this._startPosition;
         var position = 0;
         var velocity = 0;
-        var t = this._frameTime;
+        var t2 = this._frameTime;
         if (zeta < 1) {
-          var envelope = Math.exp(-zeta * omega0 * t);
-          position = this._toValue - envelope * ((v0 + zeta * omega0 * x0) / omega1 * Math.sin(omega1 * t) + x0 * Math.cos(omega1 * t));
-          velocity = zeta * omega0 * envelope * (Math.sin(omega1 * t) * (v0 + zeta * omega0 * x0) / omega1 + x0 * Math.cos(omega1 * t)) - envelope * (Math.cos(omega1 * t) * (v0 + zeta * omega0 * x0) - omega1 * x0 * Math.sin(omega1 * t));
+          var envelope = Math.exp(-zeta * omega0 * t2);
+          position = this._toValue - envelope * ((v0 + zeta * omega0 * x0) / omega1 * Math.sin(omega1 * t2) + x0 * Math.cos(omega1 * t2));
+          velocity = zeta * omega0 * envelope * (Math.sin(omega1 * t2) * (v0 + zeta * omega0 * x0) / omega1 + x0 * Math.cos(omega1 * t2)) - envelope * (Math.cos(omega1 * t2) * (v0 + zeta * omega0 * x0) - omega1 * x0 * Math.sin(omega1 * t2));
         } else {
-          var _envelope = Math.exp(-omega0 * t);
-          position = this._toValue - _envelope * (x0 + (v0 + omega0 * x0) * t);
-          velocity = _envelope * (v0 * (t * omega0 - 1) + t * x0 * (omega0 * omega0));
+          var _envelope = Math.exp(-omega0 * t2);
+          position = this._toValue - _envelope * (x0 + (v0 + omega0 * x0) * t2);
+          velocity = _envelope * (v0 * (t2 * omega0 - 1) + t2 * x0 * (omega0 * omega0));
         }
         this._lastTime = now;
         this._lastPosition = position;
@@ -20209,8 +20209,8 @@ var require_Easing = __commonJS({
        *
        * http://cubic-bezier.com/#0,0,1,1
        */
-      static linear(t) {
-        return t;
+      static linear(t2) {
+        return t2;
       }
       /**
        * A simple inertial interaction, similar to an object slowly accelerating to
@@ -20218,11 +20218,11 @@ var require_Easing = __commonJS({
        *
        * http://cubic-bezier.com/#.42,0,1,1
        */
-      static ease(t) {
+      static ease(t2) {
         if (!ease) {
           ease = _Easing.bezier(0.42, 0, 1, 1);
         }
-        return ease(t);
+        return ease(t2);
       }
       /**
        * A quadratic function, `f(t) = t * t`. Position equals the square of elapsed
@@ -20230,8 +20230,8 @@ var require_Easing = __commonJS({
        *
        * http://easings.net/#easeInQuad
        */
-      static quad(t) {
-        return t * t;
+      static quad(t2) {
+        return t2 * t2;
       }
       /**
        * A cubic function, `f(t) = t * t * t`. Position equals the cube of elapsed
@@ -20239,8 +20239,8 @@ var require_Easing = __commonJS({
        *
        * http://easings.net/#easeInCubic
        */
-      static cubic(t) {
-        return t * t * t;
+      static cubic(t2) {
+        return t2 * t2 * t2;
       }
       /**
        * A power function. Position is equal to the Nth power of elapsed time.
@@ -20249,31 +20249,31 @@ var require_Easing = __commonJS({
        * n = 5: http://easings.net/#easeInQuint
        */
       static poly(n) {
-        return (t) => Math.pow(t, n);
+        return (t2) => Math.pow(t2, n);
       }
       /**
        * A sinusoidal function.
        *
        * http://easings.net/#easeInSine
        */
-      static sin(t) {
-        return 1 - Math.cos(t * Math.PI / 2);
+      static sin(t2) {
+        return 1 - Math.cos(t2 * Math.PI / 2);
       }
       /**
        * A circular function.
        *
        * http://easings.net/#easeInCirc
        */
-      static circle(t) {
-        return 1 - Math.sqrt(1 - t * t);
+      static circle(t2) {
+        return 1 - Math.sqrt(1 - t2 * t2);
       }
       /**
        * An exponential function.
        *
        * http://easings.net/#easeInExpo
        */
-      static exp(t) {
-        return Math.pow(2, 10 * (t - 1));
+      static exp(t2) {
+        return Math.pow(2, 10 * (t2 - 1));
       }
       /**
        * A simple elastic interaction, similar to a spring oscillating back and
@@ -20290,7 +20290,7 @@ var require_Easing = __commonJS({
           bounciness = 1;
         }
         var p = bounciness * Math.PI;
-        return (t) => 1 - Math.pow(Math.cos(t * Math.PI / 2), 3) * Math.cos(t * p);
+        return (t2) => 1 - Math.pow(Math.cos(t2 * Math.PI / 2), 3) * Math.cos(t2 * p);
       }
       /**
        * Use with `Animated.parallel()` to create a simple effect where the object
@@ -20304,27 +20304,27 @@ var require_Easing = __commonJS({
         if (s === void 0) {
           s = 1.70158;
         }
-        return (t) => t * t * ((s + 1) * t - s);
+        return (t2) => t2 * t2 * ((s + 1) * t2 - s);
       }
       /**
        * Provides a simple bouncing effect.
        *
        * http://easings.net/#easeInBounce
        */
-      static bounce(t) {
-        if (t < 1 / 2.75) {
-          return 7.5625 * t * t;
+      static bounce(t2) {
+        if (t2 < 1 / 2.75) {
+          return 7.5625 * t2 * t2;
         }
-        if (t < 2 / 2.75) {
-          var _t = t - 1.5 / 2.75;
+        if (t2 < 2 / 2.75) {
+          var _t = t2 - 1.5 / 2.75;
           return 7.5625 * _t * _t + 0.75;
         }
-        if (t < 2.5 / 2.75) {
-          var _t2 = t - 2.25 / 2.75;
+        if (t2 < 2.5 / 2.75) {
+          var _t2 = t2 - 2.25 / 2.75;
           return 7.5625 * _t2 * _t2 + 0.9375;
         }
-        var t2 = t - 2.625 / 2.75;
-        return 7.5625 * t2 * t2 + 0.984375;
+        var t22 = t2 - 2.625 / 2.75;
+        return 7.5625 * t22 * t22 + 0.984375;
       }
       /**
        * Provides a cubic bezier curve, equivalent to CSS Transitions'
@@ -20346,7 +20346,7 @@ var require_Easing = __commonJS({
        * Runs an easing function backwards.
        */
       static out(easing) {
-        return (t) => 1 - easing(1 - t);
+        return (t2) => 1 - easing(1 - t2);
       }
       /**
        * Makes any easing function symmetrical. The easing function will run
@@ -20354,11 +20354,11 @@ var require_Easing = __commonJS({
        * duration.
        */
       static inOut(easing) {
-        return (t) => {
-          if (t < 0.5) {
-            return easing(t * 2) / 2;
+        return (t2) => {
+          if (t2 < 0.5) {
+            return easing(t2 * 2) / 2;
           }
-          return 1 - easing((1 - t) * 2) / 2;
+          return 1 - easing((1 - t2) * 2) / 2;
         };
       }
     };
@@ -25483,8 +25483,8 @@ var require_Touchable = __commonJS({
         }
         _UIManager.default.measure(tag, this._handleQueryLayout);
       }, "_remeasureMetricsOnActivation"),
-      _handleQueryLayout: /* @__PURE__ */ __name(function _handleQueryLayout(l, t, w, h, globalX, globalY) {
-        if (!l && !t && !w && !h && !globalX && !globalY) {
+      _handleQueryLayout: /* @__PURE__ */ __name(function _handleQueryLayout(l, t2, w, h, globalX, globalY) {
+        if (!l && !t2 && !w && !h && !globalX && !globalY) {
           return;
         }
         this.state.touchable.positionOnActivate && _Position.default.release(this.state.touchable.positionOnActivate);
@@ -26200,30 +26200,30 @@ var require_arrayToTree_min = __commonJS({
     "use strict";
     var __assign2 = exports2 && exports2.__assign || function() {
       return (__assign2 = Object.assign || function(e) {
-        for (var r, t = 1, n = arguments.length; t < n; t++) for (var o in r = arguments[t]) Object.prototype.hasOwnProperty.call(r, o) && (e[o] = r[o]);
+        for (var r, t2 = 1, n = arguments.length; t2 < n; t2++) for (var o in r = arguments[t2]) Object.prototype.hasOwnProperty.call(r, o) && (e[o] = r[o]);
         return e;
       }).apply(this, arguments);
     };
     var defaultConfig = (Object.defineProperty(exports2, "__esModule", { value: true }), { id: "id", parentId: "parentId", dataField: "data", childrenField: "children", throwIfOrphans: false, rootParentIds: { "": !(exports2.countNodes = exports2.arrayToTree = void 0) }, nestedIds: true, assign: false });
     function arrayToTree(c, e) {
       void 0 === e && (e = {});
-      for (var r, t = __assign2(__assign2({}, defaultConfig), e), n = [], o = {}, a = t.throwIfOrphans ? /* @__PURE__ */ new Set() : null, s = 0, h = c; s < h.length; s++) {
-        var i = h[s], d = t.nestedIds ? getNestedProperty(i, t.id) : i[t.id], l = t.nestedIds ? getNestedProperty(i, t.parentId) : i[t.parentId];
-        if (t.rootParentIds[d]) throw new Error("The item array contains a node whose parentId both exists in another node and is in " + '`rootParentIds` (`itemId`: "'.concat(d, '", `rootParentIds`: ').concat(Object.keys(t.rootParentIds).map(function(e2) {
+      for (var r, t2 = __assign2(__assign2({}, defaultConfig), e), n = [], o = {}, a = t2.throwIfOrphans ? /* @__PURE__ */ new Set() : null, s = 0, h = c; s < h.length; s++) {
+        var i = h[s], d = t2.nestedIds ? getNestedProperty(i, t2.id) : i[t2.id], l = t2.nestedIds ? getNestedProperty(i, t2.parentId) : i[t2.parentId];
+        if (t2.rootParentIds[d]) throw new Error("The item array contains a node whose parentId both exists in another node and is in " + '`rootParentIds` (`itemId`: "'.concat(d, '", `rootParentIds`: ').concat(Object.keys(t2.rootParentIds).map(function(e2) {
           return '"'.concat(e2, '"');
         }).join(", "), ")."));
-        Object.prototype.hasOwnProperty.call(o, d) || (o[d] = ((r = {})[t.childrenField] = [], r)), a && a.delete(d), t.dataField ? o[d][t.dataField] = i : t.assign ? o[d] = Object.assign(i, ((r = {})[t.childrenField] = o[d][t.childrenField], r)) : o[d] = __assign2(__assign2({}, i), ((i = {})[t.childrenField] = o[d][t.childrenField], i));
+        Object.prototype.hasOwnProperty.call(o, d) || (o[d] = ((r = {})[t2.childrenField] = [], r)), a && a.delete(d), t2.dataField ? o[d][t2.dataField] = i : t2.assign ? o[d] = Object.assign(i, ((r = {})[t2.childrenField] = o[d][t2.childrenField], r)) : o[d] = __assign2(__assign2({}, i), ((i = {})[t2.childrenField] = o[d][t2.childrenField], i));
         i = o[d];
-        null == l || t.rootParentIds[l] ? n.push(i) : (Object.prototype.hasOwnProperty.call(o, l) || (o[l] = ((d = {})[t.childrenField] = [], d), a && a.add(l)), o[l][t.childrenField].push(i));
+        null == l || t2.rootParentIds[l] ? n.push(i) : (Object.prototype.hasOwnProperty.call(o, l) || (o[l] = ((d = {})[t2.childrenField] = [], d), a && a.add(l)), o[l][t2.childrenField].push(i));
       }
       if (null != a && a.size) throw new Error("The items array contains orphans that point to the following parentIds: " + "[".concat(Array.from(a), "]. These parentIds do not exist in the items array. Hint: prevent orphans to result ") + "in an error by passing the following option: { throwIfOrphans: false }");
-      if (t.throwIfOrphans && countNodes(n, t.childrenField) < Object.keys(o).length) throw new Error("The items array contains nodes with a circular parent/child relationship.");
+      if (t2.throwIfOrphans && countNodes(n, t2.childrenField) < Object.keys(o).length) throw new Error("The items array contains nodes with a circular parent/child relationship.");
       return n;
     }
     __name(arrayToTree, "arrayToTree");
-    function countNodes(e, t) {
+    function countNodes(e, t2) {
       return e.reduce(function(e2, r) {
-        return e2 + 1 + (r[t] && countNodes(r[t], t));
+        return e2 + 1 + (r[t2] && countNodes(r[t2], t2));
       }, 0);
     }
     __name(countNodes, "countNodes");
@@ -26317,11 +26317,11 @@ var require_use_sync_external_store_shim_production_min = __commonJS({
       }
     }
     __name(r, "r");
-    function t(a, b) {
+    function t2(a, b) {
       return b();
     }
-    __name(t, "t");
-    var u = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? t : q;
+    __name(t2, "t");
+    var u = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? t2 : q;
     exports2.useSyncExternalStore = void 0 !== e.useSyncExternalStore ? e.useSyncExternalStore : u;
   }
 });
@@ -26478,12 +26478,12 @@ var require_with_selector_production_min = __commonJS({
     __name(p, "p");
     var q = "function" === typeof Object.is ? Object.is : p;
     var r = n.useSyncExternalStore;
-    var t = h.useRef;
+    var t2 = h.useRef;
     var u = h.useEffect;
     var v = h.useMemo;
     var w = h.useDebugValue;
     exports2.useSyncExternalStoreWithSelector = function(a, b, e, l, g) {
-      var c = t(null);
+      var c = t2(null);
       if (null === c.current) {
         var f = { hasValue: false, value: null };
         c.current = f;
@@ -47062,9 +47062,411 @@ var Text4 = (0, import_core59.styled)(import_core59.Text, {
 // node_modules/tamagui/dist/esm/index.mjs
 var import_core60 = require("@tamagui/core");
 
+// theme/theme-output.ts
+var theme_output_exports = {};
+__export(theme_output_exports, {
+  dark: () => dark,
+  dark_Button: () => dark_Button,
+  dark_Card: () => dark_Card,
+  dark_Checkbox: () => dark_Checkbox,
+  dark_DialogOverlay: () => dark_DialogOverlay,
+  dark_Input: () => dark_Input,
+  dark_ListItem: () => dark_ListItem,
+  dark_ModalOverlay: () => dark_ModalOverlay,
+  dark_Progress: () => dark_Progress,
+  dark_ProgressIndicator: () => dark_ProgressIndicator,
+  dark_RadioGroupItem: () => dark_RadioGroupItem,
+  dark_SelectTrigger: () => dark_SelectTrigger,
+  dark_SheetOverlay: () => dark_SheetOverlay,
+  dark_SliderThumb: () => dark_SliderThumb,
+  dark_SliderTrack: () => dark_SliderTrack,
+  dark_SliderTrackActive: () => dark_SliderTrackActive,
+  dark_Switch: () => dark_Switch,
+  dark_SwitchThumb: () => dark_SwitchThumb,
+  dark_TextArea: () => dark_TextArea,
+  dark_Tooltip: () => dark_Tooltip,
+  dark_TooltipArrow: () => dark_TooltipArrow,
+  dark_TooltipContent: () => dark_TooltipContent,
+  dark_accent: () => dark_accent,
+  dark_accent_Button: () => dark_accent_Button,
+  dark_accent_Card: () => dark_accent_Card,
+  dark_accent_Checkbox: () => dark_accent_Checkbox,
+  dark_accent_DialogOverlay: () => dark_accent_DialogOverlay,
+  dark_accent_Input: () => dark_accent_Input,
+  dark_accent_ListItem: () => dark_accent_ListItem,
+  dark_accent_ModalOverlay: () => dark_accent_ModalOverlay,
+  dark_accent_Progress: () => dark_accent_Progress,
+  dark_accent_ProgressIndicator: () => dark_accent_ProgressIndicator,
+  dark_accent_RadioGroupItem: () => dark_accent_RadioGroupItem,
+  dark_accent_SelectTrigger: () => dark_accent_SelectTrigger,
+  dark_accent_SheetOverlay: () => dark_accent_SheetOverlay,
+  dark_accent_SliderThumb: () => dark_accent_SliderThumb,
+  dark_accent_SliderTrack: () => dark_accent_SliderTrack,
+  dark_accent_SliderTrackActive: () => dark_accent_SliderTrackActive,
+  dark_accent_Switch: () => dark_accent_Switch,
+  dark_accent_SwitchThumb: () => dark_accent_SwitchThumb,
+  dark_accent_TextArea: () => dark_accent_TextArea,
+  dark_accent_Tooltip: () => dark_accent_Tooltip,
+  dark_accent_TooltipArrow: () => dark_accent_TooltipArrow,
+  dark_accent_TooltipContent: () => dark_accent_TooltipContent,
+  dark_accent_active: () => dark_accent_active,
+  dark_accent_alt1: () => dark_accent_alt1,
+  dark_accent_alt2: () => dark_accent_alt2,
+  dark_accent_surface1: () => dark_accent_surface1,
+  dark_accent_surface2: () => dark_accent_surface2,
+  dark_accent_surface3: () => dark_accent_surface3,
+  dark_accent_surface4: () => dark_accent_surface4,
+  dark_active: () => dark_active,
+  dark_alt1: () => dark_alt1,
+  dark_alt2: () => dark_alt2,
+  dark_surface1: () => dark_surface1,
+  dark_surface2: () => dark_surface2,
+  dark_surface3: () => dark_surface3,
+  dark_surface4: () => dark_surface4,
+  light: () => light,
+  light_Button: () => light_Button,
+  light_Card: () => light_Card,
+  light_Checkbox: () => light_Checkbox,
+  light_DialogOverlay: () => light_DialogOverlay,
+  light_Input: () => light_Input,
+  light_ListItem: () => light_ListItem,
+  light_ModalOverlay: () => light_ModalOverlay,
+  light_Progress: () => light_Progress,
+  light_ProgressIndicator: () => light_ProgressIndicator,
+  light_RadioGroupItem: () => light_RadioGroupItem,
+  light_SelectTrigger: () => light_SelectTrigger,
+  light_SheetOverlay: () => light_SheetOverlay,
+  light_SliderThumb: () => light_SliderThumb,
+  light_SliderTrack: () => light_SliderTrack,
+  light_SliderTrackActive: () => light_SliderTrackActive,
+  light_Switch: () => light_Switch,
+  light_SwitchThumb: () => light_SwitchThumb,
+  light_TextArea: () => light_TextArea,
+  light_Tooltip: () => light_Tooltip,
+  light_TooltipArrow: () => light_TooltipArrow,
+  light_TooltipContent: () => light_TooltipContent,
+  light_accent: () => light_accent,
+  light_accent_Button: () => light_accent_Button,
+  light_accent_Card: () => light_accent_Card,
+  light_accent_Checkbox: () => light_accent_Checkbox,
+  light_accent_DialogOverlay: () => light_accent_DialogOverlay,
+  light_accent_Input: () => light_accent_Input,
+  light_accent_ListItem: () => light_accent_ListItem,
+  light_accent_ModalOverlay: () => light_accent_ModalOverlay,
+  light_accent_Progress: () => light_accent_Progress,
+  light_accent_ProgressIndicator: () => light_accent_ProgressIndicator,
+  light_accent_RadioGroupItem: () => light_accent_RadioGroupItem,
+  light_accent_SelectTrigger: () => light_accent_SelectTrigger,
+  light_accent_SheetOverlay: () => light_accent_SheetOverlay,
+  light_accent_SliderThumb: () => light_accent_SliderThumb,
+  light_accent_SliderTrack: () => light_accent_SliderTrack,
+  light_accent_SliderTrackActive: () => light_accent_SliderTrackActive,
+  light_accent_Switch: () => light_accent_Switch,
+  light_accent_SwitchThumb: () => light_accent_SwitchThumb,
+  light_accent_TextArea: () => light_accent_TextArea,
+  light_accent_Tooltip: () => light_accent_Tooltip,
+  light_accent_TooltipArrow: () => light_accent_TooltipArrow,
+  light_accent_TooltipContent: () => light_accent_TooltipContent,
+  light_accent_active: () => light_accent_active,
+  light_accent_alt1: () => light_accent_alt1,
+  light_accent_alt2: () => light_accent_alt2,
+  light_accent_surface1: () => light_accent_surface1,
+  light_accent_surface2: () => light_accent_surface2,
+  light_accent_surface3: () => light_accent_surface3,
+  light_accent_surface4: () => light_accent_surface4,
+  light_active: () => light_active,
+  light_alt1: () => light_alt1,
+  light_alt2: () => light_alt2,
+  light_surface1: () => light_surface1,
+  light_surface2: () => light_surface2,
+  light_surface3: () => light_surface3,
+  light_surface4: () => light_surface4
+});
+function t(a) {
+  let res = {};
+  for (const [ki, vi] of a) {
+    res[ks[ki]] = vs[vi];
+  }
+  return res;
+}
+__name(t, "t");
+var vs = [
+  "hsla(33, 100%, 54%, 1)",
+  "hsla(0, 0%, 94%, 1)",
+  "hsla(0, 0%, 89%, 1)",
+  "hsla(0, 0%, 83%, 1)",
+  "hsla(0, 0%, 100%, 0)",
+  "hsla(0, 0%, 100%, 0.25)",
+  "hsla(0, 0%, 100%, 0.5)",
+  "hsla(0, 0%, 100%, 0.75)",
+  "hsla(0, 0%, 100%, 1)",
+  "hsla(0, 0%, 78%, 1)",
+  "hsla(0, 0%, 72%, 1)",
+  "hsla(0, 0%, 67%, 1)",
+  "hsla(0, 0%, 61%, 1)",
+  "hsla(0, 0%, 56%, 1)",
+  "hsla(0, 0%, 50%, 1)",
+  "hsla(0, 15%, 15%, 1)",
+  "hsla(0, 15%, 10%, 1)",
+  "hsla(0, 14%, 10%, 0)",
+  "hsla(0, 14%, 10%, 0.25)",
+  "hsla(0, 14%, 10%, 0.5)",
+  "hsla(0, 14%, 10%, 0.75)",
+  "hsla(33, 100%, 59%, 1)",
+  "hsla(0, 0%, 13%, 1)",
+  "hsla(0, 0%, 8%, 0.75)",
+  "hsla(0, 0%, 17%, 1)",
+  "hsla(0, 0%, 8%, 0)",
+  "hsla(0, 0%, 8%, 0.25)",
+  "hsla(0, 0%, 8%, 0.5)",
+  "hsla(0, 0%, 8%, 1)",
+  "hsla(0, 0%, 22%, 1)",
+  "hsla(0, 0%, 27%, 1)",
+  "hsla(0, 0%, 31%, 1)",
+  "hsla(0, 0%, 36%, 1)",
+  "hsla(0, 0%, 41%, 1)",
+  "hsla(0, 0%, 45%, 1)",
+  "hsla(0, 15%, 93%, 1)",
+  "hsla(0, 15%, 95%, 1)",
+  "hsla(0, 15%, 95%, 0)",
+  "hsla(0, 15%, 95%, 0.25)",
+  "hsla(0, 15%, 95%, 0.5)",
+  "hsla(0, 15%, 95%, 0.75)",
+  "hsla(33, 100%, 50%, 1)",
+  "hsla(33, 100%, 52%, 1)",
+  "hsla(33, 100%, 48%, 0)",
+  "hsla(33, 100%, 48%, 0.25)",
+  "hsla(33, 100%, 48%, 0.5)",
+  "hsla(33, 100%, 48%, 0.75)",
+  "hsla(33, 100%, 48%, 1)",
+  "hsla(33, 100%, 56%, 1)",
+  "hsla(33, 100%, 57%, 1)",
+  "hsla(33, 100%, 61%, 1)",
+  "hsla(33, 100%, 63%, 1)",
+  "hsla(33, 100%, 65%, 1)",
+  "hsla(250, 50%, 95%, 1)",
+  "hsla(249, 52%, 95%, 0)",
+  "hsla(249, 52%, 95%, 0.25)",
+  "hsla(249, 52%, 95%, 0.5)",
+  "hsla(249, 52%, 95%, 0.75)",
+  "hsla(33, 100%, 49%, 0.75)",
+  "hsla(33, 100%, 51%, 1)",
+  "hsla(33, 100%, 49%, 0)",
+  "hsla(33, 100%, 49%, 0.25)",
+  "hsla(33, 100%, 49%, 0.5)",
+  "hsla(33, 100%, 49%, 1)",
+  "hsla(33, 100%, 53%, 1)",
+  "hsla(33, 100%, 55%, 1)",
+  "hsla(33, 100%, 58%, 1)",
+  "hsla(33, 100%, 60%, 1)",
+  "hsla(250, 50%, 90%, 1)",
+  "rgba(0,0,0,0.5)",
+  "rgba(0,0,0,0.8)"
+];
+var ks = [
+  "accentBackground",
+  "accentBackgroundHover",
+  "accentBackgroundPress",
+  "accentBackgroundFocus",
+  "accentColor",
+  "background0",
+  "background025",
+  "background05",
+  "background075",
+  "color1",
+  "color2",
+  "color3",
+  "color4",
+  "color5",
+  "color6",
+  "color7",
+  "color8",
+  "color9",
+  "color10",
+  "color11",
+  "color12",
+  "color0",
+  "color025",
+  "color05",
+  "color075",
+  "background",
+  "backgroundHover",
+  "backgroundPress",
+  "backgroundFocus",
+  "borderColor",
+  "borderColorHover",
+  "borderColorPress",
+  "borderColorFocus",
+  "color",
+  "colorHover",
+  "colorPress",
+  "colorFocus",
+  "colorTransparent",
+  "placeholderColor",
+  "outlineColor"
+];
+var n1 = t([[0, 0], [1, 1], [2, 2], [3, 3], [4, 0], [5, 4], [6, 5], [7, 6], [8, 7], [9, 8], [10, 1], [11, 2], [12, 3], [13, 9], [14, 10], [15, 11], [16, 12], [17, 13], [18, 14], [19, 15], [20, 16], [21, 17], [22, 18], [23, 19], [24, 20], [25, 8], [26, 7], [27, 1], [28, 1], [29, 3], [30, 2], [31, 9], [32, 3], [33, 16], [34, 15], [35, 16], [36, 15], [37, 17], [38, 13], [39, 18]]);
+var light = n1;
+var n2 = t([[0, 21], [1, 22], [2, 23], [3, 24], [4, 21], [5, 25], [6, 26], [7, 27], [8, 23], [9, 28], [10, 22], [11, 24], [12, 29], [13, 30], [14, 31], [15, 32], [16, 33], [17, 34], [18, 14], [19, 35], [20, 36], [21, 37], [22, 38], [23, 39], [24, 40], [25, 28], [26, 22], [27, 23], [28, 23], [29, 29], [30, 30], [31, 24], [32, 29], [33, 36], [34, 35], [35, 36], [36, 35], [37, 37], [38, 34], [39, 38]]);
+var dark = n2;
+var n3 = t([[0, 3], [1, 41], [2, 42], [3, 0], [4, 3], [5, 43], [6, 44], [7, 45], [8, 46], [9, 47], [10, 41], [11, 42], [12, 0], [13, 48], [14, 49], [15, 21], [16, 50], [17, 51], [18, 52], [19, 53], [20, 53], [21, 54], [22, 55], [23, 56], [24, 57], [25, 47], [26, 46], [27, 41], [28, 41], [29, 0], [30, 42], [31, 48], [32, 0], [33, 53], [34, 53], [35, 53], [36, 53], [37, 54], [38, 51], [39, 55]]);
+var light_accent = n3;
+var n4 = t([[0, 34], [1, 41], [2, 58], [3, 59], [4, 34], [5, 60], [6, 61], [7, 62], [8, 58], [9, 63], [10, 41], [11, 59], [12, 64], [13, 0], [14, 65], [15, 48], [16, 66], [17, 21], [18, 67], [19, 68], [20, 53], [21, 54], [22, 55], [23, 56], [24, 57], [25, 63], [26, 41], [27, 58], [28, 58], [29, 64], [30, 0], [31, 59], [32, 64], [33, 53], [34, 68], [35, 53], [36, 68], [37, 54], [38, 21], [39, 55]]);
+var dark_accent = n4;
+var n5 = t([[33, 15], [34, 14], [35, 15], [36, 14]]);
+var light_alt1 = n5;
+var n6 = t([[33, 14], [34, 13], [35, 14], [36, 13]]);
+var light_alt2 = n6;
+var n7 = t([[25, 3], [26, 2], [27, 9], [28, 9], [29, 11], [30, 10], [32, 11], [31, 12]]);
+var light_active = n7;
+var light_surface3 = n7;
+var light_Button = n7;
+var light_SliderTrackActive = n7;
+var n8 = t([[25, 1], [26, 8], [27, 2], [28, 2], [29, 9], [30, 3], [32, 9], [31, 10]]);
+var light_surface1 = n8;
+var light_ListItem = n8;
+var light_SelectTrigger = n8;
+var light_Card = n8;
+var light_Progress = n8;
+var light_TooltipArrow = n8;
+var light_SliderTrack = n8;
+var light_Input = n8;
+var light_TextArea = n8;
+var n9 = t([[25, 2], [26, 1], [27, 3], [28, 3], [29, 10], [30, 9], [32, 10], [31, 11]]);
+var light_surface2 = n9;
+var light_Checkbox = n9;
+var light_Switch = n9;
+var light_TooltipContent = n9;
+var light_RadioGroupItem = n9;
+var n10 = t([[25, 10], [26, 10], [27, 11], [28, 11], [29, 10], [30, 10], [32, 11], [31, 11]]);
+var light_surface4 = n10;
+var n11 = t([[33, 35], [34, 14], [35, 35], [36, 14]]);
+var dark_alt1 = n11;
+var n12 = t([[33, 14], [34, 34], [35, 14], [36, 34]]);
+var dark_alt2 = n12;
+var n13 = t([[25, 29], [26, 30], [27, 24], [28, 24], [29, 32], [30, 33], [32, 32], [31, 31]]);
+var dark_active = n13;
+var dark_surface3 = n13;
+var dark_Button = n13;
+var dark_SliderTrackActive = n13;
+var n14 = t([[25, 22], [26, 24], [27, 28], [28, 28], [29, 30], [30, 31], [32, 30], [31, 29]]);
+var dark_surface1 = n14;
+var dark_ListItem = n14;
+var dark_SelectTrigger = n14;
+var dark_Card = n14;
+var dark_Progress = n14;
+var dark_TooltipArrow = n14;
+var dark_SliderTrack = n14;
+var dark_Input = n14;
+var dark_TextArea = n14;
+var n15 = t([[25, 24], [26, 29], [27, 22], [28, 22], [29, 31], [30, 32], [32, 31], [31, 30]]);
+var dark_surface2 = n15;
+var dark_Checkbox = n15;
+var dark_Switch = n15;
+var dark_TooltipContent = n15;
+var dark_RadioGroupItem = n15;
+var n16 = t([[25, 31], [26, 31], [27, 30], [28, 30], [29, 31], [30, 31], [32, 30], [31, 30]]);
+var dark_surface4 = n16;
+var n17 = t([[33, 53], [34, 52], [35, 53], [36, 52]]);
+var light_accent_alt1 = n17;
+var n18 = t([[33, 52], [34, 51], [35, 52], [36, 51]]);
+var light_accent_alt2 = n18;
+var n19 = t([[25, 0], [26, 42], [27, 48], [28, 48], [29, 21], [30, 49], [32, 21], [31, 50]]);
+var light_accent_active = n19;
+var light_accent_surface3 = n19;
+var light_accent_Button = n19;
+var light_accent_SliderTrackActive = n19;
+var n20 = t([[25, 41], [26, 47], [27, 42], [28, 42], [29, 48], [30, 0], [32, 48], [31, 49]]);
+var light_accent_surface1 = n20;
+var light_accent_ListItem = n20;
+var light_accent_SelectTrigger = n20;
+var light_accent_Card = n20;
+var light_accent_Progress = n20;
+var light_accent_TooltipArrow = n20;
+var light_accent_SliderTrack = n20;
+var light_accent_Input = n20;
+var light_accent_TextArea = n20;
+var n21 = t([[25, 42], [26, 41], [27, 0], [28, 0], [29, 49], [30, 48], [32, 49], [31, 21]]);
+var light_accent_surface2 = n21;
+var light_accent_Checkbox = n21;
+var light_accent_Switch = n21;
+var light_accent_TooltipContent = n21;
+var light_accent_RadioGroupItem = n21;
+var n22 = t([[25, 49], [26, 49], [27, 21], [28, 21], [29, 49], [30, 49], [32, 21], [31, 21]]);
+var light_accent_surface4 = n22;
+var n23 = t([[33, 68], [34, 67], [35, 68], [36, 67]]);
+var dark_accent_alt1 = n23;
+var n24 = t([[33, 67], [34, 21], [35, 67], [36, 21]]);
+var dark_accent_alt2 = n24;
+var n25 = t([[25, 64], [26, 0], [27, 59], [28, 59], [29, 48], [30, 66], [32, 48], [31, 65]]);
+var dark_accent_active = n25;
+var dark_accent_surface3 = n25;
+var dark_accent_Button = n25;
+var dark_accent_SliderTrackActive = n25;
+var n26 = t([[25, 41], [26, 59], [27, 63], [28, 63], [29, 0], [30, 65], [32, 0], [31, 64]]);
+var dark_accent_surface1 = n26;
+var dark_accent_ListItem = n26;
+var dark_accent_SelectTrigger = n26;
+var dark_accent_Card = n26;
+var dark_accent_Progress = n26;
+var dark_accent_TooltipArrow = n26;
+var dark_accent_SliderTrack = n26;
+var dark_accent_Input = n26;
+var dark_accent_TextArea = n26;
+var n27 = t([[25, 59], [26, 64], [27, 41], [28, 41], [29, 65], [30, 48], [32, 65], [31, 0]]);
+var dark_accent_surface2 = n27;
+var dark_accent_Checkbox = n27;
+var dark_accent_Switch = n27;
+var dark_accent_TooltipContent = n27;
+var dark_accent_RadioGroupItem = n27;
+var n28 = t([[25, 65], [26, 65], [27, 0], [28, 0], [29, 65], [30, 65], [32, 0], [31, 0]]);
+var dark_accent_surface4 = n28;
+var n29 = t([[33, 1], [34, 8], [35, 2], [36, 2], [25, 16], [26, 15], [27, 16], [28, 15], [29, 14], [30, 13], [32, 12], [31, 11]]);
+var light_SwitchThumb = n29;
+var light_SliderThumb = n29;
+var light_Tooltip = n29;
+var light_ProgressIndicator = n29;
+var n30 = t([[25, 69]]);
+var light_SheetOverlay = n30;
+var light_DialogOverlay = n30;
+var light_ModalOverlay = n30;
+var light_accent_SheetOverlay = n30;
+var light_accent_DialogOverlay = n30;
+var light_accent_ModalOverlay = n30;
+var n31 = t([[33, 22], [34, 24], [35, 28], [36, 28], [25, 36], [26, 35], [27, 36], [28, 35], [29, 14], [30, 34], [32, 33], [31, 32]]);
+var dark_SwitchThumb = n31;
+var dark_SliderThumb = n31;
+var dark_Tooltip = n31;
+var dark_ProgressIndicator = n31;
+var n32 = t([[25, 70]]);
+var dark_SheetOverlay = n32;
+var dark_DialogOverlay = n32;
+var dark_ModalOverlay = n32;
+var dark_accent_SheetOverlay = n32;
+var dark_accent_DialogOverlay = n32;
+var dark_accent_ModalOverlay = n32;
+var n33 = t([[33, 41], [34, 47], [35, 42], [36, 42], [25, 53], [26, 53], [27, 53], [28, 53], [29, 52], [30, 51], [32, 50], [31, 21]]);
+var light_accent_SwitchThumb = n33;
+var light_accent_SliderThumb = n33;
+var light_accent_Tooltip = n33;
+var light_accent_ProgressIndicator = n33;
+var n34 = t([[33, 41], [34, 59], [35, 63], [36, 63], [25, 53], [26, 68], [27, 53], [28, 68], [29, 67], [30, 21], [32, 66], [31, 48]]);
+var dark_accent_SwitchThumb = n34;
+var dark_accent_SliderThumb = n34;
+var dark_accent_Tooltip = n34;
+var dark_accent_ProgressIndicator = n34;
+
 // tamagui.config.ts
 var interFont = createInterFont();
-var tamaguiConfig = createTamagui(config);
+var tamaguiConfig = createTamagui({
+  ...config,
+  themes: theme_output_exports,
+  fonts: {
+    ...config.fonts,
+    heading: interFont,
+    body: interFont
+  }
+});
 var tamagui_config_default = tamaguiConfig;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

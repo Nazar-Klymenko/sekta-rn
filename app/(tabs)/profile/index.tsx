@@ -1,4 +1,3 @@
-import { media } from "@tamagui/config/v3";
 import { ChevronRight, Moon, Sun, User } from "@tamagui/lucide-icons";
 
 import React from "react";
@@ -9,9 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUserData } from "@/hooks/useUserData";
 
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
-  AnimatePresence,
   Avatar,
   Button,
   Separator,
@@ -21,7 +19,6 @@ import {
   XStack,
   YStack,
   styled,
-  useTheme,
 } from "tamagui";
 
 import { PageContainer } from "@/components/PageContainer";
@@ -121,7 +118,6 @@ export default function ProfileScreen() {
 
         <LanguageSelect />
       </YStack>
-
       <YStack gap="$2">
         <SectionTitle>Support</SectionTitle>
         <MenuItem
@@ -145,19 +141,7 @@ export default function ProfileScreen() {
         marginTop="$4"
       >
         {isLoggedIn ? (
-          <Button
-            size="$7"
-            height="$6"
-            backgroundColor="$red10"
-            color="white"
-            onPress={signOut}
-            pressStyle={{ scale: 0.97 }}
-            animation="quick"
-          >
-            <Text color="white" fontSize="$5" fontWeight="bold">
-              Sign Out
-            </Text>
-          </Button>
+          <PrimaryButton onPress={signOut} text="Sign Out" />
         ) : (
           <YStack gap="$4">
             <PrimaryButton onPress={() => routerPushLogin()} text="Log In" />
@@ -174,11 +158,11 @@ export default function ProfileScreen() {
 
 const ResponsiveStack = styled(Stack, {
   hoverStyle: {
-    backgroundColor: "$gray5",
+    backgroundColor: "$backgroundHover",
     cursor: "pointer",
   },
   pressStyle: {
-    backgroundColor: "$gray5",
+    backgroundColor: "$backgroundPress",
   },
   padding: "$4",
   borderRadius: "$2",

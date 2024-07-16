@@ -1,13 +1,13 @@
 import { GestureResponderEvent } from "react-native";
 
-import { Button, Spinner, Text } from "tamagui";
+import { Button, ButtonProps, Spinner, Text } from "tamagui";
 
-type SecondaryButtonTypes = {
+interface SecondaryButtonTypes extends ButtonProps {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
   text: string;
   htmlFor?: string;
   isLoading?: boolean;
-};
+}
 
 export const SecondaryButton = ({
   onPress,

@@ -1,29 +1,25 @@
 import { GestureResponderEvent } from "react-native";
 
-import { Button, ButtonProps, Spinner, Text, Theme } from "tamagui";
+import { Button, ButtonProps, Spinner, Text } from "tamagui";
 
-interface PrimaryButtonTypes extends ButtonProps {
+interface MenuButtonTypes extends ButtonProps {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
   text: string;
   htmlFor?: string;
   isLoading?: boolean;
 }
 
-export const PrimaryButton = ({
+export const MenuButton = ({
   onPress,
   text,
   isLoading,
   htmlFor,
   ...props
-}: PrimaryButtonTypes): JSX.Element => {
+}: MenuButtonTypes): JSX.Element => {
   return (
     <Button
-      backgroundColor="$accentBackground"
-      color="$accentColor"
-      hoverStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
-      pressStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
-      size="$7"
-      height={50}
+      size="$3"
+      borderColor="$borderColor"
       animation="quick"
       onPress={onPress}
       htmlFor={htmlFor}
@@ -31,7 +27,7 @@ export const PrimaryButton = ({
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       {...props}
     >
-      <Text fontSize={20} fontWeight="bold">
+      <Text fontSize={12} fontWeight="normal">
         {text}
       </Text>
     </Button>

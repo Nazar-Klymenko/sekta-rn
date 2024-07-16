@@ -21,6 +21,7 @@ import {
 } from "tamagui";
 
 import { PageContainer } from "@/components/PageContainer";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -84,7 +85,7 @@ export default function EventDetailsPage() {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Calendar size={30} />
+                  <Calendar color="$accentColor" size={30} />
                 </YStack>
                 <YStack>
                   <Text fontSize="$4" fontWeight="bold">
@@ -104,7 +105,7 @@ export default function EventDetailsPage() {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <MapPin size={30} />
+                  <MapPin color="$accentColor" size={30} />
                 </YStack>
                 <Text fontSize="$4" fontWeight="bold">
                   {event?.location || "Nowa 3/3, Kraków"}
@@ -119,7 +120,7 @@ export default function EventDetailsPage() {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <CreditCard size={30} />
+                  <CreditCard color="$accentColor" size={30} />
                 </YStack>
                 <Text fontSize="$4" fontWeight="bold">
                   {event?.price || "20.00"} PLN
@@ -140,17 +141,15 @@ export default function EventDetailsPage() {
             </Text>
             <XStack flexWrap="wrap" gap="$2">
               {event.lineup.map((artist, index) => (
-                <Button
+                <XStack
                   key={index}
-                  size="$4"
-                  backgroundColor={"$colorTransparent"}
-                  color="white"
-                  fontWeight="bold"
-                  borderRadius="$4"
-                  variant="outlined"
+                  backgroundColor={"$gray8Dark"}
+                  borderRadius="$6"
+                  paddingVertical="$2"
+                  paddingHorizontal="$4"
                 >
-                  {artist}
-                </Button>
+                  <Text color="white">{artist}</Text>
+                </XStack>
               ))}
             </XStack>
           </YStack>
@@ -160,19 +159,20 @@ export default function EventDetailsPage() {
             </Text>
             <XStack flexWrap="wrap" gap="$2">
               {event.genres.map((genre, index) => (
-                <Button
+                <XStack
                   key={index}
-                  size="$4"
-                  backgroundColor={"$colorTransparent"}
-                  color="white"
-                  fontWeight="bold"
-                  borderRadius="$4"
-                  variant="outlined"
+                  backgroundColor={"$gray8Dark"}
+                  borderRadius="$6"
+                  paddingVertical="$2"
+                  paddingHorizontal="$4"
                 >
-                  {genre}
-                </Button>
+                  <Text color="white">{genre}</Text>
+                </XStack>
               ))}
             </XStack>
+          </YStack>
+          <YStack>
+            <PrimaryButton text="Buy ticket 🎟️" />
           </YStack>
         </YStack>
       </ScrollView>

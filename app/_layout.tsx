@@ -63,6 +63,7 @@ export default function RootLayout() {
 
   const [fontsLoaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    InterLight: require("@tamagui/font-inter/otf/Inter-Light.otf"),
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });

@@ -15,7 +15,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
+import { MenuButton } from "@/components/buttons/MenuButton";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Input } from "@/components/form/Input";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
@@ -125,7 +127,7 @@ export default function UpdateProfileScreen() {
                 {user?.email}
               </Text>
             </YStack>
-            <PrimaryButton
+            <MenuButton
               disabled={user?.emailVerified}
               text={user?.emailVerified ? "Verified" : "Verify"}
             />

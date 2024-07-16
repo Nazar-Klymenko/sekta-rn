@@ -52,16 +52,26 @@ export function PasswordInput(
           placeholder={placeholder}
           value={field.value}
           onChangeText={field.onChange}
+          secureTextEntry={!isPasswordVisible}
+          focusStyle={{
+            outlineWidth: "0",
+            outlineStyle: "none",
+            borderColor: error ? "$red10Light" : "$accentColor",
+          }}
           onBlur={() => {
             field.onBlur();
             setIsFocused(false);
           }}
           onFocus={() => setIsFocused(true)}
-          secureTextEntry={!isPasswordVisible}
-          borderColor={error ? "$red10" : isFocused ? "$blue8" : undefined}
-          // borderWidth={error || isFocused ? 2 : 1}
-          focusStyle={{
-            borderColor: error ? "$red10" : "$blue8",
+          borderColor={
+            error ? "$red10Light" : isFocused ? "accentColor" : undefined
+          }
+          hoverStyle={{
+            borderColor: error
+              ? "$red10Light"
+              : isFocused
+              ? "accentColor"
+              : undefined,
           }}
           flex={1}
           ref={field.ref}
@@ -75,7 +85,7 @@ export function PasswordInput(
           backgroundColor="transparent"
         />
       </XStack>
-      <Text color={error ? "$red10" : "$colorTransparent"} fontSize="$2">
+      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
         {error ? error?.message : "*"}
       </Text>
     </YStack>

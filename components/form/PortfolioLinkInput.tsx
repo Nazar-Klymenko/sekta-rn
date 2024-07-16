@@ -67,23 +67,34 @@ export function PortfolioLinkInput({
             placeholder={placeholder}
             value={field.value}
             onChangeText={field.onChange}
+            autoCapitalize="none"
+            inputMode="url"
+            paddingLeft={prefix ? "$5" : "$2"}
+            focusStyle={{
+              outlineWidth: "0",
+              outlineStyle: "none",
+              borderColor: error ? "$red10Light" : "$accentColor",
+            }}
+            hoverStyle={{
+              borderColor: error
+                ? "$red10Light"
+                : isFocused
+                ? "accentColor"
+                : undefined,
+            }}
             onBlur={() => {
               field.onBlur();
               setIsFocused(false);
             }}
             onFocus={() => setIsFocused(true)}
-            autoCapitalize="none"
-            inputMode="url"
-            paddingLeft={prefix ? "$5" : "$2"}
-            borderWidth={error || isFocused ? 2 : 1}
-            focusStyle={{
-              borderColor: error ? "$red10" : "$blue8",
-            }}
+            borderColor={
+              error ? "$red10Light" : isFocused ? "accentColor" : undefined
+            }
             ref={field.ref}
           />
         </Stack>
       </XStack>
-      <Text color={error ? "$red10" : "$colorTransparent"} fontSize="$2">
+      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
         {error ? error?.message : "*"}
       </Text>
     </YStack>

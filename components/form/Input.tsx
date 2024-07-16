@@ -37,20 +37,31 @@ export function Input({ name, label, placeholder, id, ...props }: InputProps) {
         placeholder={placeholder}
         value={field.value}
         onChangeText={field.onChange}
+        outlineStyle="none"
+        focusStyle={{
+          outlineWidth: "0",
+          outlineStyle: "none",
+          borderColor: error ? "$red10Light" : "$accentColor",
+        }}
         onBlur={() => {
           field.onBlur();
           setIsFocused(false);
         }}
         onFocus={() => setIsFocused(true)}
-        borderColor={error ? "$red10" : isFocused ? "$blue8" : undefined}
-        borderWidth={error || isFocused ? 2 : 1}
-        focusStyle={{
-          borderColor: error ? "$red10" : "$blue8",
+        borderColor={
+          error ? "$red10Light" : isFocused ? "accentColor" : undefined
+        }
+        hoverStyle={{
+          borderColor: error
+            ? "$red10Light"
+            : isFocused
+            ? "accentColor"
+            : undefined,
         }}
         ref={field.ref}
         {...props}
       />
-      <Text color={error ? "$red10" : "$colorTransparent"} fontSize="$2">
+      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
         {error ? error?.message : "*"}
       </Text>
     </YStack>

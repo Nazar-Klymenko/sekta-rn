@@ -30,13 +30,17 @@ export const PasswordRequirements = ({ password }: { password: string }) => {
       {passwordChecks.map((text, index) => (
         <XStack gap="$2" alignItems="center" key={index}>
           <CheckCircle2
-            color={passwordChecks[index].status ? "$green9" : "$gray10"}
+            color={
+              passwordChecks[index].status ? "$green9Light" : "$gray10Light"
+            }
             size="$1"
           />
           <Text
             fontSize={12}
             fontWeight="400"
-            color={passwordChecks[index].status ? "$green9" : "$gray10"}
+            color={
+              passwordChecks[index].status ? "$green9Light" : "$gray10Light"
+            }
           >
             {text.rule}
           </Text>
