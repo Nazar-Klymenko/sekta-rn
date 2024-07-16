@@ -11,18 +11,16 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
+import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
 import { removeItem, setItem } from "@/utils/asyncStorage";
-
-interface UserData {
-  email: string;
-  username: string;
-}
 
 export const signUp = async (
   email: string,
   password: string,
-  username: string
+  username: string,
+  agreeTos: boolean,
+  agreeEmail?: boolean
 ): Promise<User> => {
   let userCredential;
   try {
@@ -41,6 +39,8 @@ export const signUp = async (
     await setDoc(doc(db, "users", userCredential.user.uid), {
       email,
       username,
+      agreeTos,
+      agreeEmail,
     });
   } catch (error) {
     console.error("Failed to save user data to Firestore:", error);

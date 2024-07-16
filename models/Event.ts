@@ -10,4 +10,6 @@ export interface Event {
   };
   lineup: string[];
   title: string;
+  price: number;
+  location: string;
 }

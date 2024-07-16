@@ -8,6 +8,7 @@ import {
   limit,
   query,
   queryEqual,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -57,5 +58,18 @@ export const submitPlayInfo = async (data: PlayData) => {
   } catch (error) {
     console.error("Error adding document: ", error);
     throw new Error("Failed to submit play info");
+  }
+};
+export const updateUserProfile = async (
+  userId: string,
+  profileData: Partial<UserData>
+): Promise<void> => {
+  try {
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, profileData);
+    console.log("User profile updated successfully");
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw new Error("Failed to update user profile");
   }
 };

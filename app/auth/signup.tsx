@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Checkbox } from "@/components/form/Checkbox";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
@@ -38,6 +39,11 @@ const signUpSchema = yup.object().shape({
       " "
     )
     .trim(),
+  agreeTos: yup
+    .boolean()
+    .oneOf([true], "You must agree to the terms and conditions")
+    .required("You must agree to the terms and conditions"),
+  agreeEmail: yup.boolean().optional(),
 });
 
 type FormValues = yup.InferType<typeof signUpSchema>;
@@ -66,6 +72,8 @@ export default function SignupScreen() {
         email: data.email,
         password: data.password,
         username: data.username,
+        agreeTos: data.agreeTos,
+        agreeEmail: data.agreeEmail || false,
       },
       {
         onSuccess: () => {
@@ -85,7 +93,6 @@ export default function SignupScreen() {
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Sign Up
           </Text>
-
           <Input
             id="signup-email"
             name="email"
@@ -94,7 +101,6 @@ export default function SignupScreen() {
             inputMode="email"
             autoCapitalize="none"
           />
-
           <YStack gap="$0">
             <PasswordInput
               id="signup-password"
@@ -111,6 +117,18 @@ export default function SignupScreen() {
             isLoading={signUpMutation.isLoading}
             disabled={signUpMutation.isLoading}
           />
+          <YStack>
+            <Checkbox
+              name="agreeTos"
+              id="signup-agree-tos"
+              label="I agree to Sekta Selekta's Terms of service and Privacy Policy"
+            />
+            <Checkbox
+              name="agreeEmail"
+              id="agree-email"
+              label="I want to receive email notifications about new events"
+            />
+          </YStack>
 
           {signUpMutation.isError && (
             <Text color="red" textAlign="center" marginTop="$2">
@@ -118,7 +136,6 @@ export default function SignupScreen() {
                 "An error occurred during signup"}
             </Text>
           )}
-
           <YStack alignItems="center" padding="$4">
             <Link href="/auth/login">
               <Text textAlign="center">

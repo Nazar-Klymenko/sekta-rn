@@ -8,46 +8,32 @@ import {
   signOut,
   signUp,
 } from "@/api/auth";
+import { updateUserProfile } from "@/api/firestore";
+import { UserData } from "@/models/UserData";
 
-import { useRouter } from "expo-router";
 import { useMutation, useQueryClient } from "react-query";
 
-function isFirebaseError(error: unknown): error is FirebaseError {
-  return (
-    error instanceof FirebaseError ||
-    (typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      "message" in error)
-  );
-}
+import { useAuth } from "./useAuth";
+
+type SignUpData = Omit<UserData, "email"> & { email: string; password: string };
+
 export const useSignUp = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    User,
-    FirebaseError,
-    { email: string; password: string; username: string }
-  >(
-    async ({
-      email,
-      password,
-      username,
-    }: {
-      email: string;
-      password: string;
-      username: string;
-    }) => {
-      const user = await signUp(email, password, username);
+  return useMutation<User, FirebaseError, SignUpData>(
+    async ({ email, password, ...userData }: SignUpData) => {
+      const user = await signUp(
+        email,
+        password,
+        userData.username,
+        userData.agreeTos,
+        userData.agreeEmail
+      );
       return user;
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries("user");
-      },
-      onError: (error) => {
-        console.error("Sign-up error:", error);
-        // Handle error (e.g., show error message to user)
       },
     }
   );
@@ -64,27 +50,35 @@ export const useSignIn = () => {
     }
   );
 };
+
 export function useChangePassword() {
   return useMutation<
     void,
     FirebaseError,
     { currentPassword: string; newPassword: string }
-  >(
-    async ({
-      currentPassword,
-      newPassword,
-    }: {
-      currentPassword: string;
-      newPassword: string;
-    }) => {
-      await changePassword(currentPassword, newPassword);
-    }
+  >(({ currentPassword, newPassword }) =>
+    changePassword(currentPassword, newPassword)
   );
 }
 
 export const useSendPasswordReset = () => {
   return useMutation<void, FirebaseError, string>((email: string) =>
     sendPasswordReset(email)
+  );
+};
+
+export const useUpdateProfile = () => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation<void, FirebaseError, Partial<UserData>>(
+    (profileData: Partial<UserData>) =>
+      updateUserProfile(user?.uid || "", profileData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("userData");
+      },
+    }
   );
 };
 
