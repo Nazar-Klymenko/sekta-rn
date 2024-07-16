@@ -1,0 +1,36 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+		function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidData(data) {
+      return data.keys().hasAll(['createdAt', 'updatedAt']) 
+             && data.createdAt is timestamp 
+             && data.updatedAt is timestamp;
+    }
+
+		match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update, delete: if isOwner(userId);
+
+      // Validate user data on write
+      allow write: if isValidData(request.resource.data) 
+                   && request.resource.data.username is string
+                   && request.resource.data.email == request.auth.token.email;
+    }
+    match /play/{playId} {
+      allow read, write : if true;
+		}
+    match /{document=**} {
+      allow read : if true;
+    }
+  }
+}
