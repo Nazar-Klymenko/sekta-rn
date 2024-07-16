@@ -27,7 +27,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
         aspectRatio={16 / 9}
         borderRadius="$2"
       />
-      <YStack space="$2" marginTop="$2">
+      <YStack gap="$2" marginTop="$2">
         <XStack justifyContent="space-between" alignItems="center">
           <Text fontSize="$6" fontWeight="bold">
             {event.title}
@@ -39,7 +39,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
         <Paragraph numberOfLines={2} color="$gray11">
           {event.caption}
         </Paragraph>
-        <XStack flexWrap="wrap" space="$2">
+        <XStack flexWrap="wrap" gap="$2">
           {event.lineup.map((artist, index) => (
             <Button key={index} size="$2" variant="outlined">
               {artist}

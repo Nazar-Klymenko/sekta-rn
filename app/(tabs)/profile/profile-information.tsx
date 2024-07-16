@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { ActivityIndicator } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useChangePassword } from "@/hooks/useAuthOperations";
+import { useUpdateProfile } from "@/hooks/useAuthOperations";
+import { useUserData } from "@/hooks/useUserData";
+import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { Text, XStack, YStack, useTheme } from "tamagui";
@@ -15,50 +19,92 @@ import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Input } from "@/components/form/Input";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
-const changePasswordSchema = yup.object().shape({
-  currentPassword: yup.string().required("Current password is required"),
-  newPassword: yup
+const profileUpdateSchema = yup.object().shape({
+  email: yup.string().required("Email is required").email("Invalid email"),
+  username: yup
     .string()
-    .required("New password is required")
-    .min(8, "Password must be at least 8 characters long"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("newPassword")], "Passwords must match")
-    .required("Please confirm your new password"),
+    .required("Username is required")
+    .min(3, "Username must be at least 3 characters")
+    .max(18, "Username must be at most 18 characters")
+    .lowercase()
+    .trim(),
+  fullName: yup.string(),
 });
-type FormValues = yup.InferType<typeof changePasswordSchema>;
 
-export default function ChangePasswordScreen() {
-  const { user, isLoggedIn } = useAuth();
+type FormValues = yup.InferType<typeof profileUpdateSchema>;
+
+export default function UpdateProfileScreen() {
+  const { user } = useAuth();
+  const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
+  const updateProfileMutation = useUpdateProfile();
 
   const methods = useForm({
-      resolver: yupResolver(changePasswordSchema),
+      resolver: yupResolver(profileUpdateSchema),
       defaultValues: {
-        currentPassword: "",
+        email: userData?.email || "",
+        username: userData?.username || "",
+        fullName: userData?.fullName || "",
       },
     }),
-    { watch, reset, handleSubmit } = methods;
+    { handleSubmit, reset, watch, setError } = methods;
+
+  useEffect(() => {
+    if (userData) {
+      reset({
+        email: userData.email || "",
+        username: userData.username || "",
+        fullName: userData.fullName || "",
+      });
+    }
+  }, [userData, reset]);
+
+  const username = watch("username");
+  const {
+    refetch: checkUsernameAvailability,
+    data: isUsernameAvailable,
+    isLoading: isUsernameCheckLoading,
+    isError: isUsernameCheckError,
+    error: usernameCheckError,
+  } = useUsernameAvailability(username);
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
+    try {
+      const result = await checkUsernameAvailability();
+      if (result.data) {
+        updateProfileMutation.mutate(data);
+      } else {
+        setError("username", { message: "Username is taken" });
+      }
+    } catch (err) {
+      console.error("Error checking username availability:", err);
+      setError("username", { message: "Error checking username availability" });
+    }
   };
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (isError) {
+    return <Text>Error loading user data</Text>;
+  }
 
   return (
     <AuthGuard>
       <PageContainer>
         <FormProvider {...methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
-            Change Profile Information
+            Update Profile Information
           </Text>
           <Input
-            id="change-email"
-            name="changeEmail"
-            label="Current email"
-            placeholder="Current email"
+            id="update-email"
+            name="email"
+            label="Email"
+            placeholder="Email"
           />
           <Input
-            id="change-username"
-            name="changeUsername"
+            id="update-username"
+            name="username"
             label="Username"
             placeholder="Username"
           />
@@ -73,12 +119,29 @@ export default function ChangePasswordScreen() {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Text>Verify email</Text>
+            <YStack>
+              <Text>Verify email</Text>
+              <Text fontSize="$4" color="$gray10">
+                {user?.email}
+              </Text>
+            </YStack>
             <PrimaryButton
               disabled={user?.emailVerified}
               text={user?.emailVerified ? "Verified" : "Verify"}
             />
           </XStack>
+          <PrimaryButton
+            onPress={handleSubmit(onSubmit)}
+            text="Update Profile"
+            isLoading={updateProfileMutation.isLoading}
+            disabled={updateProfileMutation.isLoading}
+          />
+          {updateProfileMutation.isError && (
+            <Text>Error: {updateProfileMutation.error.message}</Text>
+          )}
+          {updateProfileMutation.isSuccess && (
+            <Text>Profile updated successfully!</Text>
+          )}
         </FormProvider>
       </PageContainer>
     </AuthGuard>

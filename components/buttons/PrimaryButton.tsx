@@ -17,8 +17,9 @@ export const PrimaryButton = ({
   ...props
 }: PrimaryButtonTypes): JSX.Element => {
   return (
-    <Theme name="light_active">
+    <Theme name="dark_orange_surface1">
       <Button
+        // backgroundColor="$orange11Light"
         size="$7"
         height={50}
         animation="quick"

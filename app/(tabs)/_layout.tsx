@@ -45,16 +45,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="storybook"
-        options={{
-          title: "Storybook",
-          headerShown: true,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="shuffle-sharp" color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }

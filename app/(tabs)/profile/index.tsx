@@ -26,6 +26,8 @@ import {
 
 import { PageContainer } from "@/components/PageContainer";
 import { Switch } from "@/components/buttons/CustomSwitch";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { LanguageSelect } from "@/components/form/LanguageSelect";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
@@ -158,28 +160,11 @@ export default function ProfileScreen() {
           </Button>
         ) : (
           <YStack gap="$4">
-            <Button
-              size="$7"
-              height={50}
-              onPress={() => routerPushLogin()}
-              pressStyle={{ scale: 0.97 }}
-              animation="quick"
-            >
-              <Text fontSize="$5" fontWeight="bold">
-                Log In
-              </Text>
-            </Button>
-            <Button
-              size="$7"
-              height={50}
+            <PrimaryButton onPress={() => routerPushLogin()} text="Log In" />
+            <SecondaryButton
               onPress={() => routerPushUsernameBridge()}
-              pressStyle={{ scale: 0.97 }}
-              animation="quick"
-            >
-              <Text fontSize="$5" fontWeight="bold">
-                Sign Up
-              </Text>
-            </Button>
+              text="Sign Up"
+            />
           </YStack>
         )}
       </YStack>
