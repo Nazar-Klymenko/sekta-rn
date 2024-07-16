@@ -1,32 +1,40 @@
 import { Link, Stack } from "expo-router";
-import { StyleSheet } from "react-native";
+import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+
+const StyledLink = styled(Button, {
+  marginTop: "$4",
+  paddingVertical: "$4",
+});
 
 export default function NotFoundScreen() {
+  const theme = useTheme();
+
   return (
-    <>
-      <Stack.Screen options={{ title: "Oops!" }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
-      </ThemedView>
-    </>
+    <YStack
+      flex={1}
+      alignItems="center"
+      justifyContent="center"
+      padding="$5"
+      backgroundColor="$background"
+      gap="$4"
+    >
+      <Stack.Screen
+        options={{
+          title: "Oops!",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
+      <Text fontSize="$6" fontWeight="bold" textAlign="center" color="$color">
+        This screen doesn't exist.
+      </Text>
+      <Link href="/" replace>
+        <Text>Go to home screen!</Text>
+      </Link>
+    </YStack>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});

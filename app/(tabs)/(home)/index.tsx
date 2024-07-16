@@ -1,34 +1,54 @@
-import { View, Text, Button } from "react-native";
-import { useRouter } from "expo-router";
+import { ActivityIndicator, FlatList } from "react-native";
+
 import { useAuth } from "@/hooks/useAuth";
+import { useEvents } from "@/hooks/useEvents";
 import { useRouterPush } from "@/hooks/useRouterPush";
 
+import { useRouter } from "expo-router";
+import { Button, Text, View, YStack, useTheme } from "tamagui";
+
+import { EventCard } from "@/components/EventCard";
+import { PageContainer } from "@/components/PageContainer";
+
 export default function HomeScreen() {
+  const theme = useTheme();
+
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
-  const routerPush = useRouterPush("/(tabs)/settings", {
-    next: "settings",
-    prev: "/",
-  });
-  const Test = () => {
-    if (user) {
-      return <Text>Welcome, {user.email}</Text>;
-    } else {
-      return <Text>Please log in</Text>;
-    }
-  };
+  const { data: events, isLoading, isError, error, refetch } = useEvents();
+
+  if (isLoading) {
+    return (
+      <PageContainer>
+        <ActivityIndicator />
+      </PageContainer>
+    );
+  }
+
+  if (isError) {
+    return (
+      <PageContainer>
+        <Text>Error: {error.message}</Text>
+      </PageContainer>
+    );
+  }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home Screen</Text>
-      <Test></Test>
-
-      <Button title="Go to settings" onPress={routerPush} />
-      <Button title="Go to Event" onPress={() => router.push("/event")} />
-      <Button
-        title="Go to Event with ID"
-        onPress={() => router.push("/event?id=123")}
-      />
-    </View>
+    <PageContainer>
+      <YStack flex={1}>
+        <FlatList
+          data={events}
+          renderItem={({ item: event }) => (
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          refreshing={isLoading}
+          onRefresh={refetch}
+        />
+      </YStack>
+    </PageContainer>
   );
 }

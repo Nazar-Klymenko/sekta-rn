@@ -1,32 +1,35 @@
-import {
-  Redirect,
-  Tabs,
-  router,
-  useNavigation,
-  usePathname,
-} from "expo-router";
-import React, { useEffect } from "react";
+import { Home, Play, User } from "@tamagui/lucide-icons";
+
+import React from "react";
+
+import { Tabs } from "expo-router";
+import { useTheme } from "tamagui";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.background.get(),
+        },
+        tabBarActiveTintColor: theme.color.get(),
+        tabBarInactiveTintColor: theme.gray9Light.get(),
+        headerStyle: {
+          backgroundColor: theme.background.get(),
+        },
+        headerTintColor: theme.color.get(),
       }}
     >
       <Tabs.Screen
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
       <Tabs.Screen
@@ -34,14 +37,14 @@ export default function TabLayout() {
         options={{
           headerShown: true,
           title: "Play",
-          tabBarIcon: ({ color }) => <TabBarIcon name="play" color={color} />,
+          tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
       />
       <Tabs.Screen
-        name="(profile)"
+        name="profile"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
       />
     </Tabs>

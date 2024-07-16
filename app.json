@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "sekta-rn",
-    "slug": "sekta-rn",
+    "slug": "sekta-selekta",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,10 +12,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+      "isProd": "process.env.APP_ENV === 'production'",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cbbc3e11-d451-4301-87cb-7f62b5a989f4"
+      }
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.yourapp"
     },
     "android": {
+      "package": "com.yourcompany.yourapp",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,10 +38,17 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-firebase-core",
+        {
+          "dynamicLinksEnabled": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "owner": "nk888888"
   }
 }

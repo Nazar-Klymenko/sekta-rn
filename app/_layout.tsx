@@ -1,55 +1,108 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+
+import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
+import tamaguiConfig from "@/tamagui.config";
+
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
 import "react-native-reanimated";
-
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { AuthProvider } from "@/context/AuthContext";
-import { RouteTracker } from "@/components/RouteTracker";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
+
+function LoadingScreen() {
+  const theme = useTheme();
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: theme.background.get(),
+      }}
+    >
+      <Text color="$color">Loading...</Text>
+    </View>
+  );
+}
+
+function AppContent() {
+  const { themeColor } = useThemeContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
+        <AuthProvider>
+          <Stack>
+            <Stack.Screen
+              name="auth"
+              options={{
+                headerShown: false,
+                animation: "fade_from_bottom",
+              }}
+            />
+            <Stack.Screen
+              name="(tabs)"
+              options={{ headerShown: false, animation: "fade_from_bottom" }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </AuthProvider>
+      </TamaguiProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  const [fontsLoaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    InterLight: require("@tamagui/font-inter/otf/Inter-Light.otf"),
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
   useEffect(() => {
-    if (loaded) {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await Promise.all([
+          /* any other promises you need to await */
+        ]);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  useEffect(() => {
+    if (appIsReady && fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [appIsReady, fontsLoaded]);
 
-  if (!loaded) {
-    return null;
+  if (!appIsReady || !fontsLoaded) {
+    return (
+      <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
+        <LoadingScreen />
+      </TamaguiProvider>
+    );
   }
 
   return (
-    <RouteTracker>
-      <AuthProvider>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Stack>
-            <Stack.Screen
-              name="(auth)"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </ThemeProvider>
-      </AuthProvider>
-    </RouteTracker>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }

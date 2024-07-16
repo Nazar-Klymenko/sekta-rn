@@ -18,3 +18,7 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
+.env
+/.tamagui
+.tamagui
+.tamagui/tamagui.config.json

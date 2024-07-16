@@ -1,11 +1,15 @@
 // contexts/AuthContext.tsx
-import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { User } from "firebase/auth";
-import { auth } from "../services/firebase";
+
+import React, { ReactNode, createContext, useEffect } from "react";
+
+import { auth } from "@/services/firebase";
+
+import { UseQueryResult, useQuery, useQueryClient } from "react-query";
 
 type AuthContextType = {
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: (user: User | null) => void;
   isInitialized: boolean;
 };
 
@@ -16,19 +20,40 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { data: user, isLoading }: UseQueryResult<User | null, unknown> =
+    useQuery<User | null, unknown, User | null>(
+      "user",
+      () =>
+        new Promise<User | null>((resolve) => {
+          const unsubscribe = auth.onAuthStateChanged((user) => {
+            unsubscribe();
+            resolve(user);
+          });
+        }),
+      {
+        staleTime: Infinity, // Prevent automatic refetches
+      }
+    );
+
+  const setUser = (newUser: User | null) => {
+    queryClient.setQueryData("user", newUser);
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      setIsInitialized(true);
+      queryClient.setQueryData("user", user);
     });
     return unsubscribe;
-  }, []);
+  }, [queryClient]);
+
+  const isInitialized = !isLoading;
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isInitialized }}>
+    <AuthContext.Provider
+      value={{ user: user ?? null, setUser, isInitialized }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,0 +1,15 @@
+{
+  "importOrder": [
+    "^react$",
+    "^react-native$",
+    "^@/(?!components/)",
+    "^(?!yup$)\\w[\\w-]*\\w$",
+    "^tamagui",
+    "^yup$",
+    "@hookform/resolvers/yup",
+    "^@/components",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}

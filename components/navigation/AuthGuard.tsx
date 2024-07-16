@@ -1,8 +1,12 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
+
+import { ActivityIndicator, View } from "react-native";
+
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter, usePathname, useLocalSearchParams } from "expo-router";
-import { View, ActivityIndicator } from "react-native";
+
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
+import { Stack } from "tamagui";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -17,7 +21,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   useEffect(() => {
     if (isInitialized && !isLoggedIn) {
       router.replace({
-        pathname: "/(auth)/login",
+        pathname: "/auth/login",
         params: {
           next: pathname,
         },
@@ -29,9 +33,16 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   if (isChecking) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Stack
+        backgroundColor="$background"
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ActivityIndicator size="large" />
-      </View>
+      </Stack>
     );
   }
 
