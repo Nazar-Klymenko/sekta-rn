@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "sekta-rn",
-    "slug": "sekta-rn",
+    "slug": "sekta-selekta",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,13 @@
       "backgroundColor": "#ffffff"
     },
     "extra": {
-      "isProd": "process.env.APP_ENV === 'production'"
+      "isProd": "process.env.APP_ENV === 'production'",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cbbc3e11-d451-4301-87cb-7f62b5a989f4"
+      }
     },
     "ios": {
       "supportsTablet": true,
@@ -42,6 +48,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "owner": "nk888888"
   }
 }
