@@ -27217,9 +27217,6 @@
     "themes": {
       "dark": {
         "accentBackground": "hsla(33, 100%, 59%, 1)",
-        "accentBackgroundHover": "hsla(0, 0%, 13%, 1)",
-        "accentBackgroundPress": "hsla(0, 0%, 8%, 0.75)",
-        "accentBackgroundFocus": "hsla(0, 0%, 17%, 1)",
         "accentColor": "hsla(33, 100%, 59%, 1)",
         "background0": "hsla(0, 0%, 8%, 0)",
         "background025": "hsla(0, 0%, 8%, 0.25)",
@@ -27542,9 +27539,6 @@
       },
       "dark_accent": {
         "accentBackground": "hsla(0, 0%, 45%, 1)",
-        "accentBackgroundHover": "hsla(33, 100%, 50%, 1)",
-        "accentBackgroundPress": "hsla(33, 100%, 49%, 0.75)",
-        "accentBackgroundFocus": "hsla(33, 100%, 51%, 1)",
         "accentColor": "hsla(0, 0%, 45%, 1)",
         "background0": "hsla(33, 100%, 49%, 0)",
         "background025": "hsla(33, 100%, 49%, 0.25)",
@@ -27893,9 +27887,6 @@
       },
       "light": {
         "accentBackground": "hsla(33, 100%, 54%, 1)",
-        "accentBackgroundHover": "hsla(0, 0%, 94%, 1)",
-        "accentBackgroundPress": "hsla(0, 0%, 89%, 1)",
-        "accentBackgroundFocus": "hsla(0, 0%, 83%, 1)",
         "accentColor": "hsla(33, 100%, 54%, 1)",
         "background0": "hsla(0, 0%, 100%, 0)",
         "background025": "hsla(0, 0%, 100%, 0.25)",
@@ -28218,9 +28209,6 @@
       },
       "light_accent": {
         "accentBackground": "hsla(0, 0%, 83%, 1)",
-        "accentBackgroundHover": "hsla(33, 100%, 50%, 1)",
-        "accentBackgroundPress": "hsla(33, 100%, 52%, 1)",
-        "accentBackgroundFocus": "hsla(33, 100%, 54%, 1)",
         "accentColor": "hsla(0, 0%, 83%, 1)",
         "background0": "hsla(33, 100%, 48%, 0)",
         "background025": "hsla(33, 100%, 48%, 0.25)",
