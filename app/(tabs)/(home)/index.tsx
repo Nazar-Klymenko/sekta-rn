@@ -1,11 +1,11 @@
-import { ActivityIndicator, FlatList } from "react-native";
+import { FlatList } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useEvents } from "@/hooks/useEvents";
 import { useRouterPush } from "@/hooks/useRouterPush";
 
 import { useRouter } from "expo-router";
-import { Button, Text, View, YStack, useTheme } from "tamagui";
+import { Button, Spinner, Text, View, YStack, useTheme } from "tamagui";
 
 import { EventCard } from "@/components/EventCard";
 import { PageContainer } from "@/components/PageContainer";
@@ -20,7 +20,7 @@ export default function HomeScreen() {
   if (isLoading) {
     return (
       <PageContainer>
-        <ActivityIndicator color="$accentColor" />
+        <Spinner color="$accentColor" size="large" />
       </PageContainer>
     );
   }
@@ -38,10 +38,28 @@ export default function HomeScreen() {
       <FlatList
         data={events}
         renderItem={({ item: event }) => (
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
+          <>
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+          </>
         )}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}

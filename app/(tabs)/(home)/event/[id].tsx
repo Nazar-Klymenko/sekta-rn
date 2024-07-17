@@ -3,8 +3,6 @@ import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
 import React from "react";
 
-import { ActivityIndicator } from "react-native";
-
 import { useEvent } from "@/hooks/useEvents";
 
 import { format } from "date-fns";
@@ -15,6 +13,7 @@ import {
   Image,
   Paragraph,
   ScrollView,
+  Spinner,
   Text,
   XStack,
   YStack,
@@ -38,7 +37,7 @@ export default function EventDetailsPage() {
   if (isLoading) {
     return (
       <PageContainer>
-        <ActivityIndicator color="$accentColor" />
+        <Spinner color="$accentColor" size="large" />
       </PageContainer>
     );
   }
@@ -80,7 +79,7 @@ export default function EventDetailsPage() {
                 width={60}
                 height={60}
                 backgroundColor="$gray6"
-                borderRadius="$4"
+                borderRadius="$2"
                 justifyContent="center"
                 alignItems="center"
               >
@@ -100,7 +99,7 @@ export default function EventDetailsPage() {
                 width={60}
                 height={60}
                 backgroundColor="$gray6"
-                borderRadius="$4"
+                borderRadius="$2"
                 justifyContent="center"
                 alignItems="center"
               >
@@ -115,7 +114,7 @@ export default function EventDetailsPage() {
                 width={60}
                 height={60}
                 backgroundColor="$gray6"
-                borderRadius="$4"
+                borderRadius="$2"
                 justifyContent="center"
                 alignItems="center"
               >

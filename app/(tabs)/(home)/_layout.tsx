@@ -11,7 +11,7 @@ export default function HomeLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Events",
           animation: "fade_from_bottom",
           headerShown: true,
           headerStyle: {

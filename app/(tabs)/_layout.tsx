@@ -28,7 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(home)"
         options={{
-          title: "Home",
+          title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
@@ -39,6 +39,12 @@ export default function TabLayout() {
           title: "Play",
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate("play");
+          },
+        })}
       />
       <Tabs.Screen
         name="profile"
@@ -46,6 +52,12 @@ export default function TabLayout() {
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate("profile");
+          },
+        })}
       />
     </Tabs>
   );

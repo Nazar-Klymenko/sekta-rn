@@ -8,6 +8,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
 
@@ -37,22 +38,24 @@ function AppContent() {
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
-        <AuthProvider>
-          <Stack>
-            <Stack.Screen
-              name="auth"
-              options={{
-                headerShown: false,
-                animation: "fade_from_bottom",
-              }}
-            />
-            <Stack.Screen
-              name="(tabs)"
-              options={{ headerShown: false, animation: "fade_from_bottom" }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </AuthProvider>
+        <SafeAreaProvider>
+          <AuthProvider>
+            <Stack>
+              <Stack.Screen
+                name="auth"
+                options={{
+                  headerShown: false,
+                  animation: "fade_from_bottom",
+                }}
+              />
+              <Stack.Screen
+                name="(tabs)"
+                options={{ headerShown: false, animation: "fade_from_bottom" }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </AuthProvider>
+        </SafeAreaProvider>
       </TamaguiProvider>
     </QueryClientProvider>
   );

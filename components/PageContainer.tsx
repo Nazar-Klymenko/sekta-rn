@@ -18,7 +18,7 @@ export function PageContainer({
   const media = useMedia();
 
   const containerStyle: StackProps = {
-    backgroundColor: theme.background,
+    backgroundColor: theme.background.get(),
     minHeight: "100%",
     width: "100%",
     maxWidth: "100%",
@@ -32,8 +32,13 @@ export function PageContainer({
   };
 
   const content = (
-    <Stack {...containerStyle}>
-      <YStack gap="$4" flex={1}>
+    <Stack flex={1} backgroundColor="$background">
+      <YStack
+        {...containerStyle}
+        flex={1}
+        padding={scrollable ? "$4" : 0}
+        gap="$4"
+      >
         {children}
       </YStack>
     </Stack>

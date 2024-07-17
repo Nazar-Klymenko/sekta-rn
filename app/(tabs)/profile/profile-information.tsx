@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 
-import { ActivityIndicator } from "react-native";
-
 import { useAuth } from "@/hooks/useAuth";
 import { useUpdateProfile } from "@/hooks/useAuthOperations";
 import { useUserData } from "@/hooks/useUserData";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 
 import { FormProvider, useForm } from "react-hook-form";
-import { Text, XStack, YStack, useTheme } from "tamagui";
+import { Spinner, Text, XStack, YStack, useTheme } from "tamagui";
 
 import * as yup from "yup";
 
@@ -84,7 +82,7 @@ export default function UpdateProfileScreen() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator color="$accentColor" />;
+    return <Spinner color="$accentColor" size="large" />;
   }
 
   if (isError) {

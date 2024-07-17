@@ -13,14 +13,17 @@ interface EventCardProps {
 
 export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
   const formattedDate = format(new Date(event.date), "dd/MM/yyyy HH:mm");
-
+  const formattedDayName = format(new Date(event.date), "EEE");
+  const formattedDay = format(new Date(event.date), "dd/MM");
   return (
     <YStack
-      backgroundColor="$backgroundStrong"
+      // backgroundColor="$gray12Light"
       padding="$4"
       marginVertical="$2"
-      borderRadius="$4"
+      borderRadius="$2"
       onPress={onPress}
+      // borderWidth="$0.25"
+      // borderColor="$gray11Light"
     >
       <Image
         source={{ uri: event.image.publicUrl }}
@@ -36,14 +39,31 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
             {formattedDate}
           </Text>
         </XStack>
-        <Paragraph numberOfLines={2} color="$gray11">
-          {event.caption}
-        </Paragraph>
+        <Paragraph color="$gray10Light">{event.caption}</Paragraph>
+        {/* <YStack
+          width={50}
+          height={50}
+          backgroundColor="$accentBackground"
+          borderRadius="$2"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Text fontSize={16} fontWeight="bold">
+            {formattedDayName}
+          </Text>
+          <Text>{formattedDay}</Text>
+        </YStack> */}
         <XStack flexWrap="wrap" gap="$2">
-          {event.lineup.map((artist, index) => (
-            <Button key={index} size="$2" variant="outlined">
-              {artist}
-            </Button>
+          {event.genres.map((genre, index) => (
+            <XStack
+              key={index}
+              backgroundColor={"$gray8Dark"}
+              borderRadius="$6"
+              paddingVertical="$2"
+              paddingHorizontal="$4"
+            >
+              <Text color="white">{genre}</Text>
+            </XStack>
           ))}
         </XStack>
       </YStack>

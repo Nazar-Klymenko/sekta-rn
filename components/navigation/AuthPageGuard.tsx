@@ -1,12 +1,10 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
 
-import { ActivityIndicator, View } from "react-native";
-
 import { useAuth } from "@/hooks/useAuth";
 
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
-import { Stack } from "tamagui";
+import { Spinner, Stack } from "tamagui";
 
 interface AuthPageGuardProps {
   children: React.ReactNode;
@@ -39,7 +37,7 @@ export const AuthPageGuard: React.FC<AuthPageGuardProps> = ({ children }) => {
           alignItems: "center",
         }}
       >
-        <ActivityIndicator color="$accentColor" />
+        <Spinner color="$accentColor" size="large" />
       </Stack>
     );
   }
