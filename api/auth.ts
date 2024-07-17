@@ -3,13 +3,14 @@ import {
   EmailAuthProvider,
   User,
   createUserWithEmailAndPassword,
+  deleteUser,
   signOut as firebaseSignOut,
   reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updatePassword,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
@@ -92,7 +93,21 @@ export const changePassword = async (
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
+export const deleteAccount = async (password: string): Promise<void> => {
+  const user = auth.currentUser;
+  if (user && user.email) {
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
 
+    await deleteDoc(doc(db, "users", user.uid));
+
+    await deleteUser(user);
+
+    await removeItem("userToken");
+  } else {
+    throw new Error("No user is currently signed in");
+  }
+};
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
   await removeItem("userToken");

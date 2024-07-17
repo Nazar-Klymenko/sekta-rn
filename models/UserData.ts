@@ -6,4 +6,6 @@ export interface UserData {
   language?: "pl" | "en" | "ru" | "ua";
   agreeTos: boolean;
   agreeEmail?: boolean;
+  status?: "active" | "pending_deletion" | "deleted";
+  deletionRequestedAt?: Date;
 }

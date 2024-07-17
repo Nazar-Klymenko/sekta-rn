@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 
 import {
   changePassword,
+  deleteAccount,
   sendPasswordReset,
   signIn,
   signOut,
@@ -77,6 +78,17 @@ export const useUpdateProfile = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries("userData");
+      },
+    }
+  );
+};
+export const useDeleteAccount = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, FirebaseError, string>(
+    (password: string) => deleteAccount(password),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
       },
     }
   );
