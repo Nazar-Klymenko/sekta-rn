@@ -43,11 +43,15 @@ export function Checkbox({ name, label, id, ...props }: CustomCheckboxProps) {
             <Text>✓</Text>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
-        <Label htmlFor={id}>{label}</Label>
+        <Label fontSize={11} htmlFor={id}>
+          {label}
+        </Label>
       </XStack>
-      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
-        {error ? error?.message : "*"}
-      </Text>
+      {error && (
+        <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+          {error?.message}
+        </Text>
+      )}
     </YStack>
   );
 }

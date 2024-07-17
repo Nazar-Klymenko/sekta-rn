@@ -10,7 +10,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "generate-themes": "tamagui generate-themes ./theme/theme-builder.ts ./theme/theme-output.ts"
+    "generate-themes": "tamagui generate-themes ./theme/theme-builder.ts ./theme/theme-output.ts",
+    "predeploy": "expo export -p web",
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
   },
   "jest": {
     "preset": "jest-expo"
@@ -23,7 +25,7 @@
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/babel-plugin": "^1.102.1",
-    "@tamagui/cli": "^1.102.2",
+    "@tamagui/cli": "^1.102.1",
     "@tamagui/config": "^1.102.1",
     "@tamagui/lucide-icons": "^1.102.1",
     "@tamagui/metro-plugin": "^1.102.1",
@@ -53,8 +55,7 @@
     "react-native-web": "~0.19.10",
     "react-query": "^3.39.3",
     "tamagui": "^1.102.1",
-    "yup": "^1.4.0",
-    "zustand": "^4.5.4"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

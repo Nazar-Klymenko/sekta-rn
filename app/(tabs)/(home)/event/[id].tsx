@@ -38,7 +38,7 @@ export default function EventDetailsPage() {
   if (isLoading) {
     return (
       <PageContainer>
-        <ActivityIndicator />
+        <ActivityIndicator color="$accentColor" />
       </PageContainer>
     );
   }
@@ -64,118 +64,116 @@ export default function EventDetailsPage() {
 
   return (
     <PageContainer>
-      <ScrollView>
-        <YStack gap="$4">
-          <Image
-            source={{ uri: event.image.publicUrl }}
-            aspectRatio={16 / 9}
-            borderRadius="$2"
-          />
+      <YStack gap="$4">
+        <Image
+          source={{ uri: event.image.publicUrl }}
+          aspectRatio={16 / 9}
+          borderRadius="$2"
+        />
+        <YStack gap="$2">
+          <Text fontSize="$8" fontWeight="bold">
+            {event.title}
+          </Text>
           <YStack gap="$2">
-            <Text fontSize="$8" fontWeight="bold">
-              {event.title}
-            </Text>
-            <YStack gap="$2">
-              <XStack alignItems="center" gap="$2">
-                <YStack
-                  width={60}
-                  height={60}
-                  backgroundColor="$gray6"
-                  borderRadius="$4"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Calendar color="$accentColor" size={30} />
-                </YStack>
-                <YStack>
-                  <Text fontSize="$4" fontWeight="bold">
-                    {formattedDate}
-                  </Text>
-                  <Text fontSize="$4" fontWeight="bold" color="$gray10">
-                    {formattedTime}
-                  </Text>
-                </YStack>
-              </XStack>
-              <XStack alignItems="center" gap="$2">
-                <YStack
-                  width={60}
-                  height={60}
-                  backgroundColor="$gray6"
-                  borderRadius="$4"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <MapPin color="$accentColor" size={30} />
-                </YStack>
+            <XStack alignItems="center" gap="$2">
+              <YStack
+                width={60}
+                height={60}
+                backgroundColor="$gray6"
+                borderRadius="$4"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Calendar color="$accentColor" size={30} />
+              </YStack>
+              <YStack>
                 <Text fontSize="$4" fontWeight="bold">
-                  {event?.location || "Nowa 3/3, Kraków"}
+                  {formattedDate}
                 </Text>
-              </XStack>
-              <XStack alignItems="center" gap="$2">
-                <YStack
-                  width={60}
-                  height={60}
-                  backgroundColor="$gray6"
-                  borderRadius="$4"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <CreditCard color="$accentColor" size={30} />
-                </YStack>
-                <Text fontSize="$4" fontWeight="bold">
-                  {event?.price || "20.00"} PLN
+                <Text fontSize="$4" fontWeight="bold" color="$gray10">
+                  {formattedTime}
                 </Text>
-              </XStack>
-            </YStack>
-          </YStack>
-          <YStack>
-            <Text fontSize="$6" fontWeight="bold">
-              About this event
-            </Text>
-            <Paragraph>{event.caption}</Paragraph>
-          </YStack>
-
-          <YStack gap="$2">
-            <Text fontSize="$6" fontWeight="bold">
-              Lineup
-            </Text>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.lineup.map((artist, index) => (
-                <XStack
-                  key={index}
-                  backgroundColor={"$gray8Dark"}
-                  borderRadius="$6"
-                  paddingVertical="$2"
-                  paddingHorizontal="$4"
-                >
-                  <Text color="white">{artist}</Text>
-                </XStack>
-              ))}
+              </YStack>
             </XStack>
-          </YStack>
-          <YStack gap="$2">
-            <Text fontSize="$6" fontWeight="bold">
-              Genres
-            </Text>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.genres.map((genre, index) => (
-                <XStack
-                  key={index}
-                  backgroundColor={"$gray8Dark"}
-                  borderRadius="$6"
-                  paddingVertical="$2"
-                  paddingHorizontal="$4"
-                >
-                  <Text color="white">{genre}</Text>
-                </XStack>
-              ))}
+            <XStack alignItems="center" gap="$2">
+              <YStack
+                width={60}
+                height={60}
+                backgroundColor="$gray6"
+                borderRadius="$4"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <MapPin color="$accentColor" size={30} />
+              </YStack>
+              <Text fontSize="$4" fontWeight="bold">
+                {event?.location || "Nowa 3/3, Kraków"}
+              </Text>
             </XStack>
-          </YStack>
-          <YStack>
-            <PrimaryButton text="Buy ticket 🎟️" />
+            <XStack alignItems="center" gap="$2">
+              <YStack
+                width={60}
+                height={60}
+                backgroundColor="$gray6"
+                borderRadius="$4"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CreditCard color="$accentColor" size={30} />
+              </YStack>
+              <Text fontSize="$4" fontWeight="bold">
+                {event?.price || "20.00"} PLN
+              </Text>
+            </XStack>
           </YStack>
         </YStack>
-      </ScrollView>
+        <YStack>
+          <Text fontSize="$6" fontWeight="bold">
+            About this event
+          </Text>
+          <Paragraph color="$color10">{event.caption}</Paragraph>
+        </YStack>
+
+        <YStack gap="$2">
+          <Text fontSize="$6" fontWeight="bold">
+            Lineup
+          </Text>
+          <XStack flexWrap="wrap" gap="$2">
+            {event.lineup.map((artist, index) => (
+              <XStack
+                key={index}
+                backgroundColor={"$gray8Dark"}
+                borderRadius="$6"
+                paddingVertical="$2"
+                paddingHorizontal="$4"
+              >
+                <Text color="white">{artist}</Text>
+              </XStack>
+            ))}
+          </XStack>
+        </YStack>
+        <YStack gap="$2">
+          <Text fontSize="$6" fontWeight="bold">
+            Genres
+          </Text>
+          <XStack flexWrap="wrap" gap="$2">
+            {event.genres.map((genre, index) => (
+              <XStack
+                key={index}
+                backgroundColor={"$gray8Dark"}
+                borderRadius="$6"
+                paddingVertical="$2"
+                paddingHorizontal="$4"
+              >
+                <Text color="white">{genre}</Text>
+              </XStack>
+            ))}
+          </XStack>
+        </YStack>
+        <YStack>
+          <PrimaryButton text="Buy ticket 🎟️" />
+        </YStack>
+      </YStack>
     </PageContainer>
   );
 }

@@ -24,6 +24,7 @@ export default function HomeLayout() {
         name="event"
         options={{
           headerShown: false,
+          animation: "fade_from_bottom",
         }}
       />
     </Stack>

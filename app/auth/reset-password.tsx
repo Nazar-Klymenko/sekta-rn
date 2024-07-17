@@ -1,80 +1,122 @@
-// On your web app's reset password page
-import { confirmPasswordReset } from "firebase/auth";
+// src/pages/HandlePasswordReset.tsx
+import { confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth";
 
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { auth } from "@/services/firebase";
 
-import { Link } from "expo-router";
-import { FormProvider, Input, Text, YStack } from "tamagui";
+import { Link, useLocalSearchParams } from "expo-router";
+import { FormProvider, useForm } from "react-hook-form";
+import { Text, YStack } from "tamagui";
+
+import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { PasswordInput } from "@/components/form/PasswordInput";
 
-const ResetPasswordPage: React.FC = () => {
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+const newPasswordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Confirm password is required"),
+});
 
-  const handleResetPassword = async () => {
-    if (newPassword !== confirmPassword) {
-      setError("Passwords don't match");
-      return;
-    }
+type FormValues = yup.InferType<typeof newPasswordSchema>;
 
-    try {
-      // Get the action code from the URL
-      const actionCode = new URLSearchParams(window.location.search).get(
-        "oobCode"
-      );
-      if (!actionCode) {
-        setError("Invalid password reset link");
-        return;
+export default function HandlePasswordResetScreen() {
+  const { oobCode } = useLocalSearchParams();
+  const [isValidCode, setIsValidCode] = useState(false);
+  const [error, setError] = useState("");
+
+  const methods = useForm({
+    resolver: yupResolver(newPasswordSchema),
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  useEffect(() => {
+    const verifyCode = async () => {
+      if (typeof oobCode === "string") {
+        try {
+          await verifyPasswordResetCode(auth, oobCode);
+          setIsValidCode(true);
+        } catch (error) {
+          setError("Invalid or expired reset link. Please try again.");
+        }
+      } else {
+        setError("Invalid reset link. Please try again.");
       }
+    };
 
-      await confirmPasswordReset(auth, actionCode, newPassword);
-      setSuccess(true);
-    } catch (err) {
-      setError((err as Error).message);
+    verifyCode();
+  }, [oobCode]);
+
+  const onSubmit = async (data: FormValues) => {
+    if (typeof oobCode === "string") {
+      try {
+        await confirmPasswordReset(auth, oobCode, data.password);
+        alert("password reset successfully");
+      } catch (error) {
+        setError("Failed to reset password. Please try again.");
+      }
     }
   };
-  return <Text>Password reset page</Text>;
-  //   <AuthPageGuard>
-  //     <PageContainer>
-  //       <FormProvider {...methods}>
-  //         <Text
-  //           fontSize={24}
-  //           fontWeight="bold"
-  //           textAlign="center"
-  //           marginBottom="$4"
-  //         >
-  //           Forgot Password
-  //         </Text>
 
-  //         <Input
-  //           id="forgot-password-email"
-  //           name="email"
-  //           label="Email"
-  //           placeholder="Enter your email"
-  //           inputMode="email"
-  //           autoCapitalize="none"
-  //         />
-  //         <PrimaryButton
-  //           text="Reset Password"
-  //           onPress={onSubmit}
-  //           isLoading={sendPasswordResetMutation.isLoading}
-  //           disabled={sendPasswordResetMutation.isLoading}
-  //         />
-  //         <YStack alignItems="center" padding="$4" gap="$4">
-  //           <Link href="/auth/login">
-  //             <Text color="blue" textAlign="center">
-  //               Back to login
-  //             </Text>
-  //           </Link>
-  //         </YStack>
-  //       </FormProvider>
-  //     </PageContainer>
-  //   </AuthPageGuard>;
-};
+  if (!isValidCode) {
+    return (
+      <PageContainer>
+        <Text fontSize={24} fontWeight="bold" textAlign="center">
+          Reset Password
+        </Text>
+        <Text color="$errorColor">{error}</Text>
+        <Link href="/auth/forgot-password">
+          <Text color="$accentColor">Request a new reset link</Text>
+        </Link>
+      </PageContainer>
+    );
+  }
+
+  return (
+    <PageContainer>
+      <FormProvider {...methods}>
+        <Text fontSize={24} fontWeight="bold" textAlign="center">
+          Set New Password
+        </Text>
+        <PasswordInput
+          id="new-password"
+          name="password"
+          label="New Password"
+          placeholder="Enter your new password"
+        />
+        <PasswordInput
+          id="confirm-password"
+          name="confirmPassword"
+          label="Confirm Password"
+          placeholder="Confirm your new password"
+        />
+        <PrimaryButton
+          onPress={methods.handleSubmit(onSubmit)}
+          text="Reset Password"
+        />
+        {error && <Text color="$errorColor">{error}</Text>}
+        <YStack alignItems="center" padding="$4" gap="$4">
+          <Link href="/(auth)/login">
+            <Text textAlign="center">
+              Remember your password?
+              <Text color="$accentColor"> Log In</Text>
+            </Text>
+          </Link>
+        </YStack>
+      </FormProvider>
+    </PageContainer>
+  );
+}

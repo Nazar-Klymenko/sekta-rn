@@ -12,7 +12,8 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const getInitialTheme = (): ThemeColorType => {
-  const colorScheme = Appearance.getColorScheme();
+  const colorScheme = "dark";
+  // const colorScheme = Appearance.getColorScheme();
   return colorScheme === "dark" ? "dark" : "light";
 };
 

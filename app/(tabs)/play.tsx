@@ -146,6 +146,7 @@ export default function PlayScreen() {
           multiline
           placeholder="Any additional information you'd like to share..."
           numberOfLines={4}
+          verticalAlign="top"
         />
         <PrimaryButton
           onPress={handleSubmit(onSubmit)}

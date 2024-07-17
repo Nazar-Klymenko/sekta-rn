@@ -84,7 +84,7 @@ export default function UpdateProfileScreen() {
   };
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator color="$accentColor" />;
   }
 
   if (isError) {

@@ -11,9 +11,14 @@ import {
   XStack,
   YStack,
   getFontSize,
+  styled,
 } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
+const HoverEffect = styled(YStack, {
+  hoverStyle: {
+    backgroundColor: "$backgroundHover",
+  },
+});
 
 export function LanguageSelect() {
   return (
@@ -80,16 +85,9 @@ export function SelectDemoItem(props: SelectProps) {
           width="100%"
           height="$3"
         >
-          <YStack zIndex={10}>
+          <HoverEffect zIndex={10}>
             <ChevronUp size={20} />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["$background", "transparent"]}
-            borderRadius="$4"
-          />
+          </HoverEffect>
         </Select.ScrollUpButton>
 
         <Select.Viewport minWidth={200}>
@@ -135,16 +133,9 @@ export function SelectDemoItem(props: SelectProps) {
           width="100%"
           height="$3"
         >
-          <YStack zIndex={10}>
+          <HoverEffect zIndex={10}>
             <ChevronDown size={20} />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["transparent", "$background"]}
-            borderRadius="$4"
-          />
+          </HoverEffect>
         </Select.ScrollDownButton>
       </Select.Content>
     </Select>

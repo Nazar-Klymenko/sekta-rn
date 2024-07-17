@@ -22,3 +22,4 @@ expo-env.d.ts
 /.tamagui
 .tamagui
 .tamagui/tamagui.config.json
+.firebase/hosting.ZGlzdA.cache

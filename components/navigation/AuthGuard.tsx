@@ -41,7 +41,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" />
+        <ActivityIndicator color="$accentColor" />
       </Stack>
     );
   }

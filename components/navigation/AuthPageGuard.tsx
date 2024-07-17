@@ -39,7 +39,7 @@ export const AuthPageGuard: React.FC<AuthPageGuardProps> = ({ children }) => {
           alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" />
+        <ActivityIndicator color="$accentColor" />
       </Stack>
     );
   }

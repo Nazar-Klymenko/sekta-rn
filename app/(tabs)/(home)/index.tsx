@@ -20,7 +20,7 @@ export default function HomeScreen() {
   if (isLoading) {
     return (
       <PageContainer>
-        <ActivityIndicator />
+        <ActivityIndicator color="$accentColor" />
       </PageContainer>
     );
   }
@@ -34,21 +34,22 @@ export default function HomeScreen() {
   }
 
   return (
-    <PageContainer>
-      <YStack flex={1}>
-        <FlatList
-          data={events}
-          renderItem={({ item: event }) => (
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          refreshing={isLoading}
-          onRefresh={refetch}
-        />
-      </YStack>
+    <PageContainer scrollable={false}>
+      <FlatList
+        data={events}
+        renderItem={({ item: event }) => (
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        refreshing={isLoading}
+        onRefresh={refetch}
+        ListEmptyComponent={() => (
+          <Text>No events found. Pull to refresh or check back later.</Text>
+        )}
+      />
     </PageContainer>
   );
 }
