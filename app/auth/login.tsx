@@ -1,3 +1,5 @@
+import { Toast, useToastController } from "@tamagui/toast";
+
 import React from "react";
 
 import { useSignIn } from "@/hooks/useAuthOperations";
@@ -25,6 +27,8 @@ type FormValues = yup.InferType<typeof loginSchema>;
 export default function LoginScreen() {
   const theme = useTheme();
   const signInMutation = useSignIn();
+  const toast = useToastController();
+
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -35,7 +39,23 @@ export default function LoginScreen() {
 
   const onSubmit = async (data: FormValues) => {
     console.log(data);
-    signInMutation.mutate({ email: data.email, password: data.password });
+    signInMutation.mutate(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: () => {
+          toast.show("Successfully logged in", {
+            message: "Welcome back!",
+          });
+        },
+        onError: (error) => {
+          toast.show("Login failed", {
+            message:
+              error instanceof Error ? error.message : "An error occurred",
+            variant: "error",
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -73,10 +93,9 @@ export default function LoginScreen() {
             isLoading={signInMutation.isLoading}
             disabled={signInMutation.isLoading}
           />
-          {signInMutation.isError && (
+          {/* {signInMutation.isError && (
             <Text>Error: {signInMutation.error.message}</Text>
-          )}
-
+          )} */}
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/username-bridge">
               <Text textAlign="center">

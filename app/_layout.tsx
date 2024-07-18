@@ -1,3 +1,10 @@
+import {
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  useToastState,
+} from "@tamagui/toast";
+
 import React, { useEffect, useState } from "react";
 
 import { AuthProvider } from "@/context/AuthContext";
@@ -8,9 +15,12 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
+
+import { CurrentToast } from "@/components/Toast";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,27 +44,40 @@ function LoadingScreen() {
 
 function AppContent() {
   const { themeColor } = useThemeContext();
+  const { left, top, right } = useSafeAreaInsets();
 
   return (
     <QueryClientProvider client={queryClient}>
       <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
         <SafeAreaProvider>
-          <AuthProvider>
-            <Stack>
-              <Stack.Screen
-                name="auth"
-                options={{
-                  headerShown: false,
-                  animation: "fade_from_bottom",
-                }}
-              />
-              <Stack.Screen
-                name="(tabs)"
-                options={{ headerShown: false, animation: "fade_from_bottom" }}
-              />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </AuthProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <Stack>
+                <Stack.Screen
+                  name="auth"
+                  options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
+                  }}
+                />
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
+                  }}
+                />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </AuthProvider>
+            <CurrentToast />
+            <ToastViewport
+              flexDirection="column-reverse"
+              top={top}
+              left={left}
+              right={right}
+            />
+          </ToastProvider>
         </SafeAreaProvider>
       </TamaguiProvider>
     </QueryClientProvider>
