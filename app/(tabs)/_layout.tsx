@@ -29,6 +29,8 @@ export default function TabLayout() {
         name="(home)"
         options={{
           title: "Events",
+          tabBarShowLabel: false,
+
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
@@ -37,6 +39,8 @@ export default function TabLayout() {
         options={{
           headerShown: true,
           title: "Play",
+          tabBarShowLabel: false,
+
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
         listeners={({ navigation }) => ({
@@ -51,6 +55,7 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+          tabBarShowLabel: false,
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
