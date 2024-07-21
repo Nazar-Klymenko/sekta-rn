@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Platform } from "react-native";
+
 import { Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -11,9 +13,9 @@ export default function HomeLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "Profile",
+          title: "Profiles",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -25,7 +27,7 @@ export default function HomeLayout() {
         options={{
           title: "Profile information",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -37,7 +39,7 @@ export default function HomeLayout() {
         options={{
           title: "Change Password",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -49,7 +51,7 @@ export default function HomeLayout() {
         options={{
           title: "Delete account",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -61,7 +63,7 @@ export default function HomeLayout() {
         options={{
           title: "Push notifications",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -73,7 +75,7 @@ export default function HomeLayout() {
         options={{
           title: "Email notifications",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -85,7 +87,7 @@ export default function HomeLayout() {
         options={{
           title: "Cookie policy",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -97,7 +99,7 @@ export default function HomeLayout() {
         options={{
           title: "Terms of service",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -109,7 +111,7 @@ export default function HomeLayout() {
         options={{
           title: "Contact us",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },

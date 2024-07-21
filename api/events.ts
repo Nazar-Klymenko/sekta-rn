@@ -35,3 +35,27 @@ export const fetchEventById = async (id: string): Promise<Event> => {
     throw new Error("Event not found");
   }
 };
+export const fetchLikedEvents = async (userId: string): Promise<Event[]> => {
+  const userRef = doc(db, "users", userId);
+  const userDoc = await getDoc(userRef);
+
+  if (!userDoc.exists()) {
+    throw new Error("User not found");
+  }
+
+  const userData = userDoc.data();
+  const likedEventIds = userData.likedEvents || [];
+
+  // Fetch all liked events
+  const eventPromises = likedEventIds.map(async (eventId: string) => {
+    const eventRef = doc(db, "events", eventId);
+    const eventDoc = await getDoc(eventRef);
+    if (eventDoc.exists()) {
+      return { id: eventDoc.id, ...eventDoc.data() } as Event;
+    }
+    return null;
+  });
+
+  const events = await Promise.all(eventPromises);
+  return events.filter((event): event is Event => event !== null);
+};

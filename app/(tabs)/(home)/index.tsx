@@ -34,40 +34,39 @@ export default function HomeScreen() {
   }
 
   return (
-    <PageContainer scrollable={false}>
-      <FlatList
-        data={events}
-        renderItem={({ item: event }) => (
-          <>
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
-          </>
-        )}
-        keyExtractor={(item) => item.id}
-        refreshing={isLoading}
-        onRefresh={refetch}
-        ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
-        )}
-      />
-    </PageContainer>
+    <FlatList
+      style={{ minHeight: "100%", width: "100%", maxWidth: "100%" }}
+      data={events}
+      renderItem={({ item: event }) => (
+        <PageContainer scrollable={false}>
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+          <EventCard
+            event={event}
+            onPress={() => router.push(`/event/${event.id}`)}
+          />
+        </PageContainer>
+      )}
+      keyExtractor={(item) => item.id}
+      refreshing={isLoading}
+      onRefresh={refetch}
+      ListEmptyComponent={() => (
+        <Text>No events found. Pull to refresh or check back later.</Text>
+      )}
+    />
   );
 }

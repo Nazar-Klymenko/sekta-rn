@@ -32,7 +32,7 @@ export function PageContainer({
   };
 
   const content = (
-    <Stack flex={1} backgroundColor="$background">
+    <YStack flex={1} backgroundColor="$background">
       <YStack
         {...containerStyle}
         flex={1}
@@ -41,7 +41,7 @@ export function PageContainer({
       >
         {children}
       </YStack>
-    </Stack>
+    </YStack>
   );
 
   if (scrollable) {

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Platform } from "react-native";
+
 import { Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -13,7 +15,7 @@ export default function HomeLayout() {
         options={{
           title: "Events",
           animation: "fade_from_bottom",
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },

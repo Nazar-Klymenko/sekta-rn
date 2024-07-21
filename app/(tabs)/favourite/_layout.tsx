@@ -11,10 +11,10 @@ export default function HomeLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="[id]"
+        name="index"
         options={{
+          title: "Favourite",
           animation: "fade_from_bottom",
-          title: "Event",
           headerShown: Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),

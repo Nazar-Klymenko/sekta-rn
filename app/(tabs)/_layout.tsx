@@ -1,6 +1,8 @@
-import { Home, Play, User } from "@tamagui/lucide-icons";
+import { Heart, Home, List, Play, User } from "@tamagui/lucide-icons";
 
 import React from "react";
+
+import { Platform } from "react-native";
 
 import { Tabs } from "expo-router";
 import { useTheme } from "tamagui";
@@ -35,20 +37,24 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="favourite"
+        options={{
+          headerShown: Platform.OS !== "web",
+          title: "Favourite",
+          tabBarShowLabel: false,
+
+          tabBarIcon: ({ color, size }) => <Heart color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
         name="play"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Play",
           tabBarShowLabel: false,
 
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault();
-            navigation.navigate("play");
-          },
-        })}
       />
       <Tabs.Screen
         name="profile"
@@ -57,12 +63,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
           tabBarShowLabel: false,
         }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            e.preventDefault();
-            navigation.navigate("profile");
-          },
-        })}
       />
     </Tabs>
   );

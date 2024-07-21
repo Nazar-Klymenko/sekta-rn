@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 import { Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -16,7 +18,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="username-bridge"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Create username",
           animation: "fade_from_bottom",
         }}
@@ -24,7 +26,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="login"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Log in",
           animation: "fade_from_bottom",
         }}
@@ -32,7 +34,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="signup"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Sign Up",
           animation: "fade_from_bottom",
         }}
@@ -40,7 +42,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="forgot-password"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Forgot Password",
           animation: "fade_from_bottom",
         }}
@@ -48,7 +50,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="forgot-password-success"
         options={{
-          headerShown: true,
+          headerShown: Platform.OS !== "web",
           title: "Password recovery email sent!",
           animation: "fade_from_bottom",
         }}
