@@ -18,13 +18,9 @@ export const PrimaryButton = ({
 }: PrimaryButtonTypes): JSX.Element => {
   return (
     <Button
-      borderRadius="$2"
       backgroundColor="$accentBackground"
-      color="$accentColor"
       hoverStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
       pressStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
-      size="$7"
-      height={40}
       animation="quick"
       onPress={onPress}
       htmlFor={htmlFor}
@@ -32,9 +28,7 @@ export const PrimaryButton = ({
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       {...props}
     >
-      <Text fontSize={16} fontWeight="bold">
-        {text}
-      </Text>
+      {text}
     </Button>
   );
 };

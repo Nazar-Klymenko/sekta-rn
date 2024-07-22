@@ -6,6 +6,8 @@ import { Event } from "@/models/Event";
 import { format } from "date-fns";
 import { Button, Image, Paragraph, Text, XStack, YStack } from "tamagui";
 
+import { Tag } from "./Tag";
+
 interface EventCardProps {
   event: Event;
   onPress: () => void;
@@ -22,6 +24,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
       marginVertical="$2"
       borderRadius="$2"
       onPress={onPress}
+      // maxWidth={720}
+      // display="flex"
+      // justifyContent="center"
+      // width={720}
+      // minWidth="100%"
       // borderWidth="$0.25"
       // borderColor="$gray11Light"
     >
@@ -35,35 +42,27 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onPress }) => {
           <Text fontSize="$6" fontWeight="bold">
             {event.title}
           </Text>
+          {/* <YStack
+            backgroundColor="$accentBackground"
+            borderRadius="$2"
+            justifyContent="center"
+            alignItems="center"
+            padding="$2"
+          >
+            <Text fontSize={16} fontWeight="bold">
+              {formattedDayName}
+            </Text>
+            <Text>{formattedDay}</Text>
+          </YStack> */}
           <Text fontSize="$4" color="$gray10">
             {formattedDate}
           </Text>
         </XStack>
         <Paragraph color="$gray10Light">{event.caption}</Paragraph>
-        {/* <YStack
-          width={50}
-          height={50}
-          backgroundColor="$accentBackground"
-          borderRadius="$2"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Text fontSize={16} fontWeight="bold">
-            {formattedDayName}
-          </Text>
-          <Text>{formattedDay}</Text>
-        </YStack> */}
+
         <XStack flexWrap="wrap" gap="$2">
           {event.genres.map((genre, index) => (
-            <XStack
-              key={index}
-              backgroundColor={"$gray8Dark"}
-              borderRadius="$6"
-              paddingVertical="$2"
-              paddingHorizontal="$4"
-            >
-              <Text color="white">{genre}</Text>
-            </XStack>
+            <Tag tag={genre} key={index} />
           ))}
         </XStack>
       </YStack>

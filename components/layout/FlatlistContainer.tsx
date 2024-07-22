@@ -8,9 +8,8 @@ interface PageContainerProps extends Omit<StackProps, "children"> {
   children: React.ReactNode;
   scrollable?: boolean;
 }
-export function PageContainer({
+export function FlatlistContainer({
   children,
-  scrollable = true,
   style,
   ...stackProps
 }: PageContainerProps) {
@@ -22,39 +21,17 @@ export function PageContainer({
     minHeight: "100%",
     width: "100%",
     maxWidth: "100%",
-    ...(media.gtXs && { maxWidth: 540 }),
-    ...(media.gtSm && { maxWidth: 720 }),
-    ...(media.gtMd && { maxWidth: 720 }),
-    ...(media.gtLg && { maxWidth: 720 }),
     marginHorizontal: "auto",
-    padding: "$4",
     ...stackProps,
   };
 
   const content = (
     <YStack flex={1} backgroundColor="$background">
-      <YStack
-        {...containerStyle}
-        flex={1}
-        padding={scrollable ? "$4" : 0}
-        gap="$4"
-      >
+      <YStack {...containerStyle} flex={1} gap="$4">
         {children}
       </YStack>
     </YStack>
   );
-
-  if (scrollable) {
-    return (
-      <ScrollView
-        style={{ flex: 1, backgroundColor: theme.background.get() }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
-        {content}
-      </ScrollView>
-    );
-  }
 
   return content;
 }

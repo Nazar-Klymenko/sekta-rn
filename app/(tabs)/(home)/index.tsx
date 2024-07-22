@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, Platform } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useEvents } from "@/hooks/useEvents";
@@ -8,7 +8,8 @@ import { useRouter } from "expo-router";
 import { Button, Spinner, Text, View, YStack, useTheme } from "tamagui";
 
 import { EventCard } from "@/components/EventCard";
-import { PageContainer } from "@/components/PageContainer";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -17,13 +18,7 @@ export default function HomeScreen() {
   const { user, isLoggedIn } = useAuth();
   const { data: events, isLoading, isError, error, refetch } = useEvents();
 
-  if (isLoading) {
-    return (
-      <PageContainer>
-        <Spinner color="$accentColor" size="large" />
-      </PageContainer>
-    );
-  }
+  if (isLoading) return <FullPageLoading />;
 
   if (isError) {
     return (
@@ -34,39 +29,32 @@ export default function HomeScreen() {
   }
 
   return (
-    <FlatList
-      style={{ minHeight: "100%", width: "100%", maxWidth: "100%" }}
-      data={events}
-      renderItem={({ item: event }) => (
-        <PageContainer scrollable={false}>
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
-          <EventCard
-            event={event}
-            onPress={() => router.push(`/event/${event.id}`)}
-          />
-        </PageContainer>
-      )}
-      keyExtractor={(item) => item.id}
-      refreshing={isLoading}
-      onRefresh={refetch}
-      ListEmptyComponent={() => (
-        <Text>No events found. Pull to refresh or check back later.</Text>
-      )}
-    />
+    <PageContainer scrollable={false} fullWidth>
+      <FlatList
+        style={{ flex: 1, width: "100%" }}
+        contentContainerStyle={{
+          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
+        }}
+        data={events}
+        renderItem={({ item: event }) => (
+          <YStack
+            style={{
+              maxWidth: 720,
+            }}
+          >
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+          </YStack>
+        )}
+        keyExtractor={(item) => item.id}
+        refreshing={isLoading}
+        onRefresh={refetch}
+        ListEmptyComponent={() => (
+          <Text>No events found. Pull to refresh or check back later.</Text>
+        )}
+      />
+    </PageContainer>
   );
 }

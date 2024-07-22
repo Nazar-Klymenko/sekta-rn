@@ -18,10 +18,6 @@ export const SecondaryButton = ({
 }: SecondaryButtonTypes): JSX.Element => {
   return (
     <Button
-      borderRadius="$2"
-      size="$7"
-      height={40}
-      borderColor="$borderColor"
       animation="quick"
       onPress={onPress}
       htmlFor={htmlFor}
@@ -29,9 +25,7 @@ export const SecondaryButton = ({
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       {...props}
     >
-      <Text fontSize={16} fontWeight="bold">
-        {text}
-      </Text>
+      {text}
     </Button>
   );
 };

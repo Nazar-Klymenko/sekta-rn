@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Text, YStack } from "tamagui";
 
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 export default function ForgotPasswordSuccessScreen() {

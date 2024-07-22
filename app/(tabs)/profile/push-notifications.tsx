@@ -5,8 +5,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { Redirect } from "expo-router";
 import { Label, Text, View, XStack, YStack } from "tamagui";
 
-import { PageContainer } from "@/components/PageContainer";
 import { Switch } from "@/components/buttons/CustomSwitch";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 export default function PushNotificationScreen() {
@@ -19,10 +19,10 @@ export default function PushNotificationScreen() {
       <PageContainer>
         <XStack display="flex" justifyContent="space-between">
           <YStack>
-            <Text fontSize="$6" fontWeight="bold">
+            <Text fontSize="$5" fontWeight="bold">
               Enable push notifications
             </Text>
-            <Text fontSize="$4" color="$gray10">
+            <Text fontSize="$4" color="$gray10Light">
               Enable notifications events that you planned to attend
             </Text>
           </YStack>

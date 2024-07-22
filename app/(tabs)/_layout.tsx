@@ -4,6 +4,8 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { useAuth } from "@/hooks/useAuth";
+
 import { Tabs } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -11,6 +13,7 @@ import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
   const theme = useTheme();
+  const { isLoggedIn } = useAuth();
 
   return (
     <Tabs
@@ -39,17 +42,19 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favourite"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Favourite",
           tabBarShowLabel: false,
-
+          tabBarItemStyle: {
+            display: isLoggedIn ? "flex" : "none",
+          },
           tabBarIcon: ({ color, size }) => <Heart color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="play"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Play",
           tabBarShowLabel: false,
 

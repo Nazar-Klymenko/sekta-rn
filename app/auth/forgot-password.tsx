@@ -12,9 +12,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Input } from "@/components/form/Input";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const forgotPasswordSchema = yup.object().shape({

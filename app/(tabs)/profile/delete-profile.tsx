@@ -19,9 +19,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { PasswordInput } from "@/components/form/PasswordInput";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
@@ -55,6 +55,9 @@ export default function DeleteAccountScreen() {
       onSuccess: () => {
         router.replace("/(auth)/login");
       },
+      onError: () => {
+        setShowConfirmDialog(false);
+      },
     });
   };
 
@@ -81,7 +84,6 @@ export default function DeleteAccountScreen() {
             text="Delete Account"
             isLoading={deleteAccountMutation.isLoading}
             disabled={deleteAccountMutation.isLoading}
-            backgroundColor="$red10"
           />
           {deleteAccountMutation.isError && (
             <Text color="$red10">
@@ -119,29 +121,37 @@ export default function DeleteAccountScreen() {
               scale={1}
               opacity={1}
               y={0}
+              gap="$4"
             >
-              <Dialog.Title>Confirm Account Deletion</Dialog.Title>
+              <Dialog.Title>Are you sure?</Dialog.Title>
               <Dialog.Description>
-                Are you sure you want to delete your account? This action cannot
-                be undone.
+                All your data will be permanently deleted. This action cannot be
+                undone.
               </Dialog.Description>
-              <Paragraph size="$2" theme="alt2">
-                All your data will be permanently deleted.
-              </Paragraph>
-              <XStack space="$3" justifyContent="flex-end">
+              <YStack gap="$4" justifyContent="flex-end">
+                <PrimaryButton
+                  theme="active"
+                  onPress={handleDeleteAccount}
+                  aria-label="Delete Account"
+                  isLoading={deleteAccountMutation.isLoading}
+                  disabled={deleteAccountMutation.isLoading}
+                  text="Delete Account"
+                  backgroundColor={theme.red10Light.get()}
+                  hoverStyle={{
+                    backgroundColor: theme.red10Light.get(),
+                    opacity: 0.9,
+                  }}
+                  pressStyle={{
+                    backgroundColor: theme.red10Light.get(),
+                    opacity: 0.9,
+                  }}
+                />
                 <Dialog.Close asChild>
                   <Button theme="alt1" aria-label="Close">
                     Cancel
                   </Button>
                 </Dialog.Close>
-                <Button
-                  theme="active"
-                  onPress={handleDeleteAccount}
-                  aria-label="Delete Account"
-                >
-                  Delete Account
-                </Button>
-              </XStack>
+              </YStack>
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog>

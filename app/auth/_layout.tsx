@@ -18,7 +18,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="username-bridge"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Create username",
           animation: "fade_from_bottom",
         }}
@@ -26,7 +26,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="login"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Log in",
           animation: "fade_from_bottom",
         }}
@@ -34,7 +34,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="signup"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Sign Up",
           animation: "fade_from_bottom",
         }}
@@ -42,7 +42,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="forgot-password"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Forgot Password",
           animation: "fade_from_bottom",
         }}
@@ -50,7 +50,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="forgot-password-success"
         options={{
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           title: "Password recovery email sent!",
           animation: "fade_from_bottom",
         }}

@@ -13,10 +13,10 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { HelloWave } from "@/components/HelloWave";
-import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const usernameBridgeSchema = yup.object().shape({

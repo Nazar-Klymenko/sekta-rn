@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useAddEventToCollection, useEvent } from "@/hooks/useEvents";
 
 import { format } from "date-fns";
+import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   Button,
@@ -21,8 +22,10 @@ import {
   useTheme,
 } from "tamagui";
 
-import { PageContainer } from "@/components/PageContainer";
+import { Tag } from "@/components/Tag";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -41,13 +44,7 @@ export default function EventDetailsPage() {
     );
   }
 
-  if (isLoading) {
-    return (
-      <PageContainer>
-        <Spinner color="$accentColor" size="large" />
-      </PageContainer>
-    );
-  }
+  if (isLoading) return <FullPageLoading />;
 
   if (isError) {
     return (
@@ -175,15 +172,7 @@ export default function EventDetailsPage() {
           </Text>
           <XStack flexWrap="wrap" gap="$2">
             {event.lineup.map((artist, index) => (
-              <XStack
-                key={index}
-                backgroundColor={"$gray8Dark"}
-                borderRadius="$6"
-                paddingVertical="$2"
-                paddingHorizontal="$4"
-              >
-                <Text color="white">{artist}</Text>
-              </XStack>
+              <Tag tag={artist} key={index} />
             ))}
           </XStack>
         </YStack>
@@ -193,15 +182,7 @@ export default function EventDetailsPage() {
           </Text>
           <XStack flexWrap="wrap" gap="$2">
             {event.genres.map((genre, index) => (
-              <XStack
-                key={index}
-                backgroundColor={"$gray8Dark"}
-                borderRadius="$6"
-                paddingVertical="$2"
-                paddingHorizontal="$4"
-              >
-                <Text color="white">{genre}</Text>
-              </XStack>
+              <Tag tag={genre} key={index} />
             ))}
           </XStack>
         </YStack>

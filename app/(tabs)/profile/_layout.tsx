@@ -15,7 +15,7 @@ export default function HomeLayout() {
         options={{
           title: "Profiles",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -27,7 +27,7 @@ export default function HomeLayout() {
         options={{
           title: "Profile information",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -39,7 +39,7 @@ export default function HomeLayout() {
         options={{
           title: "Change Password",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -51,7 +51,7 @@ export default function HomeLayout() {
         options={{
           title: "Delete account",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -63,7 +63,7 @@ export default function HomeLayout() {
         options={{
           title: "Push notifications",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -75,7 +75,7 @@ export default function HomeLayout() {
         options={{
           title: "Email notifications",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -87,7 +87,7 @@ export default function HomeLayout() {
         options={{
           title: "Cookie policy",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -99,7 +99,7 @@ export default function HomeLayout() {
         options={{
           title: "Terms of service",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
@@ -111,7 +111,7 @@ export default function HomeLayout() {
         options={{
           title: "Contact us",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },

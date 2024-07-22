@@ -15,7 +15,7 @@ export default function HomeLayout() {
         options={{
           title: "Favourite",
           animation: "fade_from_bottom",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },

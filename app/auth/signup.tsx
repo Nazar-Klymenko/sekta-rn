@@ -10,13 +10,13 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Checkbox } from "@/components/form/Checkbox";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordRequirements } from "@/components/form/PasswordRequirements";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const signUpSchema = yup.object().shape({

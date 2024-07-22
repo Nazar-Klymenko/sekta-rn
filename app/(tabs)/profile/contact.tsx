@@ -2,7 +2,7 @@ import React from "react";
 
 import { Text, XStack, YStack } from "tamagui";
 
-import { PageContainer } from "@/components/PageContainer";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function Contact() {
   return (

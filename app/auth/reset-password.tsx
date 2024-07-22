@@ -13,9 +13,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { PageContainer } from "@/components/PageContainer";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { PasswordInput } from "@/components/form/PasswordInput";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const newPasswordSchema = yup.object().shape({
   password: yup

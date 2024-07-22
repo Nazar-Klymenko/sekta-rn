@@ -12,11 +12,12 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { PageContainer } from "@/components/PageContainer";
 import { MenuButton } from "@/components/buttons/MenuButton";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Input } from "@/components/form/Input";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 const profileUpdateSchema = yup.object().shape({
@@ -81,9 +82,7 @@ export default function UpdateProfileScreen() {
     }
   };
 
-  if (isLoading) {
-    return <Spinner color="$accentColor" size="large" />;
-  }
+  if (isLoading) return <FullPageLoading />;
 
   if (isError) {
     return <Text>Error loading user data</Text>;

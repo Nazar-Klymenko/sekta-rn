@@ -1,7 +1,7 @@
 // src/pages/LikedEventsPage.tsx
 import React from "react";
 
-import { FlatList } from "react-native";
+import { FlatList, Platform } from "react-native";
 
 import { useLikedEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
@@ -10,19 +10,14 @@ import { useRouter } from "expo-router";
 import { Spinner, Text, YStack } from "tamagui";
 
 import { EventCard } from "@/components/EventCard";
-import { PageContainer } from "@/components/PageContainer";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function LikedEventsPage() {
   const { data: likedEvents, isLoading, isError, error } = useLikedEvents();
   const router = useRouter();
 
-  if (isLoading) {
-    return (
-      <PageContainer>
-        <Spinner color="$accentColor" size="large" />
-      </PageContainer>
-    );
-  }
+  if (isLoading) return <FullPageLoading />;
 
   if (isError) {
     return (
@@ -40,23 +35,32 @@ export default function LikedEventsPage() {
     );
   }
 
-  const renderEvent = ({ item }: { item: Event }) => (
-    <EventCard event={item} onPress={() => router.push(`/event/${item.id}`)} />
-  );
-
   return (
-    <PageContainer>
-      <YStack gap="$4">
-        <Text fontSize="$8" fontWeight="bold">
-          Liked Events
-        </Text>
-        <FlatList
-          data={likedEvents}
-          renderItem={renderEvent}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: 16 }}
-        />
-      </YStack>
+    <PageContainer scrollable={false} fullWidth>
+      <FlatList
+        style={{ flex: 1, width: "100%" }}
+        contentContainerStyle={{
+          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
+        }}
+        data={likedEvents}
+        renderItem={({ item: event }) => (
+          <YStack
+            style={{
+              maxWidth: 720,
+            }}
+          >
+            <EventCard
+              event={event}
+              onPress={() => router.push(`/event/${event.id}`)}
+            />
+          </YStack>
+        )}
+        keyExtractor={(item) => item.id}
+        refreshing={isLoading}
+        ListEmptyComponent={() => (
+          <Text>No events found. Pull to refresh or check back later.</Text>
+        )}
+      />
     </PageContainer>
   );
 }

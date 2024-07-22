@@ -21,11 +21,11 @@ import {
   styled,
 } from "tamagui";
 
-import { PageContainer } from "@/components/PageContainer";
 import { Switch } from "@/components/buttons/CustomSwitch";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { LanguageSelect } from "@/components/form/LanguageSelect";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">

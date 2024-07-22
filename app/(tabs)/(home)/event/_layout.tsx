@@ -15,7 +15,7 @@ export default function HomeLayout() {
         options={{
           animation: "fade_from_bottom",
           title: "Event",
-          headerShown: Platform.OS !== "web",
+          headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
