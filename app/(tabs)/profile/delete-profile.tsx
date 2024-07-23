@@ -1,4 +1,6 @@
 // src/screens/DeleteAccountScreen.tsx
+import { useToastController } from "@tamagui/toast";
+
 import React, { useState } from "react";
 
 import { useDeleteAccount } from "@/hooks/useAuthOperations";
@@ -35,6 +37,8 @@ type FormValues = yup.InferType<typeof deleteAccountSchema>;
 
 export default function DeleteAccountScreen() {
   const theme = useTheme();
+  const toast = useToastController();
+
   const router = useRouter();
   const deleteAccountMutation = useDeleteAccount();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -53,9 +57,17 @@ export default function DeleteAccountScreen() {
     const password = methods.getValues("password");
     deleteAccountMutation.mutate(password, {
       onSuccess: () => {
-        router.replace("/(auth)/login");
+        toast.show("Account deleted", {
+          message: "Your account has been successfully deleted.",
+          variant: "success",
+        });
+        router.replace("/(tabs)/(home)/");
       },
-      onError: () => {
+      onError: (error) => {
+        toast.show("Delete account failed", {
+          message: error instanceof Error ? error.message : "An error occurred",
+          variant: "error",
+        });
         setShowConfirmDialog(false);
       },
     });
@@ -68,7 +80,7 @@ export default function DeleteAccountScreen() {
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Delete Account
           </Text>
-          <Text textAlign="center" color="$red10">
+          <Text fontSize="$4" color="$gray10Light">
             Warning: This action is irreversible. All your data will be
             permanently deleted.
           </Text>
@@ -85,11 +97,6 @@ export default function DeleteAccountScreen() {
             isLoading={deleteAccountMutation.isLoading}
             disabled={deleteAccountMutation.isLoading}
           />
-          {deleteAccountMutation.isError && (
-            <Text color="$red10">
-              Error: {deleteAccountMutation.error.message}
-            </Text>
-          )}
         </FormProvider>
 
         <Dialog
@@ -97,7 +104,7 @@ export default function DeleteAccountScreen() {
           open={showConfirmDialog}
           onOpenChange={setShowConfirmDialog}
         >
-          <Dialog.Portal>
+          <Dialog.Portal padding="$4">
             <Dialog.Overlay
               key="overlay"
               animation="quick"
@@ -107,6 +114,7 @@ export default function DeleteAccountScreen() {
             />
             <Dialog.Content
               key="content"
+              borderWidth={1}
               animation={[
                 "quick",
                 {

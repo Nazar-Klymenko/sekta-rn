@@ -1,8 +1,9 @@
 import React from "react";
 
 import { ScrollView, ViewStyle } from "react-native";
+import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 
-import { Stack, StackProps, YStack, useMedia, useTheme } from "tamagui";
+import { Stack, StackProps, View, YStack, useMedia, useTheme } from "tamagui";
 
 interface PageContainerProps extends Omit<StackProps, "children"> {
   children: React.ReactNode;
@@ -48,13 +49,15 @@ export function PageContainer({
 
   if (scrollable) {
     return (
-      <ScrollView
-        style={{ flex: 1, backgroundColor: theme.background.get() }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
-        {content}
-      </ScrollView>
+      <View style={StyleSheet.absoluteFill}>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: theme.background.get() }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+        >
+          {content}
+        </ScrollView>
+      </View>
     );
   }
 

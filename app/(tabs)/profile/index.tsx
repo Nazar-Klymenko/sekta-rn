@@ -62,7 +62,7 @@ export default function ProfileScreen() {
         <Text fontSize="$6" fontWeight="bold">
           {userData?.username || user?.displayName || "Guest"}
         </Text>
-        <Text fontSize="$3" color="$gray10">
+        <Text fontSize="$3" color="$gray10Light">
           {userData?.email || user?.email || "Not logged in"}
         </Text>
       </YStack>

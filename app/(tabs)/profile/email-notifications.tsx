@@ -22,7 +22,7 @@ export default function EmailNotificationScreen() {
             <Text fontSize="$5" fontWeight="bold">
               Enable email notifications
             </Text>
-            <Text fontSize="$4" color="$gray10Light">
+            <Text fontSize="$3" color="$gray10Light">
               Enable notifications about new events and other news
             </Text>
           </YStack>

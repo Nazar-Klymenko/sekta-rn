@@ -122,7 +122,7 @@ export default function EventDetailsPage() {
                 <Text fontSize="$4" fontWeight="bold">
                   {formattedDate}
                 </Text>
-                <Text fontSize="$4" fontWeight="bold" color="$gray10">
+                <Text fontSize="$4" fontWeight="bold" color="$gray10Light">
                   {formattedTime}
                 </Text>
               </YStack>

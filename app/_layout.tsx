@@ -21,26 +21,11 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
 
 import { CurrentToast } from "@/components/Toast";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
-
-function LoadingScreen() {
-  const theme = useTheme();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: theme.background.get(),
-      }}
-    >
-      <Text color="$color">Loading...</Text>
-    </View>
-  );
-}
 
 function AppContent() {
   const { themeColor } = useThemeContext();
@@ -48,8 +33,8 @@ function AppContent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
-        <SafeAreaProvider>
+      <SafeAreaProvider>
+        <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
           <ToastProvider>
             <AuthProvider>
               <Stack>
@@ -72,14 +57,14 @@ function AppContent() {
             </AuthProvider>
             <CurrentToast />
             <ToastViewport
-              flexDirection="column-reverse"
               top={top}
               left={left}
               right={right}
+              flexDirection="column-reverse"
             />
           </ToastProvider>
-        </SafeAreaProvider>
-      </TamaguiProvider>
+        </TamaguiProvider>
+      </SafeAreaProvider>
     </QueryClientProvider>
   );
 }
@@ -120,7 +105,7 @@ export default function RootLayout() {
   if (!appIsReady || !fontsLoaded) {
     return (
       <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
-        <LoadingScreen />
+        <FullPageLoading />
       </TamaguiProvider>
     );
   }

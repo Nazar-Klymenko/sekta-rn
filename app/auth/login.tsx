@@ -45,6 +45,7 @@ export default function LoginScreen() {
         onSuccess: () => {
           toast.show("Successfully logged in", {
             message: "Welcome back!",
+            variant: "success",
           });
         },
         onError: (error) => {
@@ -62,7 +63,7 @@ export default function LoginScreen() {
     <AuthPageGuard>
       <PageContainer>
         <FormProvider {...methods}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
+          <Text fontSize="$8" fontWeight="bold" textAlign="center">
             Log In
           </Text>
           <Input
@@ -82,7 +83,7 @@ export default function LoginScreen() {
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/forgot-password">
-              <Text color="$accentColor" textAlign="center">
+              <Text color="$accentColor" textAlign="center" fontSize="$3">
                 Forgot password?
               </Text>
             </Link>
@@ -98,9 +99,12 @@ export default function LoginScreen() {
           )} */}
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/username-bridge">
-              <Text textAlign="center">
+              <Text textAlign="center" fontSize="$3">
                 Don't have an account?
-                <Text color="$accentColor"> Sign Up</Text>
+                <Text color="$accentColor" fontSize="$3">
+                  {" "}
+                  Sign Up
+                </Text>
               </Text>
             </Link>
           </YStack>

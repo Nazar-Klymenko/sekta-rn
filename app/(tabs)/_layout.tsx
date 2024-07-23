@@ -42,7 +42,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favourite"
         options={{
-          headerShown: true || Platform.OS !== "web",
+          headerShown: false,
+          // headerShown: true || Platform.OS !== "web",
           title: "Favourite",
           tabBarShowLabel: false,
           tabBarItemStyle: {

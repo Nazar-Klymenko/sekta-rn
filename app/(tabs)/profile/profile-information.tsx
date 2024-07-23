@@ -1,3 +1,5 @@
+import { useToastController } from "@tamagui/toast";
+
 import React, { useEffect } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
@@ -38,6 +40,7 @@ export default function UpdateProfileScreen() {
   const { user } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
   const updateProfileMutation = useUpdateProfile();
+  const toast = useToastController();
 
   const methods = useForm({
       resolver: yupResolver(profileUpdateSchema),
@@ -47,7 +50,13 @@ export default function UpdateProfileScreen() {
         fullName: userData?.fullName || "",
       },
     }),
-    { handleSubmit, reset, watch, setError } = methods;
+    {
+      handleSubmit,
+      reset,
+      watch,
+      setError,
+      formState: { isDirty },
+    } = methods;
 
   useEffect(() => {
     if (userData) {
@@ -72,13 +81,35 @@ export default function UpdateProfileScreen() {
     try {
       const result = await checkUsernameAvailability();
       if (result.data) {
-        updateProfileMutation.mutate(data);
+        updateProfileMutation.mutate(data, {
+          onSuccess: () => {
+            toast.show("Profile updated successfully", {
+              message: "Your profile information has been updated.",
+              variant: "success",
+            });
+          },
+          onError: (error) => {
+            toast.show("Profile update failed", {
+              message:
+                error instanceof Error ? error.message : "An error occurred",
+              variant: "error",
+            });
+          },
+        });
       } else {
         setError("username", { message: "Username is taken" });
+        toast.show("Username is taken", {
+          message: "Please choose a different username.",
+          variant: "error",
+        });
       }
     } catch (err) {
       console.error("Error checking username availability:", err);
       setError("username", { message: "Error checking username availability" });
+      toast.show("Error", {
+        message: "Error checking username availability.",
+        variant: "error",
+      });
     }
   };
 
@@ -120,7 +151,7 @@ export default function UpdateProfileScreen() {
           >
             <YStack>
               <Text>Verify email</Text>
-              <Text fontSize="$4" color="$gray10">
+              <Text fontSize="$4" color="$gray10Light">
                 {user?.email}
               </Text>
             </YStack>
@@ -133,14 +164,14 @@ export default function UpdateProfileScreen() {
             onPress={handleSubmit(onSubmit)}
             text="Update Profile"
             isLoading={updateProfileMutation.isLoading}
-            disabled={updateProfileMutation.isLoading}
+            disabled={updateProfileMutation.isLoading || !isDirty}
           />
-          {updateProfileMutation.isError && (
+          {/* {updateProfileMutation.isError && (
             <Text>Error: {updateProfileMutation.error.message}</Text>
           )}
           {updateProfileMutation.isSuccess && (
             <Text>Profile updated successfully!</Text>
-          )}
+          )} */}
         </FormProvider>
       </PageContainer>
     </AuthGuard>

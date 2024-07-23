@@ -8,6 +8,7 @@ import {
   Phone,
   Youtube,
 } from "@tamagui/lucide-icons";
+import { useToastController } from "@tamagui/toast";
 
 import React, { useState } from "react";
 
@@ -71,6 +72,7 @@ const portfolioLinks = [
 export default function PlayScreen() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const theme = useTheme();
+  const toast = useToastController();
 
   const methods = useForm<FormValues>({
       resolver: yupResolver(playSchema),
@@ -95,9 +97,22 @@ export default function PlayScreen() {
 
   const onSubmit = async (data: PlayData) => {
     try {
-      submitPlayInfo(data);
-      console.log("Play info submitted successfully!");
-      methods.reset();
+      submitPlayInfo(data, {
+        onSuccess: () => {
+          toast.show("Application Submitted", {
+            message: "Your play info has been submitted successfully!",
+            variant: "success",
+          });
+          methods.reset();
+        },
+        onError: (error) => {
+          toast.show("Submission Failed", {
+            message:
+              error instanceof Error ? error.message : "An error occurred",
+            variant: "error",
+          });
+        },
+      });
     } catch (error) {
       console.error("Error submitting play info:", error);
     }

@@ -1,3 +1,5 @@
+import { useToastController } from "@tamagui/toast";
+
 import React from "react";
 
 import { useAuth } from "@/hooks/useAuth";
@@ -31,6 +33,7 @@ const changePasswordSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof changePasswordSchema>;
 
 export default function ChangePasswordScreen() {
+  const toast = useToastController();
   const theme = useTheme();
   const changePasswordMutation = useChangePassword();
   const methods = useForm({
@@ -44,7 +47,6 @@ export default function ChangePasswordScreen() {
     { watch, reset, handleSubmit } = methods;
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
     changePasswordMutation.mutate(
       {
         currentPassword: data.currentPassword,
@@ -53,6 +55,17 @@ export default function ChangePasswordScreen() {
       {
         onSuccess: () => {
           reset();
+          toast.show("Password changed successfully", {
+            message: "Your password has been updated.",
+            variant: "success",
+          });
+        },
+        onError: (error) => {
+          toast.show("Change password failed", {
+            message:
+              error instanceof Error ? error.message : "An error occurred",
+            variant: "error",
+          });
         },
       }
     );

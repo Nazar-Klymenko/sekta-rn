@@ -22,7 +22,7 @@ export default function PushNotificationScreen() {
             <Text fontSize="$5" fontWeight="bold">
               Enable push notifications
             </Text>
-            <Text fontSize="$4" color="$gray10Light">
+            <Text fontSize="$3" color="$gray10Light">
               Enable notifications events that you planned to attend
             </Text>
           </YStack>

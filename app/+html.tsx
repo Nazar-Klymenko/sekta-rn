@@ -37,15 +37,6 @@ const responsiveBackground = `
 body {
   background-color: #fff;
 }
-  html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-}
-
-#root {
-  height: 100%;
-}
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #000;
