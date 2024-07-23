@@ -97,7 +97,7 @@ export default function SignupScreen() {
             id="signup-email"
             name="email"
             label="Email"
-            placeholder="Enter your email"
+            placeholder="Your email"
             inputMode="email"
             autoCapitalize="none"
           />
@@ -106,7 +106,7 @@ export default function SignupScreen() {
               id="signup-password"
               name="password"
               label="Password"
-              placeholder="Enter your password"
+              placeholder="New password"
               secureTextEntry
             />
             <PasswordRequirements password={watch("password")} />
@@ -118,16 +118,24 @@ export default function SignupScreen() {
             disabled={signUpMutation.isLoading}
           />
           <YStack>
-            <Checkbox
-              name="agreeEmail"
-              id="agree-email"
-              label="I want to subscribe to newsletter to receive email notifications about new events"
-            />
-            <Checkbox
-              name="agreeTos"
-              id="signup-agree-tos"
-              label="I agree to Sekta Selekta's Terms of service and Privacy Policy*"
-            />
+            <Checkbox name="agreeEmail" id="agree-email">
+              <Text>
+                I want to subscribe to newsletter to receive email notifications
+                about new events
+              </Text>
+            </Checkbox>
+            <Checkbox name="agreeTos" id="signup-agree-tos">
+              <Text>
+                I agree to Sekta Selekta's{" "}
+                <Link href="/tos" push>
+                  <Text color="$accentColor">Terms of service </Text>
+                </Link>
+                and
+                <Link href="/privacy-policy" push>
+                  <Text color="$accentColor"> Privacy Policy*</Text>
+                </Link>
+              </Text>
+            </Checkbox>
           </YStack>
 
           {signUpMutation.isError && (

@@ -70,7 +70,7 @@ export default function LoginScreen() {
             id="login-email"
             name="email"
             label="Email"
-            placeholder="Enter your email"
+            placeholder="Your email"
             inputMode="email"
             autoCapitalize="none"
           />
@@ -78,7 +78,7 @@ export default function LoginScreen() {
             id="login-password"
             name="password"
             label="Password"
-            placeholder="Enter your password"
+            placeholder="Your password"
             secureTextEntry
           />
           <YStack alignItems="center" padding="$4" gap="$4">

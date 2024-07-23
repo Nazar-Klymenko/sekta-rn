@@ -9,7 +9,7 @@ export default function CookiePolicyScreen() {
     <PageContainer>
       <YStack gap="$2">
         <Text fontSize="$6" fontWeight="bold">
-          Cookie policy page - add later
+          Cookie and Privacy policy page - add later
         </Text>
         <XStack>
           <Text fontSize="$4">Policy itself</Text>

@@ -7,6 +7,8 @@ import {
 
 import React, { useEffect, useState } from "react";
 
+import { Platform } from "react-native";
+
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
 import tamaguiConfig from "@/tamagui.config";
@@ -30,6 +32,7 @@ const queryClient = new QueryClient();
 function AppContent() {
   const { themeColor } = useThemeContext();
   const { left, top, right } = useSafeAreaInsets();
+  const theme = useTheme();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -53,6 +56,30 @@ function AppContent() {
                   }}
                 />
                 <Stack.Screen name="+not-found" />
+                <Stack.Screen
+                  name="privacy-policy"
+                  options={{
+                    title: "Privacy policy",
+                    animation: "fade_from_bottom",
+                    headerShown: true || Platform.OS !== "web",
+                    headerStyle: {
+                      backgroundColor: theme.background.get(),
+                    },
+                    headerTintColor: theme.color.get(),
+                  }}
+                />
+                <Stack.Screen
+                  name="tos"
+                  options={{
+                    title: "Terms of service",
+                    animation: "fade_from_bottom",
+                    headerShown: true || Platform.OS !== "web",
+                    headerStyle: {
+                      backgroundColor: theme.background.get(),
+                    },
+                    headerTintColor: theme.color.get(),
+                  }}
+                />
               </Stack>
             </AuthProvider>
             <CurrentToast />

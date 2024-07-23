@@ -83,7 +83,7 @@ export default function UsernameBridgeScreen() {
             id="username"
             name="username"
             label="Username"
-            placeholder="Enter your username"
+            placeholder="Username"
             autoCapitalize="none"
             inputMode="text"
           />

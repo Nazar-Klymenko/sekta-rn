@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "expo-router";
 import { useController, useFormContext } from "react-hook-form";
 import {
   CheckboxProps,
@@ -12,12 +13,19 @@ import {
 
 interface CustomCheckboxProps
   extends Omit<CheckboxProps, "checked" | "onCheckedChange"> {
+  children: React.ReactNode;
   name: string;
-  label: string;
+  label?: string;
   id: string;
 }
 
-export function Checkbox({ name, label, id, ...props }: CustomCheckboxProps) {
+export function Checkbox({
+  name,
+  label,
+  id,
+  children,
+  ...props
+}: CustomCheckboxProps) {
   const { control } = useFormContext();
   const {
     field,
@@ -43,8 +51,8 @@ export function Checkbox({ name, label, id, ...props }: CustomCheckboxProps) {
             <Text>✓</Text>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
-        <Label fontSize={11} htmlFor={id}>
-          {label}
+        <Label fontSize={12} htmlFor={id}>
+          {children}
         </Label>
       </XStack>
       {error && (

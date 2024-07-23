@@ -122,11 +122,11 @@ export default function ProfileScreen() {
         <SectionTitle>Support</SectionTitle>
         <MenuItem
           title="Terms of Service"
-          onPress={() => router.push("/profile/tos")}
+          onPress={() => router.push("/tos")}
         />
         <MenuItem
-          title="Cookie policy"
-          onPress={() => router.push("/profile/cookie-policy")}
+          title="Privacy policy"
+          onPress={() => router.push("/privacy-policy")}
         />
         <MenuItem
           title="Contact us"
