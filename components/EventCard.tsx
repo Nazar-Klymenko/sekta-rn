@@ -10,13 +10,14 @@ import { Tag } from "./Tag";
 
 interface EventCardProps {
   event: Event;
+  hrefSource: "event" | "favourite";
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ event }) => {
+export const EventCard: React.FC<EventCardProps> = ({ event, hrefSource }) => {
   const formattedDate = format(new Date(event.date), "dd/MM/yyyy HH:mm");
 
   return (
-    <Link href={`/event/${event.id}`} asChild>
+    <Link href={`/${hrefSource}/${event.id}`} asChild>
       <YStack
         padding="$4"
         marginVertical="$2"

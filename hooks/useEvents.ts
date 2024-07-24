@@ -1,5 +1,11 @@
 // src/hooks/useEvents.ts
-import { arrayUnion, doc, setDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 
 import { fetchEventById, fetchEvents, fetchLikedEvents } from "@/api/events";
 import { Event } from "@/models/Event";
@@ -18,24 +24,54 @@ export const useEvent = (id: string) => {
     enabled: !!id,
   });
 };
+export const useEventCollection = () => {
+  const { user } = useAuth();
+
+  return useQuery(
+    ["userCollection", user?.uid],
+    async () => {
+      if (!user) return null;
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      return userDoc.data()?.likedEvents || [];
+    },
+    {
+      enabled: !!user,
+    }
+  );
+};
 export const useAddEventToCollection = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const { data: likedEvents } = useEventCollection();
 
   return useMutation(
     async (eventId: string) => {
       if (!user) throw new Error("User not authenticated");
 
       const userRef = doc(db, "users", user.uid);
-      await setDoc(
-        userRef,
-        { likedEvents: arrayUnion(eventId) },
-        { merge: true }
-      );
+      const isLiked = likedEvents?.includes(eventId);
+
+      if (isLiked) {
+        await setDoc(
+          userRef,
+          { likedEvents: arrayRemove(eventId) },
+          { merge: true }
+        );
+      } else {
+        await setDoc(
+          userRef,
+          { likedEvents: arrayUnion(eventId) },
+          { merge: true }
+        );
+      }
+
+      return !isLiked;
     },
     {
-      onSuccess: () => {
+      onSuccess: (_, eventId) => {
         queryClient.invalidateQueries("userCollection");
+        queryClient.invalidateQueries(["event", eventId]);
+        queryClient.invalidateQueries("likedEvents");
       },
     }
   );
@@ -48,7 +84,7 @@ export const useLikedEvents = () => {
     () => fetchLikedEvents(user!.uid),
     {
       enabled: !!user,
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      staleTime: 5 * 1000,
     }
   );
 };

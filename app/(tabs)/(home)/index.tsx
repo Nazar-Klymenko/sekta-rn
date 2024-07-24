@@ -42,10 +42,7 @@ export default function HomeScreen() {
               maxWidth: 720,
             }}
           >
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
+            <EventCard event={event} hrefSource="event" />
           </YStack>
         )}
         keyExtractor={(item) => item.id}

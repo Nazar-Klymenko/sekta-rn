@@ -49,10 +49,7 @@ export default function LikedEventsPage() {
               maxWidth: 720,
             }}
           >
-            <EventCard
-              event={event}
-              onPress={() => router.push(`/event/${event.id}`)}
-            />
+            <EventCard event={event} hrefSource="favourite" />
           </YStack>
         )}
         keyExtractor={(item) => item.id}

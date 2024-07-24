@@ -4,7 +4,11 @@ import { Calendar, CreditCard, Heart, MapPin } from "@tamagui/lucide-icons";
 import React, { useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useAddEventToCollection, useEvent } from "@/hooks/useEvents";
+import {
+  useAddEventToCollection,
+  useEvent,
+  useEventCollection,
+} from "@/hooks/useEvents";
 
 import { format } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,11 +34,11 @@ import { PageContainer } from "@/components/layout/PageContainer";
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useEvent(id || "");
-  const [isLiked, setIsLiked] = useState(false);
   const theme = useTheme();
   const addEventToCollection = useAddEventToCollection();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
+  const { data: likedEvents } = useEventCollection();
 
   if (!id) {
     return (
@@ -61,11 +65,12 @@ export default function EventDetailsPage() {
       </PageContainer>
     );
   }
+  const isLiked = likedEvents?.includes(event.id);
+
   const handleLike = () => {
     if (!isLoggedIn) {
       router.push("/auth/login");
     } else {
-      setIsLiked(!isLiked);
       addEventToCollection.mutate(event.id);
     }
   };
@@ -75,6 +80,11 @@ export default function EventDetailsPage() {
   return (
     <PageContainer>
       <YStack gap="$4">
+        <Image
+          source={{ uri: event.image.publicUrl }}
+          aspectRatio={16 / 9}
+          borderRadius="$2"
+        />
         <XStack justifyContent="space-between" alignItems="center">
           <Text fontSize="$8" fontWeight="bold">
             {event.title}
@@ -97,11 +107,6 @@ export default function EventDetailsPage() {
             animation="bouncy"
           />
         </XStack>
-        <Image
-          source={{ uri: event.image.publicUrl }}
-          aspectRatio={16 / 9}
-          borderRadius="$2"
-        />
         <YStack gap="$2">
           <Text fontSize="$6" fontWeight="bold">
             Details
@@ -165,7 +170,6 @@ export default function EventDetailsPage() {
           </Text>
           <Paragraph color="$color10">{event.caption}</Paragraph>
         </YStack>
-
         <YStack gap="$2">
           <Text fontSize="$6" fontWeight="bold">
             Lineup

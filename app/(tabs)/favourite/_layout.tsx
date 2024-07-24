@@ -22,6 +22,18 @@ export default function HomeLayout() {
           headerTintColor: theme.color.get(),
         }}
       />
+      <Stack.Screen
+        name="[id]"
+        options={{
+          animation: "fade_from_bottom",
+          title: "Event",
+          headerShown: true || Platform.OS !== "web",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
     </Stack>
   );
 }

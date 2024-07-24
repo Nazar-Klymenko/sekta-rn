@@ -94,9 +94,6 @@ export default function LoginScreen() {
             isLoading={signInMutation.isLoading}
             disabled={signInMutation.isLoading}
           />
-          {/* {signInMutation.isError && (
-            <Text>Error: {signInMutation.error.message}</Text>
-          )} */}
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href="/auth/username-bridge">
               <Text textAlign="center" fontSize="$3">
