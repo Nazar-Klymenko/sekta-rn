@@ -56,7 +56,8 @@
     "react-query": "^3.39.3",
     "tamagui": "^1.102.1",
     "yup": "^1.4.0",
-    "expo-linear-gradient": "~13.0.2"
+    "expo-linear-gradient": "~13.0.2",
+    "expo-blur": "~13.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

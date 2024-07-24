@@ -1,7 +1,13 @@
+import { useState } from "react";
+
 import { FlatList, Platform } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useEvents } from "@/hooks/useEvents";
+import {
+  useEventCollection,
+  useEvents,
+  useLikedEvents,
+} from "@/hooks/useEvents";
 import { useRouterPush } from "@/hooks/useRouterPush";
 
 import { useRouter } from "expo-router";
@@ -17,6 +23,8 @@ export default function HomeScreen() {
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
   const { data: events, isLoading, isError, error, refetch } = useEvents();
+  const { data: likedEvents } = useLikedEvents();
+  const { data: likedEventss } = useEventCollection();
 
   if (isLoading) return <FullPageLoading />;
 
@@ -36,15 +44,23 @@ export default function HomeScreen() {
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
         data={events}
-        renderItem={({ item: event }) => (
-          <YStack
-            style={{
-              maxWidth: 720,
-            }}
-          >
-            <EventCard event={event} hrefSource="event" />
-          </YStack>
-        )}
+        renderItem={({ item: event }) => {
+          const isLiked = likedEventss?.includes(event.id);
+
+          return (
+            <YStack
+              style={{
+                maxWidth: 720,
+              }}
+            >
+              <EventCard
+                event={event}
+                hrefSource="event"
+                isLiked={isLiked || false}
+              />
+            </YStack>
+          );
+        }}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         onRefresh={refetch}

@@ -115,6 +115,7 @@ export default function DeleteAccountScreen() {
             <Dialog.Content
               key="content"
               borderWidth={1}
+              borderColor="$borderColor"
               animation={[
                 "quick",
                 {

@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { fetchEventById, fetchEvents, fetchLikedEvents } from "@/api/events";
@@ -85,6 +86,45 @@ export const useLikedEvents = () => {
     {
       enabled: !!user,
       staleTime: 5 * 1000,
+    }
+  );
+};
+export const useUserLikedEvents = () => {
+  const { user } = useAuth();
+
+  return useQuery(
+    ["userLikedEvents", user?.uid],
+    async () => {
+      if (!user) return [];
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      return userDoc.data()?.likedEvents || [];
+    },
+    {
+      enabled: !!user,
+    }
+  );
+};
+export const useToggleEventLike = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation(
+    async ({ eventId, isLiked }: { eventId: string; isLiked: boolean }) => {
+      if (!user) throw new Error("User not authenticated");
+
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        likedEvents: isLiked ? arrayRemove(eventId) : arrayUnion(eventId),
+      });
+
+      return !isLiked;
+    },
+    {
+      onSuccess: (_, { eventId }) => {
+        queryClient.invalidateQueries("userCollection");
+        queryClient.invalidateQueries(["event", eventId]);
+        queryClient.invalidateQueries("likedEvents");
+      },
     }
   );
 };

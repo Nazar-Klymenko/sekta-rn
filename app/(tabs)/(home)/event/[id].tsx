@@ -1,7 +1,6 @@
-// src/pages/EventDetailsPage.tsx
 import { Calendar, CreditCard, Heart, MapPin } from "@tamagui/lucide-icons";
 
-import React, { useState } from "react";
+import React from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -11,20 +10,18 @@ import {
 } from "@/hooks/useEvents";
 
 import { format } from "date-fns";
-import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   Button,
-  Circle,
   Image,
   Paragraph,
-  ScrollView,
-  Spinner,
   Text,
   XStack,
   YStack,
   useTheme,
 } from "tamagui";
+
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import { Tag } from "@/components/Tag";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
@@ -40,33 +37,21 @@ export default function EventDetailsPage() {
   const router = useRouter();
   const { data: likedEvents } = useEventCollection();
 
-  if (!id) {
-    return (
-      <PageContainer>
-        <Text>No event ID provided</Text>
-      </PageContainer>
-    );
-  }
-
-  if (isLoading) return <FullPageLoading />;
-
-  if (isError) {
+  if (!id || isLoading) return <FullPageLoading />;
+  if (isError)
     return (
       <PageContainer>
         <Text>Error: {error.message}</Text>
       </PageContainer>
     );
-  }
-
-  if (!event) {
+  if (!event)
     return (
       <PageContainer>
         <Text>Event not found</Text>
       </PageContainer>
     );
-  }
-  const isLiked = likedEvents?.includes(event.id);
 
+  const isLiked = likedEvents?.includes(event.id);
   const handleLike = () => {
     if (!isLoggedIn) {
       router.push("/auth/login");
@@ -74,102 +59,83 @@ export default function EventDetailsPage() {
       addEventToCollection.mutate(event.id);
     }
   };
+
   const formattedDate = format(new Date(event.date), "EEEE, MMMM do yyyy");
   const formattedTime = format(new Date(event.date), "h:mm a");
 
   return (
     <PageContainer>
       <YStack gap="$4">
-        <Image
-          source={{ uri: event.image.publicUrl }}
-          aspectRatio={16 / 9}
-          borderRadius="$2"
-        />
-        <XStack justifyContent="space-between" alignItems="center">
-          <Text fontSize="$8" fontWeight="bold">
-            {event.title}
-          </Text>
-          <Button
-            size="$5"
-            circular
-            icon={
-              <Heart
-                size={24}
-                color={
-                  isLiked ? theme.red10Light.get() : theme.gray10Light.get()
-                }
-                fill={isLiked ? theme.red10Light.get() : "transparent"}
-              />
-            }
-            backgroundColor={isLiked ? "$red2" : "$gray2"}
-            onPress={handleLike}
-            pressStyle={{ scale: 0.9 }}
-            animation="bouncy"
+        <YStack position="relative">
+          <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
+          <LinearGradient
+            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
+            start={[0, 0]}
+            end={[0, 1]}
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 100,
+            }}
           />
-        </XStack>
-        <YStack gap="$2">
-          <Text fontSize="$6" fontWeight="bold">
-            Details
-          </Text>
-          <YStack gap="$2">
-            <XStack alignItems="center" gap="$2">
-              <YStack
-                width={60}
-                height={60}
-                backgroundColor="$gray6"
-                borderRadius="$2"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Calendar color="$accentColor" size={30} />
-              </YStack>
-              <YStack>
-                <Text fontSize="$4" fontWeight="bold">
-                  {formattedDate}
-                </Text>
-                <Text fontSize="$4" fontWeight="bold" color="$gray10Light">
-                  {formattedTime}
-                </Text>
-              </YStack>
-            </XStack>
-            <XStack alignItems="center" gap="$2">
-              <YStack
-                width={60}
-                height={60}
-                backgroundColor="$gray6"
-                borderRadius="$2"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <MapPin color="$accentColor" size={30} />
-              </YStack>
-              <Text fontSize="$4" fontWeight="bold">
-                {event?.location || "Nowa 3/3, Kraków"}
+          <XStack
+            position="absolute"
+            bottom={10}
+            left={10}
+            right={10}
+            justifyContent="space-between"
+            alignItems="flex-end"
+          >
+            <YStack>
+              <Text fontSize="$8" fontWeight="bold" color="white">
+                {event.title}
               </Text>
-            </XStack>
-            <XStack alignItems="center" gap="$2">
-              <YStack
-                width={60}
-                height={60}
-                backgroundColor="$gray6"
-                borderRadius="$2"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <CreditCard color="$accentColor" size={30} />
-              </YStack>
-              <Text fontSize="$4" fontWeight="bold">
-                {event?.price || "20.00"} PLN
-              </Text>
-            </XStack>
-          </YStack>
+            </YStack>
+            <Button
+              size="$5"
+              circular
+              icon={
+                <Heart
+                  size={24}
+                  color={isLiked ? theme.red10Light.get() : "white"}
+                  fill={isLiked ? theme.red10Light.get() : "transparent"}
+                />
+              }
+              backgroundColor={isLiked ? "$red2" : "rgba(255, 255, 255, 0.2)"}
+              onPress={handleLike}
+              pressStyle={{ scale: 0.9 }}
+              animation="bouncy"
+            />
+          </XStack>
         </YStack>
-        <YStack>
+
+        <YStack gap="$4">
+          <InfoItem
+            icon={<Calendar color={theme.accentColor.get()} size={24} />}
+            title="Date"
+            value={`${formattedDate} • ${formattedTime}`}
+          />
+          <InfoItem
+            icon={<MapPin color={theme.accentColor.get()} size={24} />}
+            title="Location"
+            value={event?.location || "Nowa 3/3, Kraków"}
+          />
+          <InfoItem
+            icon={<CreditCard color={theme.accentColor.get()} size={24} />}
+            title="Price"
+            value={`${event?.price || "20.00"} PLN`}
+          />
+        </YStack>
+
+        <YStack gap="$2">
           <Text fontSize="$6" fontWeight="bold">
             About this event
           </Text>
           <Paragraph color="$color10">{event.caption}</Paragraph>
         </YStack>
+
         <YStack gap="$2">
           <Text fontSize="$6" fontWeight="bold">
             Lineup
@@ -180,6 +146,7 @@ export default function EventDetailsPage() {
             ))}
           </XStack>
         </YStack>
+
         <YStack gap="$2">
           <Text fontSize="$6" fontWeight="bold">
             Genres
@@ -190,22 +157,32 @@ export default function EventDetailsPage() {
             ))}
           </XStack>
         </YStack>
-        <YStack>
-          <PrimaryButton text="Buy ticket 🎟️" />
-        </YStack>
+
+        <PrimaryButton text="Buy ticket 🎟️" />
       </YStack>
     </PageContainer>
   );
 }
-const getRandomColor = () => {
-  const colors = [
-    "$blue8",
-    "$green8",
-    "$yellow8",
-    "$red8",
-    "$purple8",
-    "$pink8",
-    "$orange8",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
+
+const InfoItem = ({ icon, title, value }: any) => (
+  <XStack alignItems="center" gap="$3">
+    <YStack
+      width={50}
+      height={50}
+      backgroundColor="$gray6"
+      borderRadius="$2"
+      justifyContent="center"
+      alignItems="center"
+    >
+      {icon}
+    </YStack>
+    <YStack>
+      <Text fontSize="$3" color="$gray10Light">
+        {title}
+      </Text>
+      <Text fontSize="$4" fontWeight="bold">
+        {value}
+      </Text>
+    </YStack>
+  </XStack>
+);

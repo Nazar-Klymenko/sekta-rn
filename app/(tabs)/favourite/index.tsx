@@ -3,7 +3,7 @@ import React from "react";
 
 import { FlatList, Platform } from "react-native";
 
-import { useLikedEvents } from "@/hooks/useEvents";
+import { useEventCollection, useLikedEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { useRouter } from "expo-router";
@@ -15,6 +15,8 @@ import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function LikedEventsPage() {
   const { data: likedEvents, isLoading, isError, error } = useLikedEvents();
+  const { data: likedEventss } = useEventCollection();
+
   const router = useRouter();
 
   if (isLoading) return <FullPageLoading />;
@@ -27,14 +29,6 @@ export default function LikedEventsPage() {
     );
   }
 
-  if (!likedEvents || likedEvents.length === 0) {
-    return (
-      <PageContainer>
-        <Text>You haven't liked any events yet.</Text>
-      </PageContainer>
-    );
-  }
-
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
@@ -43,19 +37,27 @@ export default function LikedEventsPage() {
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
         data={likedEvents}
-        renderItem={({ item: event }) => (
-          <YStack
-            style={{
-              maxWidth: 720,
-            }}
-          >
-            <EventCard event={event} hrefSource="favourite" />
-          </YStack>
-        )}
+        renderItem={({ item: event }) => {
+          const isLiked = likedEventss?.includes(event.id);
+
+          return (
+            <YStack
+              style={{
+                maxWidth: 720,
+              }}
+            >
+              <EventCard
+                event={event}
+                hrefSource="favourite"
+                isLiked={isLiked || false}
+              />
+            </YStack>
+          );
+        }}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
+          <Text marginTop="$4">You haven't liked any events yet.</Text>
         )}
       />
     </PageContainer>
