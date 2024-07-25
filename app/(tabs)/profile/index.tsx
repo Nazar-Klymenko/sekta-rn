@@ -1,6 +1,21 @@
-import { ChevronRight, Moon, Sun, User } from "@tamagui/lucide-icons";
+import {
+  Bell,
+  ChevronRight,
+  FileText,
+  HelpCircle,
+  Lock,
+  Mail,
+  Moon,
+  ShieldCheck,
+  Sun,
+  Trash2,
+  User,
+  UserCircle,
+} from "@tamagui/lucide-icons";
 
 import React from "react";
+
+import { Pressable } from "react-native";
 
 import { signOut } from "@/api/auth";
 import { useThemeContext } from "@/context/ThemeContext";
@@ -26,12 +41,6 @@ import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { LanguageSelect } from "@/components/form/LanguageSelect";
 import { PageContainer } from "@/components/layout/PageContainer";
-
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
-    {children}
-  </Text>
-);
 
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
@@ -76,14 +85,17 @@ export default function ProfileScreen() {
             <MenuItem
               title="Profile Information"
               onPress={() => router.push("/profile/profile-information")}
+              icon={UserCircle}
             />
             <MenuItem
               title="Change Password"
               onPress={() => router.push("/profile/change-password")}
+              icon={Lock}
             />
             <MenuItem
               title="Delete account"
               onPress={() => router.push("/profile/delete-profile")}
+              icon={Trash2}
             />
           </YStack>
           <YStack gap="$2">
@@ -91,10 +103,12 @@ export default function ProfileScreen() {
             <MenuItem
               title="Push notifications"
               onPress={() => router.push("/profile/push-notifications")}
+              icon={Bell}
             />
             <MenuItem
               title="Email notifications"
               onPress={() => router.push("/profile/email-notifications")}
+              icon={Mail}
             />
           </YStack>
         </>
@@ -109,8 +123,12 @@ export default function ProfileScreen() {
           padding="$4"
           borderRadius="$2"
         >
-          <XStack alignItems="center" gap="$2">
-            {isDarkMode ? <Moon size={24} /> : <Sun size={24} />}
+          <XStack alignItems="center" gap="$3">
+            {isDarkMode ? (
+              <Moon size="$1" color="$gray10Light" />
+            ) : (
+              <Sun size="$1" color="$gray10Light" />
+            )}
             <Text fontSize="$4">{isDarkMode ? "Dark Mode" : "Light Mode"}</Text>
           </XStack>
           <Switch checked={isDarkMode} onPress={toggleTheme} />
@@ -123,14 +141,17 @@ export default function ProfileScreen() {
         <MenuItem
           title="Terms of Service"
           onPress={() => router.push("/tos")}
+          icon={FileText}
         />
         <MenuItem
           title="Privacy policy"
           onPress={() => router.push("/privacy-policy")}
+          icon={ShieldCheck}
         />
         <MenuItem
           title="Contact us"
           onPress={() => router.push("/profile/contact")}
+          icon={HelpCircle}
         />
       </YStack>
 
@@ -155,30 +176,38 @@ export default function ProfileScreen() {
     </PageContainer>
   );
 }
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+  <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
+    {children}
+  </Text>
+);
 
-const ResponsiveStack = styled(Stack, {
+const ResponsiveStack = styled(XStack, {
   hoverStyle: {
     backgroundColor: "$backgroundHover",
     cursor: "pointer",
   },
   pressStyle: {
-    backgroundColor: "$backgroundPress",
+    backgroundColor: "$backgroundHover",
   },
   padding: "$4",
   borderRadius: "$2",
+  justifyContent: "space-between",
 });
-
 const MenuItem = ({
   title,
   onPress,
+  icon: Icon,
 }: {
   title: string;
   onPress: () => void;
+  icon: React.ElementType;
 }) => (
   <ResponsiveStack onPress={onPress}>
-    <XStack alignItems="center" justifyContent="space-between">
+    <XStack alignItems="center" gap="$3">
+      <Icon size="$1" color="$gray10Light" />
       <Text fontSize="$4">{title}</Text>
-      <ChevronRight size="$1" />
     </XStack>
+    <ChevronRight size="$1" color="$color" />
   </ResponsiveStack>
 );

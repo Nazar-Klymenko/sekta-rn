@@ -1,8 +1,7 @@
-import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
+import { Check, ChevronDown, ChevronUp, Globe } from "@tamagui/lucide-icons";
 
-import { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
-import type { FontSizeTokens, SelectProps } from "tamagui";
 import {
   Adapt,
   Label,
@@ -13,33 +12,81 @@ import {
   getFontSize,
   styled,
 } from "tamagui";
+import type { FontSizeTokens, SelectProps } from "tamagui";
 
-const HoverEffect = styled(YStack, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-});
-
-export function LanguageSelect() {
-  return (
-    <XStack padding="$4" gap="$4" display="flex" justifyContent="space-between">
-      <Label htmlFor="select-demo-1" f={1}>
-        Language
-      </Label>
-      <SelectDemoItem id="select-demo-1" />
-    </XStack>
-  );
+interface Language {
+  code: string;
+  name: string;
 }
 
-export function SelectDemoItem(props: SelectProps) {
-  const [val, setVal] = useState("en");
+// Constants
+const LANGUAGES: Language[] = [
+  { code: "pl", name: "Polish" },
+  { code: "en", name: "English" },
+  { code: "ru", name: "Russian" },
+  { code: "ua", name: "Ukrainian" },
+];
 
-  const languages = [
-    { code: "pl", name: "Polish" },
-    { code: "en", name: "English" },
-    { code: "ru", name: "Russian" },
-    { code: "ua", name: "Ukrainian" },
-  ];
+const StyledItem = styled(Select.Item, {
+  backgroundColor: "$background",
+  hoverStyle: {
+    backgroundColor: "$backgroundHover",
+    cursor: "pointer",
+  },
+  pressStyle: { backgroundColor: "$backgroundHover" },
+});
+
+const SelectTrigger: React.FC<{ width?: number }> = ({ width = 220 }) => (
+  <Select.Trigger width={width} iconAfter={ChevronDown}>
+    <Select.Value placeholder="Select Language" />
+  </Select.Trigger>
+);
+
+const SelectContent: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => <Select.Content zIndex={200000}>{children}</Select.Content>;
+
+const SelectViewport: React.FC<{
+  children: React.ReactNode;
+  native?: boolean;
+  size?: FontSizeTokens;
+}> = ({ children, native, size }) => (
+  <Select.Viewport minWidth={200}>
+    {children}
+    {native && (
+      <YStack
+        position="absolute"
+        right={0}
+        top={0}
+        bottom={0}
+        alignItems="center"
+        justifyContent="center"
+        width="$4"
+        pointerEvents="none"
+      >
+        <ChevronDown size={getFontSize(size ?? "$true")} />
+      </YStack>
+    )}
+  </Select.Viewport>
+);
+
+const SelectItems: React.FC<{ languages: Language[] }> = ({ languages }) => (
+  <Select.Group>
+    <Select.Label>Languages</Select.Label>
+    {languages.map((lang, i) => (
+      <StyledItem index={i} key={lang.code} value={lang.code}>
+        <Select.ItemText>{lang.name}</Select.ItemText>
+        <Select.ItemIndicator marginLeft="auto">
+          <Check size={16} />
+        </Select.ItemIndicator>
+      </StyledItem>
+    ))}
+  </Select.Group>
+);
+
+// Main components
+const SelectDemoItem: React.FC<SelectProps> = (props) => {
+  const [val, setVal] = React.useState("en");
 
   return (
     <Select
@@ -48,9 +95,7 @@ export function SelectDemoItem(props: SelectProps) {
       disablePreventBodyScroll
       {...props}
     >
-      <Select.Trigger width={220} iconAfter={ChevronDown}>
-        <Select.Value placeholder="Select Language" />
-      </Select.Trigger>
+      <SelectTrigger />
 
       <Adapt when="sm" platform="touch">
         <Sheet
@@ -77,67 +122,24 @@ export function SelectDemoItem(props: SelectProps) {
         </Sheet>
       </Adapt>
 
-      <Select.Content zIndex={200000}>
-        <Select.ScrollUpButton
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-          width="100%"
-          height="$3"
+      <SelectContent>
+        <SelectViewport
+          native={!!props.native}
+          size={props.size as FontSizeTokens}
         >
-          <HoverEffect zIndex={10}>
-            <ChevronUp size={20} />
-          </HoverEffect>
-        </Select.ScrollUpButton>
-
-        <Select.Viewport minWidth={200}>
-          <Select.Group>
-            <Select.Label>Languages</Select.Label>
-            {useMemo(
-              () =>
-                languages.map((lang, i) => {
-                  return (
-                    <Select.Item index={i} key={lang.code} value={lang.code}>
-                      <Select.ItemText>{lang.name}</Select.ItemText>
-                      <Select.ItemIndicator marginLeft="auto">
-                        <Check size={16} />
-                      </Select.ItemIndicator>
-                    </Select.Item>
-                  );
-                }),
-              [languages]
-            )}
-          </Select.Group>
-          {props.native && (
-            <YStack
-              position="absolute"
-              right={0}
-              top={0}
-              bottom={0}
-              alignItems="center"
-              justifyContent="center"
-              width={"$4"}
-              pointerEvents="none"
-            >
-              <ChevronDown
-                size={getFontSize((props.size as FontSizeTokens) ?? "$true")}
-              />
-            </YStack>
-          )}
-        </Select.Viewport>
-
-        <Select.ScrollDownButton
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-          width="100%"
-          height="$3"
-        >
-          <HoverEffect zIndex={10}>
-            <ChevronDown size={20} />
-          </HoverEffect>
-        </Select.ScrollDownButton>
-      </Select.Content>
+          <SelectItems languages={LANGUAGES} />
+        </SelectViewport>
+      </SelectContent>
     </Select>
   );
-}
+};
+
+export const LanguageSelect: React.FC = () => (
+  <XStack padding="$4" gap="$4" display="flex" justifyContent="space-between">
+    <XStack alignItems="center" f={1} gap="$3">
+      <Globe size="$1" color="$gray10Light" />
+      <Label htmlFor="select-demo-1">Language</Label>
+    </XStack>
+    <SelectDemoItem id="select-demo-1" />
+  </XStack>
+);

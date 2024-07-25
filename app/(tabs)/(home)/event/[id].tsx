@@ -104,7 +104,9 @@ export default function EventDetailsPage() {
                   fill={isLiked ? theme.red10Light.get() : "transparent"}
                 />
               }
-              backgroundColor={isLiked ? "$red2" : "rgba(255, 255, 255, 0.2)"}
+              backgroundColor={
+                isLiked ? "$red2Light" : "rgba(255, 255, 255, 0.2)"
+              }
               onPress={handleLike}
               pressStyle={{ scale: 0.9 }}
               animation="bouncy"

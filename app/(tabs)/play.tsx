@@ -160,7 +160,7 @@ export default function PlayScreen() {
           label="Additional Info"
           multiline
           placeholder="Any additional information you'd like to share..."
-          numberOfLines={4}
+          rows={4}
           verticalAlign="top"
         />
         <PrimaryButton

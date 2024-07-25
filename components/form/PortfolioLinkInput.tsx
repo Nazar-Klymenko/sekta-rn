@@ -69,7 +69,7 @@ export function PortfolioLinkInput({
             onChangeText={field.onChange}
             autoCapitalize="none"
             inputMode="url"
-            paddingLeft={prefix ? "$5" : "$2"}
+            paddingHorizontal={prefix ? "$5" : "$3.5"}
             focusStyle={{
               outlineWidth: "0",
               outlineStyle: "none",

@@ -58,7 +58,9 @@ export default function LikedEventsPage() {
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         ListEmptyComponent={() => (
-          <Text marginTop="$4">You haven't liked any events yet.</Text>
+          <Text marginTop="$4" alignSelf="center">
+            You haven't liked any events yet.
+          </Text>
         )}
       />
     </PageContainer>
