@@ -36,8 +36,8 @@ export function Checkbox({
   });
 
   return (
-    <YStack gap="$2">
-      <XStack alignItems="center" gap="$2">
+    <YStack gap="$2" marginBottom="$4">
+      <XStack alignItems="flex-start" gap="$2">
         <TamaguiCheckbox
           id={id}
           checked={field.value}
@@ -51,7 +51,7 @@ export function Checkbox({
             <Text>✓</Text>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
-        <Label fontSize={12} htmlFor={id}>
+        <Label fontSize={12} htmlFor={id} lineHeight={"$1"}>
           {children}
         </Label>
       </XStack>
