@@ -7,6 +7,7 @@ import {
   useAddEventToCollection,
   useEvent,
   useEventCollection,
+  useToggleEventLike,
 } from "@/hooks/useEvents";
 
 import { format } from "date-fns";
@@ -32,7 +33,7 @@ export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useEvent(id || "");
   const theme = useTheme();
-  const addEventToCollection = useAddEventToCollection();
+  const toggleLike = useToggleEventLike();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const { data: likedEvents } = useEventCollection();
@@ -56,7 +57,7 @@ export default function EventDetailsPage() {
     if (!isLoggedIn) {
       router.push("/auth/login");
     } else {
-      addEventToCollection.mutate(event.id);
+      toggleLike.mutate({ eventId: event.id, isLiked });
     }
   };
 

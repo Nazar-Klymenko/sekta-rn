@@ -23,8 +23,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
   const { data: events, isLoading, isError, error, refetch } = useEvents();
-  const { data: likedEvents } = useLikedEvents();
-  const { data: likedEventss } = useEventCollection();
+  const { data: likedEvents } = useEventCollection();
 
   if (isLoading) return <FullPageLoading />;
 
@@ -40,12 +39,13 @@ export default function HomeScreen() {
     <PageContainer scrollable={false} fullWidth>
       <FlatList
         style={{ flex: 1, width: "100%" }}
+        showsVerticalScrollIndicator={Platform.OS == "web"}
         contentContainerStyle={{
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
         data={events}
         renderItem={({ item: event }) => {
-          const isLiked = likedEventss?.includes(event.id);
+          const isLiked = likedEvents?.includes(event.id);
 
           return (
             <YStack

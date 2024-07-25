@@ -7,10 +7,11 @@ import {
 
 import React, { useEffect, useState } from "react";
 
-import { Platform } from "react-native";
+import { Platform, StatusBar } from "react-native";
 
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
+import { useAuth } from "@/hooks/useAuth";
 import tamaguiConfig from "@/tamagui.config";
 
 import { useFonts } from "expo-font";
@@ -20,8 +21,9 @@ import "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { TamaguiProvider, Text, Theme, View, useTheme } from "tamagui";
+import { TamaguiProvider, Text, Theme, View, YStack, useTheme } from "tamagui";
 
+import { CustomHeader } from "@/components/CustomHeader";
 import { CurrentToast } from "@/components/Toast";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 
@@ -29,10 +31,71 @@ import { FullPageLoading } from "@/components/layout/FullPageLoading";
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
-function AppContent() {
+function AppStack() {
   const { themeColor } = useThemeContext();
   const { left, top, right } = useSafeAreaInsets();
   const theme = useTheme();
+  const { user } = useAuth();
+
+  return (
+    <YStack f={1}>
+      <StatusBar
+        barStyle={themeColor === "dark" ? "light-content" : "dark-content"}
+        backgroundColor={theme.background.get()}
+      />
+      <Stack
+        screenOptions={{
+          headerShown: false, // Hide the default header for all screens
+        }}
+      >
+        <Stack.Screen
+          name="auth"
+          options={{
+            headerShown: false,
+            animation: "fade_from_bottom",
+          }}
+        />
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+            animation: "fade_from_bottom",
+          }}
+        />
+        <Stack.Screen name="+not-found" />
+        <Stack.Screen
+          name="privacy-policy"
+          options={{
+            title: "Privacy policy",
+            animation: "fade_from_bottom",
+            headerShown: true || Platform.OS !== "web",
+            headerStyle: {
+              backgroundColor: theme.background.get(),
+            },
+            headerBackVisible: true,
+            headerTintColor: theme.color.get(),
+          }}
+        />
+        <Stack.Screen
+          name="tos"
+          options={{
+            title: "Terms of service",
+            animation: "fade_from_bottom",
+            headerShown: true || Platform.OS !== "web",
+            headerStyle: {
+              backgroundColor: theme.background.get(),
+            },
+            headerTintColor: theme.color.get(),
+          }}
+        />
+      </Stack>
+    </YStack>
+  );
+}
+
+function AppContent() {
+  const { themeColor } = useThemeContext();
+  const { left, top, right } = useSafeAreaInsets();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -40,47 +103,7 @@ function AppContent() {
         <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
           <ToastProvider>
             <AuthProvider>
-              <Stack>
-                <Stack.Screen
-                  name="auth"
-                  options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                  }}
-                />
-                <Stack.Screen
-                  name="(tabs)"
-                  options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                  }}
-                />
-                <Stack.Screen name="+not-found" />
-                <Stack.Screen
-                  name="privacy-policy"
-                  options={{
-                    title: "Privacy policy",
-                    animation: "fade_from_bottom",
-                    headerShown: true || Platform.OS !== "web",
-                    headerStyle: {
-                      backgroundColor: theme.background.get(),
-                    },
-                    headerTintColor: theme.color.get(),
-                  }}
-                />
-                <Stack.Screen
-                  name="tos"
-                  options={{
-                    title: "Terms of service",
-                    animation: "fade_from_bottom",
-                    headerShown: true || Platform.OS !== "web",
-                    headerStyle: {
-                      backgroundColor: theme.background.get(),
-                    },
-                    headerTintColor: theme.color.get(),
-                  }}
-                />
-              </Stack>
+              <AppStack />
             </AuthProvider>
             <CurrentToast />
             <ToastViewport

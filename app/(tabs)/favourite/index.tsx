@@ -37,6 +37,7 @@ export default function LikedEventsPage() {
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
         data={likedEvents}
+        showsVerticalScrollIndicator={Platform.OS !== "web"}
         renderItem={({ item: event }) => {
           const isLiked = likedEventss?.includes(event.id);
 

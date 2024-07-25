@@ -4,6 +4,7 @@ import React from "react";
 
 import { GestureResponderEvent } from "react-native";
 
+import { useAuth } from "@/hooks/useAuth";
 import { useToggleEventLike } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
@@ -34,15 +35,12 @@ const CardContainer = styled(YStack, {
   padding: "$4",
   borderRadius: "$4",
   overflow: "hidden",
-  elevation: 5,
-  shadowColor: "$colorTransparent",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
+  // elevation: 5,
   marginVertical: "$3",
   maxWidth: 600,
   alignSelf: "center",
   width: "100%",
+  cursor: "pointer",
 });
 
 const DateContainer = styled(XStack, {
@@ -73,16 +71,20 @@ export const EventCard: React.FC<EventCardProps> = ({
   const toggleLike = useToggleEventLike();
   const theme = useTheme();
   const router = useRouter();
+  const { isLoggedIn } = useAuth();
 
   const handleLike = (
     e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleLike.mutate({ eventId: event.id, isLiked });
+    if (!isLoggedIn) {
+      router.push({ pathname: "/auth/login", params: { returnTo: "/" } });
+    } else {
+      toggleLike.mutate({ eventId: event.id, isLiked });
+    }
   };
   return (
-    // <Link href={`/${hrefSource}/${event.id}`} asChild>
     <CardContainer onPress={() => router.push(`/${hrefSource}/${event.id}`)}>
       <YStack position="relative">
         <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
@@ -155,6 +157,5 @@ export const EventCard: React.FC<EventCardProps> = ({
         </XStack>
       </YStack>
     </CardContainer>
-    // </Link>
   );
 };
