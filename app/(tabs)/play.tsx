@@ -1,9 +1,11 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
+  AudioLines,
   Calendar,
   Facebook,
   Instagram,
   Mail,
+  Music,
   Music2,
   Phone,
   Youtube,
@@ -26,7 +28,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { PortfolioLinkInput } from "@/components/form/PortfolioLinkInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 const playSchema = yup.object({
@@ -46,13 +47,12 @@ const portfolioLinks = [
     name: "instagram",
     label: "Instagram",
     icon: Instagram,
-    placeholder: "username",
-    prefix: true,
+    placeholder: "@username",
   },
   {
     name: "soundcloud",
     label: "Soundcloud",
-    icon: Music2,
+    icon: AudioLines,
     placeholder: "https://soundcloud.com/",
   },
   {
@@ -131,29 +131,29 @@ export default function PlayScreen() {
           name="email"
           label="Contact Email"
           placeholder="email@gmail.com"
+          icon={Mail}
         />
+
         <Input
           id="play-phone"
           name="phone"
           label="Phone Number (Optional)"
-          placeholder="577 925 024"
+          placeholder="+48 577 925 024"
+          icon={Phone}
         />
         <Text fontSize={20} fontWeight="bold">
           Portfolio Links (Optional)
         </Text>
-        {portfolioLinks.map(
-          ({ name, icon, placeholder, prefix, label }, idx) => (
-            <PortfolioLinkInput
-              id={"play-" + name}
-              key={idx}
-              label={label}
-              name={name}
-              icon={icon}
-              placeholder={placeholder}
-              prefix={prefix}
-            />
-          )
-        )}
+        {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
+          <Input
+            id={"play-" + name}
+            key={idx}
+            label={label}
+            name={name}
+            icon={icon}
+            placeholder={placeholder}
+          />
+        ))}
         <Input
           id="play-additional-info"
           name="additionalInfo"

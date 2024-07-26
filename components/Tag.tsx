@@ -11,7 +11,7 @@ export const Tag = ({ tag }: { tag: string }) => {
       paddingVertical="$2"
       paddingHorizontal="$4"
     >
-      <Text color="white" fontSize="$3">
+      <Text color="$color" fontSize="$3">
         {tag}
       </Text>
     </XStack>

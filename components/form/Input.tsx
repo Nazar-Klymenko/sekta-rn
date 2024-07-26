@@ -1,3 +1,5 @@
+import { Mail } from "@tamagui/lucide-icons";
+
 import React, { useState } from "react";
 
 import { TextInputProps } from "react-native";
@@ -5,9 +7,11 @@ import { TextInputProps } from "react-native";
 import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
+  Stack,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   Text,
+  XStack,
   YStack,
 } from "tamagui";
 
@@ -16,9 +20,17 @@ interface InputProps extends TamaguiInputProps {
   label: string;
   id: string;
   placeholder: string;
+  icon?: React.ElementType;
 }
 
-export function Input({ name, label, placeholder, id, ...props }: InputProps) {
+export function Input({
+  name,
+  label,
+  placeholder,
+  id,
+  icon: Icon,
+  ...props
+}: InputProps) {
   const { control } = useFormContext();
   const {
     field,
@@ -29,41 +41,81 @@ export function Input({ name, label, placeholder, id, ...props }: InputProps) {
   });
 
   const [isFocused, setIsFocused] = useState(false);
+  const hasValue = field.value && field.value.length > 0;
+
   return (
     <YStack gap="$2">
       <Label htmlFor={id}>{label}</Label>
-      <TamaguiInput
-        id={id}
-        placeholder={placeholder}
-        value={field.value}
-        onChangeText={field.onChange}
-        outlineStyle="none"
-        focusStyle={{
-          outlineWidth: "0",
-          outlineStyle: "none",
-          borderColor: error ? "$red10Light" : "$accentColor",
-        }}
-        onBlur={() => {
-          field.onBlur();
-          setIsFocused(false);
-        }}
-        onFocus={() => setIsFocused(true)}
-        borderColor={
-          error ? "$red10Light" : isFocused ? "accentColor" : undefined
-        }
-        hoverStyle={{
-          borderColor: error
-            ? "$red10Light"
-            : isFocused
-            ? "accentColor"
-            : undefined,
-        }}
-        ref={field.ref}
-        {...props}
-      />
+      <YStack alignItems="center" gap="$2">
+        <Stack
+          flexDirection="row"
+          width="100%"
+          alignItems="center"
+          flex={1}
+          position="relative"
+        >
+          {Icon && (
+            <Icon
+              style={{
+                position: "absolute",
+                left: 16,
+                color: "$placeholderColor",
+                pointerEvents: "none",
+                userSelect: "none",
+                zIndex: 1,
+                size: 16,
+              }}
+            />
+          )}
+
+          <TamaguiInput
+            id={id}
+            flex={1}
+            placeholder={placeholder}
+            value={field.value}
+            onChangeText={field.onChange}
+            outlineStyle="none"
+            paddingHorizontal={Icon ? "$8" : "$3.5"}
+            focusStyle={{
+              outlineWidth: "0",
+              outlineStyle: "none",
+              borderColor: error ? "$red10Light" : "$accentColor",
+            }}
+            onBlur={() => {
+              field.onBlur();
+              setIsFocused(false);
+            }}
+            onFocus={() => setIsFocused(true)}
+            borderColor={
+              error ? "$red10Light" : isFocused ? "accentColor" : undefined
+            }
+            hoverStyle={{
+              borderColor: error
+                ? "$red10Light"
+                : isFocused
+                ? "accentColor"
+                : undefined,
+            }}
+            ref={field.ref}
+            {...props}
+          />
+        </Stack>
+      </YStack>
       <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
         {error ? error?.message : "*"}
       </Text>
     </YStack>
   );
 }
+// {Icon && (
+//   <Text
+//     position="absolute"
+//     left="$2"
+//     color={hasValue ? "$color" : "$placeholderColor"}
+//     pointerEvents="none"
+//     userSelect="none"
+//     zIndex={1}
+//   >
+//     <Icon />
+//   </Text>
+// )}
