@@ -4,7 +4,7 @@ import React from "react";
 
 import { useSignIn } from "@/hooks/useAuthOperations";
 
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { Text, YStack, useTheme } from "tamagui";
 
@@ -28,6 +28,8 @@ export default function LoginScreen() {
   const theme = useTheme();
   const signInMutation = useSignIn();
   const toast = useToastController();
+  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const router = useRouter();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -47,6 +49,11 @@ export default function LoginScreen() {
             message: "Welcome back!",
             variant: "success",
           });
+          if (returnTo) {
+            router.replace(returnTo as string);
+          } else {
+            router.replace("/");
+          }
         },
         onError: (error) => {
           toast.show("Login failed", {
@@ -82,7 +89,7 @@ export default function LoginScreen() {
             secureTextEntry
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/auth/forgot-password">
+            <Link href={`/auth/forgot-password?returnTo=${returnTo}`}>
               <Text color="$accentColor" textAlign="center" fontSize="$3">
                 Forgot password?
               </Text>
@@ -95,7 +102,7 @@ export default function LoginScreen() {
             disabled={signInMutation.isLoading}
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/auth/username-bridge">
+            <Link href={`/auth/username-bridge?returnTo=${returnTo}`}>
               <Text textAlign="center" fontSize="$3">
                 Don't have an account?
                 <Text color="$accentColor" fontSize="$3">

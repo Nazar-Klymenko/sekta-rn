@@ -9,7 +9,7 @@ import { useToggleEventLike } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { format } from "date-fns";
-import { Link, useRouter } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
 import {
   Button,
   Image,
@@ -75,6 +75,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   const router = useRouter();
   const { isLoggedIn } = useAuth();
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(isLiked);
+  const pathname = usePathname();
 
   useEffect(() => {
     setOptimisticIsLiked(isLiked);
@@ -86,7 +87,7 @@ export const EventCard: React.FC<EventCardProps> = ({
     e.preventDefault();
     e.stopPropagation();
     if (!isLoggedIn) {
-      router.push({ pathname: "/auth/login", params: { returnTo: "/" } });
+      router.push({ pathname: "/auth/login", params: { returnTo: pathname } });
     } else {
       setOptimisticIsLiked((prev) => !prev);
       toggleLike.mutate(
@@ -142,7 +143,11 @@ export const EventCard: React.FC<EventCardProps> = ({
             </DateContainer>
           </YStack>
 
-          <LikeButton isLiked={optimisticIsLiked} handleLike={handleLike} />
+          <LikeButton
+            isLiked={optimisticIsLiked}
+            handleLike={handleLike}
+            size="sm"
+          />
         </XStack>
       </YStack>
       <YStack paddingTop="$4" backgroundColor="$backgroundStrong">

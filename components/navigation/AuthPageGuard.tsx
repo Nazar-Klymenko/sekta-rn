@@ -15,12 +15,12 @@ export const AuthPageGuard: React.FC<AuthPageGuardProps> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
-  const { next = "/" } = useLocalSearchParams<{ next: string }>();
+  const { returnTo = "/" } = useLocalSearchParams<{ returnTo: string }>();
 
   useEffect(() => {
     if (isInitialized && isLoggedIn) {
       router.replace({
-        pathname: `${next}`,
+        pathname: returnTo,
       });
     } else if (isInitialized && !isLoggedIn) {
       setIsChecking(false);

@@ -1,3 +1,5 @@
+import { useToastController } from "@tamagui/toast";
+
 import React from "react";
 
 import { useSignUp } from "@/hooks/useAuthOperations";
@@ -51,7 +53,12 @@ type FormValues = yup.InferType<typeof signUpSchema>;
 export default function SignupScreen() {
   const theme = useTheme();
   const router = useRouter();
-  const { username = "" } = useLocalSearchParams<{ username: string }>();
+  const toast = useToastController();
+
+  const { username = "", returnTo = "/" } = useLocalSearchParams<{
+    username: string;
+    returnTo?: string;
+  }>();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(signUpSchema),
@@ -77,10 +84,18 @@ export default function SignupScreen() {
       },
       {
         onSuccess: () => {
-          router.replace("/(app)/(tabs)/(home)");
+          toast.show("Successfully signed up", {
+            message: "Welcome!",
+            variant: "success",
+          });
+          router.replace(returnTo);
         },
-        onError: () => {
-          // alert("error");
+        onError: (error) => {
+          toast.show("Sign up failed", {
+            message:
+              error instanceof Error ? error.message : "An error occurred",
+            variant: "error",
+          });
         },
       }
     );
@@ -145,7 +160,7 @@ export default function SignupScreen() {
             </Text>
           )}
           <YStack alignItems="center" padding="$4">
-            <Link href="/auth/login">
+            <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Text textAlign="center">
                 Already have an account?
                 <Text color="$accentColor"> Log in</Text>

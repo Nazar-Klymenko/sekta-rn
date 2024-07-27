@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { useSendPasswordReset } from "@/hooks/useAuthOperations";
 
-import { Link, useRouter } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
 import { Text, YStack } from "tamagui";
 
@@ -23,6 +23,8 @@ const forgotPasswordSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
+  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+
   const router = useRouter();
   const methods = useForm<FormValues>({
     resolver: yupResolver(forgotPasswordSchema),
@@ -36,7 +38,10 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     sendPasswordResetMutation.mutate(data.email, {
       onSuccess: () => {
-        router.push("/auth/forgot-password-success");
+        router.push({
+          pathname: "/auth/forgot-password-success",
+          params: { returnTo },
+        });
       },
     });
   };
@@ -79,7 +84,7 @@ export default function ForgotPasswordScreen() {
             </Text>
           )}
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/auth/login">
+            <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Text color="$accentColor" textAlign="center">
                 Go back to login
               </Text>

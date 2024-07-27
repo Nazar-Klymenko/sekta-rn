@@ -11,7 +11,7 @@ import {
 } from "@/hooks/useEvents";
 
 import { format } from "date-fns";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import {
   Button,
   Image,
@@ -37,6 +37,7 @@ export default function EventDetailsPage() {
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const { data: likedEvents } = useEventCollection();
+  const pathname = usePathname();
 
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
 
@@ -62,7 +63,7 @@ export default function EventDetailsPage() {
 
   const handleLike = () => {
     if (!isLoggedIn) {
-      router.push("/auth/login");
+      router.push({ pathname: "/auth/login", params: { returnTo: pathname } });
     } else {
       setOptimisticIsLiked((prev) => !prev);
       toggleLike.mutate(

@@ -6,20 +6,21 @@ import { Button, useTheme } from "tamagui";
 
 interface LikeButtonProps {
   isLiked: boolean;
+  size: "sm" | "lg";
   handleLike: (
     e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
   ) => void;
 }
-export const LikeButton = ({ isLiked, handleLike }: LikeButtonProps) => {
+export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
   const theme = useTheme();
 
   return (
     <Button
-      size="$3"
+      size={size === "sm" ? "$3" : "$5"}
       circular
       icon={
         <Heart
-          size={20}
+          size={size === "sm" ? 20 : 24}
           color={isLiked ? theme.red10Light.get() : theme.gray10Light.get()}
           fill={isLiked ? theme.red10Light.get() : "transparent"}
         />

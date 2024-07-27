@@ -4,7 +4,7 @@ import { queryUserByUsername } from "@/api/firestore";
 import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { Text, XStack, YStack } from "tamagui";
 
@@ -32,7 +32,9 @@ const usernameBridgeSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
 export default function UsernameBridgeScreen() {
-  const routerPushSignUp = useRouterPush("/auth/signup");
+  const router = useRouter();
+  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+
   const methods = useForm<FormValues>({
       resolver: yupResolver(usernameBridgeSchema),
       shouldFocusError: true,
@@ -55,10 +57,12 @@ export default function UsernameBridgeScreen() {
     try {
       const result = await checkAvailability();
       if (result.data) {
-        routerPushSignUp({
-          next: "/",
-          prev: "/auth/username-bridge",
-          username: data.username,
+        router.push({
+          pathname: "/auth/signup",
+          params: {
+            username: data.username,
+            returnTo: returnTo,
+          },
         });
       } else {
         setError("username", { message: "Username is taken" });
@@ -94,7 +98,7 @@ export default function UsernameBridgeScreen() {
             disabled={isLoading}
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href="/auth/login">
+            <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Text textAlign="center">
                 Already have an account?
                 <Text color="$accentColor"> Log in</Text>
