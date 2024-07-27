@@ -1,6 +1,6 @@
 import { Calendar, CreditCard, Heart, MapPin } from "@tamagui/lucide-icons";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -38,6 +38,14 @@ export default function EventDetailsPage() {
   const router = useRouter();
   const { data: likedEvents } = useEventCollection();
 
+  const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (likedEvents && event) {
+      setOptimisticIsLiked(likedEvents.includes(event.id));
+    }
+  }, [likedEvents, event]);
+
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
@@ -52,12 +60,19 @@ export default function EventDetailsPage() {
       </PageContainer>
     );
 
-  const isLiked = likedEvents?.includes(event.id);
   const handleLike = () => {
     if (!isLoggedIn) {
       router.push("/auth/login");
     } else {
-      toggleLike.mutate({ eventId: event.id, isLiked });
+      setOptimisticIsLiked((prev) => !prev);
+      toggleLike.mutate(
+        { eventId: event.id, isLiked: optimisticIsLiked },
+        {
+          onError: () => {
+            setOptimisticIsLiked((prev) => !prev);
+          },
+        }
+      );
     }
   };
 
@@ -100,12 +115,14 @@ export default function EventDetailsPage() {
               icon={
                 <Heart
                   size={24}
-                  color={isLiked ? theme.red10Light.get() : "white"}
-                  fill={isLiked ? theme.red10Light.get() : "transparent"}
+                  color={optimisticIsLiked ? theme.red10Light.get() : "white"}
+                  fill={
+                    optimisticIsLiked ? theme.red10Light.get() : "transparent"
+                  }
                 />
               }
               backgroundColor={
-                isLiked ? "$red2Light" : "rgba(255, 255, 255, 0.2)"
+                optimisticIsLiked ? "$red2Light" : "rgba(255, 255, 255, 0.2)"
               }
               onPress={handleLike}
               pressStyle={{ scale: 0.9 }}

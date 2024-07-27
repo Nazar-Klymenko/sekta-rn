@@ -3,17 +3,12 @@ import { useState } from "react";
 import { FlatList, Platform } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
-import {
-  useEventCollection,
-  useEvents,
-  useLikedEvents,
-} from "@/hooks/useEvents";
-import { useRouterPush } from "@/hooks/useRouterPush";
+import { useEventCollection, useEvents } from "@/hooks/useEvents";
 
 import { useRouter } from "expo-router";
 import { Button, Spinner, Text, View, YStack, useTheme } from "tamagui";
 
-import { EventCard } from "@/components/EventCard";
+import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 

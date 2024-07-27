@@ -3,19 +3,24 @@ import React from "react";
 
 import { FlatList, Platform } from "react-native";
 
-import { useEventCollection, useLikedEvents } from "@/hooks/useEvents";
+import { useEventCollection, useFavoriteEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { useRouter } from "expo-router";
 import { Spinner, Text, YStack } from "tamagui";
 
-import { EventCard } from "@/components/EventCard";
+import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function LikedEventsPage() {
-  const { data: likedEvents, isLoading, isError, error } = useLikedEvents();
-  const { data: likedEventss } = useEventCollection();
+  const {
+    data: favoriteEvents,
+    isLoading,
+    isError,
+    error,
+  } = useFavoriteEvents();
+  const { data: likedEvents } = useEventCollection();
 
   const router = useRouter();
 
@@ -36,10 +41,10 @@ export default function LikedEventsPage() {
         contentContainerStyle={{
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
-        data={likedEvents}
+        data={favoriteEvents}
         showsVerticalScrollIndicator={Platform.OS !== "web"}
         renderItem={({ item: event }) => {
-          const isLiked = likedEventss?.includes(event.id);
+          const isLiked = likedEvents?.includes(event.id);
 
           return (
             <YStack

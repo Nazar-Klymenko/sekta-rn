@@ -77,7 +77,7 @@ export const useAddEventToCollection = () => {
     }
   );
 };
-export const useLikedEvents = () => {
+export const useFavoriteEvents = () => {
   const { user } = useAuth();
 
   return useQuery<Event[], Error>(

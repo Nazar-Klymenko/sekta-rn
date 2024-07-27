@@ -1,6 +1,6 @@
 import { Heart } from "@tamagui/lucide-icons";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { GestureResponderEvent } from "react-native";
 
@@ -23,7 +23,9 @@ import {
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
-import { Tag } from "./Tag";
+import { Tag } from "@/components/Tag";
+
+import { LikeButton } from "./LikeButton";
 
 interface EventCardProps {
   event: Event;
@@ -72,6 +74,11 @@ export const EventCard: React.FC<EventCardProps> = ({
   const theme = useTheme();
   const router = useRouter();
   const { isLoggedIn } = useAuth();
+  const [optimisticIsLiked, setOptimisticIsLiked] = useState(isLiked);
+
+  useEffect(() => {
+    setOptimisticIsLiked(isLiked);
+  }, [isLiked]);
 
   const handleLike = (
     e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
@@ -81,7 +88,15 @@ export const EventCard: React.FC<EventCardProps> = ({
     if (!isLoggedIn) {
       router.push({ pathname: "/auth/login", params: { returnTo: "/" } });
     } else {
-      toggleLike.mutate({ eventId: event.id, isLiked });
+      setOptimisticIsLiked((prev) => !prev);
+      toggleLike.mutate(
+        { eventId: event.id, isLiked: optimisticIsLiked },
+        {
+          onError: () => {
+            setOptimisticIsLiked((prev) => !prev);
+          },
+        }
+      );
     }
   };
   return (
@@ -126,21 +141,8 @@ export const EventCard: React.FC<EventCardProps> = ({
               </Text>
             </DateContainer>
           </YStack>
-          <Button
-            size="$3"
-            circular
-            icon={
-              <Heart
-                size={20}
-                color={
-                  isLiked ? theme.red10Light.get() : theme.gray10Light.get()
-                }
-                fill={isLiked ? theme.red10Light.get() : "transparent"}
-              />
-            }
-            onPress={(e) => handleLike(e)}
-            backgroundColor={isLiked ? "$red2Light" : "rgba(0, 0, 0, 0.6)"}
-          />
+
+          <LikeButton isLiked={optimisticIsLiked} handleLike={handleLike} />
         </XStack>
       </YStack>
       <YStack paddingTop="$4" backgroundColor="$backgroundStrong">

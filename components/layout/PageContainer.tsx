@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 
 import {
   ScrollView,
@@ -57,11 +57,11 @@ export function PageContainer({
     return (
       <ScrollView
         style={{ flex: 1, backgroundColor: theme.background.get() }}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1, minHeight: "100%" }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={Platform.OS == "web"}
       >
-        {content}
+        <View style={{ flexGrow: 1 }}>{content}</View>
       </ScrollView>
     );
   }
