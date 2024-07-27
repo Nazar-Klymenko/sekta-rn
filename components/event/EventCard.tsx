@@ -37,7 +37,7 @@ const CardContainer = styled(YStack, {
   padding: "$4",
   borderRadius: "$4",
   overflow: "hidden",
-  // elevation: 5,
+  elevation: 1,
   marginVertical: "$3",
   maxWidth: 600,
   alignSelf: "center",

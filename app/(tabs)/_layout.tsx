@@ -28,14 +28,14 @@ export default function TabLayout() {
           backgroundColor: theme.background.get(),
         },
         headerTintColor: theme.color.get(),
+        tabBarIconStyle: { marginTop: Platform.OS !== "web" ? 4 : 0 },
+        tabBarLabelStyle: { paddingBottom: Platform.OS !== "web" ? 4 : 0 },
       }}
     >
       <Tabs.Screen
         name="(home)"
         options={{
           title: "Events",
-          // tabBarShowLabel: false,
-
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
@@ -45,7 +45,6 @@ export default function TabLayout() {
           headerShown: false,
           // headerShown: true || Platform.OS !== "web",
           title: "Favourite",
-          // tabBarShowLabel: false,
           tabBarItemStyle: {
             display: isLoggedIn ? "flex" : "none",
           },
@@ -57,8 +56,6 @@ export default function TabLayout() {
         options={{
           headerShown: true || Platform.OS !== "web",
           title: "Play",
-          // tabBarShowLabel: false,
-
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
       />
@@ -67,7 +64,6 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
-          // tabBarShowLabel: false,
         }}
       />
     </Tabs>

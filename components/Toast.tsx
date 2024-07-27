@@ -6,7 +6,8 @@ import React from "react";
 import { Button, XStack, YStack, styled } from "tamagui";
 
 const StyledToast = styled(Toast, {
-  minWidth: "100%",
+  width: "90%",
+  maxWidth: 400,
   backgroundColor: "$gray7Dark",
   padding: "$1",
   borderColor: "$borderColor",
@@ -40,8 +41,13 @@ const CloseButton = styled(Button, {
 const IconWrapper = styled(YStack, {
   justifyContent: "center",
   alignItems: "center",
+  marginLeft: "$2",
 });
-
+const ContentWrapper = styled(YStack, {
+  flex: 1,
+  marginHorizontal: "$2",
+  marginVertical: "$1",
+});
 export const CurrentToast = () => {
   const toast = useToastState();
 
@@ -75,10 +81,14 @@ export const CurrentToast = () => {
     >
       <XStack flex={1} alignItems="center">
         <IconWrapper>{getIcon()}</IconWrapper>
-        <YStack flex={1} marginHorizontal="$4">
-          <Toast.Title fontWeight="bold">{toast.title}</Toast.Title>
-          <Toast.Description>{toast.message}</Toast.Description>
-        </YStack>
+        <ContentWrapper>
+          <Toast.Title fontWeight="bold" numberOfLines={1}>
+            {toast.title}
+          </Toast.Title>
+          <Toast.Description numberOfLines={2}>
+            {toast.message}
+          </Toast.Description>
+        </ContentWrapper>
         <Toast.Close asChild>
           <CloseButton circular icon={<X size="$1" />} />
         </Toast.Close>
