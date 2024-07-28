@@ -37,9 +37,7 @@ const CardContainer = styled(YStack, {
   padding: "$4",
   borderRadius: "$4",
   overflow: "hidden",
-  elevation: 1,
   marginVertical: "$3",
-  maxWidth: 600,
   alignSelf: "center",
   width: "100%",
   cursor: "pointer",
@@ -102,7 +100,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   };
   return (
     <CardContainer onPress={() => router.push(`/${hrefSource}/${event.id}`)}>
-      <YStack position="relative">
+      <YStack position="relative" borderRadius={"$4"} overflow="hidden">
         <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
         <LinearGradient
           colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}

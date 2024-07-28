@@ -39,10 +39,6 @@ function AppStack() {
 
   return (
     <YStack f={1}>
-      <StatusBar
-        barStyle={themeColor === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={theme.background.get()}
-      />
       <Stack
         screenOptions={{
           headerShown: false, // Hide the default header for all screens

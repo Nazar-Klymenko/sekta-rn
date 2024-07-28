@@ -1,6 +1,6 @@
 import { Check, ChevronDown, ChevronUp, Globe } from "@tamagui/lucide-icons";
 
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 
 import {
   Adapt,
@@ -19,7 +19,6 @@ interface Language {
   name: string;
 }
 
-// Constants
 const LANGUAGES: Language[] = [
   { code: "pl", name: "Polish" },
   { code: "en", name: "English" },
@@ -84,9 +83,8 @@ const SelectItems: React.FC<{ languages: Language[] }> = ({ languages }) => (
   </Select.Group>
 );
 
-// Main components
-const SelectDemoItem: React.FC<SelectProps> = (props) => {
-  const [val, setVal] = React.useState("en");
+const LanguageSelectComponent: React.FC<SelectProps> = (props) => {
+  const [val, setVal] = useState("en");
 
   return (
     <Select
@@ -138,8 +136,8 @@ export const LanguageSelect: React.FC = () => (
   <XStack padding="$4" gap="$4" display="flex" justifyContent="space-between">
     <XStack alignItems="center" f={1} gap="$3">
       <Globe size="$1" color="$gray10Light" />
-      <Label htmlFor="select-demo-1">Language</Label>
+      <Label htmlFor="language-select">Language</Label>
     </XStack>
-    <SelectDemoItem id="select-demo-1" />
+    <LanguageSelectComponent id="language-select" />
   </XStack>
 );

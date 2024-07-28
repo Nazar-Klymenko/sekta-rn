@@ -40,7 +40,11 @@ export default function EventDetailsPage() {
   const pathname = usePathname();
 
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
-
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: null,
+  //   });
+  // }, []);
   useEffect(() => {
     if (likedEvents && event) {
       setOptimisticIsLiked(likedEvents.includes(event.id));

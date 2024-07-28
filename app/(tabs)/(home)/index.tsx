@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { SlidersHorizontal, X } from "@tamagui/lucide-icons";
+
+import { useCallback, useEffect, useState } from "react";
 
 import { FlatList, Platform } from "react-native";
 
@@ -6,29 +9,79 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEventCollection, useEvents } from "@/hooks/useEvents";
 
 import { useRouter } from "expo-router";
-import { Button, Spinner, Text, View, YStack, useTheme } from "tamagui";
+import {
+  Adapt,
+  Button,
+  Checkbox,
+  Dialog,
+  Input,
+  Label,
+  Select,
+  Sheet,
+  Spinner,
+  Text,
+  View,
+  XStack,
+  YStack,
+  useTheme,
+} from "tamagui";
 
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function HomeScreen() {
-  const theme = useTheme();
+  const navigation = useNavigation();
 
+  const theme = useTheme();
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
   const { data: events, isLoading, isError, error, refetch } = useEvents();
   const { data: likedEvents } = useEventCollection();
+  const [open, setOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    date: "",
+    genre: "",
+    price: "",
+    freeOnly: false,
+    tags: [],
+  });
+  const [uniqueTags, setUniqueTags] = useState([]);
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          size="$3"
+          icon={SlidersHorizontal}
+          circular
+          onPress={() => setOpen(true)}
+          theme="active"
+        />
+      ),
+    });
+  }, [navigation, setOpen]);
+  useEffect(() => {
+    if (events) {
+      const tagsSet = new Set();
+      events.forEach((event) => {
+        event.genres.forEach((tag) => tagsSet.add(tag));
+      });
+      // setUniqueTags(Array.from(tagsSet));
+    }
+  }, [events]);
 
   if (isLoading) return <FullPageLoading />;
-
-  if (isError) {
+  if (isError)
     return (
       <PageContainer>
         <Text>Error: {error.message}</Text>
       </PageContainer>
     );
-  }
+
+  const applyFilters = () => {
+    // Apply filters logic here
+    setOpen(false);
+  };
 
   return (
     <PageContainer scrollable={false} fullWidth>
@@ -39,23 +92,15 @@ export default function HomeScreen() {
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
         data={events}
-        renderItem={({ item: event }) => {
-          const isLiked = likedEvents?.includes(event.id);
-
-          return (
-            <YStack
-              style={{
-                maxWidth: 720,
-              }}
-            >
-              <EventCard
-                event={event}
-                hrefSource="event"
-                isLiked={isLiked || false}
-              />
-            </YStack>
-          );
-        }}
+        renderItem={({ item: event }) => (
+          <YStack style={{ maxWidth: 720 }}>
+            <EventCard
+              event={event}
+              hrefSource="event"
+              isLiked={likedEvents?.includes(event.id) || false}
+            />
+          </YStack>
+        )}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         onRefresh={refetch}
@@ -63,6 +108,51 @@ export default function HomeScreen() {
           <Text>No events found. Pull to refresh or check back later.</Text>
         )}
       />
+
+      <Dialog modal open={open} onOpenChange={setOpen}>
+        <Adapt when="sm" platform="touch">
+          <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
+            <Sheet.Frame padding="$4" gap="$4">
+              <Adapt.Contents />
+            </Sheet.Frame>
+            <Sheet.Overlay
+              animation="lazy"
+              enterStyle={{ opacity: 0 }}
+              exitStyle={{ opacity: 0 }}
+            />
+          </Sheet>
+        </Adapt>
+
+        <Dialog.Portal>
+          <Dialog.Overlay
+            key="overlay"
+            animation="quick"
+            opacity={0.5}
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
+
+          <Dialog.Content
+            bordered
+            elevate
+            key="content"
+            animateOnly={["transform", "opacity"]}
+            animation={[
+              "quick",
+              {
+                opacity: {
+                  overshootClamping: true,
+                },
+              },
+            ]}
+            enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
+            exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+            gap="$4"
+          >
+            <Dialog.Title>Filter Events</Dialog.Title>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
     </PageContainer>
   );
 }
