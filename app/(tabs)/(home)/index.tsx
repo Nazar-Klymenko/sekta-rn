@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { SlidersHorizontal, X } from "@tamagui/lucide-icons";
 
 import { useCallback, useEffect, useState } from "react";
@@ -8,7 +7,7 @@ import { FlatList, Platform } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useEventCollection, useEvents } from "@/hooks/useEvents";
 
-import { useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import {
   Adapt,
   Button,
@@ -31,8 +30,6 @@ import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
-
   const theme = useTheme();
   const router = useRouter();
   const { user, isLoggedIn } = useAuth();
@@ -47,19 +44,7 @@ export default function HomeScreen() {
     tags: [],
   });
   const [uniqueTags, setUniqueTags] = useState([]);
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          size="$3"
-          icon={SlidersHorizontal}
-          circular
-          onPress={() => setOpen(true)}
-          theme="active"
-        />
-      ),
-    });
-  }, [navigation, setOpen]);
+
   useEffect(() => {
     if (events) {
       const tagsSet = new Set();
@@ -85,6 +70,19 @@ export default function HomeScreen() {
 
   return (
     <PageContainer scrollable={false} fullWidth>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <Button
+              size="$3"
+              icon={SlidersHorizontal}
+              circular
+              onPress={() => setOpen(true)}
+              theme="active"
+            />
+          ),
+        }}
+      />
       <FlatList
         style={{ flex: 1, width: "100%" }}
         showsVerticalScrollIndicator={Platform.OS == "web"}
@@ -108,7 +106,6 @@ export default function HomeScreen() {
           <Text>No events found. Pull to refresh or check back later.</Text>
         )}
       />
-
       <Dialog modal open={open} onOpenChange={setOpen}>
         <Adapt when="sm" platform="touch">
           <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
