@@ -20,7 +20,6 @@ import { Pressable } from "react-native";
 import { signOut } from "@/api/auth";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useAuth } from "@/hooks/useAuth";
-import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUserData } from "@/hooks/useUserData";
 
 import { useRouter } from "expo-router";
@@ -46,8 +45,6 @@ export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
 
-  const routerPushLogin = useRouterPush("/auth/login");
-  const routerPushUsernameBridge = useRouterPush("/auth/username-bridge");
   const { themeColor, toggleTheme } = useThemeContext();
   const isDarkMode = themeColor === "dark";
   const router = useRouter();
@@ -165,9 +162,12 @@ export default function ProfileScreen() {
           <PrimaryButton onPress={signOut} text="Sign Out" />
         ) : (
           <YStack gap="$4">
-            <PrimaryButton onPress={() => routerPushLogin()} text="Log In" />
+            <PrimaryButton
+              onPress={() => router.push("/auth/login")}
+              text="Log In"
+            />
             <SecondaryButton
-              onPress={() => routerPushUsernameBridge()}
+              onPress={() => router.push("/auth/username-bridge")}
               text="Sign Up"
             />
           </YStack>

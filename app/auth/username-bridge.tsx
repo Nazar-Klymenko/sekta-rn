@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 import { queryUserByUsername } from "@/api/firestore";
-import { useRouterPush } from "@/hooks/useRouterPush";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
