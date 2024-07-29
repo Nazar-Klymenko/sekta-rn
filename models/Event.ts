@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore";
 
 export interface Event {
   id: string;
-  date: number; //TODO: change to firestore timestamp
+  date: Timestamp; //TODO: change to firestore timestamp
   caption: string;
   genres: string[];
   image: {

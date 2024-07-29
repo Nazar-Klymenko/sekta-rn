@@ -9,7 +9,7 @@ import { useToggleEventLike } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { format } from "date-fns";
+import { isAfter } from "date-fns";
 import { Link, usePathname, useRouter } from "expo-router";
 import {
   Button,
@@ -34,33 +34,6 @@ interface EventCardProps {
   isLiked: boolean;
 }
 
-const CardContainer = styled(YStack, {
-  padding: "$4",
-  borderRadius: "$4",
-  overflow: "hidden",
-  marginVertical: "$3",
-  alignSelf: "center",
-  width: "100%",
-  cursor: "pointer",
-});
-
-const DateContainer = styled(XStack, {
-  backgroundColor: "rgba(0, 0, 0, 0.6)",
-  borderRadius: "$2",
-  padding: "$1",
-  paddingHorizontal: "$2",
-});
-const DateBadge = styled(YStack, {
-  position: "absolute",
-  top: 10,
-  left: 10,
-  backgroundColor: "$accentColor",
-  borderRadius: "$1",
-  padding: "$2",
-  opacity: 0.9,
-  width: 50,
-  alignItems: "center",
-});
 export const EventCard: React.FC<EventCardProps> = ({
   event,
   hrefSource,
@@ -103,6 +76,10 @@ export const EventCard: React.FC<EventCardProps> = ({
   );
   const formattedDayName = formatFirestoreTimestamp(event.date, "EEE");
   const formattedDay = formatFirestoreTimestamp(event.date, "dd");
+  const isPastEvent = isAfter(
+    new Date(),
+    new Date(event.date.seconds * 1000 + event.date.nanoseconds / 1000000)
+  );
 
   return (
     <CardContainer onPress={() => router.push(`/${hrefSource}/${event.id}`)}>
@@ -120,6 +97,20 @@ export const EventCard: React.FC<EventCardProps> = ({
             height: 100,
           }}
         />
+        <PriceBadge>
+          <Text fontSize={14} fontWeight="bold" color="white">
+            {event.price === 0 || event.price === undefined
+              ? "Free"
+              : `${event?.price?.toFixed(2)} PLN`}
+          </Text>
+        </PriceBadge>
+        {isPastEvent && (
+          <PastEventOverlay>
+            <Text fontSize={24} fontWeight="bold" color="white">
+              Event Passed
+            </Text>
+          </PastEventOverlay>
+        )}
         <DateBadge>
           <Text fontSize={12} fontWeight="bold" color="white">
             {formattedDayName.toUpperCase()}
@@ -170,3 +161,52 @@ export const EventCard: React.FC<EventCardProps> = ({
     </CardContainer>
   );
 };
+
+const CardContainer = styled(YStack, {
+  padding: "$4",
+  borderRadius: "$4",
+  overflow: "hidden",
+  marginVertical: "$3",
+  alignSelf: "center",
+  width: "100%",
+  cursor: "pointer",
+});
+
+const DateContainer = styled(XStack, {
+  backgroundColor: "rgba(0, 0, 0, 0.6)",
+  borderRadius: "$2",
+  padding: "$1",
+  paddingHorizontal: "$2",
+});
+const DateBadge = styled(YStack, {
+  position: "absolute",
+  top: 10,
+  left: 10,
+  backgroundColor: "$accentColor",
+  borderRadius: "$1",
+  padding: "$2",
+  opacity: 0.9,
+  width: 50,
+  alignItems: "center",
+});
+
+const PriceBadge = styled(YStack, {
+  position: "absolute",
+  top: 10,
+  right: 10,
+  backgroundColor: "rgba(0, 0, 0, 0.6)",
+  borderRadius: "$2",
+  padding: "$2",
+  opacity: 0.9,
+});
+
+const PastEventOverlay = styled(YStack, {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.6)",
+  justifyContent: "center",
+  alignItems: "center",
+});
