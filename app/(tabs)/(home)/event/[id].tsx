@@ -9,6 +9,7 @@ import {
   useEventCollection,
   useToggleEventLike,
 } from "@/hooks/useEvents";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { format } from "date-fns";
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
@@ -40,11 +41,7 @@ export default function EventDetailsPage() {
   const pathname = usePathname();
 
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
-  // useEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: null,
-  //   });
-  // }, []);
+
   useEffect(() => {
     if (likedEvents && event) {
       setOptimisticIsLiked(likedEvents.includes(event.id));
@@ -80,10 +77,11 @@ export default function EventDetailsPage() {
       );
     }
   };
-
-  const formattedDate = format(new Date(event.date), "EEEE, MMMM do yyyy");
-  const formattedTime = format(new Date(event.date), "h:mm a");
-
+  const formattedDate = formatFirestoreTimestamp(
+    event.date,
+    "EEEE, MMMM do yyyy"
+  );
+  const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
   return (
     <PageContainer>
       <YStack gap="$4">

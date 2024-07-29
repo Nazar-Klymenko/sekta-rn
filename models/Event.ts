@@ -1,8 +1,9 @@
 // src/models/Event.ts
+import { Timestamp } from "firebase/firestore";
 
 export interface Event {
   id: string;
-  date: number; // Unix timestamp in milliseconds
+  date: number; //TODO: change to firestore timestamp
   caption: string;
   genres: string[];
   image: {

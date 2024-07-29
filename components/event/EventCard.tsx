@@ -7,6 +7,7 @@ import { GestureResponderEvent } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useToggleEventLike } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { format } from "date-fns";
 import { Link, usePathname, useRouter } from "expo-router";
@@ -65,9 +66,6 @@ export const EventCard: React.FC<EventCardProps> = ({
   hrefSource,
   isLiked = false,
 }) => {
-  const formattedDate = format(new Date(event.date), "dd MMM yyyy • HH:mm");
-  const formattedDayName = format(new Date(event.date), "EEE");
-  const formattedDay = format(new Date(event.date), "dd");
   const toggleLike = useToggleEventLike();
   const theme = useTheme();
   const router = useRouter();
@@ -98,6 +96,14 @@ export const EventCard: React.FC<EventCardProps> = ({
       );
     }
   };
+
+  const formattedDate = formatFirestoreTimestamp(
+    event.date,
+    "dd MMM yyyy • HH:mm"
+  );
+  const formattedDayName = formatFirestoreTimestamp(event.date, "EEE");
+  const formattedDay = formatFirestoreTimestamp(event.date, "dd");
+
   return (
     <CardContainer onPress={() => router.push(`/${hrefSource}/${event.id}`)}>
       <YStack position="relative" borderRadius={"$4"} overflow="hidden">
