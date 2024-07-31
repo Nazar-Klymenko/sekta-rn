@@ -28,7 +28,7 @@ export default function HomeScreen() {
     priceSort: false,
     selectedGenres: [],
     selectedArtists: [],
-    upcomingOnly: false,
+    includeOldEvents: false,
   });
 
   const { data: likedEvents } = useEventCollection();
@@ -83,7 +83,7 @@ export default function HomeScreen() {
       priceSort: false,
       selectedGenres: [],
       selectedArtists: [],
-      upcomingOnly: false,
+      includeOldEvents: false,
     });
   };
 

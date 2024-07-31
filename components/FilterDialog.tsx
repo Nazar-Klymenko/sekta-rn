@@ -1,17 +1,15 @@
-import { Timestamp } from "firebase/firestore";
+import { Filter, SlidersHorizontal, X } from "@tamagui/lucide-icons";
 
 import React from "react";
 
 import { Event } from "@/models/Event";
 
-import { Controller, useForm } from "react-hook-form";
-import { Adapt, Button, Label, Sheet, Text, XStack, YStack } from "tamagui";
+import { useForm } from "react-hook-form";
+import { Button, Text, XStack, YStack, styled } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Tag } from "@/components/Tag";
 
 import { Dialog } from "./Dialog";
 import { Checkbox } from "./form/Checkbox";
@@ -31,15 +29,25 @@ interface FilterDialogProps {
 const schema = yup.object().shape({
   priceSort: yup
     .mixed()
-    .oneOf([false, "lowToHigh", "highToLow", "free"], (value) => {
-      console.log({ value });
-    })
+    .oneOf([false, "lowToHigh", "highToLow", "free"])
     .default(false),
-  selectedGenres: yup.array().of(yup.string().required()).required(),
-  selectedArtists: yup.array().of(yup.string().required()).required(),
-  upcomingOnly: yup.boolean().required(),
+  selectedGenres: yup.array().of(yup.string()).default([]),
+  selectedArtists: yup.array().of(yup.string()).default([]),
+  includeOldEvents: yup.boolean().default(false),
 });
+
 export type FilterValues = yup.InferType<typeof schema>;
+
+const StyledButton = styled(Button, {
+  borderRadius: 8,
+  paddingVertical: 12,
+  paddingHorizontal: 16,
+  shadowColor: "$shadowColor",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevate: true,
+});
 
 export function FilterDialog({
   open,
@@ -50,10 +58,11 @@ export function FilterDialog({
   currentFilters,
 }: FilterDialogProps) {
   const methods = useForm<FilterValues>({
-      resolver: yupResolver(schema),
-      defaultValues: currentFilters,
-    }),
-    { control, handleSubmit, reset } = methods;
+    resolver: yupResolver(schema),
+    defaultValues: currentFilters,
+  });
+
+  const { handleSubmit, reset } = methods;
 
   const uniqueGenres = Array.from(
     new Set(events.flatMap((event) => event.genres))
@@ -61,6 +70,7 @@ export function FilterDialog({
   const uniqueArtists = Array.from(
     new Set(events.flatMap((event) => event.lineup))
   );
+
   const onSubmit = (data: FilterValues) => {
     onApplyFilters(data);
     onOpenChange(false);
@@ -70,6 +80,7 @@ export function FilterDialog({
     reset();
     onResetFilters();
   };
+
   const priceOptions = [
     { label: "Don't Filter", value: false },
     { label: "Low to High", value: "lowToHigh" },
@@ -85,7 +96,7 @@ export function FilterDialog({
       id={"event-filter-dialog"}
     >
       <Form methods={methods}>
-        <YStack gap="$4">
+        <YStack gap="$6" paddingVertical="$4">
           <Select
             name="priceSort"
             placeholder="Select price"
@@ -98,7 +109,7 @@ export function FilterDialog({
             name="selectedGenres"
             placeholder="Select Genres"
             id="genres-sort"
-            label="Sort by genres"
+            label="Filter by genres"
             items={uniqueGenres}
           />
 
@@ -106,17 +117,25 @@ export function FilterDialog({
             name="selectedArtists"
             placeholder="Select Artists"
             id="artists-sort"
-            label="Sort by Artists"
+            label="Filter by Artists"
             items={uniqueArtists}
           />
-          <Checkbox id="upcoming-only" name="upcomingOnly">
-            Show old events
+
+          <Checkbox id="include-old-events" name="includeOldEvents">
+            <Text color="$gray11">Include past events</Text>
           </Checkbox>
-          <XStack gap="$4" justifyContent="flex-end">
-            <Button onPress={handleReset}>Reset all</Button>
-            <Button theme="active" onPress={handleSubmit(onSubmit)}>
-              Apply
-            </Button>
+
+          <XStack gap="$4" justifyContent="space-between">
+            <StyledButton onPress={handleReset} icon={X} theme="alt2">
+              Reset all
+            </StyledButton>
+            <StyledButton
+              theme="active"
+              onPress={handleSubmit(onSubmit)}
+              icon={Filter}
+            >
+              Apply Filters
+            </StyledButton>
           </XStack>
         </YStack>
       </Form>
