@@ -42,7 +42,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ icon, label, value }) => (
   </Card>
 );
 
-export default function ContactScreen() {
+export default function Contact() {
   return (
     <PageContainer>
       <YStack gap="$6" padding="$6">

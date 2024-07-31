@@ -198,8 +198,6 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
-              "transition": true,
-              "textWrap": true,
               "backdropFilter": true,
               "background": true,
               "backgroundAttachment": true,
@@ -491,8 +489,6 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
-              "transition": true,
-              "textWrap": true,
               "backdropFilter": true,
               "background": true,
               "backgroundAttachment": true,
@@ -766,8 +762,6 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
-              "transition": true,
-              "textWrap": true,
               "backdropFilter": true,
               "background": true,
               "backgroundAttachment": true,
@@ -1014,8 +1008,6 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
-              "transition": true,
-              "textWrap": true,
               "backdropFilter": true,
               "background": true,
               "backgroundAttachment": true,
@@ -1121,8 +1113,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false,
               "tag": "a",
               "accessibilityRole": "link"
@@ -4082,10 +4074,10 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
+              "unstyled": false,
               "tag": "button",
               "role": "button",
-              "focusable": true,
-              "unstyled": false
+              "focusable": true
             },
             "validStyles": {
               "enterStyle": true,
@@ -4437,10 +4429,10 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
+              "unstyled": false,
               "tag": "button",
               "role": "button",
-              "focusable": true,
-              "unstyled": false
+              "focusable": true
             },
             "validStyles": {
               "enterStyle": true,
@@ -4791,8 +4783,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false
             },
             "inlineWhenUnflattened": {},
@@ -6596,8 +6588,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "button",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "button"
             },
             "validStyles": {
               "enterStyle": true,
@@ -6945,8 +6937,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "button",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "button"
             },
             "validStyles": {
               "enterStyle": true,
@@ -7792,9 +7784,9 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "dialog",
               "size": "$true",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "dialog"
             },
             "validStyles": {
               "enterStyle": true,
@@ -8111,8 +8103,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false,
               "tag": "p",
               "userSelect": "auto",
@@ -8986,8 +8978,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "pointerEvents": "none",
-              "unstyled": false
+              "unstyled": false,
+              "pointerEvents": "none"
             },
             "validStyles": {
               "enterStyle": true,
@@ -9205,16 +9197,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h2",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$9",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h2",
-              "size": "$9"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -12804,8 +12796,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false,
               "tag": "label"
             },
@@ -13052,8 +13044,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false,
               "tag": "label"
             },
@@ -13298,8 +13290,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "li",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "li"
             },
             "validStyles": {
               "enterStyle": true,
@@ -13632,8 +13624,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "li",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "li"
             },
             "validStyles": {
               "enterStyle": true,
@@ -13964,8 +13956,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false
             },
             "inlineWhenUnflattened": {},
@@ -14207,8 +14199,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false
             },
             "inlineWhenUnflattened": {},
@@ -14446,8 +14438,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false
             },
             "inlineWhenUnflattened": {},
@@ -18124,8 +18116,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "button",
-              "unstyled": false
+              "unstyled": false,
+              "tag": "button"
             },
             "validStyles": {
               "enterStyle": true,
@@ -21808,8 +21800,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "backgroundColor": "$background",
-              "position": "absolute"
+              "position": "absolute",
+              "backgroundColor": "$background"
             },
             "validStyles": {
               "enterStyle": true,
@@ -23420,9 +23412,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "button",
-              "tabIndex": 0,
-              "unstyled": false
+              "unstyled": false,
+              "tag": "button"
             },
             "validStyles": {
               "enterStyle": true,
@@ -23655,9 +23646,8 @@
             "acceptsClassName": true,
             "defaultProps": {
               "flexDirection": "column",
-              "tag": "button",
-              "tabIndex": 0,
-              "unstyled": false
+              "unstyled": false,
+              "tag": "button"
             },
             "validStyles": {
               "enterStyle": true,
@@ -24459,8 +24449,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false
             },
             "inlineWhenUnflattened": {},
@@ -24694,8 +24684,8 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
-              "suppressHighlighting": true,
               "fontFamily": "$body",
+              "suppressHighlighting": true,
               "unstyled": false,
               "tag": "p",
               "userSelect": "auto",
@@ -24931,16 +24921,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h1",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$10",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h1",
-              "size": "$10"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25170,16 +25160,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h2",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$9",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h2",
-              "size": "$9"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25409,16 +25399,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h3",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$8",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h3",
-              "size": "$8"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25648,16 +25638,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h4",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$7",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h4",
-              "size": "$7"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -25887,16 +25877,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h5",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$6",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h5",
-              "size": "$6"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -26126,16 +26116,16 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "h6",
               "userSelect": "auto",
               "color": "$color",
+              "size": "$5",
               "whiteSpace": "normal",
               "accessibilityRole": "header",
-              "fontFamily": "$heading",
-              "margin": 0,
-              "tag": "h6",
-              "size": "$5"
+              "margin": 0
             },
             "inlineWhenUnflattened": {},
             "variants": {
@@ -26365,15 +26355,15 @@
             "acceptsClassName": true,
             "isText": true,
             "defaultProps": {
+              "fontFamily": "$heading",
               "suppressHighlighting": true,
               "unstyled": false,
+              "tag": "span",
               "userSelect": "auto",
               "color": "$color",
-              "whiteSpace": "normal",
-              "tag": "span",
-              "accessibilityRole": "header",
-              "fontFamily": "$heading",
               "size": "$8",
+              "whiteSpace": "normal",
+              "accessibilityRole": "header",
               "margin": 0
             },
             "inlineWhenUnflattened": {},
@@ -27221,6 +27211,9 @@
         "minWidth": 1651
       }
     },
+    "defaultFont": "$body",
+    "shouldAddPrefersColorThemes": true,
+    "themeClassNameOnRoot": true,
     "themes": {
       "dark": {
         "accentBackground": "hsla(33, 100%, 59%, 1)",
@@ -30968,24 +30961,20 @@
         }
       }
     },
-    "selectionStyles": "Function",
-    "settings": {
-      "webContainerType": "inline-size",
-      "mediaQueryDefaultActive": {
-        "xl": true,
-        "lg": true,
-        "md": true,
-        "sm": true,
-        "xs": true,
-        "xxs": false
-      },
-      "defaultFont": "body",
-      "fastSchemeChange": true,
-      "shouldAddPrefersColorThemes": true,
-      "themeClassNameOnRoot": true
+    "mediaQueryDefaultActive": {
+      "xl": true,
+      "lg": true,
+      "md": true,
+      "sm": true,
+      "xs": true,
+      "xxs": false
     },
+    "selectionStyles": "Function",
     "unset": {
       "fontFamily": "$body"
+    },
+    "settings": {
+      "webContainerType": "inline-size"
     },
     "inverseShorthands": {
       "userSelect": "ussel",
@@ -31072,7 +31061,6 @@
     },
     "parsed": true,
     "getNewCSS": "Function",
-    "defaultFont": "$body",
     "fontSizeTokens": {},
     "specificTokens": {
       "$color.white0": {
