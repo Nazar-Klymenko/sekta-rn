@@ -3,98 +3,104 @@ import { Check, ChevronDown } from "@tamagui/lucide-icons";
 
 import React, { useState } from "react";
 
-import { Adapt, Select, Sheet, Text, XStack, YStack } from "tamagui";
+import { useController, useFormContext } from "react-hook-form";
+import {
+  Adapt,
+  Select,
+  Sheet,
+  SelectProps as TamaguiSelectProps,
+  Text,
+  XStack,
+  YStack,
+} from "tamagui";
 
 import { Tag } from "@/components/Tag";
 
-interface MultiSelectProps {
-  options: string[];
-  value: string[];
-  onChange: (value: string[]) => void;
+import {
+  CustomAdapt,
+  MultiSelectTrigger,
+  ScrollDownButton,
+  ScrollUpButton,
+  SelectTrigger,
+} from "./shared/SelectComponents";
+
+interface MultiSelectProps extends TamaguiSelectProps {
+  name: string;
+  label: string;
+  id: string;
   placeholder: string;
+  items: string[];
 }
 
-export const MultiSelect: React.FC<MultiSelectProps> = ({
-  options,
-  value,
-  onChange,
+export const MultiSelect = ({
+  items,
   placeholder,
-}) => {
+  name,
+  id,
+  ...props
+}: MultiSelectProps): JSX.Element => {
   const [open, setOpen] = useState(false);
-
-  const handleValueChange = (newValue: string) => {
-    const updatedValue = value.includes(newValue)
-      ? value.filter((v) => v !== newValue)
-      : [...value, newValue];
-    onChange(updatedValue);
-  };
+  const { control } = useFormContext();
+  const {
+    field: { value },
+    fieldState: { error },
+  } = useController({
+    name,
+    control,
+  });
 
   return (
-    <Select
-      open={open}
-      onOpenChange={setOpen}
-      value={value.length > 0 ? value[0] : undefined}
-      onValueChange={handleValueChange}
-    >
-      <Select.Trigger width="100%">
-        <Select.Value placeholder={placeholder}>
-          <XStack flexWrap="wrap" gap="$2">
-            {value.map((item) => (
-              <Tag key={item} tag={item} />
-            ))}
-          </XStack>
-        </Select.Value>
-      </Select.Trigger>
-
-      <Adapt when="sm" platform="touch">
-        <Sheet modal dismissOnSnapToBottom>
-          <Sheet.Frame>
-            <Sheet.ScrollView>
-              <Adapt.Contents />
-            </Sheet.ScrollView>
-          </Sheet.Frame>
-          <Sheet.Overlay />
-        </Sheet>
-      </Adapt>
-
-      <Select.Content>
-        <Select.ScrollUpButton
-          ai="center"
-          jc="center"
-          pos="relative"
-          w="100%"
-          h="$3"
-        >
-          <YStack zi={10}>
-            <ChevronDown size={20} />
-          </YStack>
-        </Select.ScrollUpButton>
-
+    <Select id={id}>
+      <MultiSelectTrigger placeholder={placeholder}>
+        {value.map((item: any) => (
+          <Tag key={item.value} tag={item.label} />
+        ))}
+      </MultiSelectTrigger>
+      <CustomAdapt native={!!props.native} />
+      <Select.Content zIndex={200000}>
+        <ScrollUpButton />
         <Select.Viewport minWidth={200}>
-          <YStack gap="$0">
-            {options.map((item, i) => (
-              <Select.Item index={i} key={item} value={item}>
-                <Select.ItemText>{item}</Select.ItemText>
-                <Select.ItemIndicator marginLeft="auto">
-                  {value.includes(item) && <Check size={16} />}
-                </Select.ItemIndicator>
-              </Select.Item>
-            ))}
-          </YStack>
+          <Select.Group>
+            <Select.Label>{placeholder}</Select.Label>
+            {items.map((item, i) => {
+              return (
+                <Select.Item index={i} key={`${item}-${i}`} value={item}>
+                  <Select.ItemText>
+                    <Tag tag={item}></Tag>
+                  </Select.ItemText>
+                  <Select.ItemIndicator marginLeft="auto">
+                    <Check size={16} />
+                  </Select.ItemIndicator>
+                </Select.Item>
+              );
+            })}
+          </Select.Group>
         </Select.Viewport>
 
-        <Select.ScrollDownButton
-          ai="center"
-          jc="center"
-          pos="relative"
-          w="100%"
-          h="$3"
-        >
-          <YStack zi={10}>
-            <ChevronDown size={20} />
-          </YStack>
-        </Select.ScrollDownButton>
+        <ScrollDownButton />
       </Select.Content>
     </Select>
   );
 };
+// {
+//   value.map((item) => <Tag key={item} tag={item} />);
+// }
+// const handleValueChange = (newValue: string) => {
+//   const updatedValue = value.includes(newValue)
+//     ? value.filter((v) => v !== newValue)
+//     : [...value, newValue];
+//   onChange(updatedValue);
+// };
+
+// {items.map((item, i) => (
+//   <Select.Item
+//     index={i}
+//     key={(item.value as string) + i}
+//     value={item.value as string}
+//   >
+//     <Select.ItemText>{item.label}</Select.ItemText>
+//     {/* <Select.ItemIndicator marginLeft="auto">
+//       {value.includes(item.value as string) && <Check size={16} />}
+//     </Select.ItemIndicator> */}
+//   </Select.Item>
+// ))}

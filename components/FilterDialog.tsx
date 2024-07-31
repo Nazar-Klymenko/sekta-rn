@@ -59,6 +59,12 @@ export function FilterDialog({
 }: FilterDialogProps) {
   const methods = useForm<FilterValues>({
       resolver: yupResolver(schema),
+      // defaultValues: {
+      //   priceSort: "highToLow",
+      //   selectedGenres: [],
+      //   selectedArtists: [],
+      //   upcomingOnly: false,
+      // },
       defaultValues: currentFilters,
     }),
     { control, handleSubmit, reset } = methods;
@@ -69,7 +75,7 @@ export function FilterDialog({
   const uniqueArtists = Array.from(
     new Set(events.flatMap((event) => event.lineup))
   );
-
+  console.log(uniqueGenres);
   const onSubmit = (data: FilterValues) => {
     onApplyFilters(data);
     onOpenChange(false);
@@ -114,6 +120,13 @@ export function FilterDialog({
                 items={priceOptions}
               />
 
+              <MultiSelect
+                name="selectedGenres"
+                placeholder="Select Genres"
+                id="genres-sort"
+                label="Sort by genres"
+                items={uniqueGenres}
+              />
               <Checkbox id="upcoming-only" name="upcomingOnly">
                 Only show upcoming events
               </Checkbox>

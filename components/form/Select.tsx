@@ -19,7 +19,12 @@ import {
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
-import { CustomAdapt } from "./CustomAdapt";
+import {
+  CustomAdapt,
+  ScrollDownButton,
+  ScrollUpButton,
+  SelectTrigger,
+} from "./shared/SelectComponents";
 
 interface SelectProps extends TamaguiSelectProps {
   name: string;
@@ -51,35 +56,13 @@ export function Select({
     <TamaguiSelect
       value={field.value}
       onValueChange={(val) => {
-        console.log({ val });
         field.onChange(val);
       }}
     >
-      <TamaguiSelect.Trigger width={220} iconAfter={ChevronDown}>
-        <TamaguiSelect.Value placeholder={placeholder} />
-      </TamaguiSelect.Trigger>
-
+      <SelectTrigger placeholder={placeholder} />
       <CustomAdapt native={!!props.native} />
-
       <TamaguiSelect.Content zIndex={200000}>
-        <TamaguiSelect.ScrollUpButton
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-          width="100%"
-          height="$3"
-        >
-          <YStack zIndex={10}>
-            <ChevronUp size={20} />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["$background", "transparent"]}
-            borderRadius="$4"
-          />
-        </TamaguiSelect.ScrollUpButton>
+        <ScrollUpButton />
         <TamaguiSelect.Viewport
           animation="quick"
           animateOnly={["transform", "opacity"]}
@@ -111,24 +94,7 @@ export function Select({
             )}
           </TamaguiSelect.Group>
         </TamaguiSelect.Viewport>
-        <TamaguiSelect.ScrollDownButton
-          alignItems="center"
-          justifyContent="center"
-          position="relative"
-          width="100%"
-          height="$3"
-        >
-          <YStack zIndex={10}>
-            <ChevronDown size={20} />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["transparent", "$background"]}
-            borderRadius="$4"
-          />
-        </TamaguiSelect.ScrollDownButton>
+        <ScrollDownButton />
       </TamaguiSelect.Content>
     </TamaguiSelect>
   );
