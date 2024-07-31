@@ -1,7 +1,7 @@
 // src/components/form/MultiSelect.tsx
-import { Check, ChevronDown } from "@tamagui/lucide-icons";
+import { Check, ChevronDown, X } from "@tamagui/lucide-icons";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useController, useFormContext } from "react-hook-form";
 import {
@@ -21,10 +21,10 @@ import {
   MultiSelectTrigger,
   ScrollDownButton,
   ScrollUpButton,
-  SelectTrigger,
 } from "./shared/SelectComponents";
 
-interface MultiSelectProps extends TamaguiSelectProps {
+interface MultiSelectProps
+  extends Omit<TamaguiSelectProps, "value" | "onValueChange"> {
   name: string;
   label: string;
   id: string;
@@ -37,70 +37,86 @@ export const MultiSelect = ({
   placeholder,
   name,
   id,
+  label,
   ...props
 }: MultiSelectProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const { control } = useFormContext();
   const {
-    field: { value },
+    field: { value, onChange },
     fieldState: { error },
   } = useController({
     name,
     control,
   });
 
-  return (
-    <Select id={id}>
-      <MultiSelectTrigger placeholder={placeholder}>
-        {value.map((item: any) => (
-          <Tag key={item.value} tag={item.label} />
-        ))}
-      </MultiSelectTrigger>
-      <CustomAdapt native={!!props.native} />
-      <Select.Content zIndex={200000}>
-        <ScrollUpButton />
-        <Select.Viewport minWidth={200}>
-          <Select.Group>
-            <Select.Label>{placeholder}</Select.Label>
-            {items.map((item, i) => {
-              return (
-                <Select.Item index={i} key={`${item}-${i}`} value={item}>
-                  <Select.ItemText>
-                    <Tag tag={item}></Tag>
-                  </Select.ItemText>
-                  <Select.ItemIndicator marginLeft="auto">
-                    <Check size={16} />
-                  </Select.ItemIndicator>
-                </Select.Item>
-              );
-            })}
-          </Select.Group>
-        </Select.Viewport>
+  const handleValueChange = (newValue: string) => {
+    const updatedValue = [...value, newValue];
+    onChange(updatedValue);
+  };
 
-        <ScrollDownButton />
-      </Select.Content>
-    </Select>
+  const handleRemoveTag = (tag: string) => {
+    const newValue = value.filter((item: string) => item !== tag);
+    onChange(newValue);
+  };
+
+  const availableItems = useMemo(() => {
+    return items.filter((item) => !value.includes(item));
+  }, [items, value]);
+  const isDisabled = availableItems.length === 0;
+
+  return (
+    <YStack>
+      <Text>{label}</Text>
+      <Select
+        id={id}
+        value={value.length > 0 ? value[value.length - 1] : undefined}
+        onValueChange={handleValueChange}
+        open={open}
+        onOpenChange={setOpen}
+        {...props}
+      >
+        <XStack flexWrap="wrap" gap="$2" marginBottom="$2">
+          {value.map((item: string) => (
+            <Tag
+              key={item}
+              tag={item}
+              selected
+              onPress={() => handleRemoveTag(item)}
+              icon={<X size={12} />}
+            />
+          ))}
+        </XStack>
+        <MultiSelectTrigger placeholder={placeholder} disabled={isDisabled}>
+          {value.length > 0
+            ? `${value.length} item${value.length > 1 ? "s" : ""} selected`
+            : placeholder}
+        </MultiSelectTrigger>
+        <CustomAdapt />
+        <Select.Content zIndex={200000}>
+          <ScrollUpButton />
+          <Select.Viewport>
+            <Select.Group>
+              {availableItems.map((item, i) => {
+                return (
+                  <Select.Item index={i} key={item} value={item}>
+                    <Select.ItemText>{item}</Select.ItemText>
+                    <Select.ItemIndicator marginLeft="auto">
+                      <Check size={16} />
+                    </Select.ItemIndicator>
+                  </Select.Item>
+                );
+              })}
+            </Select.Group>
+          </Select.Viewport>
+          <ScrollDownButton />
+        </Select.Content>
+      </Select>
+      {error && (
+        <Text color="$red10" fontSize="$2">
+          {error.message}
+        </Text>
+      )}
+    </YStack>
   );
 };
-// {
-//   value.map((item) => <Tag key={item} tag={item} />);
-// }
-// const handleValueChange = (newValue: string) => {
-//   const updatedValue = value.includes(newValue)
-//     ? value.filter((v) => v !== newValue)
-//     : [...value, newValue];
-//   onChange(updatedValue);
-// };
-
-// {items.map((item, i) => (
-//   <Select.Item
-//     index={i}
-//     key={(item.value as string) + i}
-//     value={item.value as string}
-//   >
-//     <Select.ItemText>{item.label}</Select.ItemText>
-//     {/* <Select.ItemIndicator marginLeft="auto">
-//       {value.includes(item.value as string) && <Check size={16} />}
-//     </Select.ItemIndicator> */}
-//   </Select.Item>
-// ))}

@@ -5,9 +5,10 @@ interface TagProps {
   tag: string;
   onPress?: () => void;
   selected?: boolean;
+  icon?: React.ReactNode;
 }
 
-export const Tag = ({ tag, onPress, selected }: TagProps) => {
+export const Tag = ({ tag, onPress, selected, icon }: TagProps) => {
   const theme = useTheme();
 
   return (
@@ -19,10 +20,14 @@ export const Tag = ({ tag, onPress, selected }: TagProps) => {
       paddingHorizontal="$4"
       backgroundColor={selected ? "$accentBackground" : "transparent"}
       onPress={onPress}
+      alignItems="center"
+      gap="$2"
+      cursor={selected ? "pointer" : "unset"}
     >
       <Text color="$color" fontSize="$3">
         {tag}
       </Text>
+      {icon}
     </XStack>
   );
 };

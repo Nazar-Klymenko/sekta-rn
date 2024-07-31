@@ -61,11 +61,13 @@ export const SelectTrigger = ({ placeholder }: { placeholder: string }) => (
 export const MultiSelectTrigger = ({
   placeholder,
   children,
+  disabled,
 }: {
   placeholder: string;
+  disabled?: boolean;
   children?: React.ReactNode;
 }) => (
-  <Select.Trigger iconAfter={ChevronDown}>
+  <Select.Trigger iconAfter={ChevronDown} disabled={disabled}>
     <Select.Value> {children}</Select.Value>
   </Select.Trigger>
 );

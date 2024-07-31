@@ -85,7 +85,6 @@ export default function HomeScreen() {
       selectedArtists: [],
       upcomingOnly: false,
     });
-    queryClient.resetQueries(["events"]);
   };
 
   if (status === "loading") return <FullPageLoading />;

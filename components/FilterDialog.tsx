@@ -5,16 +5,7 @@ import React from "react";
 import { Event } from "@/models/Event";
 
 import { Controller, useForm } from "react-hook-form";
-import {
-  Adapt,
-  Button,
-  Dialog,
-  Label,
-  Sheet,
-  Text,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Adapt, Button, Label, Sheet, Text, XStack, YStack } from "tamagui";
 
 import * as yup from "yup";
 
@@ -22,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Tag } from "@/components/Tag";
 
+import { Dialog } from "./Dialog";
 import { Checkbox } from "./form/Checkbox";
 import { Form } from "./form/Form";
 import { MultiSelect } from "./form/MultiSelect";
@@ -59,12 +51,6 @@ export function FilterDialog({
 }: FilterDialogProps) {
   const methods = useForm<FilterValues>({
       resolver: yupResolver(schema),
-      // defaultValues: {
-      //   priceSort: "highToLow",
-      //   selectedGenres: [],
-      //   selectedArtists: [],
-      //   upcomingOnly: false,
-      // },
       defaultValues: currentFilters,
     }),
     { control, handleSubmit, reset } = methods;
@@ -75,7 +61,6 @@ export function FilterDialog({
   const uniqueArtists = Array.from(
     new Set(events.flatMap((event) => event.lineup))
   );
-  console.log(uniqueGenres);
   const onSubmit = (data: FilterValues) => {
     onApplyFilters(data);
     onOpenChange(false);
@@ -93,85 +78,48 @@ export function FilterDialog({
   ];
 
   return (
-    <Dialog modal open={open} onOpenChange={onOpenChange}>
-      <Adapt when="sm" platform="touch">
-        <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-          <Sheet.Frame padding="$4" gap="$4">
-            <Adapt.Contents />
-          </Sheet.Frame>
-          <Sheet.Overlay
-            animation="lazy"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
+    <Dialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title="Filter Events"
+      id={"event-filter-dialog"}
+    >
+      <Form methods={methods}>
+        <YStack gap="$4">
+          <Select
+            name="priceSort"
+            placeholder="Select price"
+            id="price-sort"
+            label="Sort by price"
+            items={priceOptions}
           />
-        </Sheet>
-      </Adapt>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content key={"event-filter-dialog"}>
-          <Dialog.Title>Filter Events</Dialog.Title>
-          <Form methods={methods}>
-            <YStack gap="$4">
-              <Select
-                name="priceSort"
-                placeholder="Select price"
-                id="price-sort"
-                label="Sort by price"
-                items={priceOptions}
-              />
 
-              <MultiSelect
-                name="selectedGenres"
-                placeholder="Select Genres"
-                id="genres-sort"
-                label="Sort by genres"
-                items={uniqueGenres}
-              />
-              <Checkbox id="upcoming-only" name="upcomingOnly">
-                Only show upcoming events
-              </Checkbox>
-              <XStack gap="$4" justifyContent="flex-end">
-                <Button onPress={handleReset}>Reset</Button>
-                <Button theme="active" onPress={handleSubmit(onSubmit)}>
-                  Apply
-                </Button>
-              </XStack>
-            </YStack>
-          </Form>
-        </Dialog.Content>
-      </Dialog.Portal>
+          <MultiSelect
+            name="selectedGenres"
+            placeholder="Select Genres"
+            id="genres-sort"
+            label="Sort by genres"
+            items={uniqueGenres}
+          />
+
+          <MultiSelect
+            name="selectedArtists"
+            placeholder="Select Artists"
+            id="artists-sort"
+            label="Sort by Artists"
+            items={uniqueArtists}
+          />
+          <Checkbox id="upcoming-only" name="upcomingOnly">
+            Show old events
+          </Checkbox>
+          <XStack gap="$4" justifyContent="flex-end">
+            <Button onPress={handleReset}>Reset all</Button>
+            <Button theme="active" onPress={handleSubmit(onSubmit)}>
+              Apply
+            </Button>
+          </XStack>
+        </YStack>
+      </Form>
     </Dialog>
   );
-}
-
-{
-  /* 
-
-              <Text fontWeight="bold">Genres</Text>
-              <Controller
-                control={control}
-                name="selectedGenres"
-                render={({ field: { onChange, value } }) => (
-                  <MultiSelect
-                    options={uniqueGenres}
-                    value={value}
-                    onChange={onChange}
-                    placeholder="Select genres"
-                  />
-                )}
-              />
-
-              <Text fontWeight="bold">Artists</Text>
-              <Controller
-                control={control}
-                name="selectedArtists"
-                render={({ field: { onChange, value } }) => (
-                  <MultiSelect
-                    options={uniqueArtists}
-                    value={value}
-                    onChange={onChange}
-                    placeholder="Select artists"
-                  />
-                )}
-              /> */
 }
