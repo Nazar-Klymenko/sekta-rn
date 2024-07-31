@@ -33,6 +33,7 @@ interface FilterDialogProps {
   events: Event[];
   onApplyFilters: (filters: FilterValues) => void;
   onResetFilters: () => void;
+  currentFilters: FilterValues;
 }
 
 const schema = yup.object().shape({
@@ -54,15 +55,11 @@ export function FilterDialog({
   events,
   onApplyFilters,
   onResetFilters,
+  currentFilters,
 }: FilterDialogProps) {
   const methods = useForm<FilterValues>({
       resolver: yupResolver(schema),
-      defaultValues: {
-        priceSort: false,
-        selectedGenres: [],
-        selectedArtists: [],
-        upcomingOnly: false,
-      },
+      defaultValues: currentFilters,
     }),
     { control, handleSubmit, reset } = methods;
 

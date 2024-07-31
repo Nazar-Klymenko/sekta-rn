@@ -172,6 +172,7 @@ export default function HomeScreen() {
         events={flattenedEvents}
         onApplyFilters={handleApplyFilters}
         onResetFilters={handleResetFilters}
+        currentFilters={filters}
       />
     </PageContainer>
   );
