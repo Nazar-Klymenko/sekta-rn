@@ -1,85 +1,138 @@
-import { SlidersHorizontal, X } from "@tamagui/lucide-icons";
+import { SlidersHorizontal } from "@tamagui/lucide-icons";
 
-import { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { FlatList, Platform } from "react-native";
+import { ActivityIndicator, FlatList, Platform } from "react-native";
 
-import { useAuth } from "@/hooks/useAuth";
+import { fetchFilteredEvents } from "@/api/firestore";
 import { useEventCollection, useEvents } from "@/hooks/useEvents";
+import { Event } from "@/models/Event";
 
 import { Stack, useRouter } from "expo-router";
-import {
-  Adapt,
-  Button,
-  Checkbox,
-  Dialog,
-  Input,
-  Label,
-  Select,
-  Sheet,
-  Spinner,
-  Text,
-  View,
-  XStack,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { useInfiniteQuery, useQueryClient } from "react-query";
+import { Button, Text, YStack, useTheme } from "tamagui";
 
+import { FilterDialog, FilterValues } from "@/components/FilterDialog";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 
+const ITEMS_PER_PAGE = 1;
+
 export default function HomeScreen() {
   const theme = useTheme();
   const router = useRouter();
-  const { user, isLoggedIn } = useAuth();
-  const { data: events, isLoading, isError, error, refetch } = useEvents();
-  const { data: likedEvents } = useEventCollection();
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    date: "",
-    genre: "",
-    price: "",
-    freeOnly: false,
-    tags: [],
+  const [filters, setFilters] = useState<FilterValues>({
+    priceSort: false,
+    selectedGenres: [],
+    selectedArtists: [],
+    upcomingOnly: false,
   });
-  const [uniqueTags, setUniqueTags] = useState([]);
 
-  useEffect(() => {
-    if (events) {
-      const tagsSet = new Set();
-      events.forEach((event) => {
-        event.genres.forEach((tag) => tagsSet.add(tag));
-      });
-      // setUniqueTags(Array.from(tagsSet));
+  const { data: likedEvents } = useEventCollection();
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+    refetch,
+    isLoading,
+  } = useInfiniteQuery(
+    ["events", filters],
+    async ({ pageParam = 0 }) => {
+      const events = await fetchFilteredEvents(
+        filters,
+        pageParam,
+        ITEMS_PER_PAGE
+      );
+      return events;
+    },
+    {
+      getNextPageParam: (lastPage, pages) => {
+        return lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined;
+      },
     }
-  }, [events]);
+  );
 
-  if (isLoading) return <FullPageLoading />;
-  if (isError)
+  const flattenedEvents = data?.pages.flat() || [];
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const appliedFiltersCount = Object.values(filters).filter((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    if (typeof value === "boolean") return value;
+    return value !== null;
+  }).length;
+
+  const handleApplyFilters = (newFilters: FilterValues) => {
+    setFilters(newFilters);
+    queryClient.resetQueries(["events", newFilters]);
+  };
+
+  const handleResetFilters = () => {
+    setFilters({
+      priceSort: false,
+      selectedGenres: [],
+      selectedArtists: [],
+      upcomingOnly: false,
+    });
+    queryClient.resetQueries(["events"]);
+  };
+
+  if (status === "loading") return <FullPageLoading />;
+  if (status === "error")
     return (
       <PageContainer>
-        <Text>Error: {error.message}</Text>
+        <Text>Error: {(error as Error).message}</Text>
       </PageContainer>
     );
-
-  const applyFilters = () => {
-    // Apply filters logic here
-    setOpen(false);
-  };
 
   return (
     <PageContainer scrollable={false} fullWidth>
       <Stack.Screen
         options={{
           headerRight: () => (
-            <Button
-              size="$3"
-              icon={SlidersHorizontal}
-              circular
-              onPress={() => setOpen(true)}
-              theme="active"
-            />
+            <YStack
+              position="relative"
+              justifyContent="center"
+              alignItems="center"
+              marginHorizontal={Platform.OS === "web" ? "$4" : "unset"}
+            >
+              <Button
+                size="$3"
+                icon={SlidersHorizontal}
+                circular
+                onPress={() => setOpen(true)}
+                theme="active"
+              />
+              {appliedFiltersCount > 0 && (
+                <YStack
+                  position="absolute"
+                  top={-5}
+                  right={-5}
+                  backgroundColor="$red10Dark"
+                  borderRadius={10}
+                  width={20}
+                  height={20}
+                  justifyContent="center"
+                  alignItems="center"
+                  zIndex={1}
+                >
+                  <Text color="white" fontSize={10}>
+                    {appliedFiltersCount}
+                  </Text>
+                </YStack>
+              )}
+            </YStack>
           ),
         }}
       />
@@ -89,7 +142,7 @@ export default function HomeScreen() {
         contentContainerStyle={{
           marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
         }}
-        data={events}
+        data={flattenedEvents}
         renderItem={({ item: event }) => (
           <YStack style={{ maxWidth: 720 }}>
             <EventCard
@@ -102,54 +155,24 @@ export default function HomeScreen() {
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         onRefresh={refetch}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.1}
         ListEmptyComponent={() => (
           <Text>No events found. Pull to refresh or check back later.</Text>
         )}
+        ListFooterComponent={() =>
+          isFetchingNextPage ? (
+            <ActivityIndicator size="large" color={theme.accentColor.get()} />
+          ) : null
+        }
       />
-      <Dialog modal open={open} onOpenChange={setOpen}>
-        <Adapt when="sm" platform="touch">
-          <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-            <Sheet.Frame padding="$4" gap="$4">
-              <Adapt.Contents />
-            </Sheet.Frame>
-            <Sheet.Overlay
-              animation="lazy"
-              enterStyle={{ opacity: 0 }}
-              exitStyle={{ opacity: 0 }}
-            />
-          </Sheet>
-        </Adapt>
-
-        <Dialog.Portal>
-          <Dialog.Overlay
-            key="overlay"
-            animation="quick"
-            opacity={0.5}
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-
-          <Dialog.Content
-            bordered
-            elevate
-            key="content"
-            animateOnly={["transform", "opacity"]}
-            animation={[
-              "quick",
-              {
-                opacity: {
-                  overshootClamping: true,
-                },
-              },
-            ]}
-            enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-            exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-            gap="$4"
-          >
-            <Dialog.Title>Filter Events</Dialog.Title>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog>
+      <FilterDialog
+        open={open}
+        onOpenChange={setOpen}
+        events={flattenedEvents}
+        onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
+      />
     </PageContainer>
   );
 }

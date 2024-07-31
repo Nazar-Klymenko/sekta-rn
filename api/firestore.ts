@@ -1,18 +1,24 @@
 // src/services/databaseService.ts
 import {
+  Query,
   addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   limit,
+  orderBy,
   query,
   queryEqual,
+  startAfter,
   updateDoc,
   where,
 } from "firebase/firestore";
 
+import { Event } from "@/models/Event";
 import { UserData } from "@/models/UserData";
+
+import { FilterValues } from "@/components/FilterDialog";
 
 import { db } from "../services/firebase";
 
@@ -73,3 +79,63 @@ export const updateUserProfile = async (
     throw new Error("Failed to update user profile");
   }
 };
+
+export async function fetchFilteredEvents(
+  filters: FilterValues,
+  page: number,
+  pageSize: number
+): Promise<Event[]> {
+  const eventsRef = collection(db, "events");
+  let q = query(eventsRef);
+
+  // Apply filters
+  if (filters.selectedGenres.length > 0) {
+    q = query(q, where("genres", "array-contains-any", filters.selectedGenres));
+  }
+
+  if (filters.selectedArtists.length > 0) {
+    q = query(
+      q,
+      where("lineup", "array-contains-any", filters.selectedArtists)
+    );
+  }
+
+  if (filters.upcomingOnly) {
+    q = query(q, where("date", ">=", new Date()));
+  }
+
+  // Apply sorting
+  if (filters.priceSort === "lowToHigh") {
+    q = query(q, orderBy("price", "asc"));
+  } else if (filters.priceSort === "highToLow") {
+    q = query(q, orderBy("price", "desc"));
+  } else if (filters.priceSort === "free") {
+    q = query(q, where("price", "==", 0));
+  } else {
+    q = query(q, orderBy("date", "desc"));
+  }
+
+  // Apply pagination
+  q = query(q, limit(pageSize));
+  if (page > 0) {
+    const lastVisible = await getLastVisibleDocument(q, page, pageSize);
+    if (lastVisible) {
+      q = query(q, startAfter(lastVisible));
+    }
+  }
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as unknown as Event)
+  );
+}
+
+async function getLastVisibleDocument(
+  q: Query,
+  page: number,
+  pageSize: number
+) {
+  if (page === 0) return null;
+  const lastVisibleSnapshot = await getDocs(query(q, limit(page * pageSize)));
+  return lastVisibleSnapshot.docs[lastVisibleSnapshot.docs.length - 1];
+}

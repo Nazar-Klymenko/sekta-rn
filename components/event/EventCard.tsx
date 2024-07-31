@@ -151,7 +151,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         </Paragraph>
         <XStack flexWrap="wrap" gap="$2" marginTop="$2">
           {event.genres.slice(0, 3).map((genre, index) => (
-            <Tag tag={genre} key={index} />
+            <Tag tag={genre} key={genre + index} />
           ))}
           {event.genres.length > 3 && (
             <Tag tag={`+${event.genres.length - 3}`} />

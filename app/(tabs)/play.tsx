@@ -147,7 +147,7 @@ export default function PlayScreen() {
         {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
           <Input
             id={"play-" + name}
-            key={idx}
+            key={name + idx}
             label={label}
             name={name}
             icon={icon}
