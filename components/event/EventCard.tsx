@@ -75,7 +75,7 @@ export const EventCard: React.FC<EventCardProps> = ({
     "dd MMM yyyy • HH:mm"
   );
   const formattedDayName = formatFirestoreTimestamp(event.date, "EEE");
-  const formattedDay = formatFirestoreTimestamp(event.date, "dd");
+  const formattedDay = formatFirestoreTimestamp(event.date, "dd.MM");
   const isPastEvent = isAfter(
     new Date(),
     new Date(event.date.seconds * 1000 + event.date.nanoseconds / 1000000)
@@ -115,7 +115,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           <Text fontSize={12} fontWeight="bold" color="white">
             {formattedDayName.toUpperCase()}
           </Text>
-          <Text fontSize={18} fontWeight="bold" color="white">
+          <Text fontSize={16} fontWeight="bold" color="white">
             {formattedDay}
           </Text>
         </DateBadge>

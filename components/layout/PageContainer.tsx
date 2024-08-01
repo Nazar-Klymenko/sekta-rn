@@ -78,7 +78,10 @@ export function PageContainer({
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background.get() }}>
+    <SafeAreaView
+      edges={["bottom", "left", "right"]}
+      style={{ flex: 1, backgroundColor: theme.background.get() }}
+    >
       {scrollable ? (
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
