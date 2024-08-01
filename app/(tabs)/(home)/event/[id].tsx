@@ -140,7 +140,7 @@ export default function EventDetailsPage() {
         </YStack>
 
         <XStack display="flex" flex={1} gap="$4">
-          <YStack gap="$4" flex={md ? 2 : 0}>
+          <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
             <InfoItem
               icon={<Calendar color={theme.accentColor.get()} size={24} />}
               title="Date"
