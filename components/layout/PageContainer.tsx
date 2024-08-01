@@ -79,8 +79,10 @@ export function PageContainer({
       {scrollable ? (
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
           showsVerticalScrollIndicator={Platform.OS === "web"}
+          keyboardDismissMode="on-drag"
+          automaticallyAdjustKeyboardInsets
         >
           {content}
         </ScrollView>
