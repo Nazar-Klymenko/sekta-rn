@@ -51,7 +51,7 @@ export function PageContainer({
         flex={1}
         padding={scrollable && !fullWidth ? "$4" : 0}
         gap="$4"
-        paddingBottom={stickyBottom ? stickyBottomHeight : 0}
+        paddingBottom={stickyBottom ? stickyBottomHeight : "$4"}
       >
         {children}
       </YStack>
