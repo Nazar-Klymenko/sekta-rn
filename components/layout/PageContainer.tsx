@@ -68,7 +68,7 @@ export function PageContainer({
       backgroundColor="$background"
       borderTopWidth={1}
       borderTopColor="$borderColor"
-      padding="$4"
+      padding="$3"
     >
       {stickyBottom}
     </YStack>
