@@ -52,7 +52,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 const schema = yup.object().shape({
   priceSort: yup.string().oneOf(["en", "pl", "ru", "ua"]).default("en"),
 });
-export type FilterValues = yup.InferType<typeof schema>;
+export type FormValues = yup.InferType<typeof schema>;
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
@@ -60,7 +60,7 @@ export default function ProfileScreen() {
   const { themeColor, toggleTheme } = useThemeContext();
   const isDarkMode = themeColor === "dark";
   const router = useRouter();
-  const methods = useForm<FilterValues>({
+  const methods = useForm<FormValues>({
       resolver: yupResolver(schema),
       defaultValues: {
         priceSort: "en",

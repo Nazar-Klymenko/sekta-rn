@@ -9,7 +9,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { fetchEventById, fetchEvents, fetchLikedEvents } from "@/api/events";
+import {
+  fetchEventById,
+  fetchEvents,
+  fetchLikedEvents,
+  fetchLikedEventsId,
+} from "@/api/events";
 import { Event } from "@/models/Event";
 import { db } from "@/services/firebase";
 
@@ -30,57 +35,7 @@ export const useEvent = (id: string) => {
   });
 };
 
-export const useEventCollection = () => {
-  const { user } = useAuth();
-
-  return useQuery<string[], Error>({
-    queryKey: ["userCollection", user?.uid],
-    queryFn: async () => {
-      if (!user) return [];
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      return userDoc.data()?.likedEvents || [];
-    },
-    enabled: !!user,
-  });
-};
-
-export const useAddEventToCollection = () => {
-  const queryClient = useQueryClient();
-  const { user } = useAuth();
-  const { data: likedEvents } = useEventCollection();
-
-  return useMutation<boolean, Error, string>({
-    mutationFn: async (eventId: string) => {
-      if (!user) throw new Error("User not authenticated");
-
-      const userRef = doc(db, "users", user.uid);
-      const isLiked = likedEvents?.includes(eventId);
-
-      if (isLiked) {
-        await setDoc(
-          userRef,
-          { likedEvents: arrayRemove(eventId) },
-          { merge: true }
-        );
-      } else {
-        await setDoc(
-          userRef,
-          { likedEvents: arrayUnion(eventId) },
-          { merge: true }
-        );
-      }
-
-      return !isLiked;
-    },
-    onSuccess: (_, eventId) => {
-      queryClient.invalidateQueries({ queryKey: ["userCollection"] });
-      queryClient.invalidateQueries({ queryKey: ["event", eventId] });
-      queryClient.invalidateQueries({ queryKey: ["likedEvents"] });
-    },
-  });
-};
-
-export const useFavoriteEvents = () => {
+export const useFavoriteEventsList = () => {
   const { user } = useAuth();
 
   return useQuery<Event[], Error>({
@@ -91,17 +46,14 @@ export const useFavoriteEvents = () => {
   });
 };
 
-export const useUserLikedEvents = () => {
+export const useFavoriteEventsId = () => {
   const { user } = useAuth();
 
   return useQuery<string[], Error>({
-    queryKey: ["userLikedEvents", user?.uid],
-    queryFn: async () => {
-      if (!user) return [];
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      return userDoc.data()?.likedEvents || [];
-    },
+    queryKey: ["likedEventsId", user?.uid],
+    queryFn: () => fetchLikedEventsId(user!.uid),
     enabled: !!user,
+    staleTime: 5 * 1000,
   });
 };
 
@@ -121,9 +73,8 @@ export const useToggleEventLike = () => {
       return !isLiked;
     },
     onSuccess: (_, { eventId }) => {
-      queryClient.invalidateQueries({ queryKey: ["userCollection"] });
-      queryClient.invalidateQueries({ queryKey: ["event", eventId] });
       queryClient.invalidateQueries({ queryKey: ["likedEvents"] });
+      queryClient.invalidateQueries({ queryKey: ["likedEventsId"] });
     },
   });
 };

@@ -10,8 +10,8 @@ import React, { useState } from "react";
 
 import { ActivityIndicator, FlatList, Platform } from "react-native";
 
-import { fetchFilteredEvents } from "@/api/firestore";
-import { useEventCollection, useEvents } from "@/hooks/useEvents";
+import { fetchFilteredEvents } from "@/api/events";
+import { useFavoriteEventsId } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { Stack, useRouter } from "expo-router";
@@ -36,7 +36,7 @@ export default function HomeScreen() {
     includeOldEvents: false,
   });
 
-  const { data: likedEvents } = useEventCollection();
+  const { data: likedEvents } = useFavoriteEventsId();
 
   const {
     data,

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   useEvent,
-  useEventCollection,
+  useFavoriteEventsId,
   useToggleEventLike,
 } from "@/hooks/useEvents";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
@@ -36,11 +36,11 @@ import { PageContainer } from "@/components/layout/PageContainer";
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useEvent(id || "");
+  const { data: likedEvents } = useFavoriteEventsId();
   const theme = useTheme();
   const toggleLike = useToggleEventLike();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
-  const { data: likedEvents } = useEventCollection();
   const pathname = usePathname();
   const media = useMedia();
 

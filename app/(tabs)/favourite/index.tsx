@@ -2,7 +2,7 @@ import React from "react";
 
 import { FlatList, Platform } from "react-native";
 
-import { useEventCollection, useFavoriteEvents } from "@/hooks/useEvents";
+import { useFavoriteEventsId, useFavoriteEventsList } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { useRouter } from "expo-router";
@@ -18,8 +18,8 @@ export default function LikedEventsPage() {
     isLoading,
     isError,
     error,
-  } = useFavoriteEvents();
-  const { data: likedEvents } = useEventCollection();
+  } = useFavoriteEventsList();
+  const { data: likedEvents } = useFavoriteEventsId();
 
   const router = useRouter();
 
