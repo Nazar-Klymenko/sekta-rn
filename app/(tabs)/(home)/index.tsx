@@ -1,4 +1,10 @@
+// index.tsx
 import { SlidersHorizontal } from "@tamagui/lucide-icons";
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import React, { useState } from "react";
 
@@ -9,7 +15,6 @@ import { useEventCollection, useEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { Stack, useRouter } from "expo-router";
-import { useInfiniteQuery, useQueryClient } from "react-query";
 import { Button, Text, YStack, useTheme } from "tamagui";
 
 import { FilterDialog, FilterValues } from "@/components/FilterDialog";
@@ -42,9 +47,15 @@ export default function HomeScreen() {
     error,
     refetch,
     isLoading,
-  } = useInfiniteQuery(
-    ["events", filters],
-    async ({ pageParam = 0 }) => {
+  } = useInfiniteQuery<
+    Event[],
+    Error,
+    InfiniteData<Event[]>,
+    [string, FilterValues],
+    number
+  >({
+    queryKey: ["events", filters],
+    queryFn: async ({ pageParam }) => {
       const events = await fetchFilteredEvents(
         filters,
         pageParam,
@@ -52,12 +63,11 @@ export default function HomeScreen() {
       );
       return events;
     },
-    {
-      getNextPageParam: (lastPage, pages) => {
-        return lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined;
-      },
-    }
-  );
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined;
+    },
+  });
 
   const flattenedEvents = data?.pages.flat() || [];
 
@@ -75,7 +85,7 @@ export default function HomeScreen() {
 
   const handleApplyFilters = (newFilters: FilterValues) => {
     setFilters(newFilters);
-    queryClient.resetQueries(["events", newFilters]);
+    queryClient.resetQueries({ queryKey: ["events", newFilters] });
   };
 
   const handleResetFilters = () => {
@@ -87,7 +97,7 @@ export default function HomeScreen() {
     });
   };
 
-  if (status === "loading") return <FullPageLoading />;
+  if (status === "pending") return <FullPageLoading />;
   if (status === "error")
     return (
       <PageContainer>

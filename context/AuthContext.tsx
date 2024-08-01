@@ -1,21 +1,27 @@
 // contexts/AuthContext.tsx
+import {
+  UseQueryResult,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { User } from "firebase/auth";
 
 import React, { ReactNode, createContext, useEffect } from "react";
 
 import { auth } from "@/services/firebase";
 
-import { UseQueryResult, useQuery, useQueryClient } from "react-query";
-
-type AuthContextType = {
+export type AuthContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
   isInitialized: boolean;
+  isLoggedIn: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
+
+const userQueryKey = ["user"];
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -23,38 +29,40 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const queryClient = useQueryClient();
 
   const { data: user, isLoading }: UseQueryResult<User | null, unknown> =
-    useQuery<User | null, unknown, User | null>(
-      "user",
-      () =>
+    useQuery({
+      queryKey: userQueryKey,
+      queryFn: () =>
         new Promise<User | null>((resolve) => {
           const unsubscribe = auth.onAuthStateChanged((user) => {
             unsubscribe();
             resolve(user);
           });
         }),
-      {
-        staleTime: Infinity, // Prevent automatic refetches
-      }
-    );
+      staleTime: Infinity, // Prevent automatic refetches
+    });
 
   const setUser = (newUser: User | null) => {
-    queryClient.setQueryData("user", newUser);
+    queryClient.setQueryData(userQueryKey, newUser);
   };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      queryClient.setQueryData("user", user);
+      queryClient.setQueryData(userQueryKey, user);
     });
     return unsubscribe;
   }, [queryClient]);
 
-  const isInitialized = !isLoading;
+  const contextValue = React.useMemo<AuthContextType>(
+    () => ({
+      user: user ?? null,
+      setUser,
+      isInitialized: !isLoading,
+      isLoggedIn: !!user,
+    }),
+    [user, isLoading]
+  );
 
   return (
-    <AuthContext.Provider
-      value={{ user: user ?? null, setUser, isInitialized }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

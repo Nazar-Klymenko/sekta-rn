@@ -75,48 +75,40 @@ export default function PlayScreen() {
   const toast = useToastController();
 
   const methods = useForm<FormValues>({
-      resolver: yupResolver(playSchema),
-      defaultValues: {
-        email: "",
-        phone: "",
-        soundcloud: "",
-        youtube: "",
-        instagram: "",
-        facebook: "",
-        additionalInfo: "",
+    resolver: yupResolver(playSchema),
+    defaultValues: {
+      email: "",
+      phone: "",
+      soundcloud: "",
+      youtube: "",
+      instagram: "",
+      facebook: "",
+      additionalInfo: "",
+    },
+  });
+
+  const { handleSubmit, formState } = methods;
+
+  const playSubmission = usePlaySubmission();
+
+  const onSubmit = async (data: FormValues) => {
+    playSubmission.mutate(data, {
+      onSuccess: () => {
+        toast.show("Application Submitted", {
+          message: "Your play info has been submitted successfully!",
+          variant: "success",
+        });
+        methods.reset();
       },
-    }),
-    { handleSubmit, formState } = methods;
-
-  const {
-    mutate: submitPlayInfo,
-    isLoading,
-    isError,
-    isSuccess,
-  } = usePlaySubmission();
-
-  const onSubmit = async (data: PlayData) => {
-    try {
-      submitPlayInfo(data, {
-        onSuccess: () => {
-          toast.show("Application Submitted", {
-            message: "Your play info has been submitted successfully!",
-            variant: "success",
-          });
-          methods.reset();
-        },
-        onError: (error) => {
-          toast.show("Submission Failed", {
-            message:
-              error instanceof Error ? error.message : "An error occurred",
-            variant: "error",
-          });
-        },
-      });
-    } catch (error) {
-      console.error("Error submitting play info:", error);
-    }
+      onError: (error) => {
+        toast.show("Submission Failed", {
+          message: error instanceof Error ? error.message : "An error occurred",
+          variant: "error",
+        });
+      },
+    });
   };
+
   return (
     <PageContainer>
       <Form methods={methods}>
@@ -166,11 +158,13 @@ export default function PlayScreen() {
         <PrimaryButton
           onPress={handleSubmit(onSubmit)}
           text="Send application 🎸"
-          isLoading={isLoading}
-          disabled={isLoading}
+          isLoading={playSubmission.isPending}
+          disabled={playSubmission.isPending}
         />
-        {isError && <Text>Error submitting play info</Text>}
-        {isSuccess && <Text>Play info submitted successfully!</Text>}
+        {playSubmission.isError && <Text>Error submitting play info</Text>}
+        {playSubmission.isSuccess && (
+          <Text>Play info submitted successfully!</Text>
+        )}
       </Form>
     </PageContainer>
   );

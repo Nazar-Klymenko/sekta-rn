@@ -98,8 +98,8 @@ export default function LoginScreen() {
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
             text="Log in"
-            isLoading={signInMutation.isLoading}
-            disabled={signInMutation.isLoading}
+            isLoading={signInMutation.isPending}
+            disabled={signInMutation.isPending}
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/username-bridge?returnTo=${returnTo}`}>

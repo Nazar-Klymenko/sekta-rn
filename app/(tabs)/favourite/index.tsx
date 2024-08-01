@@ -1,4 +1,3 @@
-// src/pages/LikedEventsPage.tsx
 import React from "react";
 
 import { FlatList, Platform } from "react-native";
@@ -7,7 +6,7 @@ import { useEventCollection, useFavoriteEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
 
 import { useRouter } from "expo-router";
-import { Spinner, Text, YStack } from "tamagui";
+import { Text, YStack } from "tamagui";
 
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";

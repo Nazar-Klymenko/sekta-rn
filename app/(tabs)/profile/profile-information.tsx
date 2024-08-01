@@ -163,8 +163,8 @@ export default function UpdateProfileScreen() {
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}
             text="Update Profile"
-            isLoading={updateProfileMutation.isLoading}
-            disabled={updateProfileMutation.isLoading || !isDirty}
+            isLoading={updateProfileMutation.isPending}
+            disabled={updateProfileMutation.isPending || !isDirty}
           />
           {/* {updateProfileMutation.isError && (
             <Text>Error: {updateProfileMutation.error.message}</Text>

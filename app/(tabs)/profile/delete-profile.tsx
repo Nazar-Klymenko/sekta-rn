@@ -94,8 +94,8 @@ export default function DeleteAccountScreen() {
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
             text="Delete Account"
-            isLoading={deleteAccountMutation.isLoading}
-            disabled={deleteAccountMutation.isLoading}
+            isLoading={deleteAccountMutation.isPending}
+            disabled={deleteAccountMutation.isPending}
           />
         </FormProvider>
 
@@ -142,8 +142,8 @@ export default function DeleteAccountScreen() {
                   theme="active"
                   onPress={handleDeleteAccount}
                   aria-label="Delete Account"
-                  isLoading={deleteAccountMutation.isLoading}
-                  disabled={deleteAccountMutation.isLoading}
+                  isLoading={deleteAccountMutation.isPending}
+                  disabled={deleteAccountMutation.isPending}
                   text="Delete Account"
                   backgroundColor={theme.red10Light.get()}
                   hoverStyle={{

@@ -70,7 +70,6 @@ export default function SignupScreen() {
     },
   });
   const { handleSubmit, watch } = methods;
-
   const signUpMutation = useSignUp();
 
   const onSubmit = (data: FormValues) => {
@@ -80,7 +79,7 @@ export default function SignupScreen() {
         password: data.password,
         username: data.username,
         agreeTos: data.agreeTos,
-        agreeEmail: data.agreeEmail || false,
+        agreeEmail: data.agreeEmail,
       },
       {
         onSuccess: () => {
@@ -129,8 +128,8 @@ export default function SignupScreen() {
           <PrimaryButton
             text="Sign up"
             onPress={handleSubmit(onSubmit)}
-            isLoading={signUpMutation.isLoading}
-            disabled={signUpMutation.isLoading}
+            isLoading={signUpMutation.isPending}
+            disabled={signUpMutation.isPending}
           />
           <YStack>
             <Checkbox name="agreeEmail" id="agree-email">
@@ -155,8 +154,9 @@ export default function SignupScreen() {
 
           {signUpMutation.isError && (
             <Text color="red" textAlign="center" marginTop="$2">
-              {signUpMutation.error?.message ||
-                "An error occurred during signup"}
+              {signUpMutation.error instanceof Error
+                ? signUpMutation.error.message
+                : "An error occurred during signup"}
             </Text>
           )}
           <YStack alignItems="center" padding="$4">

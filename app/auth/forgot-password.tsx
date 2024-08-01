@@ -70,12 +70,14 @@ export default function ForgotPasswordScreen() {
           <PrimaryButton
             text="Reset Password"
             onPress={methods.handleSubmit(onSubmit)}
-            isLoading={sendPasswordResetMutation.isLoading}
-            disabled={sendPasswordResetMutation.isLoading}
+            isLoading={sendPasswordResetMutation.isPending}
+            disabled={sendPasswordResetMutation.isPending}
           />
           {sendPasswordResetMutation.isError && (
             <Text color="red" textAlign="center" marginTop="$2">
-              {sendPasswordResetMutation.error?.message || "An error occurred"}
+              {sendPasswordResetMutation.error instanceof Error
+                ? sendPasswordResetMutation.error.message
+                : "An error occurred"}
             </Text>
           )}
           {sendPasswordResetMutation.isSuccess && (

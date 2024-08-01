@@ -4,6 +4,7 @@ import {
   ToastViewport,
   useToastState,
 } from "@tamagui/toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import React, { useEffect, useState } from "react";
 
@@ -20,7 +21,6 @@ import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { TamaguiProvider, Text, Theme, View, YStack, useTheme } from "tamagui";
 
 import { CustomHeader } from "@/components/CustomHeader";
