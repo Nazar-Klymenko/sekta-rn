@@ -110,7 +110,7 @@ export default function PlayScreen() {
   };
 
   return (
-    <PageContainer>
+    <PageContainer formContaier>
       <Form methods={methods}>
         <Text fontSize={24} fontWeight="bold">
           Play a set at our venue! 🎵

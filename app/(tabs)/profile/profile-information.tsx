@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MenuButton } from "@/components/buttons/MenuButton";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -121,8 +122,8 @@ export default function UpdateProfileScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer>
-        <FormProvider {...methods}>
+      <PageContainer formContaier>
+        <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Update Profile Information
           </Text>
@@ -172,7 +173,7 @@ export default function UpdateProfileScreen() {
           {updateProfileMutation.isSuccess && (
             <Text>Profile updated successfully!</Text>
           )} */}
-        </FormProvider>
+        </Form>
       </PageContainer>
     </AuthGuard>
   );

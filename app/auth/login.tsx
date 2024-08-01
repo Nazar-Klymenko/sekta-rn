@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -68,8 +69,8 @@ export default function LoginScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer>
-        <FormProvider {...methods}>
+      <PageContainer formContaier>
+        <Form methods={methods}>
           <Text fontSize="$8" fontWeight="bold" textAlign="center">
             Log In
           </Text>
@@ -112,7 +113,7 @@ export default function LoginScreen() {
               </Text>
             </Link>
           </YStack>
-        </FormProvider>
+        </Form>
       </PageContainer>
     </AuthPageGuard>
   );

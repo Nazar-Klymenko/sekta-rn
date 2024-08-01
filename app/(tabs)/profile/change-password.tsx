@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordRequirements } from "@/components/form/PasswordRequirements";
@@ -74,7 +75,7 @@ export default function ChangePasswordScreen() {
   return (
     <AuthGuard>
       <PageContainer>
-        <FormProvider {...methods}>
+        <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Change Password
           </Text>
@@ -103,8 +104,8 @@ export default function ChangePasswordScreen() {
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}
             text="Change Password"
-            isLoading={changePasswordMutation.isLoading}
-            disabled={changePasswordMutation.isLoading}
+            isLoading={changePasswordMutation.isPending}
+            disabled={changePasswordMutation.isPending}
           />
           {changePasswordMutation.isError && (
             <Text>Error: {changePasswordMutation.error.message}</Text>
@@ -112,7 +113,7 @@ export default function ChangePasswordScreen() {
           {changePasswordMutation.isSuccess && (
             <Text>Password changed successfully</Text>
           )}
-        </FormProvider>
+        </Form>
       </PageContainer>
     </AuthGuard>
   );

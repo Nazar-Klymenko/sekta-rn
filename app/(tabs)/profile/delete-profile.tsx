@@ -22,6 +22,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
@@ -75,8 +76,8 @@ export default function DeleteAccountScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer>
-        <FormProvider {...methods}>
+      <PageContainer formContaier>
+        <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Delete Account
           </Text>
@@ -97,7 +98,7 @@ export default function DeleteAccountScreen() {
             isLoading={deleteAccountMutation.isPending}
             disabled={deleteAccountMutation.isPending}
           />
-        </FormProvider>
+        </Form>
 
         <Dialog
           modal

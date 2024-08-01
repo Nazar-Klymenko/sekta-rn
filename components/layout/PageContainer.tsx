@@ -2,6 +2,7 @@ import React from "react";
 
 import { Platform, View } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ScrollView,
   Stack,
@@ -15,6 +16,7 @@ interface PageContainerProps extends Omit<StackProps, "children"> {
   children: React.ReactNode;
   scrollable?: boolean;
   fullWidth?: boolean;
+  formContaier?: boolean;
   stickyBottom?: React.ReactNode;
 }
 
@@ -22,6 +24,7 @@ export function PageContainer({
   children,
   scrollable = true,
   fullWidth = false,
+  formContaier = false,
   stickyBottom,
   style,
   ...stackProps
@@ -36,8 +39,8 @@ export function PageContainer({
     maxWidth: "100%",
     ...(media.gtXs && !fullWidth && { maxWidth: 540 }),
     ...(media.gtSm && !fullWidth && { maxWidth: 744 }),
-    ...(media.gtMd && !fullWidth && { maxWidth: 968 }),
-    ...(media.gtLg && !fullWidth && { maxWidth: 968 }),
+    ...(media.gtMd && !fullWidth && !formContaier && { maxWidth: 968 }),
+    ...(media.gtLg && !fullWidth && !formContaier && { maxWidth: 968 }),
     marginHorizontal: "auto",
     ...stackProps,
   };
@@ -75,7 +78,7 @@ export function PageContainer({
   );
 
   return (
-    <YStack flex={1} backgroundColor="$background">
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background.get() }}>
       {scrollable ? (
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -90,6 +93,6 @@ export function PageContainer({
         content
       )}
       {!md && stickyBottomComponent}
-    </YStack>
+    </SafeAreaView>
   );
 }

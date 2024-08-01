@@ -13,6 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
@@ -48,8 +49,8 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer>
-        <FormProvider {...methods}>
+      <PageContainer formContaier>
+        <Form methods={methods}>
           <Text
             fontSize={24}
             fontWeight="bold"
@@ -92,7 +93,7 @@ export default function ForgotPasswordScreen() {
               </Text>
             </Link>
           </YStack>
-        </FormProvider>
+        </Form>
       </PageContainer>
     </AuthPageGuard>
   );

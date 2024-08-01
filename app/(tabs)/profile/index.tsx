@@ -69,7 +69,7 @@ export default function ProfileScreen() {
     { control, handleSubmit, reset } = methods;
 
   return (
-    <PageContainer>
+    <PageContainer formContaier>
       <Form methods={methods}>
         <YStack alignItems="center" gap="$2">
           <Avatar circular size="$12">

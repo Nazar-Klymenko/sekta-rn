@@ -14,6 +14,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 
@@ -86,8 +87,8 @@ export default function HandlePasswordResetScreen() {
   }
 
   return (
-    <PageContainer>
-      <FormProvider {...methods}>
+    <PageContainer formContaier>
+      <Form methods={methods}>
         <Text fontSize={24} fontWeight="bold" textAlign="center">
           Set New Password
         </Text>
@@ -116,7 +117,7 @@ export default function HandlePasswordResetScreen() {
             </Text>
           </Link>
         </YStack>
-      </FormProvider>
+      </Form>
     </PageContainer>
   );
 }

@@ -6,6 +6,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import { Spinner, Stack } from "tamagui";
 
+import { FullPageLoading } from "../layout/FullPageLoading";
+
 interface AuthGuardProps {
   children: React.ReactNode;
 }
@@ -29,20 +31,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     }
   }, [isInitialized, isLoggedIn, pathname, router]);
 
-  if (isChecking) {
-    return (
-      <Stack
-        backgroundColor="$background"
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spinner color="$accentColor" size="large" />
-      </Stack>
-    );
-  }
+  if (isChecking) return <FullPageLoading />;
 
   return <>{children}</>;
 };
