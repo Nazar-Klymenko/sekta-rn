@@ -21,12 +21,12 @@ export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
       icon={
         <Heart
           size={size === "sm" ? 20 : 24}
-          color={isLiked ? theme.red10Light.get() : theme.gray10Light.get()}
+          color={isLiked ? theme.red10Light.get() : "$color"}
           fill={isLiked ? theme.red10Light.get() : "transparent"}
         />
       }
       onPress={(e) => handleLike(e)}
-      backgroundColor={isLiked ? "$red2Light" : "rgba(0, 0, 0, 0.6)"}
+      backgroundColor={"$colorTransparent"}
     />
   );
 };

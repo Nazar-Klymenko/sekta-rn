@@ -15,12 +15,14 @@ interface PageContainerProps extends Omit<StackProps, "children"> {
   children: React.ReactNode;
   scrollable?: boolean;
   fullWidth?: boolean;
+  stickyBottom?: React.ReactNode;
 }
 
 export function PageContainer({
   children,
   scrollable = true,
   fullWidth = false,
+  stickyBottom,
   style,
   ...stackProps
 }: PageContainerProps) {
@@ -33,38 +35,59 @@ export function PageContainer({
     width: "100%",
     maxWidth: "100%",
     ...(media.gtXs && !fullWidth && { maxWidth: 540 }),
-    ...(media.gtSm && !fullWidth && { maxWidth: 720 }),
-    ...(media.gtMd && !fullWidth && { maxWidth: 720 }),
-    ...(media.gtLg && !fullWidth && { maxWidth: 720 }),
+    ...(media.gtSm && !fullWidth && { maxWidth: 744 }),
+    ...(media.gtMd && !fullWidth && { maxWidth: 968 }),
+    ...(media.gtLg && !fullWidth && { maxWidth: 968 }),
     marginHorizontal: "auto",
     ...stackProps,
   };
+  const md = media.gtMd;
+
+  const stickyBottomHeight = md ? 0 : 70;
 
   const content = (
-    <YStack height="100%" flex={1} backgroundColor="$background">
+    <YStack flex={1} {...containerStyle} paddingBottom={stickyBottom ? 16 : 0}>
       <YStack
-        {...containerStyle}
         flex={1}
         padding={scrollable && !fullWidth ? "$4" : 0}
         gap="$4"
+        paddingBottom={stickyBottom ? stickyBottomHeight : 0}
       >
         {children}
       </YStack>
     </YStack>
   );
 
-  if (scrollable) {
-    return (
-      <ScrollView
-        style={{ flex: 1, backgroundColor: theme.background.get() }}
-        contentContainerStyle={{ flexGrow: 1, minHeight: "100%" }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={Platform.OS == "web"}
-      >
-        <View style={{ flexGrow: 1 }}>{content}</View>
-      </ScrollView>
-    );
-  }
+  const stickyBottomComponent = stickyBottom && (
+    <YStack
+      position="absolute"
+      bottom={0}
+      left={0}
+      right={0}
+      height={stickyBottomHeight}
+      backgroundColor="$background"
+      borderTopWidth={1}
+      borderTopColor="$borderColor"
+      padding="$4"
+    >
+      {stickyBottom}
+    </YStack>
+  );
 
-  return content;
+  return (
+    <YStack flex={1} backgroundColor="$background">
+      {scrollable ? (
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={Platform.OS === "web"}
+        >
+          {content}
+        </ScrollView>
+      ) : (
+        content
+      )}
+      {!md && stickyBottomComponent}
+    </YStack>
+  );
 }

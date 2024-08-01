@@ -100,7 +100,7 @@ export async function fetchFilteredEvents(
     );
   }
 
-  if (filters.upcomingOnly) {
+  if (filters.includeOldEvents) {
     q = query(q, where("date", ">=", new Date()));
   }
 

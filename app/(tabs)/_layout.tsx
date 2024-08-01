@@ -6,7 +6,7 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
 
-import { Tabs } from "expo-router";
+import { Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
@@ -14,6 +14,9 @@ import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 export default function TabLayout() {
   const theme = useTheme();
   const { isLoggedIn } = useAuth();
+  const pathname = usePathname();
+
+  const isEventDetailsPage = pathname.startsWith("/event/");
 
   return (
     <Tabs
@@ -21,6 +24,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.background.get(),
+          display: isEventDetailsPage ? "none" : "flex",
         },
         tabBarActiveTintColor: theme.color.get(),
         tabBarInactiveTintColor: theme.gray9Light.get(),
