@@ -1,14 +1,17 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
 
 import { submitPlayInfo } from "@/api/firestore";
 
-import { useMutation, useQueryClient } from "react-query";
-
 export const usePlaySubmission = () => {
-  return useMutation<void, FirebaseError, PlayData, string>(
-    "submitPlayInfo",
-    async (data: PlayData) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, FirebaseError, PlayData>({
+    mutationFn: async (data: PlayData) => {
       await submitPlayInfo(data);
-    }
-  );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["playInfo"] });
+    },
+  });
 };

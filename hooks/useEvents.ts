@@ -1,4 +1,5 @@
-// src/hooks/useEvents.ts
+// useEvents.ts
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   arrayRemove,
   arrayUnion,
@@ -12,41 +13,44 @@ import { fetchEventById, fetchEvents, fetchLikedEvents } from "@/api/events";
 import { Event } from "@/models/Event";
 import { db } from "@/services/firebase";
 
-import { useMutation, useQuery, useQueryClient } from "react-query";
-
 import { useAuth } from "./useAuth";
 
 export const useEvents = () => {
-  return useQuery<Event[], Error>("events", fetchEvents);
+  return useQuery<Event[], Error>({
+    queryKey: ["events"],
+    queryFn: fetchEvents,
+  });
 };
 
 export const useEvent = (id: string) => {
-  return useQuery<Event, Error>(["event", id], () => fetchEventById(id), {
+  return useQuery<Event, Error>({
+    queryKey: ["event", id],
+    queryFn: () => fetchEventById(id),
     enabled: !!id,
   });
 };
+
 export const useEventCollection = () => {
   const { user } = useAuth();
 
-  return useQuery(
-    ["userCollection", user?.uid],
-    async () => {
-      if (!user) return null;
+  return useQuery<string[], Error>({
+    queryKey: ["userCollection", user?.uid],
+    queryFn: async () => {
+      if (!user) return [];
       const userDoc = await getDoc(doc(db, "users", user.uid));
       return userDoc.data()?.likedEvents || [];
     },
-    {
-      enabled: !!user,
-    }
-  );
+    enabled: !!user,
+  });
 };
+
 export const useAddEventToCollection = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const { data: likedEvents } = useEventCollection();
 
-  return useMutation(
-    async (eventId: string) => {
+  return useMutation<boolean, Error, string>({
+    mutationFn: async (eventId: string) => {
       if (!user) throw new Error("User not authenticated");
 
       const userRef = doc(db, "users", user.uid);
@@ -68,48 +72,45 @@ export const useAddEventToCollection = () => {
 
       return !isLiked;
     },
-    {
-      onSuccess: (_, eventId) => {
-        queryClient.invalidateQueries("userCollection");
-        queryClient.invalidateQueries(["event", eventId]);
-        queryClient.invalidateQueries("likedEvents");
-      },
-    }
-  );
+    onSuccess: (_, eventId) => {
+      queryClient.invalidateQueries({ queryKey: ["userCollection"] });
+      queryClient.invalidateQueries({ queryKey: ["event", eventId] });
+      queryClient.invalidateQueries({ queryKey: ["likedEvents"] });
+    },
+  });
 };
+
 export const useFavoriteEvents = () => {
   const { user } = useAuth();
 
-  return useQuery<Event[], Error>(
-    ["likedEvents", user?.uid],
-    () => fetchLikedEvents(user!.uid),
-    {
-      enabled: !!user,
-      staleTime: 5 * 1000,
-    }
-  );
+  return useQuery<Event[], Error>({
+    queryKey: ["likedEvents", user?.uid],
+    queryFn: () => fetchLikedEvents(user!.uid),
+    enabled: !!user,
+    staleTime: 5 * 1000,
+  });
 };
+
 export const useUserLikedEvents = () => {
   const { user } = useAuth();
 
-  return useQuery(
-    ["userLikedEvents", user?.uid],
-    async () => {
+  return useQuery<string[], Error>({
+    queryKey: ["userLikedEvents", user?.uid],
+    queryFn: async () => {
       if (!user) return [];
       const userDoc = await getDoc(doc(db, "users", user.uid));
       return userDoc.data()?.likedEvents || [];
     },
-    {
-      enabled: !!user,
-    }
-  );
+    enabled: !!user,
+  });
 };
+
 export const useToggleEventLike = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
-  return useMutation(
-    async ({ eventId, isLiked }: { eventId: string; isLiked: boolean }) => {
+  return useMutation<boolean, Error, { eventId: string; isLiked: boolean }>({
+    mutationFn: async ({ eventId, isLiked }) => {
       if (!user) throw new Error("User not authenticated");
 
       const userRef = doc(db, "users", user.uid);
@@ -119,12 +120,10 @@ export const useToggleEventLike = () => {
 
       return !isLiked;
     },
-    {
-      onSuccess: (_, { eventId }) => {
-        queryClient.invalidateQueries("userCollection");
-        queryClient.invalidateQueries(["event", eventId]);
-        queryClient.invalidateQueries("likedEvents");
-      },
-    }
-  );
+    onSuccess: (_, { eventId }) => {
+      queryClient.invalidateQueries({ queryKey: ["userCollection"] });
+      queryClient.invalidateQueries({ queryKey: ["event", eventId] });
+      queryClient.invalidateQueries({ queryKey: ["likedEvents"] });
+    },
+  });
 };

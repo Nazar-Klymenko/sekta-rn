@@ -1,7 +1,5 @@
-// src/hooks/useUsernameAvailability.ts
+import { useQuery } from "@tanstack/react-query";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
-
-import { useQuery } from "react-query";
 
 import { db } from "../services/firebase";
 
@@ -19,12 +17,10 @@ const checkUsernameAvailability = async (
 };
 
 export const useUsernameAvailability = (username: string) => {
-  return useQuery(
-    ["usernameAvailability", username],
-    () => checkUsernameAvailability(username),
-    {
-      enabled: false,
-      retry: false,
-    }
-  );
+  return useQuery<boolean, Error>({
+    queryKey: ["usernameAvailability", username],
+    queryFn: () => checkUsernameAvailability(username),
+    enabled: false,
+    retry: false,
+  });
 };
