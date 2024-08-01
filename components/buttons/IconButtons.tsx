@@ -1,9 +1,28 @@
-import { Heart } from "@tamagui/lucide-icons";
+import { Heart, Share } from "@tamagui/lucide-icons";
 
 import { GestureResponderEvent } from "react-native";
 
 import { Button, useTheme } from "tamagui";
 
+interface ShareButtonProps {
+  size: "sm" | "lg";
+  handleShare?: (
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
+  ) => void;
+}
+export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
+  const theme = useTheme();
+
+  return (
+    <Button
+      size={size === "sm" ? "$3" : "$5"}
+      circular
+      icon={<Share size={size === "sm" ? 20 : 24} />}
+      //   onPress={(e) => handleShare(e)}
+      backgroundColor={"$colorTransparent"}
+    />
+  );
+};
 interface LikeButtonProps {
   isLiked: boolean;
   size: "sm" | "lg";

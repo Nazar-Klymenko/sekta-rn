@@ -27,9 +27,8 @@ import {
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import { Tag } from "@/components/Tag";
+import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { LikeButton } from "@/components/event/LikeButton";
-import { ShareButton } from "@/components/event/ShareButton";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 

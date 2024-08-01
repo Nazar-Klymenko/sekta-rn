@@ -25,8 +25,7 @@ import {
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import { Tag } from "@/components/Tag";
-
-import { LikeButton } from "./LikeButton";
+import { LikeButton } from "@/components/buttons/IconButtons";
 
 interface EventCardProps {
   event: Event;
