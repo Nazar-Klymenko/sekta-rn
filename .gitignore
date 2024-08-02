@@ -23,3 +23,6 @@ expo-env.d.ts
 .tamagui
 .tamagui/tamagui.config.json
 .firebase/hosting.ZGlzdA.cache
+/ios
+/android
+.env.production
