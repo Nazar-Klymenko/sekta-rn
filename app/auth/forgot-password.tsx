@@ -49,7 +49,7 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContaier>
+      <PageContainer formContainer>
         <Form methods={methods}>
           <Text
             fontSize={24}

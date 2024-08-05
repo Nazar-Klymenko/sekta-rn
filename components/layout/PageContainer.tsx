@@ -16,7 +16,7 @@ interface PageContainerProps extends Omit<StackProps, "children"> {
   children: React.ReactNode;
   scrollable?: boolean;
   fullWidth?: boolean;
-  formContaier?: boolean;
+  formContainer?: boolean;
   stickyBottom?: React.ReactNode;
 }
 
@@ -24,7 +24,7 @@ export function PageContainer({
   children,
   scrollable = true,
   fullWidth = false,
-  formContaier = false,
+  formContainer = false,
   stickyBottom,
   style,
   ...stackProps
@@ -39,8 +39,8 @@ export function PageContainer({
     maxWidth: "100%",
     ...(media.gtXs && !fullWidth && { maxWidth: 540 }),
     ...(media.gtSm && !fullWidth && { maxWidth: 744 }),
-    ...(media.gtMd && !fullWidth && !formContaier && { maxWidth: 968 }),
-    ...(media.gtLg && !fullWidth && !formContaier && { maxWidth: 968 }),
+    ...(media.gtMd && !fullWidth && !formContainer && { maxWidth: 968 }),
+    ...(media.gtLg && !fullWidth && !formContainer && { maxWidth: 968 }),
     marginHorizontal: "auto",
     ...stackProps,
   };

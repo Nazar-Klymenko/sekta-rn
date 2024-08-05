@@ -76,7 +76,7 @@ export default function DeleteAccountScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContaier>
+      <PageContainer formContainer>
         <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Delete Account

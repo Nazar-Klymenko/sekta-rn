@@ -87,7 +87,7 @@ export default function HandlePasswordResetScreen() {
   }
 
   return (
-    <PageContainer formContaier>
+    <PageContainer formContainer>
       <Form methods={methods}>
         <Text fontSize={24} fontWeight="bold" textAlign="center">
           Set New Password

@@ -122,7 +122,7 @@ export default function UpdateProfileScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContaier>
+      <PageContainer formContainer>
         <Form methods={methods}>
           <Text fontSize={24} fontWeight="bold" textAlign="center">
             Update Profile Information
