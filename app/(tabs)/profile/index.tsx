@@ -50,7 +50,7 @@ import { Select } from "@/components/form/Select";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 const schema = yup.object().shape({
-  priceSort: yup.string().oneOf(["en", "pl", "ru", "ua"]).default("en"),
+  selectLanguage: yup.string().oneOf(["en", "pl", "ru", "ua"]).default("en"),
 });
 export type FormValues = yup.InferType<typeof schema>;
 export default function ProfileScreen() {
@@ -63,7 +63,7 @@ export default function ProfileScreen() {
   const methods = useForm<FormValues>({
       resolver: yupResolver(schema),
       defaultValues: {
-        priceSort: "en",
+        selectLanguage: "en",
       },
     }),
     { control, handleSubmit, reset } = methods;

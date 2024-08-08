@@ -157,7 +157,7 @@ export default function PlayScreen() {
         />
         <PrimaryButton
           onPress={handleSubmit(onSubmit)}
-          text="Send application 🎸"
+          text="Send application"
           isLoading={playSubmission.isPending}
           disabled={playSubmission.isPending}
         />

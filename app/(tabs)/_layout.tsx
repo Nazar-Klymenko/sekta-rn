@@ -23,7 +23,7 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: theme.background075.get(),
+          backgroundColor: theme.gray2Dark.get(),
           display: isEventDetailsPage ? "none" : "flex",
           borderTopWidth: 0,
         },

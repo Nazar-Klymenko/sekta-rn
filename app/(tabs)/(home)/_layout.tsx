@@ -17,7 +17,7 @@ export default function HomeLayout() {
           animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
           headerStyle: {
-            backgroundColor: theme.background.get(),
+            backgroundColor: theme.gray2Dark.get(),
           },
           headerTintColor: theme.color.get(),
         }}

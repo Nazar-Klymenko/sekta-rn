@@ -18,6 +18,7 @@ import { Stack, useRouter } from "expo-router";
 import { Button, Text, YStack, useTheme } from "tamagui";
 
 import { FilterDialog, FilterValues } from "@/components/FilterDialog";
+import { FilterButton, RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -96,86 +97,57 @@ export default function HomeScreen() {
       includeOldEvents: false,
     });
   };
-
   if (status === "pending") return <FullPageLoading />;
-  if (status === "error")
-    return (
-      <PageContainer>
-        <Text>Error: {(error as Error).message}</Text>
-        <Button onPress={() => refetch()}>Retry</Button>
-      </PageContainer>
-    );
 
   return (
     <PageContainer scrollable={false} fullWidth>
       <Stack.Screen
         options={{
           headerRight: () => (
-            <YStack
-              position="relative"
-              justifyContent="center"
-              alignItems="center"
-              marginHorizontal={Platform.OS === "web" ? "$4" : "unset"}
-            >
-              <Button
-                size="$3"
-                icon={SlidersHorizontal}
-                circular
-                onPress={() => setOpen(true)}
-                theme="active"
-              />
-              {appliedFiltersCount > 0 && (
-                <YStack
-                  position="absolute"
-                  top={-5}
-                  right={-5}
-                  backgroundColor="$red10Dark"
-                  borderRadius={10}
-                  width={20}
-                  height={20}
-                  justifyContent="center"
-                  alignItems="center"
-                  zIndex={1}
-                >
-                  <Text color="white" fontSize={10}>
-                    {appliedFiltersCount}
-                  </Text>
-                </YStack>
-              )}
-            </YStack>
+            <FilterButton
+              setOpen={setOpen}
+              appliedFiltersCount={appliedFiltersCount}
+            />
           ),
         }}
       />
-      <FlatList
-        style={{ flex: 1, width: "100%" }}
-        showsVerticalScrollIndicator={Platform.OS == "web"}
-        contentContainerStyle={{
-          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
-        }}
-        data={flattenedEvents}
-        renderItem={({ item: event }) => (
-          <YStack style={{ maxWidth: 720 }}>
-            <EventCard
-              event={event}
-              hrefSource="event"
-              isLiked={likedEvents?.includes(event.id) || false}
-            />
-          </YStack>
-        )}
-        keyExtractor={(item) => item.id}
-        refreshing={isLoading}
-        onRefresh={refetch}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.1}
-        ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
-        )}
-        ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" color={theme.accentColor.get()} />
-          ) : null
-        }
-      />
+      {status === "error" ? (
+        <YStack flex={1} justifyContent="flex-start" alignItems="center">
+          <Text>Error: {(error as Error).message}</Text>
+          <RetryButton onPress={() => refetch()} size="lg" />
+        </YStack>
+      ) : (
+        <FlatList
+          style={{ flex: 1, width: "100%" }}
+          showsVerticalScrollIndicator={Platform.OS == "web"}
+          contentContainerStyle={{
+            marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
+          }}
+          data={flattenedEvents}
+          renderItem={({ item: event }) => (
+            <YStack style={{ maxWidth: 720 }}>
+              <EventCard
+                event={event}
+                hrefSource="event"
+                isLiked={likedEvents?.includes(event.id) || false}
+              />
+            </YStack>
+          )}
+          keyExtractor={(item) => item.id}
+          refreshing={isLoading}
+          onRefresh={refetch}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.1}
+          ListEmptyComponent={() => (
+            <Text>No events found. Pull to refresh or check back later.</Text>
+          )}
+          ListFooterComponent={() =>
+            isFetchingNextPage ? (
+              <ActivityIndicator size="large" color={theme.accentColor.get()} />
+            ) : null
+          }
+        />
+      )}
       <FilterDialog
         open={open}
         onOpenChange={setOpen}

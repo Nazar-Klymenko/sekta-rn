@@ -1,8 +1,13 @@
-import { Heart, Share } from "@tamagui/lucide-icons";
+import {
+  Heart,
+  RefreshCcw,
+  Share,
+  SlidersHorizontal,
+} from "@tamagui/lucide-icons";
 
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, Platform } from "react-native";
 
-import { Button, useTheme } from "tamagui";
+import { Button, Text, YStack, useTheme } from "tamagui";
 
 interface ShareButtonProps {
   size: "sm" | "lg";
@@ -19,6 +24,24 @@ export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
       circular
       icon={<Share size={size === "sm" ? 20 : 24} />}
       //   onPress={(e) => handleShare(e)}
+      backgroundColor={"$colorTransparent"}
+    />
+  );
+};
+interface RetryButtonProps {
+  size?: "sm" | "lg";
+  onPress?: () => void;
+}
+
+export const RetryButton = ({ size = "sm", onPress }: RetryButtonProps) => {
+  const theme = useTheme();
+
+  return (
+    <Button
+      size={size === "sm" ? "$3" : "$5"}
+      circular
+      icon={<RefreshCcw size={size === "sm" ? 20 : 24} />}
+      onPress={onPress}
       backgroundColor={"$colorTransparent"}
     />
   );
@@ -49,3 +72,44 @@ export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
     />
   );
 };
+interface FilterButtonProps {
+  appliedFiltersCount: number;
+  setOpen: (arg: boolean) => void;
+}
+export const FilterButton = ({
+  appliedFiltersCount,
+  setOpen,
+}: FilterButtonProps) => (
+  <YStack
+    position="relative"
+    justifyContent="center"
+    alignItems="center"
+    marginHorizontal={Platform.OS === "web" ? "$4" : "unset"}
+  >
+    <Button
+      size="$3"
+      icon={SlidersHorizontal}
+      circular
+      onPress={() => setOpen(true)}
+      theme="active"
+    />
+    {appliedFiltersCount > 0 && (
+      <YStack
+        position="absolute"
+        top={-5}
+        right={-5}
+        backgroundColor="$red10Dark"
+        borderRadius={10}
+        width={20}
+        height={20}
+        justifyContent="center"
+        alignItems="center"
+        zIndex={1}
+      >
+        <Text color="white" fontSize={10}>
+          {appliedFiltersCount}
+        </Text>
+      </YStack>
+    )}
+  </YStack>
+);

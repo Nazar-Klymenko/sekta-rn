@@ -3,7 +3,7 @@ import { GestureResponderEvent } from "react-native";
 import { Button, ButtonProps, Spinner, Text } from "tamagui";
 
 interface SecondaryButtonTypes extends ButtonProps {
-  onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
+  onPress?: () => void;
   text: string;
   htmlFor?: string;
   isLoading?: boolean;
@@ -18,7 +18,6 @@ export const SecondaryButton = ({
 }: SecondaryButtonTypes): JSX.Element => {
   return (
     <Button
-      animation="quick"
       onPress={onPress}
       htmlFor={htmlFor}
       icon={isLoading ? <Spinner /> : undefined}

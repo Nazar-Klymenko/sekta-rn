@@ -49,11 +49,10 @@ export function FilterDialog({
   currentFilters,
 }: FilterDialogProps) {
   const methods = useForm<FilterValues>({
-    resolver: yupResolver(schema),
-    defaultValues: currentFilters,
-  });
-
-  const { handleSubmit, reset } = methods;
+      resolver: yupResolver(schema),
+      defaultValues: currentFilters,
+    }),
+    { handleSubmit, reset } = methods;
 
   const uniqueGenres = Array.from(
     new Set(events.flatMap((event) => event.genres))
@@ -63,13 +62,18 @@ export function FilterDialog({
   );
 
   const onSubmit = (data: FilterValues) => {
+    console.log(data);
     onApplyFilters(data);
     onOpenChange(false);
   };
 
   const handleReset = () => {
-    reset();
-    onResetFilters();
+    reset({
+      priceSort: false,
+      selectedGenres: [],
+      selectedArtists: [],
+      includeOldEvents: false,
+    });
   };
 
   const priceOptions = [
@@ -96,7 +100,6 @@ export function FilterDialog({
             items={priceOptions}
             hideErrors
           />
-
           <MultiSelect
             name="selectedGenres"
             placeholder="Select Genres"
@@ -104,7 +107,6 @@ export function FilterDialog({
             label="Filter by genres"
             items={uniqueGenres}
           />
-
           <MultiSelect
             name="selectedArtists"
             placeholder="Select Artists"
@@ -112,14 +114,12 @@ export function FilterDialog({
             label="Filter by Artists"
             items={uniqueArtists}
           />
-
           <Checkbox id="include-old-events" name="includeOldEvents">
             <Text color="$gray11">Include past events</Text>
           </Checkbox>
-
           <XStack gap="$4" justifyContent="space-between">
             <SecondaryButton
-              text=" Reset all"
+              text="Reset all"
               onPress={handleReset}
               icon={X}
               flex={1}

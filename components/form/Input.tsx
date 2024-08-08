@@ -44,9 +44,9 @@ export function Input({
   const hasValue = field.value && field.value.length > 0;
 
   return (
-    <YStack gap="$2">
+    <YStack>
       <Label htmlFor={id}>{label}</Label>
-      <YStack alignItems="center" gap="$2">
+      <YStack alignItems="center">
         <Stack
           flexDirection="row"
           width="100%"
@@ -107,15 +107,3 @@ export function Input({
     </YStack>
   );
 }
-// {Icon && (
-//   <Text
-//     position="absolute"
-//     left="$2"
-//     color={hasValue ? "$color" : "$placeholderColor"}
-//     pointerEvents="none"
-//     userSelect="none"
-//     zIndex={1}
-//   >
-//     <Icon />
-//   </Text>
-// )}

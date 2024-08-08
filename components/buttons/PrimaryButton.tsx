@@ -21,7 +21,6 @@ export const PrimaryButton = ({
       backgroundColor="$accentBackground"
       hoverStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
       pressStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
-      animation="quick"
       onPress={onPress}
       htmlFor={htmlFor}
       icon={isLoading ? <Spinner /> : undefined}
