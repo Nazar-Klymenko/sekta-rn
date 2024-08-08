@@ -31,7 +31,8 @@ interface SelectProps extends TamaguiSelectProps {
   label: string;
   id: string;
   placeholder: string;
-  strippedLabels?: boolean;
+  hideLabel?: boolean;
+  hideErrors?: boolean;
   items: { label: string; value: string | boolean }[];
 }
 
@@ -41,7 +42,8 @@ export function Select({
   placeholder,
   id,
   items,
-  strippedLabels = false,
+  hideLabel = false,
+  hideErrors = false,
   ...props
 }: SelectProps) {
   const { control } = useFormContext();
@@ -99,12 +101,12 @@ export function Select({
     </TamaguiSelect>
   );
 
-  if (strippedLabels) {
-    return selectBody;
-  }
+  // if (strippedLabels) {
+  //   return selectBody;
+  // }
   return (
     <YStack gap="$2">
-      <Label htmlFor={id}>{label}</Label>
+      {!hideLabel && <Label htmlFor={id}>{label}</Label>}
       <YStack alignItems="center" gap="$2">
         <Stack
           flexDirection="row"
@@ -115,9 +117,11 @@ export function Select({
           {selectBody}
         </Stack>
       </YStack>
-      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
-        {error ? error?.message : "*"}
-      </Text>
+      {!hideErrors && (
+        <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+          {error ? error?.message : "*"}
+        </Text>
+      )}
     </YStack>
   );
 }

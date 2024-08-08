@@ -102,6 +102,7 @@ export default function HomeScreen() {
     return (
       <PageContainer>
         <Text>Error: {(error as Error).message}</Text>
+        <Button onPress={() => refetch()}>Retry</Button>
       </PageContainer>
     );
 

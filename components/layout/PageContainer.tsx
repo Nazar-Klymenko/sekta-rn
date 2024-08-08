@@ -54,7 +54,7 @@ export function PageContainer({
         flex={1}
         padding={scrollable && !fullWidth ? "$4" : 0}
         gap="$4"
-        paddingBottom={stickyBottom ? stickyBottomHeight : "$4"}
+        paddingBottom={stickyBottom ? stickyBottomHeight : 0}
       >
         {children}
       </YStack>
@@ -78,17 +78,20 @@ export function PageContainer({
   );
 
   return (
-    <SafeAreaView
-      edges={["bottom", "left", "right"]}
-      style={{ flex: 1, backgroundColor: theme.background.get() }}
-    >
+    <>
       {scrollable ? (
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: "$4",
+            backgroundColor: "$background",
+          }}
+          backgroundColor="$background"
           keyboardShouldPersistTaps="never"
           showsVerticalScrollIndicator={Platform.OS === "web"}
           keyboardDismissMode="on-drag"
           automaticallyAdjustKeyboardInsets
+          alwaysBounceVertical
         >
           {content}
         </ScrollView>
@@ -96,6 +99,6 @@ export function PageContainer({
         content
       )}
       {!md && stickyBottomComponent}
-    </SafeAreaView>
+    </>
   );
 }

@@ -28,7 +28,13 @@ export function Dialog({ title, children, id, ...props }: DialogProps) {
   return (
     <TamaguiDialog modal {...props}>
       <Adapt when="sm" platform="touch">
-        <Sheet animation="medium" zIndex={200001} modal dismissOnSnapToBottom>
+        <Sheet
+          animation="medium"
+          zIndex={200001}
+          modal
+          dismissOnSnapToBottom
+          dismissOnOverlayPress
+        >
           <Sheet.Frame padding="$4">
             <Adapt.Contents />
           </Sheet.Frame>

@@ -12,6 +12,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Dialog } from "./Dialog";
+import { PrimaryButton } from "./buttons/PrimaryButton";
+import { SecondaryButton } from "./buttons/SecondaryButton";
 import { Checkbox } from "./form/Checkbox";
 import { Form } from "./form/Form";
 import { MultiSelect } from "./form/MultiSelect";
@@ -37,17 +39,6 @@ const schema = yup.object().shape({
 });
 
 export type FilterValues = yup.InferType<typeof schema>;
-
-const StyledButton = styled(Button, {
-  borderRadius: 8,
-  paddingVertical: 12,
-  paddingHorizontal: 16,
-  shadowColor: "$shadowColor",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.1,
-  shadowRadius: 4,
-  elevate: true,
-});
 
 export function FilterDialog({
   open,
@@ -103,6 +94,7 @@ export function FilterDialog({
             id="price-sort"
             label="Sort by price"
             items={priceOptions}
+            hideErrors
           />
 
           <MultiSelect
@@ -126,16 +118,18 @@ export function FilterDialog({
           </Checkbox>
 
           <XStack gap="$4" justifyContent="space-between">
-            <StyledButton onPress={handleReset} icon={X} theme="alt2">
-              Reset all
-            </StyledButton>
-            <StyledButton
-              theme="active"
-              onPress={handleSubmit(onSubmit)}
+            <SecondaryButton
+              text=" Reset all"
+              onPress={handleReset}
+              icon={X}
+              flex={1}
+            />
+            <PrimaryButton
+              text="Apply Filters"
               icon={Filter}
-            >
-              Apply Filters
-            </StyledButton>
+              onPress={handleSubmit(onSubmit)}
+              flex={1}
+            />
           </XStack>
         </YStack>
       </Form>

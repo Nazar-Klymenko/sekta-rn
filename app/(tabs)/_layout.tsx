@@ -23,8 +23,9 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: theme.background.get(),
+          backgroundColor: theme.background075.get(),
           display: isEventDetailsPage ? "none" : "flex",
+          borderTopWidth: 0,
         },
         tabBarActiveTintColor: theme.color.get(),
         tabBarInactiveTintColor: theme.gray9Light.get(),

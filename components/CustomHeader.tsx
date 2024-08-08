@@ -11,7 +11,7 @@ import { Avatar, Text, XStack, YStack, styled } from "tamagui";
 const HeaderContainer = styled(XStack, {
   paddingVertical: "$2",
   paddingHorizontal: "$4",
-  backgroundColor: "$backgroundStrong",
+  backgroundColor: "$background",
   borderBottomWidth: 1,
   borderBottomColor: "$borderColor",
   alignItems: "center",

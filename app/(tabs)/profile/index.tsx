@@ -158,6 +158,7 @@ export default function ProfileScreen() {
             gap="$4"
             display="flex"
             justifyContent="space-between"
+            alignItems="center"
           >
             <XStack alignItems="center" f={1} gap="$3">
               <Globe size="$1" color="$gray10Light" />
@@ -169,7 +170,8 @@ export default function ProfileScreen() {
               id="profile-language-select"
               placeholder="Select a language"
               items={languages}
-              strippedLabels
+              hideLabel
+              hideErrors
             />
           </XStack>
         </YStack>
