@@ -1,24 +1,37 @@
-import { format } from "date-fns";
+import { Timestamp } from "firebase/firestore";
 
-// Define the type for Firestore timestamp
-interface FirestoreTimestamp {
-  seconds: number;
-  nanoseconds: number;
-}
+import { format, isValid } from "date-fns";
 
-// Define the function with appropriate types
+type TimestampLike =
+  | Date
+  | Timestamp
+  | number
+  | { seconds: number; nanoseconds: number };
+
 export const formatFirestoreTimestamp = (
-  timestamp: FirestoreTimestamp | number,
+  timestamp: TimestampLike,
   dateFormat: string
 ): string => {
   let date: Date;
 
-  if (typeof timestamp === "number") {
-    // When timestamp is a UNIX timestamp (seconds since epoch)
-    date = new Date(timestamp * 1000); // Convert to milliseconds
-  } else {
-    // When timestamp is a Firestore timestamp
+  if (timestamp instanceof Date) {
+    date = timestamp;
+  } else if (timestamp instanceof Timestamp) {
+    date = timestamp.toDate();
+  } else if (typeof timestamp === "number") {
+    date = new Date(timestamp * 1000); // Assume seconds, convert to milliseconds
+  } else if (
+    typeof timestamp === "object" &&
+    "seconds" in timestamp &&
+    "nanoseconds" in timestamp
+  ) {
     date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+  } else {
+    throw new Error("Invalid timestamp format");
+  }
+
+  if (!isValid(date)) {
+    throw new Error("Invalid date");
   }
 
   return format(date, dateFormat);

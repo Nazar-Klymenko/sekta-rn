@@ -8,4 +8,5 @@ export interface UserData {
   agreeEmail?: boolean;
   status?: "active" | "pending_deletion" | "deleted";
   deletionRequestedAt?: Date;
+  isAdmin?: boolean;
 }

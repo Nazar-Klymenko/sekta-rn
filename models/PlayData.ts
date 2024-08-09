@@ -1,4 +1,7 @@
-interface PlayData {
+import { Timestamp } from "firebase/firestore";
+
+export interface PlayData {
+  id: string;
   email: string;
   phone?: string;
   soundcloud?: string;
@@ -6,4 +9,5 @@ interface PlayData {
   instagram?: string;
   facebook?: string;
   additionalInfo?: string;
+  submittedAt: Timestamp;
 }

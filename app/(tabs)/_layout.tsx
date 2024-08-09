@@ -1,10 +1,18 @@
-import { Heart, Home, List, Play, User } from "@tamagui/lucide-icons";
+import {
+  Heart,
+  Home,
+  List,
+  Play,
+  User,
+  UserRoundCheck,
+} from "@tamagui/lucide-icons";
 
 import React from "react";
 
 import { Platform } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useUserData } from "@/hooks/useUserData";
 
 import { Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
@@ -13,9 +21,9 @@ import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
   const theme = useTheme();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
   const pathname = usePathname();
-
+  const { data: userData } = useUserData(user?.uid || "");
   const isEventDetailsPage = pathname.startsWith("/event/");
 
   return (
@@ -31,7 +39,9 @@ export default function TabLayout() {
         tabBarInactiveTintColor: theme.gray9Light.get(),
         headerStyle: {
           backgroundColor: theme.background.get(),
+          elevation: 0,
         },
+
         headerTintColor: theme.color.get(),
         tabBarIconStyle: { marginTop: Platform.OS !== "web" ? 4 : 0 },
         tabBarLabelStyle: { paddingBottom: Platform.OS !== "web" ? 4 : 0 },
@@ -48,7 +58,6 @@ export default function TabLayout() {
         name="favourite"
         options={{
           headerShown: false,
-          // headerShown: true || Platform.OS !== "web",
           title: "Favourite",
           tabBarItemStyle: {
             display: isLoggedIn ? "flex" : "none",
@@ -69,6 +78,19 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="admin"
+        options={{
+          headerShown: false,
+          title: "Admin",
+          tabBarItemStyle: {
+            display: isLoggedIn && userData?.isAdmin ? "flex" : "none",
+          },
+          tabBarIcon: ({ color, size }) => (
+            <UserRoundCheck color={color} size={size} />
+          ),
         }}
       />
     </Tabs>

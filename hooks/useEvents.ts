@@ -72,7 +72,7 @@ export const useToggleEventLike = () => {
 
       return !isLiked;
     },
-    onSuccess: (_, { eventId }) => {
+    onSuccess: (_) => {
       queryClient.invalidateQueries({ queryKey: ["likedEvents"] });
       queryClient.invalidateQueries({ queryKey: ["likedEventsId"] });
     },

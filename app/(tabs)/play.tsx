@@ -161,10 +161,6 @@ export default function PlayScreen() {
           isLoading={playSubmission.isPending}
           disabled={playSubmission.isPending}
         />
-        {playSubmission.isError && <Text>Error submitting play info</Text>}
-        {playSubmission.isSuccess && (
-          <Text>Play info submitted successfully!</Text>
-        )}
       </Form>
     </PageContainer>
   );

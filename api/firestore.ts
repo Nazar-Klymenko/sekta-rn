@@ -1,24 +1,14 @@
-// src/services/databaseService.ts
 import {
-  Query,
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   limit,
-  orderBy,
   query,
-  queryEqual,
-  startAfter,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
-import { Event } from "@/models/Event";
 import { UserData } from "@/models/UserData";
-
-import { FilterValues } from "@/components/FilterDialog";
 
 import { db } from "../services/firebase";
 
@@ -54,28 +44,5 @@ export const queryUserByUsername = async (username: string) => {
   } catch (error) {
     console.error("Error querying user by username:", error);
     return false;
-  }
-};
-export const submitPlayInfo = async (data: PlayData) => {
-  try {
-    const docRef = await addDoc(collection(db, "play"), data);
-    console.log("Document written with ID: ", docRef.id);
-    return docRef.id; // Optionally return something if needed
-  } catch (error) {
-    console.error("Error adding document: ", error);
-    throw new Error("Failed to submit play info");
-  }
-};
-export const updateUserProfile = async (
-  userId: string,
-  profileData: Partial<UserData>
-): Promise<void> => {
-  try {
-    const userRef = doc(db, "users", userId);
-    await updateDoc(userRef, profileData);
-    console.log("User profile updated successfully");
-  } catch (error) {
-    console.error("Error updating user profile:", error);
-    throw new Error("Failed to update user profile");
   }
 };
