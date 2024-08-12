@@ -23,7 +23,7 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
-        name="users"
+        name="userlist"
         options={{
           title: "All users",
           animation: "fade_from_bottom",

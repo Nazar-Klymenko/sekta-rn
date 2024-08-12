@@ -55,10 +55,9 @@ export default function EventCreationPage() {
   return (
     <PageContainer formContainer>
       <Text fontSize={24} fontWeight="bold">
-        Admin page{" "}
+        Admin page
       </Text>
       <YStack gap="$2">
-        <SectionTitle>Account</SectionTitle>
         <MenuItem
           title="All Events"
           onPress={() => router.push("/admin/events")}
@@ -71,7 +70,7 @@ export default function EventCreationPage() {
         />
         <MenuItem
           title="All users"
-          onPress={() => router.push("/admin/users")}
+          onPress={() => router.push("/admin/userlist")}
           icon={Users}
         />
       </YStack>

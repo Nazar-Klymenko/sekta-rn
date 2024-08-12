@@ -10,7 +10,14 @@ import {
   signInWithEmailAndPassword,
   updatePassword,
 } from "firebase/auth";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
@@ -111,4 +118,12 @@ export const deleteAccount = async (password: string): Promise<void> => {
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
   await removeItem("userToken");
+};
+const usersCollection = collection(db, "users");
+
+export const fetchUsers = async (): Promise<UserData[]> => {
+  const snapshot = await getDocs(usersCollection);
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as UserData)
+  );
 };
