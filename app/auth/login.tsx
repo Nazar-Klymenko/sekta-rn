@@ -3,6 +3,7 @@ import { Toast, useToastController } from "@tamagui/toast";
 import React from "react";
 
 import { useSignIn } from "@/hooks/useAuthOperations";
+import { emailSchema } from "@/utils/validationSchemas";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
@@ -20,7 +21,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const loginSchema = yup.object().shape({
-  email: yup.string().required("Email is required").email("Invalid email"),
+  email: emailSchema,
   password: yup.string().required("Password is required"),
 });
 type FormValues = yup.InferType<typeof loginSchema>;

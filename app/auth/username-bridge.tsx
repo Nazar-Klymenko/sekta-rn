@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import { queryUserByUsername } from "@/api/firestore";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
+import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -19,13 +20,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const usernameBridgeSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required("Username is required")
-    .min(3, "Username must be at least 3 characters")
-    .max(18, "Username must be at most 18 characters")
-    .lowercase()
-    .trim(),
+  username: usernameSchema,
 });
 
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;

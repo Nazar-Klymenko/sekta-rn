@@ -4,6 +4,7 @@ import React from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useChangePassword } from "@/hooks/useAuthOperations";
+import { passwordSchema } from "@/utils/validationSchemas";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { Text, YStack, useTheme } from "tamagui";
@@ -22,10 +23,7 @@ import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 const changePasswordSchema = yup.object().shape({
   currentPassword: yup.string().required("Current password is required"),
-  newPassword: yup
-    .string()
-    .required("New password is required")
-    .min(8, "Password must be at least 8 characters long"),
+  newPassword: passwordSchema,
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("newPassword")], "Passwords must match")

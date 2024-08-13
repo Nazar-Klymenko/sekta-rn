@@ -3,6 +3,11 @@ import { useToastController } from "@tamagui/toast";
 import React from "react";
 
 import { useSignUp } from "@/hooks/useAuthOperations";
+import {
+  emailSchema,
+  passwordSchema,
+  usernameSchema,
+} from "@/utils/validationSchemas";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -21,26 +26,10 @@ import { PasswordRequirements } from "@/components/form/PasswordRequirements";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
-const signUpSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required("Username is required")
-    .min(3, "Username must be at least 3 characters")
-    .trim(),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email")
-    .trim(),
-  password: yup
-    .string()
-    .required(" ")
-    .min(6, " ")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{8,}$/,
-      " "
-    )
-    .trim(),
+export const signUpSchema = yup.object().shape({
+  email: emailSchema,
+  username: usernameSchema,
+  password: passwordSchema,
   agreeTos: yup
     .boolean()
     .oneOf([true], "You must agree to the terms and conditions")
