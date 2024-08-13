@@ -1,4 +1,10 @@
-import { Calendar, CreditCard, Heart, MapPin } from "@tamagui/lucide-icons";
+import {
+  Calendar,
+  CreditCard,
+  Heart,
+  MapPin,
+  Users,
+} from "@tamagui/lucide-icons";
 
 import React, { useEffect, useState } from "react";
 
@@ -199,7 +205,6 @@ const InfoItem = ({ icon, title, value }: any) => (
     <YStack
       width={50}
       height={50}
-      backgroundColor="$gray6"
       borderRadius="$2"
       justifyContent="center"
       alignItems="center"

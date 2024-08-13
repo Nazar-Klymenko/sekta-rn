@@ -44,7 +44,7 @@ export function Input({
   const hasValue = field.value && field.value.length > 0;
 
   return (
-    <YStack>
+    <YStack flex={1}>
       <Label htmlFor={id}>{label}</Label>
       <YStack alignItems="center">
         <Stack
@@ -97,12 +97,13 @@ export function Input({
                 : undefined,
             }}
             ref={field.ref}
+            fontSize={16}
             {...props}
           />
         </Stack>
       </YStack>
       <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
-        {error ? error?.message : "*"}
+        {error ? error?.message : ""}
       </Text>
     </YStack>
   );

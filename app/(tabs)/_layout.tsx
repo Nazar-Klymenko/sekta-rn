@@ -68,7 +68,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="play"
         options={{
-          headerShown: true || Platform.OS !== "web",
+          headerShown: false,
           title: "Play",
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}

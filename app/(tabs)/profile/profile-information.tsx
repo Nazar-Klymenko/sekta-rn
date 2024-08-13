@@ -167,12 +167,6 @@ export default function UpdateProfileScreen() {
             isLoading={updateProfileMutation.isPending}
             disabled={updateProfileMutation.isPending || !isDirty}
           />
-          {/* {updateProfileMutation.isError && (
-            <Text>Error: {updateProfileMutation.error.message}</Text>
-          )}
-          {updateProfileMutation.isSuccess && (
-            <Text>Profile updated successfully!</Text>
-          )} */}
         </Form>
       </PageContainer>
     </AuthGuard>
