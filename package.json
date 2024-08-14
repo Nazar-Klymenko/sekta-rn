@@ -12,7 +12,8 @@
     "lint": "expo lint",
     "generate-themes": "tamagui generate-themes ./theme/theme-builder.ts ./theme/theme-output.ts",
     "predeploy": "expo export -p web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
+    "generate-router-types": "npx expo-router typegen"
   },
   "jest": {
     "preset": "jest-expo"
@@ -33,13 +34,14 @@
     "@tanstack/react-query": "^5.51.16",
     "burnt": "^0.12.2",
     "date-fns": "^3.6.0",
-    "expo": "~51.0.24",
+    "expo": "^51.0.27",
     "expo-blur": "~13.0.2",
     "expo-constants": "~16.0.2",
+    "expo-dev-client": "~4.0.21",
     "expo-font": "~12.0.7",
     "expo-linear-gradient": "~13.0.2",
     "expo-linking": "~6.3.1",
-    "expo-router": "~3.5.20",
+    "expo-router": "^3.5.21",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
@@ -56,8 +58,7 @@
     "react-native-svg": "15.2.0",
     "react-native-web": "~0.19.10",
     "tamagui": "^1.105.7",
-    "yup": "^1.4.0",
-    "expo-dev-client": "~4.0.21"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

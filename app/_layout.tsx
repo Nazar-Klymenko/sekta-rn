@@ -43,7 +43,7 @@ function AppStack() {
     <YStack f={1}>
       <Stack
         screenOptions={{
-          headerShown: false, // Hide the default header for all screens
+          headerShown: false, 
         }}
       >
         <Stack.Screen

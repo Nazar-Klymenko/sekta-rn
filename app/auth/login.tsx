@@ -30,7 +30,7 @@ export default function LoginScreen() {
   const theme = useTheme();
   const signInMutation = useSignIn();
   const toast = useToastController();
-  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const { returnTo = "/" } = useLocalSearchParams<{ returnTo: string }>();
   const router = useRouter();
 
   const methods = useForm({
@@ -52,7 +52,7 @@ export default function LoginScreen() {
             variant: "success",
           });
           if (returnTo) {
-            router.replace(returnTo as string);
+            router.replace(returnTo);
           } else {
             router.replace("/");
           }
@@ -104,7 +104,12 @@ export default function LoginScreen() {
             disabled={signInMutation.isPending}
           />
           <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href={`/auth/username-bridge?returnTo=${returnTo}`}>
+            <Link
+              href={{
+                pathname: "/auth/username-bridge",
+                params: { returnTo },
+              }}
+            >
               <Text textAlign="center" fontSize="$3">
                 Don't have an account?
                 <Text color="$accentColor" fontSize="$3">
