@@ -11,6 +11,7 @@ export interface Event {
   };
   lineup: string[];
   title: string;
+  title_lowercase?: string;
   price: number;
   location: string;
 }

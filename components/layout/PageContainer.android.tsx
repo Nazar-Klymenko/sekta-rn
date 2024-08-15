@@ -34,6 +34,7 @@ export function PageContainer({
 
   const containerStyle: StackProps = {
     backgroundColor: theme.background.get(),
+    minHeight: "100%",
     width: "100%",
     maxWidth: "100%",
     ...(media.gtXs && !fullWidth && { maxWidth: 540 }),
@@ -45,18 +46,59 @@ export function PageContainer({
   };
   const md = media.gtMd;
 
+  const stickyBottomHeight = md ? 0 : 70;
+
   const content = (
-    <YStack flex={1} {...containerStyle} paddingBottom={0}>
+    <YStack flex={1} {...containerStyle} paddingBottom={stickyBottom ? 16 : 0}>
       <YStack
         flex={1}
         padding={scrollable && !fullWidth ? "$4" : 0}
         gap="$4"
-        paddingBottom={0}
+        paddingBottom={stickyBottom ? stickyBottomHeight : 0}
       >
         {children}
       </YStack>
     </YStack>
   );
 
-  return <>{content}</>;
+  const stickyBottomComponent = stickyBottom && (
+    <YStack
+      position="absolute"
+      bottom={0}
+      left={0}
+      right={0}
+      height={stickyBottomHeight}
+      backgroundColor="$background"
+      borderTopWidth={1}
+      borderTopColor="$borderColor"
+      padding="$3"
+    >
+      {stickyBottom}
+    </YStack>
+  );
+
+  return (
+    <>
+      {scrollable ? (
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: "$4",
+            backgroundColor: "$background",
+          }}
+          backgroundColor="$background"
+          keyboardShouldPersistTaps="never"
+          showsVerticalScrollIndicator={Platform.OS === "web"}
+          keyboardDismissMode="on-drag"
+          automaticallyAdjustKeyboardInsets
+          alwaysBounceVertical
+        >
+          {content}
+        </ScrollView>
+      ) : (
+        content
+      )}
+      {!md && stickyBottomComponent}
+    </>
+  );
 }

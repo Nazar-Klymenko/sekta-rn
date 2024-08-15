@@ -14,10 +14,12 @@ import { Platform } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserData } from "@/hooks/useUserData";
 
-import { Tabs, usePathname } from "expo-router";
+import { Link, Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { Footer } from "@/components/navigation/Footer";
+import { CustomHeader } from "@/components/CustomHeader";
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -26,6 +28,9 @@ export default function TabLayout() {
   const { data: userData } = useUserData(user?.uid || "");
   const isEventDetailsPage = pathname.startsWith("/event/");
 
+  if (Platform.OS === "web") {
+    return <Slot />;
+  }
   return (
     <Tabs
       screenOptions={{
@@ -43,8 +48,8 @@ export default function TabLayout() {
         },
 
         headerTintColor: theme.color.get(),
-        tabBarIconStyle: { marginTop: Platform.OS !== "web" ? 4 : 0 },
-        tabBarLabelStyle: { paddingBottom: Platform.OS !== "web" ? 4 : 0 },
+        tabBarIconStyle: { marginTop: 4 },
+        tabBarLabelStyle: { paddingBottom: 4 },
       }}
     >
       <Tabs.Screen

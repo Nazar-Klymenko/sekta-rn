@@ -1,62 +1,36 @@
-// index.tsx
-import { Search, SlidersHorizontal } from "@tamagui/lucide-icons";
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-
-import React, { useState } from "react";
-
-import { ActivityIndicator, FlatList, Platform } from "react-native";
-
-import { fetchFilteredEvents } from "@/api/events";
+import { Search } from "@tamagui/lucide-icons";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useFavoriteEventsId } from "@/hooks/useEvents";
-import { Event } from "@/models/Event";
-
-import { Stack, useRouter } from "expo-router";
+import { useEvents } from "@/hooks/useEvents";
 import { useForm } from "react-hook-form";
-import { Button, Text, XStack, YStack, useTheme } from "tamagui";
-
+import { YStack, XStack } from "tamagui";
 import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { FilterDialog, FilterValues } from "@/components/FilterDialog";
-import { FilterButton, RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { RetryButton } from "@/components/buttons/IconButtons";
+import { Typography } from "@/components/Typography";
+import { debounce } from "lodash";
 
 const searchEventsSchema = yup.object().shape({
   searchQuery: yup.string(),
 });
 type FormValues = yup.InferType<typeof searchEventsSchema>;
 
-const ITEMS_PER_PAGE = 6;
-
 export default function HomeScreen() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { data: likedEvents } = useFavoriteEventsId();
+  const loadMoreRef = useRef(null);
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(searchEventsSchema),
     defaultValues: {
       searchQuery: "",
     },
   });
-  const theme = useTheme();
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<FilterValues>({
-    priceSort: false,
-    selectedGenres: [],
-    selectedArtists: [],
-    includeOldEvents: false,
-  });
-
-  const { data: likedEvents } = useFavoriteEventsId();
 
   const {
     data,
@@ -65,133 +39,93 @@ export default function HomeScreen() {
     isFetchingNextPage,
     status,
     error,
-    refetch,
     isLoading,
-  } = useInfiniteQuery<
-    Event[],
-    Error,
-    InfiniteData<Event[]>,
-    [string, FilterValues],
-    number
-  >({
-    queryKey: ["events", filters],
-    queryFn: async ({ pageParam }) => {
-      const events = await fetchFilteredEvents(
-        filters,
-        pageParam,
-        ITEMS_PER_PAGE
-      );
-      return events;
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined;
-    },
-  });
+    refetch,
+  } = useEvents(searchQuery);
 
-  const flattenedEvents = data?.pages.flat() || [];
+  useEffect(() => {
+    const debouncedSearch = debounce((value: string) => {
+      setSearchQuery(value);
+    }, 300);
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const appliedFiltersCount = Object.values(filters).filter((value) => {
-    if (Array.isArray(value)) return value.length > 0;
-    if (typeof value === "boolean") return value;
-    return value !== null;
-  }).length;
-
-  const handleApplyFilters = (newFilters: FilterValues) => {
-    setFilters(newFilters);
-    queryClient.resetQueries({ queryKey: ["events", newFilters] });
-  };
-
-  const handleResetFilters = () => {
-    setFilters({
-      priceSort: false,
-      selectedGenres: [],
-      selectedArtists: [],
-      includeOldEvents: false,
+    const subscription = methods.watch((value) => {
+      debouncedSearch(value.searchQuery || "");
     });
-  };
-  // if (status === "pending") return <FullPageLoading />;
-  if (status === "error")
-    return (
-      <YStack flex={1} justifyContent="flex-start" alignItems="center">
-        <Text>Error: {(error as Error).message}</Text>
-        <RetryButton onPress={() => refetch()} size="lg" />
-      </YStack>
+
+    return () => {
+      subscription.unsubscribe();
+      debouncedSearch.cancel();
+    };
+  }, [methods]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1.0 },
     );
 
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const events = data?.pages.flatMap((page) => page) || [];
+
   return (
-    <PageContainer scrollable={false} fullWidth>
-      <FlatList
-        style={{ flex: 1, width: "100%" }}
-        showsVerticalScrollIndicator={Platform.OS == "web"}
-        contentContainerStyle={{
-          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
-        }}
-        data={isLoading ? Array(5).fill({}) : flattenedEvents}
-        renderItem={({ item: event }) =>
-          isLoading ? (
-            <SkeletonEventCard />
-          ) : (
-            <YStack style={{ maxWidth: 720 }}>
-              <EventCard
-                event={event}
-                hrefSource="event"
-                isLiked={likedEvents?.includes(event.id) || false}
-              />
-            </YStack>
-          )
-        }
-        keyExtractor={(item, index) => item.id || index.toString()}
-        refreshing={isLoading}
-        onRefresh={refetch}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.1}
-        ListHeaderComponent={
-          <Form
-            methods={methods}
-            style={{ maxWidth: 720 }}
-            paddingHorizontal="$4"
-            paddingTop="$4"
-            flexDirection="row"
-            ai={"center"}
-          >
-            <Input
-              flex={1}
-              placeholder="Search events"
-              name="search-events"
-              id="search-events"
-              label=""
-              icon={Search}
-            />
-            <FilterButton
-              setOpen={setOpen}
-              appliedFiltersCount={appliedFiltersCount}
-            />
-          </Form>
-        }
-        ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
-        )}
-        ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" color={theme.accentColor.get()} />
-          ) : null
-        }
-      />
-      <FilterDialog
-        open={open}
-        onOpenChange={setOpen}
-        events={flattenedEvents}
-        onApplyFilters={handleApplyFilters}
-        onResetFilters={handleResetFilters}
-        currentFilters={filters}
-      />
+    <PageContainer>
+      <Form methods={methods}>
+        <Input
+          placeholder="Search events (coming soon)"
+          name="searchQuery"
+          id="search-events"
+          label=""
+          icon={Search}
+          disabled
+        />
+      </Form>
+
+      <XStack flexWrap="wrap" justifyContent="space-between">
+        {isLoading
+          ? Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <YStack key={index} width="100%" marginBottom="$4">
+                  <SkeletonEventCard />
+                </YStack>
+              ))
+          : events.map((event) => (
+              <YStack key={event.id} width="100%" marginBottom="$4">
+                <EventCard
+                  event={event}
+                  hrefSource="event"
+                  isLiked={likedEvents?.includes(event.id) || false}
+                />
+              </YStack>
+            ))}
+      </XStack>
+
+      {events.length === 0 && !isLoading && (
+        <YStack flex={1} justifyContent="center" alignItems="center">
+          <Typography variant="body1">
+            No events found. Try a different search term.
+          </Typography>
+          <RetryButton onPress={() => refetch()} size="lg" />
+        </YStack>
+      )}
+
+      {(isFetchingNextPage || hasNextPage) && (
+        <YStack ref={loadMoreRef} height={20} />
+      )}
+
+      {isFetchingNextPage && (
+        <Typography variant="body1">Loading more events...</Typography>
+      )}
     </PageContainer>
   );
 }

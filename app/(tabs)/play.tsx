@@ -118,80 +118,74 @@ export default function PlayScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, backgroundColor: "$background" }}
+    <YStack flex={1}>
+      <HeroSection />
+
+      <YStack
+        backgroundColor="$background"
+        padding="$4"
+        flex={1}
+        gap="$4"
+        marginHorizontal="auto"
+        width="100%"
+        maxWidth={740}
       >
-        <YStack flex={1}>
-          <HeroSection />
-
-          <YStack
-            backgroundColor="$background"
-            padding="$4"
-            flex={1}
-            gap="$4"
-            marginHorizontal="auto"
-            width="100%"
-            maxWidth={740}
-          >
-            <VenueInfoSection />
-            <YStack gap="$2">
-              <Text fontSize={24} fontWeight="bold">
-                Apply to Play
-              </Text>
-              <Text fontSize="$4" color="$gray10Light">
-                Share your details and we'll be in touch
-              </Text>
-            </YStack>
-
-            <Form methods={methods} maxWidth={740} flex={1} jc="center">
-              <Input
-                id="play-email"
-                name="email"
-                label="Contact Email"
-                placeholder="email@gmail.com"
-                icon={Mail}
-              />
-              <Input
-                id="play-phone"
-                name="phone"
-                label="Phone Number (Optional)"
-                placeholder="+48 577 925 024"
-                icon={Phone}
-              />
-              <Text fontSize={20} fontWeight="bold">
-                Portfolio Links (Optional)
-              </Text>
-              {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
-                <Input
-                  key={name + idx}
-                  id={"play-" + name}
-                  label={label}
-                  name={name}
-                  icon={icon}
-                  placeholder={placeholder}
-                />
-              ))}
-              <Input
-                id="play-additional-info"
-                name="additionalInfo"
-                label="Additional Info"
-                multiline
-                placeholder="Any additional information you'd like to share..."
-                rows={4}
-                verticalAlign="top"
-              />
-              <PrimaryButton
-                onPress={methods.handleSubmit(onSubmit)}
-                text="Send application"
-                isLoading={playSubmission.isPending}
-                disabled={playSubmission.isPending}
-              />
-            </Form>
-          </YStack>
+        <VenueInfoSection />
+        <YStack gap="$2">
+          <Text fontSize={24} fontWeight="bold">
+            Apply to Play
+          </Text>
+          <Text fontSize="$4" color="$gray10Light">
+            Share your details and we'll be in touch
+          </Text>
         </YStack>
-      </ScrollView>
-    </SafeAreaView>
+
+        <Form methods={methods} maxWidth={740} flex={1} jc="center">
+          <Input
+            id="play-email"
+            name="email"
+            label="Contact Email"
+            placeholder="email@gmail.com"
+            icon={Mail}
+          />
+          <Input
+            id="play-phone"
+            name="phone"
+            label="Phone Number (Optional)"
+            placeholder="+48 577 925 024"
+            icon={Phone}
+          />
+          <Text fontSize={20} fontWeight="bold">
+            Portfolio Links (Optional)
+          </Text>
+          {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
+            <Input
+              key={name + idx}
+              id={"play-" + name}
+              label={label}
+              name={name}
+              icon={icon}
+              placeholder={placeholder}
+            />
+          ))}
+          <Input
+            id="play-additional-info"
+            name="additionalInfo"
+            label="Additional Info"
+            multiline
+            placeholder="Any additional information you'd like to share..."
+            rows={4}
+            verticalAlign="top"
+          />
+          <PrimaryButton
+            onPress={methods.handleSubmit(onSubmit)}
+            text="Send application"
+            isLoading={playSubmission.isPending}
+            disabled={playSubmission.isPending}
+          />
+        </Form>
+      </YStack>
+    </YStack>
   );
 }
 const HeroSection = () => {

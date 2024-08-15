@@ -30,7 +30,7 @@ export default function LoginScreen() {
   const theme = useTheme();
   const signInMutation = useSignIn();
   const toast = useToastController();
-  const { returnTo = "/" } = useLocalSearchParams<{ returnTo: string }>();
+  const { returnTo } = useLocalSearchParams<{ returnTo: "/" }>();
   const router = useRouter();
 
   const methods = useForm({
@@ -52,7 +52,7 @@ export default function LoginScreen() {
             variant: "success",
           });
           if (returnTo) {
-            router.replace(returnTo);
+            router.replace({ pathname: returnTo });
           } else {
             router.replace("/");
           }
@@ -64,7 +64,7 @@ export default function LoginScreen() {
             variant: "error",
           });
         },
-      }
+      },
     );
   };
 

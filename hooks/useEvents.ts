@@ -1,5 +1,11 @@
 // useEvents.ts
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   arrayRemove,
   arrayUnion,
@@ -12,6 +18,7 @@ import {
 import {
   fetchEventById,
   fetchEvents,
+  fetchFilteredEvents,
   fetchLikedEvents,
   fetchLikedEventsId,
 } from "@/api/events";
@@ -20,13 +27,26 @@ import { db } from "@/services/firebase";
 
 import { useAuth } from "./useAuth";
 
-export const useEvents = () => {
-  return useQuery<Event[], Error>({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+const ITEMS_PER_PAGE = 10;
+
+export const useEvents = (searchQuery: string) => {
+  return useInfiniteQuery<
+    Event[],
+    Error,
+    InfiniteData<Event[]>,
+    [string, string],
+    number
+  >({
+    queryKey: ["events", searchQuery],
+    queryFn: async ({ pageParam = 0 }) => {
+      return fetchFilteredEvents(searchQuery, pageParam, ITEMS_PER_PAGE);
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === ITEMS_PER_PAGE ? allPages.length : undefined;
+    },
   });
 };
-
 export const useEvent = (id: string) => {
   return useQuery<Event, Error>({
     queryKey: ["event", id],

@@ -16,7 +16,7 @@ import { useAuth } from "@/hooks/useAuth";
 import tamaguiConfig from "@/tamagui.config";
 
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Link, Slot, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import {
@@ -28,6 +28,7 @@ import { TamaguiProvider, Text, Theme, View, YStack, useTheme } from "tamagui";
 import { CustomHeader } from "@/components/CustomHeader";
 import { CurrentToast } from "@/components/Toast";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { Footer } from "@/components/navigation/Footer";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -38,12 +39,20 @@ function AppStack() {
   const { left, top, right } = useSafeAreaInsets();
   const theme = useTheme();
   const { user } = useAuth();
-
+  if (Platform.OS === "web") {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <CustomHeader title="Sekta Selekta" user={user} />
+        <Slot />
+        <Footer />
+      </div>
+    );
+  }
   return (
     <YStack f={1}>
       <Stack
         screenOptions={{
-          headerShown: false, 
+          headerShown: false,
         }}
       >
         <Stack.Screen

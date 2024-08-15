@@ -2,12 +2,14 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
 export default function HomeLayout() {
   const theme = useTheme();
-
+  if (Platform.OS === "web") {
+    return <Slot />;
+  }
   return (
     <Stack>
       <Stack.Screen

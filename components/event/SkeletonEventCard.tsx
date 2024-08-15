@@ -20,7 +20,7 @@ export const SkeletonEventCard = () => {
     animatedValue.value = withRepeat(
       withTiming(1, { duration: 1000, easing: Easing.linear }),
       -1,
-      false
+      false,
     );
   }, []);
 
