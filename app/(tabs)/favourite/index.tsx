@@ -1,16 +1,12 @@
 import React from "react";
-
-import { FlatList, Platform } from "react-native";
-
 import { useFavoriteEventsId, useFavoriteEventsList } from "@/hooks/useEvents";
-import { Event } from "@/models/Event";
-
 import { useRouter } from "expo-router";
-import { Text, YStack } from "tamagui";
-
+import { Text, YStack, XStack, ScrollView } from "tamagui";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { Typography } from "@/components/Typography";
+import { RetryButton } from "@/components/buttons/IconButtons";
 
 export default function LikedEventsPage() {
   const {
@@ -18,6 +14,7 @@ export default function LikedEventsPage() {
     isLoading,
     isError,
     error,
+    refetch,
   } = useFavoriteEventsList();
   const { data: likedEvents } = useFavoriteEventsId();
 
@@ -28,45 +25,51 @@ export default function LikedEventsPage() {
   if (isError) {
     return (
       <PageContainer>
-        <Text>Error: {error.message}</Text>
+        <YStack flex={1} justifyContent="flex-start" alignItems="center">
+          <Typography variant="body1">Error: {error.message}</Typography>
+          <RetryButton onPress={() => refetch()} size="lg" />
+        </YStack>
       </PageContainer>
     );
   }
 
   return (
-    <PageContainer scrollable={false} fullWidth>
-      <FlatList
-        style={{ flex: 1, width: "100%" }}
-        contentContainerStyle={{
-          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
-        }}
-        data={favoriteEvents}
-        showsVerticalScrollIndicator={Platform.OS !== "web"}
-        renderItem={({ item: event }) => {
-          const isLiked = likedEvents?.includes(event.id);
+    <PageContainer>
+      <ScrollView>
+        <YStack flex={1} gap="$4" padding="$4">
+          <Typography variant="h4">Favorite Events</Typography>
 
-          return (
-            <YStack
-              style={{
-                maxWidth: 720,
-              }}
-            >
-              <EventCard
-                event={event}
-                hrefSource="favourite"
-                isLiked={isLiked || false}
-              />
-            </YStack>
-          );
-        }}
-        keyExtractor={(item) => item.id}
-        refreshing={isLoading}
-        ListEmptyComponent={() => (
-          <Text marginTop="$4" alignSelf="center">
-            You haven't liked any events yet.
-          </Text>
-        )}
-      />
+          <XStack flexWrap="wrap" justifyContent="space-between">
+            {favoriteEvents && favoriteEvents.length > 0 ? (
+              favoriteEvents.map((event) => (
+                <YStack
+                  key={event.id}
+                  width="100%"
+                  maxWidth={720}
+                  marginBottom="$4"
+                >
+                  <EventCard
+                    event={event}
+                    hrefSource="favourite"
+                    isLiked={likedEvents?.includes(event.id) || false}
+                  />
+                </YStack>
+              ))
+            ) : (
+              <YStack
+                flex={1}
+                justifyContent="center"
+                alignItems="center"
+                paddingVertical="$8"
+              >
+                <Typography variant="body1">
+                  You haven't liked any events yet.
+                </Typography>
+              </YStack>
+            )}
+          </XStack>
+        </YStack>
+      </ScrollView>
     </PageContainer>
   );
 }

@@ -70,7 +70,7 @@ export function Select({
           animateOnly={["transform", "opacity"]}
           enterStyle={{ o: 0, y: -10 }}
           exitStyle={{ o: 0, y: 10 }}
-          minWidth={200}
+          minWidth={120}
         >
           <TamaguiSelect.Group>
             <TamaguiSelect.Label>{placeholder}</TamaguiSelect.Label>
@@ -92,7 +92,7 @@ export function Select({
                     </TamaguiSelect.Item>
                   );
                 }),
-              [items]
+              [items],
             )}
           </TamaguiSelect.Group>
         </TamaguiSelect.Viewport>
