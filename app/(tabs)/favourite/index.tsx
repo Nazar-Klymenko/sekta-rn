@@ -42,12 +42,7 @@ export default function LikedEventsPage() {
           <XStack flexWrap="wrap" justifyContent="space-between">
             {favoriteEvents && favoriteEvents.length > 0 ? (
               favoriteEvents.map((event) => (
-                <YStack
-                  key={event.id}
-                  width="100%"
-                  maxWidth={720}
-                  marginBottom="$4"
-                >
+                <YStack key={event.id} width="100%" marginBottom="$4">
                   <EventCard
                     event={event}
                     hrefSource="favourite"
