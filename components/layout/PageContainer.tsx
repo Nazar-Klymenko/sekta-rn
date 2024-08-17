@@ -36,6 +36,7 @@ export function PageContainer({
     backgroundColor: theme.background.get(),
     width: "100%",
     maxWidth: "100%",
+    minHeight: "100dvh",
     ...(media.gtXs && !fullWidth && { maxWidth: 540 }),
     ...(media.gtSm && !fullWidth && { maxWidth: 744 }),
     ...(media.gtMd && !fullWidth && !formContainer && { maxWidth: 968 }),
