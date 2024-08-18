@@ -2,6 +2,7 @@
 import {
   EmailAuthProvider,
   User,
+  UserCredential,
   createUserWithEmailAndPassword,
   deleteUser,
   signOut as firebaseSignOut,
@@ -16,8 +17,10 @@ import {
   doc,
   getDoc,
   getDocs,
+  runTransaction,
   setDoc,
 } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
@@ -28,46 +31,43 @@ export const signUp = async (
   password: string,
   username: string,
   agreeTos: boolean,
-  agreeEmail?: boolean
+  agreeEmail?: boolean,
 ): Promise<User> => {
-  let userCredential;
-  try {
-    userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await setItem("userToken", await userCredential.user.getIdToken());
-  } catch (error) {
-    console.error("Failed to create user account:", error);
-    throw new Error("Failed to create user account");
-  }
+  const functions = getFunctions();
+  const createUserFunction = httpsCallable(functions, "createUser");
 
   try {
-    await setDoc(doc(db, "users", userCredential.user.uid), {
+    const result = await createUserFunction({
       email,
+      password,
       username,
       agreeTos,
       agreeEmail,
     });
-  } catch (error) {
-    console.error("Failed to save user data to Firestore:", error);
-    // If Firestore write fails, delete the created auth user
-    await userCredential.user.delete();
-    throw new Error("Failed to save user data");
-  }
+    const { uid } = result.data as { success: boolean; uid: string };
 
-  return userCredential.user;
+    // Sign in the user
+    await signInWithEmailAndPassword(auth, email, password);
+
+    // Store the user token
+    const token = await auth.currentUser!.getIdToken();
+    await setItem("userToken", token);
+
+    return auth.currentUser!;
+  } catch (error) {
+    console.error("Error in signUp:", error);
+    throw new Error("Failed to create user account. Please try again.");
+  }
 };
 
 export const signIn = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<User> => {
   const userCredential = await signInWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
   await setItem("userToken", await userCredential.user.getIdToken());
   return userCredential.user;
@@ -85,7 +85,7 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
 };
 export const changePassword = async (
   currentPassword: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<void> => {
   const user = auth.currentUser;
   if (!user) {
@@ -124,6 +124,6 @@ const usersCollection = collection(db, "users");
 export const fetchUsers = async (): Promise<UserData[]> => {
   const snapshot = await getDocs(usersCollection);
   return snapshot.docs.map(
-    (doc) => ({ id: doc.id, ...doc.data() } as UserData)
+    (doc) => ({ id: doc.id, ...doc.data() }) as UserData,
   );
 };

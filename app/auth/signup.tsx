@@ -9,7 +9,7 @@ import {
   usernameSchema,
 } from "@/utils/validationSchemas";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { Text, YStack, useTheme } from "tamagui";
 
