@@ -5,6 +5,7 @@ import {
   getDocs,
   limit,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -30,7 +31,7 @@ export const queryUserByUsername = async (username: string) => {
     const q = query(
       collection(db, "users"),
       where("username", "==", username),
-      limit(1)
+      limit(1),
     );
 
     const querySnapshot = await getDocs(q);
@@ -44,5 +45,18 @@ export const queryUserByUsername = async (username: string) => {
   } catch (error) {
     console.error("Error querying user by username:", error);
     return false;
+  }
+};
+export const updateUserProfile = async (
+  userId: string,
+  profileData: Partial<UserData>,
+): Promise<void> => {
+  try {
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, profileData);
+    console.log("User profile updated successfully");
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw new Error("Failed to update user profile");
   }
 };

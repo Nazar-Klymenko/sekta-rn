@@ -25,6 +25,7 @@ import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordRequirements } from "@/components/form/PasswordRequirements";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 export const signUpSchema = yup.object().shape({
   email: emailSchema,
@@ -43,7 +44,7 @@ export default function SignupScreen() {
   const theme = useTheme();
   const router = useRouter();
   const toast = useToastController();
-
+  const handleFirebaseError = useFirebaseErrorHandler();
   const { username = "", returnTo = "/" } = useLocalSearchParams<{
     username: string;
     returnTo?: string;
@@ -62,31 +63,18 @@ export default function SignupScreen() {
   const signUpMutation = useSignUp();
 
   const onSubmit = (data: FormValues) => {
-    signUpMutation.mutate(
-      {
-        email: data.email,
-        password: data.password,
-        username: data.username,
-        agreeTos: data.agreeTos,
-        agreeEmail: data.agreeEmail,
+    signUpMutation.mutate(data, {
+      onSuccess: () => {
+        toast.show("Successfully signed up", {
+          message: "Welcome!",
+          variant: "success",
+        });
+        router.replace(returnTo);
       },
-      {
-        onSuccess: () => {
-          toast.show("Successfully signed up", {
-            message: "Welcome!",
-            variant: "success",
-          });
-          router.replace(returnTo);
-        },
-        onError: (error) => {
-          toast.show("Sign up failed", {
-            message:
-              error instanceof Error ? error.message : "An error occurred",
-            variant: "error",
-          });
-        },
-      }
-    );
+      onError: (error) => {
+        handleFirebaseError(error);
+      },
+    });
   };
 
   return (

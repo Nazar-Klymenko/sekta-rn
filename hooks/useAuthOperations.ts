@@ -16,7 +16,10 @@ import { UserData } from "@/models/UserData";
 
 import { useAuth } from "./useAuth";
 
-type SignUpData = Omit<UserData, "email"> & { email: string; password: string };
+type SignUpData = Omit<UserData, "email" | "id"> & {
+  email: string;
+  password: string;
+};
 
 export const useSignUp = () => {
   const queryClient = useQueryClient();
@@ -28,7 +31,7 @@ export const useSignUp = () => {
         password,
         userData.username,
         userData.agreeTos,
-        userData.agreeEmail
+        userData.agreeEmail,
       );
       return user;
     },

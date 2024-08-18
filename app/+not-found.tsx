@@ -30,7 +30,7 @@ export default function NotFoundScreen() {
         }}
       />
       <Text fontSize="$6" fontWeight="bold" textAlign="center" color="$color">
-        This screen doesn't exist.
+        404: This page doesn't exist.
       </Text>
       <Link href="/" replace>
         <Text>Go to home screen!</Text>
