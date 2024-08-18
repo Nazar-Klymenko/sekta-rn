@@ -72,7 +72,7 @@ export default function LoginScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize="$8" fontWeight="bold" textAlign="center">
+          <Text fontSize={40} fontWeight="bold" textAlign="center">
             Log In
           </Text>
           <Input

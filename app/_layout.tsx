@@ -16,6 +16,7 @@ import { useAuth } from "@/hooks/useAuth";
 import tamaguiConfig from "@/tamagui.config";
 
 import { useFonts } from "expo-font";
+import { Lato_900Black } from "@expo-google-fonts/lato";
 import { Link, Slot, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
@@ -133,6 +134,7 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+    Lato_900Black,
   });
 
   useEffect(() => {

@@ -18,6 +18,7 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { Info } from "@tamagui/lucide-icons";
 
 const usernameBridgeSchema = yup.object().shape({
   username: usernameSchema,
@@ -72,11 +73,14 @@ export default function UsernameBridgeScreen() {
       <PageContainer formContainer>
         <Form methods={methods}>
           <XStack justifyContent="center">
-            <Text fontSize={24} fontWeight="bold" textAlign="center">
+            <Text fontSize={40} fontWeight="bold" textAlign="center">
               Welcome!{"  "}
             </Text>
             <HelloWave />
           </XStack>
+          <Text textAlign="center" color="$gray10Light">
+            Choose a username. Don't worry, you can always change it later.
+          </Text>
           <Input
             id="username"
             name="username"
@@ -85,6 +89,13 @@ export default function UsernameBridgeScreen() {
             autoCapitalize="none"
             inputMode="text"
           />
+          <XStack gap="$2">
+            <Info color="$gray10Light" size={16} />
+            <Text fontSize="$3" color="$gray10Light">
+              Username must be 3-20 characters long and can contain letters,
+              numbers, and underscores.
+            </Text>
+          </XStack>
           <PrimaryButton
             text="Next"
             onPress={handleSubmit(onSubmit)}

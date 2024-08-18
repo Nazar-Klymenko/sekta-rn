@@ -81,7 +81,7 @@ export default function SignupScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods} id="test">
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
+          <Text fontSize={40} fontWeight="bold" textAlign="center">
             Sign Up
           </Text>
           <Input

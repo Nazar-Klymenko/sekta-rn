@@ -211,7 +211,8 @@ const HeroSection = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          justifyContent: "flex-end",
+          justifyContent: "center",
+          alignItems: "center",
           padding: 20,
         }}
       >
@@ -252,10 +253,9 @@ const VenueInfoSection = () => (
     size="$4"
     bordered
     maxWidth={740}
-    // animation="bouncy"
-    // scale={0.9}
-    // hoverStyle={{ scale: 0.925 }}
-    // pressStyle={{ scale: 0.875 }}
+    animation="quickest"
+    hoverStyle={{ scale: 0.99 }}
+    pressStyle={{ scale: 0.99 }}
   >
     <Card.Header padded>
       <Text fontSize="$6" fontWeight="bold" color="$color12">
