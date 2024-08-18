@@ -1,12 +1,14 @@
 import React from "react";
 import { useFavoriteEventsId, useFavoriteEventsList } from "@/hooks/useEvents";
 import { useRouter } from "expo-router";
-import { Text, YStack, XStack, ScrollView } from "tamagui";
+import { Text, YStack, XStack, ScrollView, Button } from "tamagui";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Typography } from "@/components/Typography";
 import { RetryButton } from "@/components/buttons/IconButtons";
+import { useAuth } from "@/hooks/useAuth";
+import { ArrowRight, Heart } from "@tamagui/lucide-icons";
 
 export default function LikedEventsPage() {
   const {
@@ -32,13 +34,41 @@ export default function LikedEventsPage() {
       </PageContainer>
     );
   }
+  const EmptyFavorites = () => {
+    const router = useRouter();
+    const { user } = useAuth();
 
+    return (
+      <YStack
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="$8"
+        gap="$4"
+      >
+        <Heart size={100} color="$gray8Light" />
+        <Typography variant="h5" textAlign="center">
+          {user?.displayName ? `${user.displayName}, your` : "Your"} favorites
+          list is empty
+        </Typography>
+        <Typography variant="body1" textAlign="center" color="$gray10Light">
+          Like events to add them to your favorites and easily find them later.
+        </Typography>
+        <Button
+          size="$4"
+          theme="active"
+          onPress={() => router.push("/")}
+          icon={<ArrowRight size={16} />}
+        >
+          Discover Events
+        </Button>
+      </YStack>
+    );
+  };
   return (
     <PageContainer>
       <ScrollView>
         <YStack flex={1} gap="$4" padding="$4">
-          <Typography variant="h4">Favorite Events</Typography>
-
           <XStack flexWrap="wrap" justifyContent="space-between">
             {favoriteEvents && favoriteEvents.length > 0 ? (
               favoriteEvents.map((event) => (
@@ -51,16 +81,7 @@ export default function LikedEventsPage() {
                 </YStack>
               ))
             ) : (
-              <YStack
-                flex={1}
-                justifyContent="center"
-                alignItems="center"
-                paddingVertical="$8"
-              >
-                <Typography variant="body1">
-                  You haven't liked any events yet.
-                </Typography>
-              </YStack>
+              <EmptyFavorites />
             )}
           </XStack>
         </YStack>

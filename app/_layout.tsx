@@ -26,7 +26,7 @@ import {
 } from "react-native-safe-area-context";
 import { TamaguiProvider, Text, Theme, View, YStack, useTheme } from "tamagui";
 
-import { CustomHeader } from "@/components/CustomHeader";
+import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
 import { CurrentToast } from "@/components/Toast";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { Footer } from "@/components/navigation/Footer";
