@@ -41,9 +41,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import { emailSchema } from "@/utils/validationSchemas";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 
 const playSchema = yup.object({
-  email: yup.string().email("Invalid email address").required(),
+  email: emailSchema,
   phone: yup.string().optional(),
   soundcloud: yup.string().optional(),
   youtube: yup.string().optional(),
@@ -119,7 +122,7 @@ export default function PlayScreen() {
 
   return (
     <YStack flex={1}>
-      <HeroSection />
+      <EnhancedHeroSection />
 
       <YStack
         backgroundColor="$background"
@@ -141,6 +144,9 @@ export default function PlayScreen() {
         </YStack>
 
         <Form methods={methods} maxWidth={740} flex={1} jc="center">
+          <Text fontSize={20} fontWeight="bold">
+            Contact Information
+          </Text>
           <Input
             id="play-email"
             name="email"
@@ -174,7 +180,7 @@ export default function PlayScreen() {
             label="Additional Info"
             multiline
             placeholder="Any additional information you'd like to share..."
-            rows={4}
+            rows={6}
             verticalAlign="top"
           />
           <PrimaryButton
@@ -188,7 +194,7 @@ export default function PlayScreen() {
     </YStack>
   );
 }
-const HeroSection = () => {
+const EnhancedHeroSection = () => {
   const { width, height } = useWindowDimensions();
   const isWideScreen = width > height;
   const imageHeight =
@@ -204,7 +210,7 @@ const HeroSection = () => {
         objectFit="cover"
       />
       <LinearGradient
-        colors={["rgba(0,0,0,0.3)", "rgba(0,0,0,0.7)"]}
+        colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]}
         style={{
           position: "absolute",
           top: 0,
@@ -216,21 +222,30 @@ const HeroSection = () => {
           padding: 20,
         }}
       >
-        <YStack gap="$2" maxWidth={600}>
-          <Text
-            fontSize={40}
-            fontWeight="bold"
-            color="white"
-            textShadowColor="rgba(0,0,0,0.75)"
-            textShadowOffset={{ width: -1, height: 1 }}
-            textShadowRadius={10}
-          >
-            Play at Our Venue
-          </Text>
-          <Text fontSize={20} color="white" opacity={0.8}>
-            Perform a set at our venue with other artists
-          </Text>
-        </YStack>
+        <Animated.View entering={FadeInDown.duration(800)}>
+          <YStack gap="$4" alignItems="center">
+            <Text
+              fontSize={48}
+              fontWeight="bold"
+              color="white"
+              textAlign="center"
+              textShadowColor="rgba(0,0,0,0.75)"
+              textShadowOffset={{ width: -1, height: 1 }}
+              textShadowRadius={10}
+            >
+              Play at Our Venue
+            </Text>
+            <Text fontSize={24} color="white" opacity={0.9} textAlign="center">
+              Perform a set at our venue with other artists
+            </Text>
+            <SecondaryButton
+              text="Apply Now"
+              onPress={() => {
+                // Scroll to application form
+              }}
+            />
+          </YStack>
+        </Animated.View>
       </LinearGradient>
     </YStack>
   );
@@ -254,7 +269,7 @@ const VenueInfoSection = () => (
     bordered
     maxWidth={740}
     animation="quickest"
-    hoverStyle={{ scale: 0.99 }}
+    hoverStyle={{ scale: 1.02 }}
     pressStyle={{ scale: 0.99 }}
   >
     <Card.Header padded>
@@ -276,10 +291,10 @@ const VenueInfoSection = () => (
           >
             <item.icon size={24} color="$color11Light" />
             <YStack alignItems="center">
-              <Text fontSize="$3" fontWeight="bold" color="$color11">
+              <Text fontSize="$4" fontWeight="bold" color="$color11">
                 {item.title}
               </Text>
-              <Text fontSize="$2" color="$color10" textAlign="center">
+              <Text fontSize="$3" color="$color10" textAlign="center">
                 {item.content}
               </Text>
             </YStack>

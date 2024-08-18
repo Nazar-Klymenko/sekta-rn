@@ -29,7 +29,7 @@ export function Dialog({ title, children, id, ...props }: DialogProps) {
     <TamaguiDialog modal {...props}>
       <Adapt when="sm" platform="touch">
         <Sheet
-          animation="medium"
+          animation="quickest"
           zIndex={200001}
           modal
           dismissOnSnapToBottom

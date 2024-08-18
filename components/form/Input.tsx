@@ -76,6 +76,7 @@ export function Input({
             onChangeText={field.onChange}
             outlineStyle="none"
             paddingHorizontal={Icon ? "$8" : "$3.5"}
+            minHeight={54}
             focusStyle={{
               outlineWidth: "0",
               outlineStyle: "none",
@@ -93,8 +94,8 @@ export function Input({
               borderColor: error
                 ? "$red10Light"
                 : isFocused
-                ? "accentColor"
-                : undefined,
+                  ? "accentColor"
+                  : undefined,
             }}
             ref={field.ref}
             fontSize={16}

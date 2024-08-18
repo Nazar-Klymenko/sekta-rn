@@ -24,7 +24,7 @@ interface InputProps extends TextInputProps {
 
 export function PasswordInput(
   { name, label, placeholder, id }: InputProps,
-  props: TextInputProps
+  props: TextInputProps,
 ) {
   const { control } = useFormContext();
   const {
@@ -53,6 +53,7 @@ export function PasswordInput(
           value={field.value}
           onChangeText={field.onChange}
           secureTextEntry={!isPasswordVisible}
+          minHeight={54}
           focusStyle={{
             outlineWidth: "0",
             outlineStyle: "none",
@@ -70,8 +71,8 @@ export function PasswordInput(
             borderColor: error
               ? "$red10Light"
               : isFocused
-              ? "accentColor"
-              : undefined,
+                ? "accentColor"
+                : undefined,
           }}
           flex={1}
           ref={field.ref}

@@ -108,7 +108,7 @@ export default function DeleteAccountScreen() {
           <Dialog.Portal padding="$4">
             <Dialog.Overlay
               key="overlay"
-              animation="quick"
+              animation="quickest"
               opacity={0.5}
               enterStyle={{ opacity: 0 }}
               exitStyle={{ opacity: 0 }}

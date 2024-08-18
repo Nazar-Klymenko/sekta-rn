@@ -66,7 +66,7 @@ export function Select({
       <TamaguiSelect.Content zIndex={200000}>
         <ScrollUpButton />
         <TamaguiSelect.Viewport
-          animation="quick"
+          animation="quickest"
           animateOnly={["transform", "opacity"]}
           enterStyle={{ o: 0, y: -10 }}
           exitStyle={{ o: 0, y: 10 }}

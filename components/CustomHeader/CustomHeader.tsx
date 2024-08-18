@@ -36,7 +36,7 @@ import { NavLink, NavLinkButton } from "./NavLink";
 // Styled components
 const HeaderWrapper = styled(Stack, {
   zIndex: 100,
-  backgroundColor: "rgba(0,0,0, 0.8)", // 80% opacity
+  backgroundColor: "rgba(19, 19, 22, 0.7)",
 } as StackProps);
 
 const HeaderContainer = styled(XStack, {
@@ -215,14 +215,14 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
           <>
             <Overlay
               key="overlay"
-              animation="quick"
+              animation="quickest"
               opacity={0.5}
               exitStyle={{ opacity: 0 }}
               onPress={() => setIsMenuOpen(false)}
             />
             <MobileMenu
               key="menu"
-              animation="quick"
+              animation="quickest"
               x={0}
               opacity={1}
               scale={1}
