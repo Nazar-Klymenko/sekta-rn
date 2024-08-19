@@ -17,7 +17,6 @@ import { Platform } from "react-native";
 
 import { usePlaySubmission } from "@/hooks/usePlay";
 
-import { BlurView } from "expo-blur";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -43,7 +42,7 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { emailSchema } from "@/utils/validationSchemas";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const playSchema = yup.object({
   email: emailSchema,
@@ -121,7 +120,7 @@ export default function PlayScreen() {
   };
 
   return (
-    <YStack flex={1}>
+    <PageContainer fullWidth>
       <EnhancedHeroSection />
 
       <YStack
@@ -143,7 +142,7 @@ export default function PlayScreen() {
           </Text>
         </YStack>
 
-        <Form methods={methods} maxWidth={740} flex={1} jc="center">
+        <Form methods={methods} maxWidth={740} flex={1}>
           <Text fontSize={20} fontWeight="bold">
             Contact Information
           </Text>
@@ -191,7 +190,7 @@ export default function PlayScreen() {
           />
         </Form>
       </YStack>
-    </YStack>
+    </PageContainer>
   );
 }
 const EnhancedHeroSection = () => {
@@ -238,12 +237,6 @@ const EnhancedHeroSection = () => {
             <Text fontSize={24} color="white" opacity={0.9} textAlign="center">
               Perform a set at our venue with other artists
             </Text>
-            <SecondaryButton
-              text="Apply Now"
-              onPress={() => {
-                // Scroll to application form
-              }}
-            />
           </YStack>
         </Animated.View>
       </LinearGradient>
