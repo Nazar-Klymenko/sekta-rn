@@ -50,10 +50,12 @@ const Cell = styled(ThemeableStack, {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "flex-start",
-  paddingVertical: "$3",
-  paddingHorizontal: "$3",
   flex: 1,
   minWidth: 220,
+  maxWidth: 220,
+  height: 54, // Set a fixed height
+  overflow: "hidden",
+  paddingHorizontal: "$2",
 });
 
 const HeaderCell = styled(Cell, {});

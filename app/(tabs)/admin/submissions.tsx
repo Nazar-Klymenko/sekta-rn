@@ -1,52 +1,90 @@
 // src/pages/AdminPlaySubmissions.tsx
-import {
-  AudioLines,
-  Calendar,
-  Facebook,
-  Info,
-  Instagram,
-  Mail,
-  Music,
-  Phone,
-  Trash2,
-  Youtube,
-} from "@tamagui/lucide-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
-import React, { useState } from "react";
-
-import { Alert, FlatList, Platform } from "react-native";
-
-import { useAuth } from "@/hooks/useAuth";
+import { Search, Trash2 } from "@tamagui/lucide-icons";
+import React, { useMemo, useState } from "react";
+import { Alert, Platform } from "react-native";
 import {
   useDeletePlaySubmission,
   useFetchPlaySubmissions,
 } from "@/hooks/usePlay";
 import { PlayData } from "@/models/PlayData";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
-
-import {
-  Button,
-  Card,
-  Paragraph,
-  ScrollView,
-  Spinner,
-  Text,
-  XStack,
-  YStack,
-} from "tamagui";
-
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
+import { Table } from "@/components/Table";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Form } from "@/components/form/Form";
+import { Input } from "@/components/form/Input";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { Pagination } from "@/components/navigation/Pagination";
+
+const ITEMS_PER_PAGE = 10;
+
+type Column = {
+  header: string;
+  accessor: keyof PlayData;
+  render?: (value: any) => React.ReactNode;
+};
+
+const columns: Column[] = [
+  { header: "Email", accessor: "email" },
+  { header: "Phone", accessor: "phone" },
+  { header: "Soundcloud", accessor: "soundcloud" },
+  { header: "Youtube", accessor: "youtube" },
+  { header: "Instagram", accessor: "instagram" },
+  { header: "Facebook", accessor: "facebook" },
+  { header: "Additional info", accessor: "additionalInfo" },
+  {
+    header: "Submitted At",
+    accessor: "submittedAt",
+    render: (value: any) => (
+      <Text>
+        {value && formatFirestoreTimestamp(value, "EEEE, MMMM do yyyy, HH:mm")}
+      </Text>
+    ),
+  },
+];
+
+const searchSchema = yup.object().shape({
+  searchQuery: yup.string(),
+});
+type FormValues = yup.InferType<typeof searchSchema>;
 
 export default function AdminPlaySubmissions() {
-  const { user } = useAuth();
   const { data: submissions, isLoading, isError } = useFetchPlaySubmissions();
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const queryClient = useQueryClient();
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const deleteSubmissionMutation = useDeletePlaySubmission();
+
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(searchSchema),
+    defaultValues: {
+      searchQuery: "",
+    },
+  });
+
+  const filteredSubmissions = useMemo(() => {
+    return submissions?.filter((submission) =>
+      Object.values(submission).some(
+        (value) =>
+          value &&
+          value.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
+  }, [submissions, searchTerm]);
+
+  const paginatedSubmissions = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredSubmissions?.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredSubmissions, currentPage]);
+
+  const totalPages = Math.ceil(
+    (filteredSubmissions?.length || 0) / ITEMS_PER_PAGE,
+  );
+
+  if (isLoading) return <FullPageLoading />;
+  if (isError) return <Text>Error loading submissions</Text>;
 
   const handleDelete = (id: string) => {
     Alert.alert(
@@ -57,126 +95,88 @@ export default function AdminPlaySubmissions() {
         {
           text: "Delete",
           onPress: () => {
-            deleteSubmissionMutation.mutate(id, {
-              onSuccess: () => {
-                setToastMessage("Submission deleted successfully");
-                setShowToast(true);
-              },
-              onError: (error) => {
-                setToastMessage("Error deleting submission");
-                setShowToast(true);
-              },
-            });
+            deleteSubmissionMutation.mutate(id);
           },
         },
-      ]
+      ],
     );
   };
 
-  if (isLoading) return <FullPageLoading />;
-  if (isError) return <Text>Error</Text>;
+  const renderCell = ({ item, column }: { item: PlayData; column: Column }) => {
+    const value = item[column.accessor];
 
-  const renderItem = ({ item }: { item: PlayData }) => {
-    let formattedDate;
-    if (item.submittedAt) {
-      formattedDate = formatFirestoreTimestamp(
-        item.submittedAt,
-        "EEEE, MMMM do yyyy, HH:mm"
+    if (column.accessor === "additionalInfo") {
+      return (
+        <XStack flex={1} alignItems="center" height={54}>
+          <Text numberOfLines={1} ellipsizeMode="tail">
+            {value?.toString() || "N/A"}
+          </Text>
+        </XStack>
       );
     }
 
-    return (
-      <Card
-        elevate
-        size="$4"
-        bordered
-        marginVertical="$2"
-        padding="$4"
-        maxWidth={740}
-        minWidth={540}
-      >
-        <YStack gap="$2">
-          <XStack gap="$2" alignItems="center">
-            <Mail size={18} color="$gray10Light" />
-            <Text color="$gray10Light">Mail: </Text>
-            <Text fontSize="$5">{item.email}</Text>
-          </XStack>
-          {item.phone && (
-            <XStack gap="$2" alignItems="center">
-              <Phone size={18} color="$gray10Light" />
-              <Text color="$gray10Light">Mail: </Text>
-              <Text>{item.phone}</Text>
-            </XStack>
-          )}
-          {item.soundcloud && (
-            <XStack gap="$2" alignItems="center">
-              <AudioLines size={18} color="$gray10Light" />
-              <Text color="$gray10Light">phone: </Text>
-              <Text>{item.soundcloud}</Text>
-            </XStack>
-          )}
-          {item.youtube && (
-            <XStack gap="$2" alignItems="center">
-              <Youtube size={18} color="$gray10Light" />
-              <Text color="$gray10Light">youtube: </Text>
-              <Text>{item.youtube}</Text>
-            </XStack>
-          )}
-          {item.instagram && (
-            <XStack gap="$2" alignItems="center">
-              <Instagram size={18} color="$gray10Light" />
-              <Text color="$gray10Light">instagram: </Text>
-              <Text>{item.instagram}</Text>
-            </XStack>
-          )}
-          {item.facebook && (
-            <XStack gap="$2" alignItems="center">
-              <Facebook size={18} color="$gray10Light" />
-              <Text color="$gray10Light">facebook: </Text>
-              <Text>{item.facebook}</Text>
-            </XStack>
-          )}
-          {item.additionalInfo && (
-            <YStack gap="$1">
-              <XStack gap="$2" alignItems="center">
-                <Info size={18} color="$gray10Light" />
-                <Text color="$gray10Light">Additional Info:</Text>
-              </XStack>
-              <Paragraph>{item.additionalInfo}</Paragraph>
-            </YStack>
-          )}
-          {item.submittedAt && (
-            <YStack gap="$1">
-              <XStack gap="$2" alignItems="center">
-                <Calendar size={18} color="$gray10Light" />
-                <Text color="$gray10Light">Date of submission:</Text>
-              </XStack>
-              <Paragraph>{formattedDate}</Paragraph>
-            </YStack>
-          )}
-        </YStack>
-        <Button
-          icon={Trash2}
-          marginTop="$3"
-          onPress={() => handleDelete(item.id)}
-        >
-          Delete Submission
-        </Button>
-      </Card>
+    return column.render ? (
+      column.render(value)
+    ) : (
+      <Text numberOfLines={1} ellipsizeMode="tail">
+        {value?.toString() || "N/A"}
+      </Text>
     );
   };
-
   return (
-    <PageContainer scrollable={false} fullWidth>
-      <FlatList
-        style={{ flex: 1, width: "100%" }}
-        showsVerticalScrollIndicator={Platform.OS == "web"}
-        contentContainerStyle={{
-          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
-        }}
-        data={submissions}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+    <PageContainer fullWidth padding="$4">
+      <Text fontSize="$6" fontWeight="bold">
+        Play Submissions
+      </Text>
+      <XStack alignItems="center" gap="$2">
+        <Form methods={methods} flex={1}>
+          <Input
+            placeholder="Search submissions"
+            name="searchQuery"
+            id="search-submissions"
+            label=""
+            onChangeText={setSearchTerm}
+            icon={Search}
+          />
+        </Form>
+      </XStack>
+      <ScrollView horizontal>
+        <Table>
+          <Table.Head>
+            <Table.Row isHeader>
+              {columns.map((column) => (
+                <Table.HeaderCell padded key={column.accessor}>
+                  <Text fontWeight="bold">{column.header}</Text>
+                </Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            {paginatedSubmissions?.map((submission) => (
+              <Table.Row key={submission.id}>
+                {columns.map((column) => (
+                  <Table.Cell
+                    padded
+                    key={`${submission.id}-${column.accessor}`}
+                  >
+                    {renderCell({ item: submission, column })}
+                  </Table.Cell>
+                ))}
+                <Table.Cell>
+                  <Button
+                    icon={Trash2}
+                    onPress={() => handleDelete(submission.id)}
+                  />
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </ScrollView>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
       />
     </PageContainer>
   );

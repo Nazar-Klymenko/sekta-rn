@@ -18,8 +18,6 @@ import { Link, Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Footer } from "@/components/navigation/Footer";
-import { CustomHeader } from "@/components/CustomHeader";
 
 export default function TabLayout() {
   const theme = useTheme();
