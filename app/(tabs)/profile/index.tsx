@@ -131,7 +131,7 @@ export default function ProfileScreen() {
           </>
         )}
 
-        <YStack gap="$2">
+        {/* <YStack gap="$2">
           <SectionTitle>Preferences</SectionTitle>
           <XStack
             alignItems="center"
@@ -174,7 +174,7 @@ export default function ProfileScreen() {
               hideErrors
             />
           </XStack>
-        </YStack>
+        </YStack> */}
         <YStack gap="$2">
           <SectionTitle>Support</SectionTitle>
           <MenuItem
