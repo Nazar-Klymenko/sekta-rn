@@ -11,6 +11,10 @@ import { Text, YStack } from "tamagui";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { useAuth } from "@/hooks/useAuth";
+import Typography from "@/components/Typography";
+import { ArrowRight, Heart } from "@tamagui/lucide-icons";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 
 export default function LikedEventsPage() {
   const {
@@ -32,7 +36,36 @@ export default function LikedEventsPage() {
       </PageContainer>
     );
   }
+  const EmptyFavorites = () => {
+    const router = useRouter();
+    const { user } = useAuth();
 
+    return (
+      <YStack
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        paddingVertical="$8"
+        gap="$4"
+      >
+        <Heart size={100} color="$gray8Light" />
+        <Typography variant="h5" textAlign="center">
+          {user?.displayName ? `${user.displayName}, your` : "Your"} favorites
+          list is empty
+        </Typography>
+        <Typography variant="body1" textAlign="center" color="$gray10Light">
+          Like events to add them to your favorites and easily find them later.
+        </Typography>
+        <SecondaryButton
+          size="$4"
+          theme="active"
+          onPress={() => router.push("/")}
+          icon={<ArrowRight size={16} />}
+          text="Discover Events"
+        ></SecondaryButton>
+      </YStack>
+    );
+  };
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
@@ -61,11 +94,7 @@ export default function LikedEventsPage() {
         }}
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
-        ListEmptyComponent={() => (
-          <Text marginTop="$4" alignSelf="center">
-            You haven't liked any events yet.
-          </Text>
-        )}
+        ListEmptyComponent={() => <EmptyFavorites />}
       />
     </PageContainer>
   );
