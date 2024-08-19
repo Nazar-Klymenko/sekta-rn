@@ -8,12 +8,14 @@ import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
   Stack,
+  styled,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   Text,
   XStack,
   YStack,
 } from "tamagui";
+import { BaseInput } from "./shared/BaseInput";
 
 interface InputProps extends TamaguiInputProps {
   name: string;
@@ -41,7 +43,6 @@ export function Input({
   });
 
   const [isFocused, setIsFocused] = useState(false);
-  const hasValue = field.value && field.value.length > 0;
 
   return (
     <YStack flex={1}>
@@ -68,42 +69,37 @@ export function Input({
             />
           )}
 
-          <TamaguiInput
+          <BaseInput
             id={id}
-            flex={1}
             placeholder={placeholder}
             value={field.value}
             onChangeText={field.onChange}
-            outlineStyle="none"
             paddingHorizontal={Icon ? "$8" : "$3.5"}
-            minHeight={54}
-            focusStyle={{
-              outlineWidth: "0",
-              outlineStyle: "none",
-              borderColor: error ? "$red10Light" : "$accentColor",
-            }}
             onBlur={() => {
               field.onBlur();
               setIsFocused(false);
             }}
             onFocus={() => setIsFocused(true)}
             borderColor={
-              error ? "$red10Light" : isFocused ? "accentColor" : undefined
-            }
-            hoverStyle={{
-              borderColor: error
+              error
                 ? "$red10Light"
                 : isFocused
-                  ? "accentColor"
-                  : undefined,
+                  ? "$accentBackground"
+                  : undefined
+            }
+            hoverStyle={{
+              borderColor: error ? "$red10Dark" : undefined,
             }}
             ref={field.ref}
-            fontSize={16}
             {...props}
           />
         </Stack>
       </YStack>
-      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+      <Text
+        color={error ? "$red10Light" : "$colorTransparent"}
+        fontSize="$2"
+        marginTop="$2"
+      >
         {error ? error?.message : ""}
       </Text>
     </YStack>

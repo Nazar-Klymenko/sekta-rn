@@ -141,7 +141,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
       left={0}
       right={0}
       style={
-        !isSmallScreen
+        !isMenuOpen
           ? { backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }
           : {}
       }

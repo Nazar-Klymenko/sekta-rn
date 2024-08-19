@@ -12,7 +12,7 @@ import { Button, Text, YStack, useTheme } from "tamagui";
 interface ShareButtonProps {
   size: "sm" | "lg";
   handleShare?: (
-    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent,
   ) => void;
 }
 export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
@@ -50,7 +50,7 @@ interface LikeButtonProps {
   isLiked: boolean;
   size: "sm" | "lg";
   handleLike: (
-    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent,
   ) => void;
 }
 export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {

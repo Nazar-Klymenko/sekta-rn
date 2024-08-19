@@ -222,7 +222,7 @@ const EnhancedHeroSection = () => {
           padding: 20,
         }}
       >
-        <Animated.View entering={FadeInDown.duration(800)}>
+        <Animated.View entering={FadeInDown.duration(400)}>
           <YStack gap="$4" alignItems="center">
             <Text
               fontSize={48}

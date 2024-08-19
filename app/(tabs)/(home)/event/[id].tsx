@@ -168,7 +168,7 @@ export default function EventDetailsPage() {
             <Text fontSize="$6" fontWeight="bold">
               About this event
             </Text>
-            <Paragraph color="$color10">{event.caption}</Paragraph>
+            <Paragraph color="$color10Light">{event.caption}</Paragraph>
             <Text fontSize="$6" fontWeight="bold">
               Lineup
             </Text>
