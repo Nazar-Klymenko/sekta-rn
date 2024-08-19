@@ -19,6 +19,7 @@ import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 const loginSchema = yup.object().shape({
   email: emailSchema,
@@ -32,6 +33,7 @@ export default function LoginScreen() {
   const toast = useToastController();
   const { returnTo } = useLocalSearchParams<{ returnTo: "/" }>();
   const router = useRouter();
+  const handleFirebaseError = useFirebaseErrorHandler();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -58,11 +60,7 @@ export default function LoginScreen() {
           }
         },
         onError: (error) => {
-          toast.show("Login failed", {
-            message:
-              error instanceof Error ? error.message : "An error occurred",
-            variant: "error",
-          });
+          handleFirebaseError(error);
         },
       },
     );

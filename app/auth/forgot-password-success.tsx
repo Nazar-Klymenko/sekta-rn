@@ -10,9 +10,9 @@ export default function ForgotPasswordSuccessScreen() {
   return (
     <AuthPageGuard>
       <PageContainer>
-        <Text>
+        <Text fontSize={40} fontWeight="bold" textAlign="center">
           Email sent! Check you inbox and follow the instuctions to reset your
-          password
+          password{" "}
         </Text>
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login?returnTo=${returnTo}`}>

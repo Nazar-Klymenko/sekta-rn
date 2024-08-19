@@ -17,17 +17,11 @@ const playCollection = collection(db, "play");
 export const submitPlayInfo = async (
   data: Omit<PlayData, "id" | "submittedAt">,
 ) => {
-  try {
-    const docRef = await addDoc(collection(db, "play"), {
-      ...data,
-      submittedAt: serverTimestamp(),
-    });
-    console.log("Document written with ID: ", docRef.id);
-    return docRef.id;
-  } catch (error) {
-    console.error("Error adding document: ", error);
-    throw new Error("Failed to submit play info");
-  }
+  const docRef = await addDoc(collection(db, "play"), {
+    ...data,
+    submittedAt: serverTimestamp(),
+  });
+  return docRef.id;
 };
 export const fetchPlaySubmissions = async (): Promise<PlayData[]> => {
   const snapshot = await getDocs(playCollection);

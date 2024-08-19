@@ -8,7 +8,7 @@ import { Button, XStack, YStack, styled } from "tamagui";
 const StyledToast = styled(Toast, {
   width: "90%",
   maxWidth: 400,
-  backgroundColor: "$gray7Dark",
+  backgroundColor: "$backgroundHover",
   padding: "$1",
   borderColor: "$borderColor",
   borderWidth: 1,

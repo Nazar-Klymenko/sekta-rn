@@ -36,28 +36,22 @@ export const signUp = async (
   const functions = getFunctions();
   const createUserFunction = httpsCallable(functions, "createUser");
 
-  try {
-    const result = await createUserFunction({
-      email,
-      password,
-      username,
-      agreeTos,
-      agreeEmail,
-    });
-    const { uid } = result.data as { success: boolean; uid: string };
+  const result = await createUserFunction({
+    email,
+    password,
+    username,
+    agreeTos,
+    agreeEmail,
+  });
+  const { uid } = result.data as { success: boolean; uid: string };
 
-    // Sign in the user
-    await signInWithEmailAndPassword(auth, email, password);
+  // Sign in the user
+  await signInWithEmailAndPassword(auth, email, password);
 
-    // Store the user token
-    const token = await auth.currentUser!.getIdToken();
-    await setItem("userToken", token);
-
-    return auth.currentUser!;
-  } catch (error) {
-    console.error("Error in signUp:", error);
-    throw new Error("Failed to create user account. Please try again.");
-  }
+  // Store the user token
+  const token = await auth.currentUser!.getIdToken();
+  await setItem("userToken", token);
+  return auth.currentUser!;
 };
 
 export const signIn = async (

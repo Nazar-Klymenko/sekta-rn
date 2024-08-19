@@ -19,8 +19,7 @@ const errorMessages: ErrorMessages = {
     "This operation is not allowed. Please contact support.",
   "auth/account-exists-with-different-credential":
     "An account already exists with the same email but different sign-in credentials.",
-  "auth/invalid-credential":
-    "The provided credential is malformed or has expired.",
+  "auth/invalid-credential": "Wrong password or email. Could not log in.",
   "auth/invalid-verification-code":
     "Invalid verification code. Please try again.",
   "auth/invalid-verification-id":
