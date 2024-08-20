@@ -1,5 +1,5 @@
 import { GestureResponderEvent } from "react-native";
-import { Button, ButtonProps, Spinner, Text, Theme, styled } from "tamagui";
+import { Button, ButtonProps, Spinner, Text, styled } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 
 interface PrimaryButtonTypes extends ButtonProps {
@@ -24,14 +24,6 @@ const StyledButton = styled(Button, {
   } as const,
 });
 
-const ButtonGradient = styled(LinearGradient, {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-});
-
 export const PrimaryButton = ({
   onPress,
   text,
@@ -49,10 +41,17 @@ export const PrimaryButton = ({
       gradient
       {...props}
     >
-      <ButtonGradient
+      <LinearGradient
         colors={["$pink8Light", "$accentBackground"]}
-        start={[0, 0] as any}
-        end={[1, 1] as any}
+        start={[0, 0]}
+        end={[1, 1]}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
       />
       <Text color="$colorContrast" fontWeight="bold" zIndex={1}>
         {text}
