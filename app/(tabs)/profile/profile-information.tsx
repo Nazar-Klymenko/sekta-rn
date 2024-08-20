@@ -158,7 +158,7 @@ export default function UpdateProfileScreen() {
             </YStack>
             <MenuButton
               disabled={user?.emailVerified}
-              text={user?.emailVerified ? "Verified" : "Verify"}
+              text={user?.emailVerified ? "Verified" : "Send verification link"}
             />
           </XStack>
           <PrimaryButton

@@ -131,50 +131,6 @@ export default function ProfileScreen() {
           </>
         )}
 
-        {/* <YStack gap="$2">
-          <SectionTitle>Preferences</SectionTitle>
-          <XStack
-            alignItems="center"
-            justifyContent="space-between"
-            backgroundColor="$background"
-            padding="$4"
-            borderRadius="$2"
-          >
-            <XStack alignItems="center" gap="$3">
-              {isDarkMode ? (
-                <Moon size="$1" color="$gray10Light" />
-              ) : (
-                <Sun size="$1" color="$gray10Light" />
-              )}
-              <Text fontSize="$4">
-                {isDarkMode ? "Dark Mode" : "Light Mode"}
-              </Text>
-            </XStack>
-            <Switch checked={isDarkMode} onPress={toggleTheme} />
-          </XStack>
-
-          <XStack
-            padding="$4"
-            gap="$4"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <XStack alignItems="center" f={1} gap="$3">
-              <Globe size="$1" color="$gray10Light" />
-              <Label htmlFor="language-select">Language</Label>
-            </XStack>
-            <Select
-              name="selectLanguage"
-              label="language"
-              id="profile-language-select"
-              placeholder="Select a language"
-              items={languages}
-              hideLabel
-              hideErrors
-            />
-          </XStack>
-        </YStack> */}
         <YStack gap="$2">
           <SectionTitle>Support</SectionTitle>
           <MenuItem
@@ -254,9 +210,56 @@ const MenuItem = ({
     <ChevronRight size="$1" color="$color" />
   </ResponsiveStack>
 );
-const languages = [
-  { value: "pl", label: "Polish" },
-  { value: "en", label: "English" },
-  { value: "ru", label: "Russian" },
-  { value: "ua", label: "Ukrainian" },
-];
+// const languages = [
+//   { value: "pl", label: "Polish" },
+//   { value: "en", label: "English" },
+//   { value: "ru", label: "Russian" },
+//   { value: "ua", label: "Ukrainian" },
+// ];
+
+{
+  /* <YStack gap="$2">
+          <SectionTitle>Preferences</SectionTitle>
+          <XStack
+            alignItems="center"
+            justifyContent="space-between"
+            backgroundColor="$background"
+            padding="$4"
+            borderRadius="$2"
+          >
+            <XStack alignItems="center" gap="$3">
+              {isDarkMode ? (
+                <Moon size="$1" color="$gray10Light" />
+              ) : (
+                <Sun size="$1" color="$gray10Light" />
+              )}
+              <Text fontSize="$4">
+                {isDarkMode ? "Dark Mode" : "Light Mode"}
+              </Text>
+            </XStack>
+            <Switch checked={isDarkMode} onPress={toggleTheme} />
+          </XStack>
+
+          <XStack
+            padding="$4"
+            gap="$4"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <XStack alignItems="center" f={1} gap="$3">
+              <Globe size="$1" color="$gray10Light" />
+              <Label htmlFor="language-select">Language</Label>
+            </XStack>
+            <Select
+              name="selectLanguage"
+              label="language"
+              id="profile-language-select"
+              placeholder="Select a language"
+              items={languages}
+              hideLabel
+              hideErrors
+            />
+          </XStack>
+        </YStack> */
+}

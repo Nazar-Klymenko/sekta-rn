@@ -35,7 +35,6 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.gray2Dark.get(),
-          display: isEventDetailsPage ? "none" : "flex",
           borderTopWidth: 0,
         },
         tabBarActiveTintColor: theme.color.get(),
