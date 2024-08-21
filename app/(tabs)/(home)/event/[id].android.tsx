@@ -99,12 +99,8 @@ export default function EventDetailsPage() {
   );
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
-  const stickyButton = (
-    <PrimaryButton text="Buy ticket 🎟️" onPress={handleBuyTicket} />
-  );
-
   return (
-    <PageContainer stickyBottom={stickyButton}>
+    <PageContainer>
       <YStack gap="$4">
         <YStack position="relative" gap="$4">
           <XStack display="flex" jc="space-between" ai="center">
@@ -182,7 +178,7 @@ export default function EventDetailsPage() {
               ))}
             </XStack>
           </YStack>
-          {md && (
+          {/* {md && (
             <Separator alignSelf="stretch" vertical marginHorizontal={15} />
           )}
           {md && (
@@ -193,7 +189,7 @@ export default function EventDetailsPage() {
                 style={{ width: "100%" }}
               />
             </YStack>
-          )}
+          )} */}
         </XStack>
       </YStack>
     </PageContainer>
