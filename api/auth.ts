@@ -2,8 +2,6 @@
 import {
   EmailAuthProvider,
   User,
-  UserCredential,
-  createUserWithEmailAndPassword,
   deleteUser,
   signOut as firebaseSignOut,
   reauthenticateWithCredential,
@@ -17,14 +15,11 @@ import {
   doc,
   getDoc,
   getDocs,
-  runTransaction,
-  setDoc,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
-import { removeItem, setItem } from "@/utils/asyncStorage";
 
 export const signUp = async (
   email: string,
@@ -36,21 +31,19 @@ export const signUp = async (
   const functions = getFunctions();
   const createUserFunction = httpsCallable(functions, "createUser");
 
-  const result = await createUserFunction({
+  await createUserFunction({
     email,
     password,
     username,
     agreeTos,
     agreeEmail,
   });
-  const { uid } = result.data as { success: boolean; uid: string };
 
   // Sign in the user
   await signInWithEmailAndPassword(auth, email, password);
 
   // Store the user token
   const token = await auth.currentUser!.getIdToken();
-  await setItem("userToken", token);
   return auth.currentUser!;
 };
 
@@ -63,7 +56,6 @@ export const signIn = async (
     email,
     password,
   );
-  await setItem("userToken", await userCredential.user.getIdToken());
   return userCredential.user;
 };
 
@@ -103,15 +95,12 @@ export const deleteAccount = async (password: string): Promise<void> => {
     await deleteDoc(doc(db, "users", user.uid));
 
     await deleteUser(user);
-
-    await removeItem("userToken");
   } else {
     throw new Error("No user is currently signed in");
   }
 };
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
-  await removeItem("userToken");
 };
 const usersCollection = collection(db, "users");
 
