@@ -91,6 +91,7 @@ export function Input({
               borderColor: error ? "$red10Dark" : undefined,
             }}
             ref={field.ref}
+            disabledStyle={{ color: "$placeholderColor" }}
             {...props}
           />
         </Stack>

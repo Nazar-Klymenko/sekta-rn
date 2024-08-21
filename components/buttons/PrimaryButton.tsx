@@ -14,14 +14,6 @@ const StyledButton = styled(Button, {
   borderRadius: "$4",
   overflow: "hidden",
   minHeight: 54,
-
-  variants: {
-    gradient: {
-      true: {
-        backgroundImage: "none",
-      },
-    },
-  } as const,
 });
 
 export const PrimaryButton = ({
@@ -35,10 +27,9 @@ export const PrimaryButton = ({
     <StyledButton
       onPress={onPress}
       htmlFor={htmlFor}
-      icon={isLoading ? <Spinner /> : undefined}
+      iconAfter={isLoading ? <Spinner /> : undefined}
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       pressStyle={{ opacity: 0.8 }}
-      gradient
       {...props}
     >
       <LinearGradient
