@@ -15,7 +15,7 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import { BaseInput } from "./shared/BaseInput";
+import { BaseInput, MaxLength } from "./shared/BaseInput";
 
 interface InputProps extends TamaguiInputProps {
   name: string;
@@ -31,11 +31,12 @@ export function Input({
   placeholder,
   id,
   icon: Icon,
+  maxLength,
   ...props
 }: InputProps) {
   const { control } = useFormContext();
   const {
-    field,
+    field: { value, onChange, onBlur, ref },
     fieldState: { error },
   } = useController({
     name,
@@ -72,11 +73,11 @@ export function Input({
           <BaseInput
             id={id}
             placeholder={placeholder}
-            value={field.value}
-            onChangeText={field.onChange}
+            value={value}
+            onChangeText={onChange}
             paddingHorizontal={Icon ? "$8" : "$3.5"}
             onBlur={() => {
-              field.onBlur();
+              onBlur();
               setIsFocused(false);
             }}
             onFocus={() => setIsFocused(true)}
@@ -90,19 +91,24 @@ export function Input({
             hoverStyle={{
               borderColor: error ? "$red10Dark" : undefined,
             }}
-            ref={field.ref}
+            ref={ref}
             disabledStyle={{ color: "$placeholderColor" }}
             {...props}
           />
         </Stack>
       </YStack>
-      <Text
-        color={error ? "$red10Light" : "$colorTransparent"}
-        fontSize="$2"
-        marginTop="$2"
-      >
-        {error ? error?.message : ""}
-      </Text>
+      <XStack ai="center" marginTop="$2">
+        <Text
+          flex={1}
+          color={error ? "$red10Light" : "$colorTransparent"}
+          fontSize="$2"
+        >
+          {error ? error?.message : ""}
+        </Text>
+        {maxLength && (
+          <MaxLength length={value?.length || 0} maxLength={maxLength} />
+        )}
+      </XStack>
     </YStack>
   );
 }

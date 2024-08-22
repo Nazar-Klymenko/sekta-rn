@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { queryUserByUsername } from "@/api/firestore";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
@@ -19,6 +19,7 @@ import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 import { Info } from "@tamagui/lucide-icons";
+import { useQueryClient } from "@tanstack/react-query";
 
 const usernameBridgeSchema = yup.object().shape({
   username: usernameSchema,
@@ -26,15 +27,21 @@ const usernameBridgeSchema = yup.object().shape({
 
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
+const TEMP_USERNAME_KEY = "temporaryUsername";
+
 export default function UsernameBridgeScreen() {
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const { returnTo } = useLocalSearchParams<{
+    returnTo?: string;
+  }>();
 
   const methods = useForm<FormValues>({
       resolver: yupResolver(usernameBridgeSchema),
       shouldFocusError: true,
       defaultValues: {
-        username: "",
+        username:
+          (queryClient.getQueryData([TEMP_USERNAME_KEY]) as string) || "",
       },
     }),
     { handleSubmit, setValue, setError, watch } = methods;
@@ -47,6 +54,12 @@ export default function UsernameBridgeScreen() {
     isError,
     error,
   } = useUsernameAvailability(username);
+
+  useEffect(() => {
+    return () => {
+      queryClient.setQueryData([TEMP_USERNAME_KEY], username);
+    };
+  }, [username, queryClient]);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -63,7 +76,6 @@ export default function UsernameBridgeScreen() {
         setError("username", { message: "Username is taken" });
       }
     } catch (err) {
-      console.error("Error checking username availability:", err);
       setError("username", { message: "Error checking username availability" });
     }
   };
@@ -88,6 +100,7 @@ export default function UsernameBridgeScreen() {
             placeholder="Username"
             autoCapitalize="none"
             inputMode="text"
+            maxLength={20}
           />
           <XStack gap="$2">
             <Info color="$gray10Light" size={16} />

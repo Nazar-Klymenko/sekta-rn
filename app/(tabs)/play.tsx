@@ -51,7 +51,10 @@ const playSchema = yup.object({
   youtube: yup.string().optional(),
   instagram: yup.string().optional(),
   facebook: yup.string().optional(),
-  additionalInfo: yup.string().optional(),
+  additionalInfo: yup
+    .string()
+    .optional()
+    .max(1000, "Please keep it shorter 👽"),
 });
 
 type FormValues = yup.InferType<typeof playSchema>;
@@ -181,6 +184,7 @@ export default function PlayScreen() {
             placeholder="Any additional information you'd like to share..."
             rows={6}
             verticalAlign="top"
+            maxLength={1000}
           />
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
