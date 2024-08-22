@@ -12,6 +12,10 @@ export const usernameSchema = yup
   .required("Username is required")
   .min(3, "Username must be at least 3 characters")
   .max(20, "Username must be 20 characters at most")
+  .matches(
+    /^[a-z0-9_]+$/,
+    "Username can only contain letters, numbers, and underscores",
+  )
   .lowercase()
   .trim();
 
