@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { StyleSheet, Pressable, Platform, View } from "react-native";
+import { StyleSheet, Pressable, Platform, View, TextStyle } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -54,7 +54,7 @@ export function HelloWave() {
 
   return (
     <Pressable onPress={handleInteraction}>
-      <Animated.View ref={viewRef} style={animatedStyle}>
+      <Animated.View ref={viewRef} style={[styles.container, animatedStyle]}>
         <ThemedText style={styles.text}>👋</ThemedText>
       </Animated.View>
     </Pressable>
@@ -62,9 +62,15 @@ export function HelloWave() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 48,
+    height: 48,
+  },
   text: {
     fontSize: 40,
-    lineHeight: 32,
-    marginTop: 6,
-  },
+    lineHeight: 48,
+    ...(Platform.OS === "android" ? { includeFontPadding: false } : {}),
+  } as TextStyle,
 });
