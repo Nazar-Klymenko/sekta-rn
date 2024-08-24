@@ -43,6 +43,7 @@ export default function UsernameBridgeScreen() {
         username:
           (queryClient.getQueryData([TEMP_USERNAME_KEY]) as string) || "",
       },
+      mode: "onBlur",
     }),
     { handleSubmit, setValue, setError, watch } = methods;
 

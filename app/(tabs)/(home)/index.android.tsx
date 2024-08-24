@@ -31,6 +31,7 @@ export default function HomeScreen() {
     defaultValues: {
       searchQuery: "",
     },
+    mode: "onBlur",
   });
 
   const {

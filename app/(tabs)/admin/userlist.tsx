@@ -68,6 +68,7 @@ export default function UserListScreen() {
     defaultValues: {
       searchQuery: "",
     },
+    mode: "onBlur",
   });
 
   const filteredUsers = useMemo(() => {

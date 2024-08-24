@@ -41,6 +41,7 @@ export default function LoginScreen() {
       email: "",
       password: "",
     },
+    mode: "onBlur",
   });
 
   const onSubmit = async (data: FormValues) => {

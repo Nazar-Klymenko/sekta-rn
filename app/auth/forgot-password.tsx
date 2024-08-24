@@ -36,6 +36,7 @@ export default function ForgotPasswordScreen() {
     defaultValues: {
       email: "",
     },
+    mode: "onBlur",
   });
 
   const sendPasswordResetMutation = useSendPasswordReset();

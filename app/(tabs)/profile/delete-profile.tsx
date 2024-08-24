@@ -48,6 +48,7 @@ export default function DeleteAccountScreen() {
     defaultValues: {
       password: "",
     },
+    mode: "onBlur",
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -78,10 +79,10 @@ export default function DeleteAccountScreen() {
     <AuthGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
+          <Text fontSize={40} fontWeight="bold" textAlign="center">
             Delete Account
           </Text>
-          <Text fontSize="$4" color="$gray10Light">
+          <Text color="$gray10Light">
             Warning: This action is irreversible. All your data will be
             permanently deleted.
           </Text>
