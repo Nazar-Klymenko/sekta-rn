@@ -11,7 +11,7 @@ import {
   signOut,
   signUp,
 } from "@/api/auth";
-import { updateUserProfile } from "@/api/firestore";
+import { updateUsername, updateUserProfile } from "@/api/firestore";
 import { UserData } from "@/models/UserData";
 
 import { useAuth } from "./useAuth";
@@ -70,15 +70,38 @@ export const useSendPasswordReset = () => {
   });
 };
 
-export const useUpdateProfile = () => {
+export const useUpdateUsername = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (profileData: Partial<UserData>) =>
-      updateUserProfile(user?.uid || "", profileData),
+    mutationFn: async (newUsername: string) => {
+      if (!user?.uid) throw new Error("User not authenticated");
+      await updateUsername(newUsername);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userData"] });
+    },
+  });
+};
+
+export const useUpdateEmail = () => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      profileData,
+      currentPassword,
+    }: {
+      profileData: Partial<UserData>;
+      currentPassword?: string;
+    }) => updateUserProfile(user!, profileData, currentPassword),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userData"] });
+      if (user) {
+        user.reload(); // Refresh the user object to get updated info
+      }
     },
   });
 };

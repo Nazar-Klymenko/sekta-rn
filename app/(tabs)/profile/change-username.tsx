@@ -1,38 +1,25 @@
+import { useEffect, useState } from "react";
 import { useToastController } from "@tamagui/toast";
-
-import React, { useEffect } from "react";
-
 import { useAuth } from "@/hooks/useAuth";
-import { useUpdateProfile } from "@/hooks/useAuthOperations";
+import { useUpdateUsername } from "@/hooks/useAuthOperations";
 import { useUserData } from "@/hooks/useUserData";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
-
-import { FormProvider, useForm } from "react-hook-form";
-import { Spinner, Text, XStack, YStack, useTheme } from "tamagui";
-
+import { useForm } from "react-hook-form";
+import { Text, XStack, YStack, Button } from "tamagui";
 import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { MenuButton } from "@/components/buttons/MenuButton";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
+import { usernameSchema } from "@/utils/validationSchemas";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { Info } from "@tamagui/lucide-icons";
 
 const profileUpdateSchema = yup.object().shape({
-  email: yup.string().required("Email is required").email("Invalid email"),
-  username: yup
-    .string()
-    .required("Username is required")
-    .min(3, "Username must be at least 3 characters")
-    .max(18, "Username must be at most 18 characters")
-    .lowercase()
-    .trim(),
-  fullName: yup.string(),
+  username: usernameSchema,
 });
 
 type FormValues = yup.InferType<typeof profileUpdateSchema>;
@@ -40,49 +27,42 @@ type FormValues = yup.InferType<typeof profileUpdateSchema>;
 export default function UpdateProfileScreen() {
   const { user } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
-  const updateProfileMutation = useUpdateProfile();
+  const updateUsernameMutation = useUpdateUsername();
   const toast = useToastController();
 
   const methods = useForm({
-      resolver: yupResolver(profileUpdateSchema),
-      defaultValues: {
-        email: userData?.email || "",
-        username: userData?.username || "",
-        fullName: userData?.fullName || "",
-      },
-    }),
-    {
-      handleSubmit,
-      reset,
-      watch,
-      setError,
-      formState: { isDirty },
-    } = methods;
+    resolver: yupResolver(profileUpdateSchema),
+    defaultValues: {
+      username: userData?.username || "",
+    },
+    mode: "onBlur",
+  });
+
+  const {
+    handleSubmit,
+    reset,
+    watch,
+    setError,
+    formState: { isDirty, dirtyFields },
+  } = methods;
+  const username = watch("username");
 
   useEffect(() => {
-    if (userData) {
+    if (user && userData) {
       reset({
-        email: userData.email || "",
         username: userData.username || "",
-        fullName: userData.fullName || "",
       });
     }
-  }, [userData, reset]);
-
-  const username = watch("username");
+  }, [user, userData, reset]);
   const {
     refetch: checkUsernameAvailability,
-    data: isUsernameAvailable,
     isLoading: isUsernameCheckLoading,
-    isError: isUsernameCheckError,
-    error: usernameCheckError,
   } = useUsernameAvailability(username);
-
   const onSubmit = async (data: FormValues) => {
     try {
       const result = await checkUsernameAvailability();
       if (result.data) {
-        updateProfileMutation.mutate(data, {
+        updateUsernameMutation.mutate(data.username, {
           onSuccess: () => {
             toast.show("Profile updated successfully", {
               message: "Your profile information has been updated.",
@@ -105,7 +85,6 @@ export default function UpdateProfileScreen() {
         });
       }
     } catch (err) {
-      console.error("Error checking username availability:", err);
       setError("username", { message: "Error checking username availability" });
       toast.show("Error", {
         message: "Error checking username availability.",
@@ -115,57 +94,42 @@ export default function UpdateProfileScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-
-  if (isError) {
-    return <Text>Error loading user data</Text>;
-  }
+  if (isError) return <Text>Error loading user data</Text>;
 
   return (
     <AuthGuard>
       <PageContainer formContainer>
+        <Text fontSize={40} fontWeight="bold">
+          Change your username
+        </Text>
         <Form methods={methods}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
-            Update Profile Information
-          </Text>
           <Input
-            id="update-email"
-            name="email"
-            label="Email"
-            placeholder="Email"
-          />
-          <Input
-            id="update-username"
+            id="username"
             name="username"
             label="Username"
             placeholder="Username"
+            autoCapitalize="none"
+            inputMode="text"
+            maxLength={20}
           />
-          <Input
-            id="full-name"
-            name="fullName"
-            label="Full Name"
-            placeholder="Full name"
-          />
-          <XStack
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <YStack>
-              <Text>Verify email</Text>
-              <Text fontSize="$4" color="$gray10Light">
-                {user?.email}
-              </Text>
-            </YStack>
-            <MenuButton
-              disabled={user?.emailVerified}
-              text={user?.emailVerified ? "Verified" : "Send verification link"}
-            />
+          <XStack gap="$2">
+            <Info color="$gray10Light" size={16} />
+            <Text fontSize="$3" color="$gray10Light">
+              Your new username must be 3-20 characters long and can contain
+              letters, numbers, and underscores.
+            </Text>
           </XStack>
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}
-            text="Update Profile"
-            isLoading={updateProfileMutation.isPending}
-            disabled={updateProfileMutation.isPending || !isDirty}
+            text="Update Username"
+            isLoading={
+              updateUsernameMutation.isPending || isUsernameCheckLoading
+            }
+            disabled={
+              !isDirty ||
+              updateUsernameMutation.isPending ||
+              isUsernameCheckLoading
+            }
           />
         </Form>
       </PageContainer>

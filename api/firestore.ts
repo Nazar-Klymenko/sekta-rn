@@ -8,10 +8,20 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { UserData } from "@/models/UserData";
 
-import { db } from "../services/firebase";
+import { auth, db } from "@/services/firebase";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendEmailVerification,
+  updateEmail,
+  User,
+  verifyBeforeUpdateEmail,
+  signOut as firebaseSignOut,
+} from "firebase/auth";
 
 export const getUserData = async (userId: string): Promise<UserData | null> => {
   const userDoc = await getDoc(doc(db, "users", userId));
@@ -42,10 +52,45 @@ export const queryUserByUsername = async (username: string) => {
     return false;
   }
 };
+export const updateUsername = async (newUsername: string) => {
+  const functions = getFunctions();
+  const updateUsernameFunc = httpsCallable(functions, "updateUsername");
+  return await updateUsernameFunc({ username: newUsername });
+};
+
 export const updateUserProfile = async (
-  userId: string,
+  user: User,
   profileData: Partial<UserData>,
-): Promise<void> => {
-  const userRef = doc(db, "users", userId);
-  await updateDoc(userRef, profileData);
+  currentPassword?: string,
+): Promise<{ message: string }> => {
+  const updates: Partial<UserData> = { ...profileData };
+
+  if (profileData.email && profileData.email !== user.email) {
+    if (!currentPassword) {
+      throw new Error("Current password is required to change email");
+    }
+
+    // Re-authenticate user
+    const credential = EmailAuthProvider.credential(
+      user.email!,
+      currentPassword,
+    );
+    await reauthenticateWithCredential(user, credential);
+
+    // Send verification email to the new address
+    await verifyBeforeUpdateEmail(user, profileData.email);
+    await firebaseSignOut(auth);
+    delete updates.email; // Remove email from Firestore updates
+    return {
+      message:
+        "Verification email sent to new address. Please verify before logging in again.",
+    };
+  }
+
+  if (Object.keys(updates).length > 0) {
+    const userRef = doc(db, "users", user.uid);
+    await updateDoc(userRef, updates);
+  }
+
+  return { message: "Profile updated successfully" };
 };

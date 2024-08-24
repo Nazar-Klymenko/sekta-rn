@@ -11,7 +11,9 @@ import {
   Sun,
   Trash2,
   User,
+  User2,
   UserCircle,
+  UserSquare,
 } from "@tamagui/lucide-icons";
 
 import React from "react";
@@ -65,6 +67,7 @@ export default function ProfileScreen() {
       defaultValues: {
         selectLanguage: "en",
       },
+      mode: "onBlur",
     }),
     { control, handleSubmit, reset } = methods;
 
@@ -100,10 +103,16 @@ export default function ProfileScreen() {
             <YStack gap="$2">
               <SectionTitle>Account</SectionTitle>
               <MenuItem
-                title="Profile Information"
-                onPress={() => router.push("/profile/profile-information")}
-                icon={UserCircle}
+                title="Username"
+                onPress={() => router.push("/profile/change-username")}
+                icon={User2}
               />
+              <MenuItem
+                title="Email"
+                onPress={() => router.push("/profile/change-email")}
+                icon={Mail}
+              />
+
               <MenuItem
                 title="Change Password"
                 onPress={() => router.push("/profile/change-password")}
