@@ -43,7 +43,7 @@ export default function UsernameBridgeScreen() {
         username:
           (queryClient.getQueryData([TEMP_USERNAME_KEY]) as string) || "",
       },
-      mode: "onBlur",
+      mode: "onTouched",
     }),
     { handleSubmit, setValue, setError, watch } = methods;
 
@@ -111,7 +111,7 @@ export default function UsernameBridgeScreen() {
             </Text>
           </XStack>
           <PrimaryButton
-            text="Next"
+            text="Continue"
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
             disabled={isLoading}

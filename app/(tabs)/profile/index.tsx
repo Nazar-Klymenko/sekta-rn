@@ -1,5 +1,6 @@
 import {
   Bell,
+  CheckCircle,
   ChevronRight,
   FileText,
   Globe,
@@ -67,7 +68,8 @@ export default function ProfileScreen() {
       defaultValues: {
         selectLanguage: "en",
       },
-      mode: "onBlur",
+
+      mode: "onTouched",
     }),
     { control, handleSubmit, reset } = methods;
 
@@ -103,16 +105,20 @@ export default function ProfileScreen() {
             <YStack gap="$2">
               <SectionTitle>Account</SectionTitle>
               <MenuItem
-                title="Username"
+                title="Change username"
                 onPress={() => router.push("/profile/change-username")}
                 icon={User2}
               />
               <MenuItem
-                title="Email"
+                title="Change email"
                 onPress={() => router.push("/profile/change-email")}
                 icon={Mail}
               />
-
+              <MenuItem
+                title="Verify Email"
+                onPress={() => {}}
+                icon={CheckCircle} // or any other appropriate icon
+              />
               <MenuItem
                 title="Change Password"
                 onPress={() => router.push("/profile/change-password")}

@@ -48,7 +48,7 @@ export default function DeleteAccountScreen() {
     defaultValues: {
       password: "",
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const onSubmit = async (data: FormValues) => {

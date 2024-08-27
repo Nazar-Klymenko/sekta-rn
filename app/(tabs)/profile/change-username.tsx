@@ -35,7 +35,7 @@ export default function UpdateProfileScreen() {
     defaultValues: {
       username: userData?.username || "",
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const {

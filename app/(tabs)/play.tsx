@@ -102,7 +102,7 @@ export default function PlayScreen() {
       facebook: "",
       additionalInfo: "",
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const onSubmit = async (data: FormValues) => {

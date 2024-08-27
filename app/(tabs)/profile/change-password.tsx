@@ -42,7 +42,7 @@ export default function ChangePasswordScreen() {
         newPassword: "",
         confirmPassword: "",
       },
-      mode: "onBlur",
+      mode: "onTouched",
     }),
     { watch, reset, handleSubmit } = methods;
 

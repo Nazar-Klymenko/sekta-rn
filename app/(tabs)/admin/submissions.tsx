@@ -62,7 +62,7 @@ export default function AdminPlaySubmissions() {
     defaultValues: {
       searchQuery: "",
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const filteredSubmissions = useMemo(() => {
