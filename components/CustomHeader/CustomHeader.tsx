@@ -13,6 +13,7 @@ import {
   X,
 } from "@tamagui/lucide-icons";
 import { User as FirebaseUser } from "firebase/auth";
+import { signOut } from "@/api/auth";
 
 import React, { useEffect, useState } from "react";
 
@@ -30,7 +31,6 @@ import {
   AnimatePresence,
 } from "tamagui";
 
-import { signOut } from "@/api/auth";
 import { useDisableScroll } from "@/hooks/useDisableScroll";
 import { Tooltip } from "../Tooltip";
 import { NavLink, NavLinkButton } from "./NavLink";
@@ -60,6 +60,11 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
       icon: <Heart size={24} color="$color" />,
       label: "Favorites",
     },
+    {
+      href: "/residents",
+      icon: <BoomBox size={24} color="$color" />,
+      label: "Residents",
+    },
     { href: "/play", icon: <Play size={24} color="$color" />, label: "Play" },
     ...(userData?.isAdmin
       ? [
@@ -70,11 +75,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
           },
         ]
       : []),
-    {
-      href: "/residents",
-      icon: <BoomBox size={24} color="$color" />,
-      label: "Residents",
-    },
   ];
 
   const handleSignOut = async () => {
@@ -229,7 +229,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
 
               {user ? (
                 <NavLinkButton
-                  onPress={handleSignOut}
+                  onPress={signOut}
                   icon={<LogOut size={24} color="$color" />}
                 >
                   Sign Out
