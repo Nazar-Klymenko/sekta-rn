@@ -192,18 +192,23 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   </Text>
 );
 
-const ResponsiveStack = styled(XStack, {
+const ResponsiveStack = styled(Button, {
   hoverStyle: {
     backgroundColor: "$backgroundHover",
-    cursor: "pointer",
   },
   pressStyle: {
     backgroundColor: "$backgroundHover",
   },
   padding: "$4",
+  minHeight: 54,
   borderRadius: "$2",
   justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  backgroundColor: "transparent",
+  borderWidth: 0,
 });
+
 const MenuItem = ({
   title,
   onPress,
@@ -214,7 +219,7 @@ const MenuItem = ({
   icon: React.ElementType;
 }) => (
   <ResponsiveStack onPress={onPress}>
-    <XStack alignItems="center" gap="$3">
+    <XStack flex={1} alignItems="center" gap="$3">
       <Icon size="$1" color="$gray10Light" />
       <Text fontSize="$4">{title}</Text>
     </XStack>
