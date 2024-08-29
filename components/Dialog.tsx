@@ -13,6 +13,7 @@ import {
 interface DialogProps extends TamaguiDialogProps {
   id: string;
   title: string;
+  description?: string;
   children: React.ReactNode;
 }
 
@@ -22,9 +23,17 @@ const StyledDialogContent = styled(TamaguiDialog.Content, {
   padding: "$4",
   maxWidth: 500,
   width: "90%",
+  borderColor: "$borderColorPress",
+  borderWidth: 1,
 });
 
-export function Dialog({ title, children, id, ...props }: DialogProps) {
+export function Dialog({
+  title,
+  children,
+  id,
+  description,
+  ...props
+}: DialogProps) {
   return (
     <TamaguiDialog modal {...props}>
       <Adapt when="sm" platform="touch">
@@ -46,6 +55,7 @@ export function Dialog({ title, children, id, ...props }: DialogProps) {
         <TamaguiDialog.Overlay />
         <StyledDialogContent key={id}>
           <TamaguiDialog.Title>{title}</TamaguiDialog.Title>
+          <TamaguiDialog.Description>{description}</TamaguiDialog.Description>
           <YStack gap="$4">{children}</YStack>
         </StyledDialogContent>
       </TamaguiDialog.Portal>

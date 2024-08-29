@@ -7,15 +7,7 @@ import { useDeleteAccount } from "@/hooks/useAuthOperations";
 
 import { useRouter } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
-import {
-  Button,
-  Dialog,
-  Paragraph,
-  Text,
-  XStack,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { Button, Paragraph, Text, XStack, YStack, useTheme } from "tamagui";
 
 import * as yup from "yup";
 
@@ -27,6 +19,8 @@ import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { Dialog } from "@/components/Dialog";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 
 const deleteAccountSchema = yup.object().shape({
   password: yup
@@ -44,20 +38,16 @@ export default function DeleteAccountScreen() {
   const deleteAccountMutation = useDeleteAccount();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const methods = useForm({
-    resolver: yupResolver(deleteAccountSchema),
-    defaultValues: {
-      password: "",
-    },
-    mode: "onTouched",
-  });
+      resolver: yupResolver(deleteAccountSchema),
+      defaultValues: {
+        password: "",
+      },
+      mode: "onTouched",
+    }),
+    { setError } = methods;
 
   const onSubmit = async (data: FormValues) => {
-    setShowConfirmDialog(true);
-  };
-
-  const handleDeleteAccount = () => {
-    const password = methods.getValues("password");
-    deleteAccountMutation.mutate(password, {
+    deleteAccountMutation.mutate(data.password, {
       onSuccess: () => {
         toast.show("Account deleted", {
           message: "Your account has been successfully deleted.",
@@ -66,11 +56,7 @@ export default function DeleteAccountScreen() {
         router.replace("/(tabs)/(home)/");
       },
       onError: (error) => {
-        toast.show("Delete account failed", {
-          message: error instanceof Error ? error.message : "An error occurred",
-          variant: "error",
-        });
-        setShowConfirmDialog(false);
+        setError("password", { message: "Wrong password" });
       },
     });
   };
@@ -78,93 +64,64 @@ export default function DeleteAccountScreen() {
   return (
     <AuthGuard>
       <PageContainer formContainer>
-        <Form methods={methods}>
-          <Text fontSize={40} fontWeight="bold" textAlign="center">
-            Delete Account
-          </Text>
-          <Text color="$gray10Light">
-            Warning: This action is irreversible. All your data will be
-            permanently deleted.
-          </Text>
-          <PasswordInput
-            id="delete-account-password"
-            name="password"
-            label="Confirm Password"
-            placeholder="Enter your password"
-            secureTextEntry
-          />
-          <PrimaryButton
-            onPress={methods.handleSubmit(onSubmit)}
-            text="Delete Account"
-            isLoading={deleteAccountMutation.isPending}
-            disabled={deleteAccountMutation.isPending}
-          />
-        </Form>
+        <Text fontSize={40} fontWeight="bold" textAlign="center">
+          Delete Account
+        </Text>
+        <Text color="$gray10Light">
+          Warning: This action is irreversible. All data will be permanently
+          deleted.
+        </Text>
+
+        <SecondaryButton
+          text="Delete Account"
+          isLoading={deleteAccountMutation.isPending}
+          disabled={deleteAccountMutation.isPending}
+          onPress={() => {
+            setShowConfirmDialog(true);
+          }}
+        />
 
         <Dialog
           modal
           open={showConfirmDialog}
           onOpenChange={setShowConfirmDialog}
+          title="Delete Account"
+          description="All your data will be permanently deleted. This action cannot be undone."
+          id="delete-profile-dialog"
         >
-          <Dialog.Portal padding="$4">
-            <Dialog.Overlay
-              key="overlay"
-              animation="quickest"
-              opacity={0.5}
-              enterStyle={{ opacity: 0 }}
-              exitStyle={{ opacity: 0 }}
+          <Form methods={methods}>
+            <PasswordInput
+              id="delete-account-password"
+              name="password"
+              label="Confirm Password"
+              placeholder="Enter your password"
+              secureTextEntry
             />
-            <Dialog.Content
-              key="content"
-              borderWidth={1}
-              borderColor="$borderColor"
-              animation={[
-                "quick",
-                {
-                  opacity: {
-                    overshootClamping: true,
-                  },
-                },
-              ]}
-              enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-              exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-              x={0}
-              scale={1}
-              opacity={1}
-              y={0}
-              gap="$4"
-            >
-              <Dialog.Title>Are you sure?</Dialog.Title>
-              <Dialog.Description>
-                All your data will be permanently deleted. This action cannot be
-                undone.
-              </Dialog.Description>
-              <YStack gap="$4" justifyContent="flex-end">
-                <PrimaryButton
-                  theme="active"
-                  onPress={handleDeleteAccount}
-                  aria-label="Delete Account"
-                  isLoading={deleteAccountMutation.isPending}
-                  disabled={deleteAccountMutation.isPending}
-                  text="Delete Account"
-                  backgroundColor={theme.red10Light.get()}
-                  hoverStyle={{
-                    backgroundColor: theme.red10Light.get(),
-                    opacity: 0.9,
-                  }}
-                  pressStyle={{
-                    backgroundColor: theme.red10Light.get(),
-                    opacity: 0.9,
-                  }}
-                />
-                <Dialog.Close asChild>
-                  <Button theme="alt1" aria-label="Close">
-                    Cancel
-                  </Button>
-                </Dialog.Close>
-              </YStack>
-            </Dialog.Content>
-          </Dialog.Portal>
+            <SecondaryButton
+              aria-label="Delete Account"
+              isLoading={deleteAccountMutation.isPending}
+              disabled={deleteAccountMutation.isPending}
+              text="Delete Account"
+              backgroundColor={theme.red10Light.get()}
+              hoverStyle={{
+                backgroundColor: theme.red10Light.get(),
+                opacity: 0.9,
+              }}
+              pressStyle={{
+                backgroundColor: theme.red10Light.get(),
+                opacity: 0.9,
+              }}
+              onPress={methods.handleSubmit(onSubmit)}
+            />
+            <SecondaryButton
+              theme="alt1"
+              aria-label="Close"
+              text="Cancel"
+              onPress={() => {
+                setShowConfirmDialog(false);
+              }}
+            />
+          </Form>
         </Dialog>
       </PageContainer>
     </AuthGuard>

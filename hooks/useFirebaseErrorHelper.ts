@@ -32,37 +32,29 @@ const errorMessages: ErrorMessages = {
 export function useFirebaseErrorHandler() {
   const toast = useToastController();
 
-  const handleFirebaseError = (error: unknown) => {
+  const handleFirebaseError = (error: unknown, showToast: boolean = true) => {
+    let errorMessage = "An unexpected error occurred. Please try again.";
+
     if (error instanceof FirebaseError) {
       const errorCode = error.code;
-      const errorMessage =
-        errorMessages[errorCode] ||
-        "An unexpected error occurred. Please try again.";
+      errorMessage = errorMessages[errorCode] || errorMessage;
+      console.error(`Firebase Error (${errorCode}):`, error.message);
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
+      console.error("Non-Firebase Error:", error.message);
+    } else {
+      console.error("Unknown Error:", error);
+    }
 
+    if (showToast) {
       toast.show("Error", {
         message: errorMessage,
         variant: "error",
         duration: 5000,
       });
-
-      console.error(`Firebase Error (${errorCode}):`, error.message);
-    } else if (error instanceof Error) {
-      toast.show("Error", {
-        message: error.message,
-        variant: "error",
-        duration: 5000,
-      });
-
-      console.error("Non-Firebase Error:", error.message);
-    } else {
-      toast.show("Error", {
-        message: "An unexpected error occurred. Please try again.",
-        variant: "error",
-        duration: 5000,
-      });
-
-      console.error("Unknown Error:", error);
     }
+
+    return errorMessage;
   };
 
   return handleFirebaseError;
