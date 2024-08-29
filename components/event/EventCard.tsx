@@ -173,6 +173,13 @@ const CardContainer = styled(YStack, {
   alignSelf: "center",
   width: "100%",
   cursor: "pointer",
+  animation: "quickest",
+  borderWidth: 1,
+  borderColor: "$borderColor",
+  hoverStyle: {
+    transform: [{ scale: 1.0 }, { translateY: -3 }],
+    borderColor: "$borderColorHover",
+  },
 });
 
 const DateContainer = styled(XStack, {

@@ -76,6 +76,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="residents"
+        options={{
+          headerShown: false,
+          title: "Residents",
+          tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",

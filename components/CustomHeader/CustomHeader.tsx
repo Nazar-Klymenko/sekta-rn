@@ -9,6 +9,7 @@ import {
   Settings,
   User,
   UserRoundCheck,
+  BoomBox,
   X,
 } from "@tamagui/lucide-icons";
 import { User as FirebaseUser } from "firebase/auth";
@@ -69,6 +70,11 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
           },
         ]
       : []),
+    {
+      href: "/residents",
+      icon: <BoomBox size={24} color="$color" />,
+      label: "Residents",
+    },
   ];
 
   const handleSignOut = async () => {
