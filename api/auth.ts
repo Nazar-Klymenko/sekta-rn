@@ -17,6 +17,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { sendEmailVerification } from "firebase/auth";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
@@ -109,4 +110,14 @@ export const fetchUsers = async (): Promise<UserData[]> => {
   return snapshot.docs.map(
     (doc) => ({ id: doc.id, ...doc.data() }) as UserData,
   );
+};
+
+export const sendVerificationEmail = async () => {
+  const user = auth.currentUser;
+  if (user && !user.emailVerified) {
+    await sendEmailVerification(user);
+    return "Verification email sent successfully";
+  } else {
+    throw new Error("No user found or email already verified");
+  }
 };

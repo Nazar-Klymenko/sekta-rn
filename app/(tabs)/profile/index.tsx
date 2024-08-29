@@ -51,6 +51,7 @@ import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Form } from "@/components/form/Form";
 import { Select } from "@/components/form/Select";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { VerifyEmail } from "@/components/VerifyEmail";
 
 const schema = yup.object().shape({
   selectLanguage: yup.string().oneOf(["en", "pl", "ru", "ua"]).default("en"),
@@ -61,7 +62,6 @@ export default function ProfileScreen() {
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
 
   const { themeColor, toggleTheme } = useThemeContext();
-  const isDarkMode = themeColor === "dark";
   const router = useRouter();
   const methods = useForm<FormValues>({
       resolver: yupResolver(schema),
@@ -97,7 +97,7 @@ export default function ProfileScreen() {
             {userData?.email || user?.email || "Not logged in"}
           </Text>
         </YStack>
-
+        <VerifyEmail />
         <Separator />
 
         {isLoggedIn && (
@@ -114,11 +114,7 @@ export default function ProfileScreen() {
                 onPress={() => router.push("/profile/change-email")}
                 icon={Mail}
               />
-              <MenuItem
-                title="Verify Email"
-                onPress={() => {}}
-                icon={CheckCircle} // or any other appropriate icon
-              />
+
               <MenuItem
                 title="Change Password"
                 onPress={() => router.push("/profile/change-password")}
