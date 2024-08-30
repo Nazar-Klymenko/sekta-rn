@@ -30,13 +30,15 @@ const Row = styled(ThemeableStack, {
   flexDirection: "row",
   borderRadius: "$4",
   marginVertical: 2,
-
+  display: "flex",
+  alignItems: "center",
   hoverStyle: {
     backgroundColor: "$backgroundHover",
   },
   variants: {
     isHeader: {
       true: {
+        height: 54,
         borderRadius: "$4",
         backgroundColor: "$backgroundHover",
         hoverStyle: {

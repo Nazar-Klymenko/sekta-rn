@@ -29,19 +29,17 @@ const columns: Column[] = [
   {
     header: "Agree ToS",
     accessor: "agreeTos",
-    render: (value: boolean) =>
-      value ? <Check /> : <Minus color="$red9Light" />,
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
   {
     header: "Agree Email",
     accessor: "agreeEmail",
-    render: (value: boolean) =>
-      value ? <Check /> : <Minus color="$red9Light" />,
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
   {
     header: "Is Admin",
     accessor: "isAdmin",
-    render: (value: boolean) => (value ? <Check /> : <X color="$red9Light" />),
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
 ];
 
@@ -116,7 +114,9 @@ export default function UserListScreen() {
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell key={column.accessor}>
-                  <Text fontSize={"$3"}>{column.header}</Text>
+                  <Text fontSize={"$3"} fontWeight={"bold"}>
+                    {column.header}
+                  </Text>
                 </Table.HeaderCell>
               ))}
             </Table.Row>
