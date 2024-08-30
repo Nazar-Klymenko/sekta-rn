@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "tamagui/linear-gradient";
 
 const StyledCard = styled(Card, {
+  maxWidth: "100%",
   width: 400,
   height: 500,
   borderRadius: "$4",
@@ -57,10 +58,6 @@ export const ResidentCard: React.FC<ResidentCardProps> = ({ resident }) => {
   return (
     <StyledCard
       elevate
-      animation="bouncy"
-      scale={0.95}
-      hoverStyle={{ scale: 1 }}
-      pressStyle={{ scale: 0.9 }}
       onPress={() => router.push(`/residents/${resident.id}`)}
     >
       <ImageContainer>

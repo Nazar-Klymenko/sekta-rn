@@ -1,59 +1,54 @@
-import {
-  AudioLines,
-  Facebook,
-  Instagram,
-  Type as LucideIcon,
-  Mail,
-  MapPin,
-  Phone,
-  Square,
-  Youtube,
-} from "@tamagui/lucide-icons";
-import { useToastController } from "@tamagui/toast";
-
 import React from "react";
-
-import { Platform } from "react-native";
-
-import { usePlaySubmission } from "@/hooks/usePlay";
-
-import { useForm } from "react-hook-form";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Card,
-  Image,
-  ScrollView,
-  Separator,
-  Text,
-  XStack,
-  YStack,
-  useTheme,
-  useWindowDimensions,
-} from "tamagui";
-
-import { LinearGradient } from "tamagui/linear-gradient";
-
-import * as yup from "yup";
-
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import { emailSchema } from "@/utils/validationSchemas";
+import { useResidents } from "@/hooks/useResidents";
+import { ResidentCard } from "@/components/ResidentCard";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { Text, useMedia } from "tamagui";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { FlatList, View } from "react-native";
+import { ResidentData } from "@/models/ResidentData";
 
-export default function PlayScreen() {
-  const theme = useTheme();
-  const toast = useToastController();
-  const playSubmission = usePlaySubmission();
+export default function ResidentScreen() {
+  const { data: residents, isLoading, error } = useResidents();
+  const media = useMedia();
+
+  if (isLoading) return <FullPageLoading />;
+  if (error) {
+    return (
+      <PageContainer>
+        <Text>Error loading residents: {error.message}</Text>
+      </PageContainer>
+    );
+  }
+
+  const renderItem = ({ item: resident }: { item: ResidentData }) => (
+    <View style={{ flex: 1, margin: 8 }}>
+      <ResidentCard resident={resident} />
+    </View>
+  );
 
   return (
-    <PageContainer>
-      <Text fontSize={40} fontWeight="bold" textAlign="center">
-        Residents
-      </Text>
+    <PageContainer scrollable={false}>
+      <FlatList
+        style={{ flex: 1, width: "100%", paddingHorizontal: 16 }}
+        data={residents}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={media.gtMd ? 3 : media.gtSm ? 2 : 1}
+        columnWrapperStyle={
+          media.gtSm ? { justifyContent: "space-between" } : undefined
+        }
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        ListHeaderComponent={
+          <Text
+            fontSize={40}
+            fontWeight="bold"
+            textAlign="center"
+            marginBottom="$4"
+          >
+            Residents
+          </Text>
+        }
+      />
     </PageContainer>
   );
 }

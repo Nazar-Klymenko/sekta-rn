@@ -229,13 +229,17 @@ const EnhancedHeroSection = () => {
         <Animated.View entering={FadeInDown.duration(400)}>
           <YStack gap="$4" alignItems="center">
             <Text
-              fontSize={48}
+              fontSize={72}
               fontWeight="bold"
               color="white"
               textAlign="center"
               textShadowColor="rgba(0,0,0,0.75)"
               textShadowOffset={{ width: -1, height: 1 }}
               textShadowRadius={10}
+              style={{
+                textTransform: "uppercase",
+                letterSpacing: -2,
+              }}
             >
               Play at Our Venue
             </Text>
