@@ -29,6 +29,7 @@ import {
   Stack,
   StackProps,
   AnimatePresence,
+  Image,
 } from "tamagui";
 
 import { useDisableScroll } from "@/hooks/useDisableScroll";
@@ -109,7 +110,15 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
             width="100%"
           >
             <Link href="/">
-              <LogoText>{title}</LogoText>
+              <XStack alignItems="center">
+                <Image
+                  source={require("@/assets/images/logo.png")}
+                  alt="Logo"
+                  height={60}
+                  width={60}
+                />
+                <LogoText>{title}</LogoText>
+              </XStack>
             </Link>
 
             {!isSmallScreen && (
