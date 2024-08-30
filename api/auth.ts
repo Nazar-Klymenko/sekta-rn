@@ -18,9 +18,12 @@ import {
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { sendEmailVerification } from "firebase/auth";
+import * as SecureStore from "expo-secure-store";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
+
+const AUTH_TOKEN_KEY = "firebaseAuthToken";
 
 export const signUp = async (
   email: string,
@@ -45,6 +48,7 @@ export const signUp = async (
 
   // Store the user token
   const token = await auth.currentUser!.getIdToken();
+  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
   return auth.currentUser!;
 };
 
@@ -57,6 +61,8 @@ export const signIn = async (
     email,
     password,
   );
+  const token = await userCredential.user.getIdToken();
+  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
   return userCredential.user;
 };
 
@@ -70,6 +76,7 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
     return null;
   }
 };
+
 export const changePassword = async (
   currentPassword: string,
   newPassword: string,
@@ -84,9 +91,11 @@ export const changePassword = async (
 
   await updatePassword(user, newPassword);
 };
+
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
+
 export const deleteAccount = async (password: string): Promise<void> => {
   const user = auth.currentUser;
   if (user && user.email) {
@@ -96,13 +105,17 @@ export const deleteAccount = async (password: string): Promise<void> => {
     await deleteDoc(doc(db, "users", user.uid));
 
     await deleteUser(user);
+    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
   } else {
     throw new Error("No user is currently signed in");
   }
 };
+
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
+  await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
 };
+
 const usersCollection = collection(db, "users");
 
 export const fetchUsers = async (): Promise<UserData[]> => {
@@ -120,4 +133,8 @@ export const sendVerificationEmail = async () => {
   } else {
     throw new Error("No user found or email already verified");
   }
+};
+
+export const getAuthToken = async (): Promise<string | null> => {
+  return await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
 };
