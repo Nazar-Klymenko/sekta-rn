@@ -1,4 +1,5 @@
 import {
+  BoomBox,
   Heart,
   Home,
   List,
@@ -80,7 +81,9 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           title: "Residents",
-          tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <BoomBox color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
