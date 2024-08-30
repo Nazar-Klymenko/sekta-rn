@@ -99,10 +99,9 @@ export default function ProfileScreen() {
         </YStack>
         <VerifyEmail />
         <Separator />
-
-        {isLoggedIn && (
-          <>
-            <YStack gap="$2">
+        <YStack gap="$2">
+          {isLoggedIn && (
+            <>
               <SectionTitle>Account</SectionTitle>
               <MenuItem
                 title="Change username"
@@ -125,8 +124,6 @@ export default function ProfileScreen() {
                 onPress={() => router.push("/profile/delete-profile")}
                 icon={Trash2}
               />
-            </YStack>
-            <YStack gap="$2">
               <SectionTitle>Notifications</SectionTitle>
               <MenuItem
                 title="Push notifications"
@@ -138,11 +135,9 @@ export default function ProfileScreen() {
                 onPress={() => router.push("/profile/email-notifications")}
                 icon={Mail}
               />
-            </YStack>
-          </>
-        )}
+            </>
+          )}
 
-        <YStack gap="$2">
           <SectionTitle>Support</SectionTitle>
           <MenuItem
             title="Terms of Service"

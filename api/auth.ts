@@ -18,12 +18,10 @@ import {
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { sendEmailVerification } from "firebase/auth";
-import * as SecureStore from "expo-secure-store";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
-
-const AUTH_TOKEN_KEY = "firebaseAuthToken";
+import { setAuthToken, removeAuthToken } from "@/utils/tokenStorage";
 
 export const signUp = async (
   email: string,
@@ -48,7 +46,7 @@ export const signUp = async (
 
   // Store the user token
   const token = await auth.currentUser!.getIdToken();
-  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
+  await setAuthToken(token);
   return auth.currentUser!;
 };
 
@@ -62,7 +60,7 @@ export const signIn = async (
     password,
   );
   const token = await userCredential.user.getIdToken();
-  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
+  await setAuthToken(token);
   return userCredential.user;
 };
 
@@ -105,7 +103,7 @@ export const deleteAccount = async (password: string): Promise<void> => {
     await deleteDoc(doc(db, "users", user.uid));
 
     await deleteUser(user);
-    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+    await removeAuthToken();
   } else {
     throw new Error("No user is currently signed in");
   }
@@ -113,7 +111,7 @@ export const deleteAccount = async (password: string): Promise<void> => {
 
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
-  await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+  await removeAuthToken();
 };
 
 const usersCollection = collection(db, "users");
@@ -133,8 +131,4 @@ export const sendVerificationEmail = async () => {
   } else {
     throw new Error("No user found or email already verified");
   }
-};
-
-export const getAuthToken = async (): Promise<string | null> => {
-  return await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
 };
