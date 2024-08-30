@@ -177,7 +177,6 @@ const CardContainer = styled(YStack, {
   borderWidth: 1,
   borderColor: "$borderColor",
   hoverStyle: {
-    transform: [{ scale: 1.0 }, { translateY: -3 }],
     borderColor: "$borderColorHover",
   },
 });

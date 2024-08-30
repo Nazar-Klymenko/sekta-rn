@@ -1,5 +1,5 @@
 // src/screens/UserListScreen.tsx
-import { Check, Search, X } from "@tamagui/lucide-icons";
+import { Check, Search, X, Minus } from "@tamagui/lucide-icons";
 import React, { useMemo, useState } from "react";
 import { useUsers } from "@/hooks/useUserData";
 import { UserData } from "@/models/UserData";
@@ -30,26 +30,18 @@ const columns: Column[] = [
     header: "Agree ToS",
     accessor: "agreeTos",
     render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
+      value ? <Check /> : <Minus color="$red9Light" />,
   },
   {
     header: "Agree Email",
     accessor: "agreeEmail",
     render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
+      value ? <Check /> : <Minus color="$red9Light" />,
   },
   {
     header: "Is Admin",
     accessor: "isAdmin",
-    render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
-  },
-  {
-    header: "Deletion Requested",
-    accessor: "deletionRequestedAt",
-    render: (value: Date | undefined) => (
-      <Text>{value?.toLocaleString() || "N/A"}</Text>
-    ),
+    render: (value: boolean) => (value ? <Check /> : <X color="$red9Light" />),
   },
 ];
 
@@ -96,7 +88,7 @@ export default function UserListScreen() {
     return column.render ? (
       column.render(value)
     ) : (
-      <Text>{value?.toString() || "N/A"}</Text>
+      <Text fontSize={"$3"}>{value?.toString() || <Minus />}</Text>
     );
   };
 
@@ -124,7 +116,7 @@ export default function UserListScreen() {
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell key={column.accessor}>
-                  <Text fontWeight="bold">{column.header}</Text>
+                  <Text fontSize={"$3"}>{column.header}</Text>
                 </Table.HeaderCell>
               ))}
             </Table.Row>
