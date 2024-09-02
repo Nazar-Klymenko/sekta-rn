@@ -4,5 +4,6 @@ admin.initializeApp();
 
 import { createUser } from "./user/createUser";
 import { updateUsername } from "./user/updateUsername";
-
-export { updateUsername, createUser };
+import { sendPushNotification } from "./sendPushNotification";
+export { updateUsername, createUser, sendPushNotification };
+// export { updateUsername, createUser };

@@ -9,11 +9,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 
 import { Platform, StatusBar } from "react-native";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
 import { useAuth } from "@/hooks/useAuth";
 import tamaguiConfig from "@/tamagui.config";
+import * as Notifications from "expo-notifications";
 
 import { useFonts } from "expo-font";
 import { Lato_900Black } from "@expo-google-fonts/lato";
@@ -40,6 +42,10 @@ function AppStack() {
   const { left, top, right } = useSafeAreaInsets();
   const theme = useTheme();
   const { user } = useAuth();
+  if (Platform.OS !== "web") {
+    usePushNotifications();
+  }
+
   if (Platform.OS === "web") {
     return (
       <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -50,54 +56,52 @@ function AppStack() {
     );
   }
   return (
-    <YStack f={1}>
-      <Stack
-        screenOptions={{
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen
+        name="auth"
+        options={{
           headerShown: false,
+          animation: "fade_from_bottom",
         }}
-      >
-        <Stack.Screen
-          name="auth"
-          options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
-          }}
-        />
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
-          }}
-        />
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen
-          name="privacy-policy"
-          options={{
-            title: "Privacy policy",
-            animation: "fade_from_bottom",
-            headerShown: true || Platform.OS !== "web",
-            headerStyle: {
-              backgroundColor: theme.background.get(),
-            },
-            headerBackVisible: true,
-            headerTintColor: theme.color.get(),
-          }}
-        />
-        <Stack.Screen
-          name="tos"
-          options={{
-            title: "Terms of service",
-            animation: "fade_from_bottom",
-            headerShown: true || Platform.OS !== "web",
-            headerStyle: {
-              backgroundColor: theme.background.get(),
-            },
-            headerTintColor: theme.color.get(),
-          }}
-        />
-      </Stack>
-    </YStack>
+      />
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+          animation: "fade_from_bottom",
+        }}
+      />
+      <Stack.Screen name="+not-found" />
+      <Stack.Screen
+        name="privacy-policy"
+        options={{
+          title: "Privacy policy",
+          animation: "fade_from_bottom",
+          headerShown: true || Platform.OS !== "web",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerBackVisible: true,
+          headerTintColor: theme.color.get(),
+        }}
+      />
+      <Stack.Screen
+        name="tos"
+        options={{
+          title: "Terms of service",
+          animation: "fade_from_bottom",
+          headerShown: true || Platform.OS !== "web",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
+    </Stack>
   );
 }
 

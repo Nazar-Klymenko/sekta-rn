@@ -6,21 +6,10 @@ import { Switch } from "@/components/buttons/CustomSwitch";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { usePushNotifications } from "@/hooks/usePushNotifications";
-
-const functions = getFunctions();
-const sendPushNotification = httpsCallable(functions, "sendPushNotification");
 
 export default function PushNotificationScreen() {
   const { user } = useAuth();
   const [isEnabled, setIsEnabled] = useState(false);
-  const { expoPushToken } = usePushNotifications();
-
-  useEffect(() => {
-    // Update this state based on user preferences from Firestore
-    // For now, we'll just set it to true if we have a token
-    setIsEnabled(!!expoPushToken);
-  }, [expoPushToken]);
 
   const toggleSwitch = async () => {
     // Here you should update the user's preference in Firestore
@@ -29,19 +18,6 @@ export default function PushNotificationScreen() {
 
   const sendNoti = async () => {
     if (!user) return;
-    try {
-      const result = await sendPushNotification({
-        userId: user.uid,
-        notification: {
-          title: "New Event!",
-          body: "A new event has been added. Check it out!",
-          data: { eventId: "-Nt-iP0bCmIjPi8gO1YV" },
-        },
-      });
-      console.log("Notification sent:", result);
-    } catch (error) {
-      console.error("Error sending notification:", error);
-    }
   };
 
   return (
