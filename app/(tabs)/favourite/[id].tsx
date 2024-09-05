@@ -1,3 +1,3 @@
-import EventDetailsPage from "../(home)/event/[id]";
+import EventDetailsPage from "../events/(event)/[id]";
 
 export default EventDetailsPage;

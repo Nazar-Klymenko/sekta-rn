@@ -41,13 +41,21 @@ export function AppNavigator() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="auth"
-          options={{ headerShown: false, animation: "fade" }}
+          options={{
+            headerShown: false,
+            animation: "fade_from_bottom",
+            presentation: "modal",
+          }}
         />
         <Stack.Screen
           name="(support)"
-          options={{ headerShown: false, animation: "fade" }}
+          options={{
+            headerShown: false,
+            animation: "fade_from_bottom",
+            presentation: "modal",
+          }}
         />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="+not-found" options={{ presentation: "modal" }} />
       </Stack>
       <CurrentToast />
       <ToastViewport

@@ -11,12 +11,11 @@ export default function HomeLayout() {
     return <Slot />;
   }
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="index"
         options={{
           title: "Events",
-          animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
@@ -33,25 +32,7 @@ export default function HomeLayout() {
           },
         }}
       />
-      {/* <Stack.Screen
-        name="upcoming"
-        options={{
-          title: "Upcoming events",
-          animation: "fade_from_bottom",
-          headerShown: true || Platform.OS !== "web",
-          headerStyle: {
-            backgroundColor: theme.background.get(),
-          },
-          headerTintColor: theme.color.get(),
-        }}
-      /> */}
-      <Stack.Screen
-        name="event"
-        options={{
-          headerShown: false,
-          animation: "fade_from_bottom",
-        }}
-      />
+      <Stack.Screen name="(event)" />
     </Stack>
   );
 }

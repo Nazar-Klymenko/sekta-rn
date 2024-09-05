@@ -8,10 +8,7 @@ import tamaguiConfig from "@/tamagui.config";
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-    Lato_900Black: require("@expo-google-fonts/lato/Lato_900Black.ttf"),
+    // Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
   });
 
   useEffect(() => {

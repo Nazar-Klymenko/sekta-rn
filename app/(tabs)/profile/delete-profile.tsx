@@ -53,7 +53,7 @@ export default function DeleteAccountScreen() {
           message: "Your account has been successfully deleted.",
           variant: "success",
         });
-        router.replace("/(tabs)/(home)/");
+        // router.replace("/(tabs)/events/");
       },
       onError: (error) => {
         setError("password", { message: "Wrong password" });

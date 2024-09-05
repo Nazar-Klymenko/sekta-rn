@@ -91,7 +91,7 @@ export default function HomeScreen() {
             <YStack style={{ maxWidth: 720 }}>
               <EventCard
                 event={event}
-                hrefSource="event"
+                hrefSource="events"
                 isLiked={likedEvents?.includes(event.id) || false}
               />
             </YStack>

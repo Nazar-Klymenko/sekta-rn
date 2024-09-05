@@ -7,6 +7,8 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "expo-router";
+import { router } from "expo-router";
+import { params } from "firebase-functions/v1";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -66,7 +68,10 @@ export function usePushNotifications() {
     console.log("Notification data:", data);
     if (data.type === "event" && data.eventId) {
       console.log("Navigating to event:", data.eventId);
-      router.push(`/(tabs)/(home)/event/${data.eventId}`);
+      router.push({
+        pathname: "/(tabs)/events/[id]",
+        params: { id: data.eventId },
+      });
     }
   };
 

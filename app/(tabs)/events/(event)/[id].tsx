@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  CreditCard,
-  Heart,
-  MapPin,
-  Users,
-} from "@tamagui/lucide-icons";
+import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
 import React, { useEffect, useState } from "react";
 
@@ -18,11 +12,8 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import {
-  Button,
   Image,
   Paragraph,
-  Separator,
-  Stack,
   Text,
   XStack,
   YStack,
@@ -34,7 +25,6 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import { Tag } from "@/components/Tag";
 import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 
@@ -88,15 +78,11 @@ export default function EventDetailsPage() {
     }
   };
 
-  const handleBuyTicket = () => {
-    // Implement buy ticket functionality
-    console.log("Buy ticket for event:", event.id);
-  };
-
   const formattedDate = formatFirestoreTimestamp(
     event.date,
     "EEEE, MMMM do yyyy",
   );
+
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
   return (
@@ -139,12 +125,8 @@ export default function EventDetailsPage() {
             alignItems="flex-end"
           ></XStack>
         </YStack>
-        <XStack
-          display="flex"
-          flex={1}
-          gap="$4"
-          flexDirection={md ? "row" : "column"}
-        >
+
+        <XStack display="flex" flex={1} gap="$4">
           <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
             <InfoItem
               icon={<Calendar color={theme.accentColor.get()} size={24} />}
@@ -164,7 +146,7 @@ export default function EventDetailsPage() {
             <Text fontSize="$6" fontWeight="bold">
               About this event
             </Text>
-            <Paragraph color="$color10Light">{event.caption}</Paragraph>
+            <Paragraph color="$color10">{event.caption}</Paragraph>
             <Text fontSize="$6" fontWeight="bold">
               Lineup
             </Text>
@@ -182,21 +164,6 @@ export default function EventDetailsPage() {
               ))}
             </XStack>
           </YStack>
-          {/* {md && (
-            <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-          )}
-          <YStack
-            flex={1}
-            width={md ? "33%" : "100%"}
-            minWidth={md ? 200 : "auto"}
-            maxWidth={md ? 300 : "none"}
-          >
-            <PrimaryButton
-              text="Buy ticket 🎟️"
-              onPress={handleBuyTicket}
-              style={{ width: "100%" }}
-            />
-          </YStack> */}
         </XStack>
       </YStack>
     </PageContainer>

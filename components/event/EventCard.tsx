@@ -29,7 +29,7 @@ import { LikeButton } from "@/components/buttons/IconButtons";
 
 interface EventCardProps {
   event: Event;
-  hrefSource: "event" | "favourite";
+  hrefSource: "events" | "favourite";
   isLiked: boolean;
 }
 
