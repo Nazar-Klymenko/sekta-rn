@@ -80,17 +80,6 @@ export default function HomeScreen() {
 
   return (
     <PageContainer>
-      <Form methods={methods}>
-        <Input
-          placeholder="Search events (coming soon)"
-          name="searchQuery"
-          id="search-events"
-          label=""
-          icon={Search}
-          disabled
-        />
-      </Form>
-
       <XStack flexWrap="wrap" justifyContent="space-between">
         {isLoading
           ? Array(3)
