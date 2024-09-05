@@ -6,25 +6,31 @@ import {
   Mail,
   MapPin,
   Phone,
+  Play,
   Square,
   Youtube,
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import React from "react";
+import React, { useRef } from "react";
 
 import { Platform } from "react-native";
 
 import { usePlaySubmission } from "@/hooks/usePlay";
 
+import { Disc } from "@tamagui/lucide-icons";
+import { BlurView } from "expo-blur";
+
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
+  Button,
   Card,
   Image,
   ScrollView,
   Separator,
   Text,
+  View,
   XStack,
   YStack,
   useTheme,
@@ -198,60 +204,114 @@ export default function PlayScreen() {
     </PageContainer>
   );
 }
+
 const EnhancedHeroSection = () => {
   const { width, height } = useWindowDimensions();
   const isWideScreen = width > height;
-  const imageHeight =
-    Platform.OS === "web" ? (isWideScreen ? "95vh" : 500) : 500;
+  const imageHeight = Platform.OS === "web" ? "100vh" : "100vh";
+  const nextSectionRef = useRef(null);
+
+  const scrollToNextSection = () => {
+    if (nextSectionRef.current) {
+      nextSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <YStack height={imageHeight} overflow="hidden">
-      <Image
-        source={require("@/assets/images/play_bg.jpg")}
-        alt="Venue background"
-        width="100%"
-        height="100%"
-        objectFit="cover"
-      />
-      <LinearGradient
-        colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 20,
-        }}
-      >
-        <Animated.View entering={FadeInDown.duration(400)}>
-          <YStack gap="$4" alignItems="center">
-            <Text
-              fontSize={72}
-              fontWeight="bold"
-              color="white"
-              textAlign="center"
-              textShadowColor="rgba(0,0,0,0.75)"
-              textShadowOffset={{ width: -1, height: 1 }}
-              textShadowRadius={10}
-              style={{
-                textTransform: "uppercase",
-                letterSpacing: -2,
-              }}
-            >
-              Play at Our Venue
-            </Text>
-            <Text fontSize={24} color="white" opacity={0.9} textAlign="center">
-              Perform a set at our venue with other artists
-            </Text>
-          </YStack>
-        </Animated.View>
-      </LinearGradient>
-    </YStack>
+    <>
+      <YStack height={imageHeight} overflow="hidden">
+        <BlurView
+          intensity={15}
+          tint="dark"
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+        >
+          <Image
+            source={require("@/assets/images/play_bg.jpg")}
+            alt="Venue background"
+            width="100%"
+            height="100%"
+            objectFit="cover"
+          />
+        </BlurView>
+        <LinearGradient
+          colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.6)", "rgba(0,0,0,0.8)"]}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+          }}
+        >
+          <Animated.View entering={FadeInDown.duration(400)}>
+            <YStack gap="$4" alignItems="center">
+              <BlurView
+                intensity={80}
+                tint="dark"
+                style={{ borderRadius: 50, padding: 15 }}
+              >
+                <Disc size={50} color="white" />
+              </BlurView>
+              <YStack>
+                <Text
+                  fontSize={72}
+                  fontWeight="900"
+                  textAlign="center"
+                  style={{
+                    textTransform: "uppercase",
+                    letterSpacing: -2,
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                    backgroundImage:
+                      "linear-gradient(45deg, #FF1493, #FF4500, #FFD700, #00CED1, #8A2BE2)",
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                  }}
+                >
+                  Play at SEKTA SELEKTA
+                </Text>
+              </YStack>
+              <Text
+                fontSize={24}
+                color="white"
+                opacity={0.9}
+                textAlign="center"
+                fontWeight="500"
+                style={{
+                  textShadowColor: "rgba(0,0,0,0.75)",
+                  textShadowOffset: { width: 2, height: 2 },
+                  textShadowRadius: 5,
+                }}
+              >
+                Perform a set at our venue with other artists
+              </Text>
+              <XStack gap="$4" marginTop="$6">
+                <Button
+                  size="$6"
+                  theme="active"
+                  borderRadius="$4"
+                  animation="bouncy"
+                  scale={0.9}
+                  hoverStyle={{ scale: 0.95 }}
+                  pressStyle={{ scale: 0.85 }}
+                  onPress={scrollToNextSection}
+                >
+                  Apply Now
+                </Button>
+              </XStack>
+            </YStack>
+          </Animated.View>
+        </LinearGradient>
+      </YStack>
+      <View ref={nextSectionRef} />
+    </>
   );
 };
+
 type VenueInfoItem = {
   title: string;
   content: string;
