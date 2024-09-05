@@ -102,24 +102,6 @@ export default function HomeScreen() {
         onRefresh={refetch}
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
-        ListHeaderComponent={
-          <Form
-            methods={methods}
-            style={{ maxWidth: 720 }}
-            paddingTop="$4"
-            flexDirection="row"
-            ai={"center"}
-          >
-            <Input
-              flex={1}
-              placeholder="Search events"
-              name="searchQuery"
-              id="search-events"
-              label=""
-              icon={Search}
-            />
-          </Form>
-        }
         ListEmptyComponent={() => (
           <Typography variant="body1">
             No events found. Pull to refresh or check back later.
