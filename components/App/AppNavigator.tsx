@@ -20,7 +20,7 @@ export function AppNavigator() {
 
   if (Platform.OS === "web") {
     return (
-      <YStack f={1}>
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <CustomHeader title="Sekta Selekta" user={user} />
         <Slot />
         <Footer />
@@ -31,7 +31,7 @@ export function AppNavigator() {
           right={right}
           flexDirection="column-reverse"
         />
-      </YStack>
+      </div>
     );
   }
 
