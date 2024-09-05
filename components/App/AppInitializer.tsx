@@ -8,7 +8,10 @@ import tamaguiConfig from "@/tamagui.config";
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts({
-    // Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+    SektaFont: require("../../assets/fonts/SektaFont-Regular.ttf"),
+    Lato_900Black: require("@expo-google-fonts/lato/Lato_900Black.ttf"),
   });
 
   useEffect(() => {
