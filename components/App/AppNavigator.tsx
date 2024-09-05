@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform } from "react-native";
 import { Slot, Stack } from "expo-router";
-import { YStack } from "tamagui";
+import { useTheme, YStack } from "tamagui";
 import { useAuth } from "@/hooks/useAuth";
 import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
 import { Footer } from "@/components/navigation/Footer";
@@ -13,6 +13,7 @@ import { usePushNotifications } from "@/hooks/usePushNotifications";
 export function AppNavigator() {
   const { user } = useAuth();
   const { left, top, right } = useSafeAreaInsets();
+  const theme = useTheme();
 
   if (Platform.OS !== "web") {
     usePushNotifications();
@@ -38,7 +39,10 @@ export function AppNavigator() {
   return (
     <YStack f={1}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ headerShown: false, animation: "fade_from_bottom" }}
+        />
         <Stack.Screen
           name="auth"
           options={{

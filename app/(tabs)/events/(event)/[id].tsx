@@ -103,7 +103,7 @@ export default function EventDetailsPage() {
             </XStack>
           </XStack>
 
-          <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
+          <Image source={{ uri: event.image.url }} aspectRatio={16 / 9} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}

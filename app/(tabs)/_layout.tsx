@@ -24,6 +24,8 @@ export default function TabLayout() {
 
   const screenOptions = {
     headerShown: false,
+    animation: "fade_from_bottom",
+
     tabBarStyle: {
       backgroundColor: theme.gray2Dark.get(),
       borderTopWidth: 0,

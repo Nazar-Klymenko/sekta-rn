@@ -21,6 +21,7 @@ export default function HomeLayout() {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
+          animation: "fade_from_bottom",
 
           headerSearchBarOptions: {
             shouldShowHintSearchIcon: false,
@@ -32,7 +33,10 @@ export default function HomeLayout() {
           },
         }}
       />
-      <Stack.Screen name="(event)" />
+      <Stack.Screen
+        name="(event)"
+        options={{ animation: "fade_from_bottom" }}
+      />
     </Stack>
   );
 }
