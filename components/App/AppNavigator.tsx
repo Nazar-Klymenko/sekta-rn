@@ -8,10 +8,15 @@ import { Footer } from "@/components/navigation/Footer";
 import { CurrentToast } from "@/components/Toast";
 import { ToastViewport } from "@tamagui/toast";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 export function AppNavigator() {
   const { user } = useAuth();
   const { left, top, right } = useSafeAreaInsets();
+
+  if (Platform.OS !== "web") {
+    usePushNotifications();
+  }
 
   if (Platform.OS === "web") {
     return (
