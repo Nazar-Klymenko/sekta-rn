@@ -8,12 +8,14 @@ import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
   Stack,
+  styled,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   Text,
   XStack,
   YStack,
 } from "tamagui";
+import { BaseInput, MaxLength } from "./shared/BaseInput";
 
 interface InputProps extends TamaguiInputProps {
   name: string;
@@ -29,11 +31,12 @@ export function Input({
   placeholder,
   id,
   icon: Icon,
+  maxLength,
   ...props
 }: InputProps) {
   const { control } = useFormContext();
   const {
-    field,
+    field: { value, onChange, onBlur, ref },
     fieldState: { error },
   } = useController({
     name,
@@ -41,7 +44,6 @@ export function Input({
   });
 
   const [isFocused, setIsFocused] = useState(false);
-  const hasValue = field.value && field.value.length > 0;
 
   return (
     <YStack flex={1}>
@@ -68,43 +70,45 @@ export function Input({
             />
           )}
 
-          <TamaguiInput
+          <BaseInput
             id={id}
-            flex={1}
             placeholder={placeholder}
-            value={field.value}
-            onChangeText={field.onChange}
-            outlineStyle="none"
+            value={value}
+            onChangeText={onChange}
             paddingHorizontal={Icon ? "$8" : "$3.5"}
-            focusStyle={{
-              outlineWidth: "0",
-              outlineStyle: "none",
-              borderColor: error ? "$red10Light" : "$accentColor",
-            }}
             onBlur={() => {
-              field.onBlur();
+              onBlur();
               setIsFocused(false);
             }}
             onFocus={() => setIsFocused(true)}
             borderColor={
-              error ? "$red10Light" : isFocused ? "accentColor" : undefined
-            }
-            hoverStyle={{
-              borderColor: error
+              error
                 ? "$red10Light"
                 : isFocused
-                ? "accentColor"
-                : undefined,
+                  ? "$accentBackground"
+                  : undefined
+            }
+            hoverStyle={{
+              borderColor: error ? "$red10Dark" : undefined,
             }}
-            ref={field.ref}
-            fontSize={16}
+            ref={ref}
+            disabledStyle={{ color: "$placeholderColor" }}
             {...props}
           />
         </Stack>
       </YStack>
-      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
-        {error ? error?.message : ""}
-      </Text>
+      <XStack ai="center" marginTop="$2">
+        <Text
+          flex={1}
+          color={error ? "$red10Light" : "$colorTransparent"}
+          fontSize="$2"
+        >
+          {error ? error?.message : ""}
+        </Text>
+        {maxLength && (
+          <MaxLength length={value?.length || 0} maxLength={maxLength} />
+        )}
+      </XStack>
     </YStack>
   );
 }

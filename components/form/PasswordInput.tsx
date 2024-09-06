@@ -14,6 +14,7 @@ import {
   YStack,
   useTheme,
 } from "tamagui";
+import { BaseInput } from "./shared/BaseInput";
 
 interface InputProps extends TextInputProps {
   name: string;
@@ -24,7 +25,7 @@ interface InputProps extends TextInputProps {
 
 export function PasswordInput(
   { name, label, placeholder, id }: InputProps,
-  props: TextInputProps
+  props: TextInputProps,
 ) {
   const { control } = useFormContext();
   const {
@@ -44,36 +45,26 @@ export function PasswordInput(
   };
 
   return (
-    <YStack gap="$2">
+    <YStack>
       <Label htmlFor={id}>{label}</Label>
       <XStack alignItems="center">
-        <TamaguiInput
+        <BaseInput
           id={id}
           placeholder={placeholder}
           value={field.value}
           onChangeText={field.onChange}
           secureTextEntry={!isPasswordVisible}
-          focusStyle={{
-            outlineWidth: "0",
-            outlineStyle: "none",
-            borderColor: error ? "$red10Light" : "$accentColor",
-          }}
           onBlur={() => {
             field.onBlur();
             setIsFocused(false);
           }}
-          onFocus={() => setIsFocused(true)}
           borderColor={
-            error ? "$red10Light" : isFocused ? "accentColor" : undefined
+            error ? "$red10Light" : isFocused ? "$accentBackground" : undefined
           }
           hoverStyle={{
-            borderColor: error
-              ? "$red10Light"
-              : isFocused
-              ? "accentColor"
-              : undefined,
+            borderColor: error ? "$red10Dark" : undefined,
           }}
-          flex={1}
+          onFocus={() => setIsFocused(true)}
           ref={field.ref}
           {...props}
         />
@@ -85,7 +76,11 @@ export function PasswordInput(
           backgroundColor="transparent"
         />
       </XStack>
-      <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+      <Text
+        color={error ? "$red10Light" : "$colorTransparent"}
+        marginTop="$2"
+        fontSize="$2"
+      >
         {error ? error?.message : "*"}
       </Text>
     </YStack>

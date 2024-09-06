@@ -30,6 +30,7 @@ export default function HomeScreen() {
     defaultValues: {
       searchQuery: "",
     },
+    mode: "onTouched",
   });
 
   const {

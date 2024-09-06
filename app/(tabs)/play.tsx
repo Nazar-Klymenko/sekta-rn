@@ -17,7 +17,6 @@ import { Platform } from "react-native";
 
 import { usePlaySubmission } from "@/hooks/usePlay";
 
-import { BlurView } from "expo-blur";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -41,15 +40,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import { emailSchema } from "@/utils/validationSchemas";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const playSchema = yup.object({
-  email: yup.string().email("Invalid email address").required(),
+  email: emailSchema,
   phone: yup.string().optional(),
   soundcloud: yup.string().optional(),
   youtube: yup.string().optional(),
   instagram: yup.string().optional(),
   facebook: yup.string().optional(),
-  additionalInfo: yup.string().optional(),
+  additionalInfo: yup
+    .string()
+    .optional()
+    .max(1000, "Please keep it shorter 👽"),
 });
 
 type FormValues = yup.InferType<typeof playSchema>;
@@ -97,6 +102,7 @@ export default function PlayScreen() {
       facebook: "",
       additionalInfo: "",
     },
+    mode: "onTouched",
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -118,8 +124,8 @@ export default function PlayScreen() {
   };
 
   return (
-    <YStack flex={1}>
-      <HeroSection />
+    <PageContainer fullWidth>
+      <EnhancedHeroSection />
 
       <YStack
         backgroundColor="$background"
@@ -140,7 +146,10 @@ export default function PlayScreen() {
           </Text>
         </YStack>
 
-        <Form methods={methods} maxWidth={740} flex={1} jc="center">
+        <Form methods={methods} maxWidth={740} flex={1}>
+          <Text fontSize={20} fontWeight="bold">
+            Contact Information
+          </Text>
           <Input
             id="play-email"
             name="email"
@@ -174,8 +183,9 @@ export default function PlayScreen() {
             label="Additional Info"
             multiline
             placeholder="Any additional information you'd like to share..."
-            rows={4}
+            rows={6}
             verticalAlign="top"
+            maxLength={1000}
           />
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
@@ -185,10 +195,10 @@ export default function PlayScreen() {
           />
         </Form>
       </YStack>
-    </YStack>
+    </PageContainer>
   );
 }
-const HeroSection = () => {
+const EnhancedHeroSection = () => {
   const { width, height } = useWindowDimensions();
   const isWideScreen = width > height;
   const imageHeight =
@@ -204,32 +214,40 @@ const HeroSection = () => {
         objectFit="cover"
       />
       <LinearGradient
-        colors={["rgba(0,0,0,0.3)", "rgba(0,0,0,0.7)"]}
+        colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]}
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          justifyContent: "flex-end",
+          justifyContent: "center",
+          alignItems: "center",
           padding: 20,
         }}
       >
-        <YStack gap="$2" maxWidth={600}>
-          <Text
-            fontSize={40}
-            fontWeight="bold"
-            color="white"
-            textShadowColor="rgba(0,0,0,0.75)"
-            textShadowOffset={{ width: -1, height: 1 }}
-            textShadowRadius={10}
-          >
-            Play at Our Venue
-          </Text>
-          <Text fontSize={20} color="white" opacity={0.8}>
-            Perform a set at our venue with other artists
-          </Text>
-        </YStack>
+        <Animated.View entering={FadeInDown.duration(400)}>
+          <YStack gap="$4" alignItems="center">
+            <Text
+              fontSize={72}
+              fontWeight="bold"
+              color="white"
+              textAlign="center"
+              textShadowColor="rgba(0,0,0,0.75)"
+              textShadowOffset={{ width: -1, height: 1 }}
+              textShadowRadius={10}
+              style={{
+                textTransform: "uppercase",
+                letterSpacing: -2,
+              }}
+            >
+              Play at Our Venue
+            </Text>
+            <Text fontSize={24} color="white" opacity={0.9} textAlign="center">
+              Perform a set at our venue with other artists
+            </Text>
+          </YStack>
+        </Animated.View>
       </LinearGradient>
     </YStack>
   );
@@ -252,10 +270,9 @@ const VenueInfoSection = () => (
     size="$4"
     bordered
     maxWidth={740}
-    // animation="bouncy"
-    // scale={0.9}
-    // hoverStyle={{ scale: 0.925 }}
-    // pressStyle={{ scale: 0.875 }}
+    animation="quickest"
+    hoverStyle={{ scale: 1.02 }}
+    pressStyle={{ scale: 0.99 }}
   >
     <Card.Header padded>
       <Text fontSize="$6" fontWeight="bold" color="$color12">
@@ -276,10 +293,10 @@ const VenueInfoSection = () => (
           >
             <item.icon size={24} color="$color11Light" />
             <YStack alignItems="center">
-              <Text fontSize="$3" fontWeight="bold" color="$color11">
+              <Text fontSize="$4" fontWeight="bold" color="$color11">
                 {item.title}
               </Text>
-              <Text fontSize="$2" color="$color10" textAlign="center">
+              <Text fontSize="$3" color="$color10" textAlign="center">
                 {item.content}
               </Text>
             </YStack>

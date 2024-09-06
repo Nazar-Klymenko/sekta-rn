@@ -42,6 +42,7 @@ export default function ChangePasswordScreen() {
         newPassword: "",
         confirmPassword: "",
       },
+      mode: "onTouched",
     }),
     { watch, reset, handleSubmit } = methods;
 
@@ -66,15 +67,15 @@ export default function ChangePasswordScreen() {
             variant: "error",
           });
         },
-      }
+      },
     );
   };
 
   return (
     <AuthGuard>
-      <PageContainer>
+      <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center">
+          <Text fontSize={40} fontWeight="bold" textAlign="center">
             Change Password
           </Text>
           <PasswordInput

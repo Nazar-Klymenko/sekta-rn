@@ -1,6 +1,6 @@
 import { GestureResponderEvent } from "react-native";
-
-import { Button, ButtonProps, Spinner, Text, Theme } from "tamagui";
+import { Button, ButtonProps, Spinner, Text, styled } from "tamagui";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 interface PrimaryButtonTypes extends ButtonProps {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
@@ -8,6 +8,13 @@ interface PrimaryButtonTypes extends ButtonProps {
   htmlFor?: string;
   isLoading?: boolean;
 }
+
+const StyledButton = styled(Button, {
+  backgroundColor: "transparent",
+  borderRadius: "$4",
+  overflow: "hidden",
+  minHeight: 54,
+});
 
 export const PrimaryButton = ({
   onPress,
@@ -17,17 +24,29 @@ export const PrimaryButton = ({
   ...props
 }: PrimaryButtonTypes): JSX.Element => {
   return (
-    <Button
-      backgroundColor="$accentBackground"
-      hoverStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
-      pressStyle={{ backgroundColor: "$accentBackground", opacity: 0.9 }}
+    <StyledButton
       onPress={onPress}
       htmlFor={htmlFor}
-      icon={isLoading ? <Spinner /> : undefined}
+      iconAfter={isLoading ? <Spinner /> : undefined}
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
+      pressStyle={{ opacity: 0.8 }}
       {...props}
     >
-      {text}
-    </Button>
+      <LinearGradient
+        colors={["$pink8Light", "$accentBackground"]}
+        start={[0, 0]}
+        end={[1, 1]}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      />
+      <Text color="$colorContrast" fontWeight="bold" zIndex={1}>
+        {text}
+      </Text>
+    </StyledButton>
   );
 };

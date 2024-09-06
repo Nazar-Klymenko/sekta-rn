@@ -1,4 +1,5 @@
 import {
+  BoomBox,
   Heart,
   Home,
   List,
@@ -18,8 +19,6 @@ import { Link, Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Footer } from "@/components/navigation/Footer";
-import { CustomHeader } from "@/components/CustomHeader";
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -37,7 +36,6 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.gray2Dark.get(),
-          display: isEventDetailsPage ? "none" : "flex",
           borderTopWidth: 0,
         },
         tabBarActiveTintColor: theme.color.get(),
@@ -76,6 +74,16 @@ export default function TabLayout() {
           headerShown: false,
           title: "Play",
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="residents"
+        options={{
+          headerShown: false,
+          title: "Residents",
+          tabBarIcon: ({ color, size }) => (
+            <BoomBox color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen

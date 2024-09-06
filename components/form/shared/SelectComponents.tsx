@@ -54,7 +54,7 @@ export const ScrollDownButton = () => {
 };
 
 export const SelectTrigger = ({ placeholder }: { placeholder: string }) => (
-  <Select.Trigger width={220} iconAfter={ChevronDown}>
+  <Select.Trigger width={220} iconAfter={ChevronDown} minHeight={54}>
     <Select.Value placeholder={placeholder} />
   </Select.Trigger>
 );
@@ -92,7 +92,7 @@ export const CustomAdapt = ({ native }: any) => {
           </Sheet.ScrollView>
         </Sheet.Frame>
         <Sheet.Overlay
-          animation="lazy"
+          animation="quickest"
           enterStyle={{ opacity: 0 }}
           exitStyle={{ opacity: 0 }}
         />

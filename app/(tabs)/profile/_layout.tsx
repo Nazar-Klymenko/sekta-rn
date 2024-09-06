@@ -25,7 +25,7 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
-        name="profile-information"
+        name="change-email"
         options={{
           title: "Profile information",
           animation: "fade_from_bottom",
@@ -37,9 +37,21 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
+        name="change-username"
+        options={{
+          title: "Change username",
+          animation: "fade_from_bottom",
+          headerShown: true || Platform.OS !== "web",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
+      <Stack.Screen
         name="change-password"
         options={{
-          title: "Change Password",
+          title: "Change password",
           animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
           headerStyle: {

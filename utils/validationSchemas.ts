@@ -11,7 +11,11 @@ export const usernameSchema = yup
   .string()
   .required("Username is required")
   .min(3, "Username must be at least 3 characters")
-  .max(18, "Username must be at most 18 characters")
+  .max(20, "Username must be 20 characters at most")
+  .matches(
+    /^[a-z0-9_]+$/,
+    "Username can only contain letters, numbers, and underscores",
+  )
   .lowercase()
   .trim();
 
@@ -21,5 +25,5 @@ export const passwordSchema = yup
   .min(8, "Password must be at least 8 characters")
   .matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{8,}$/,
-    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
   );

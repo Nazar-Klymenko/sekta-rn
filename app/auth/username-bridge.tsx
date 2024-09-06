@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { queryUserByUsername } from "@/api/firestore";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
@@ -18,6 +18,8 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { Info } from "@tamagui/lucide-icons";
+import { useQueryClient } from "@tanstack/react-query";
 
 const usernameBridgeSchema = yup.object().shape({
   username: usernameSchema,
@@ -25,16 +27,23 @@ const usernameBridgeSchema = yup.object().shape({
 
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
+const TEMP_USERNAME_KEY = "temporaryUsername";
+
 export default function UsernameBridgeScreen() {
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const { returnTo } = useLocalSearchParams<{
+    returnTo?: string;
+  }>();
 
   const methods = useForm<FormValues>({
       resolver: yupResolver(usernameBridgeSchema),
       shouldFocusError: true,
       defaultValues: {
-        username: "",
+        username:
+          (queryClient.getQueryData([TEMP_USERNAME_KEY]) as string) || "",
       },
+      mode: "onTouched",
     }),
     { handleSubmit, setValue, setError, watch } = methods;
 
@@ -46,6 +55,12 @@ export default function UsernameBridgeScreen() {
     isError,
     error,
   } = useUsernameAvailability(username);
+
+  useEffect(() => {
+    return () => {
+      queryClient.setQueryData([TEMP_USERNAME_KEY], username);
+    };
+  }, [username, queryClient]);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -62,7 +77,6 @@ export default function UsernameBridgeScreen() {
         setError("username", { message: "Username is taken" });
       }
     } catch (err) {
-      console.error("Error checking username availability:", err);
       setError("username", { message: "Error checking username availability" });
     }
   };
@@ -72,11 +86,14 @@ export default function UsernameBridgeScreen() {
       <PageContainer formContainer>
         <Form methods={methods}>
           <XStack justifyContent="center">
-            <Text fontSize={24} fontWeight="bold" textAlign="center">
+            <Text fontSize={40} fontWeight="bold" textAlign="center">
               Welcome!{"  "}
             </Text>
             <HelloWave />
           </XStack>
+          <Text textAlign="center" color="$gray10Light">
+            Choose a username. Don't worry, you can always change it later.
+          </Text>
           <Input
             id="username"
             name="username"
@@ -84,9 +101,17 @@ export default function UsernameBridgeScreen() {
             placeholder="Username"
             autoCapitalize="none"
             inputMode="text"
+            maxLength={20}
           />
+          <XStack gap="$2">
+            <Info color="$gray10Light" size={16} />
+            <Text fontSize="$3" color="$gray10Light">
+              Username must be 3-20 characters long and can contain letters,
+              numbers, and underscores.
+            </Text>
+          </XStack>
           <PrimaryButton
-            text="Next"
+            text="Continue"
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
             disabled={isLoading}

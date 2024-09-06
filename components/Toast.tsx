@@ -8,7 +8,7 @@ import { Button, XStack, YStack, styled } from "tamagui";
 const StyledToast = styled(Toast, {
   width: "90%",
   maxWidth: 400,
-  backgroundColor: "$gray7Dark",
+  backgroundColor: "$backgroundHover",
   padding: "$1",
   borderColor: "$borderColor",
   borderWidth: 1,
@@ -70,7 +70,7 @@ export const CurrentToast = () => {
     <StyledToast
       key={toast.id}
       duration={5000}
-      animation="quick"
+      animation="quickest"
       enterStyle={{ opacity: 0, scale: 0.9, y: -10 }}
       exitStyle={{ opacity: 0, scale: 0.95, y: 10 }}
       opacity={1}

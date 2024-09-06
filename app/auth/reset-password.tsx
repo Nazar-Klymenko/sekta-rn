@@ -110,7 +110,7 @@ export default function HandlePasswordResetScreen() {
         />
         {error && <Text color="$errorColor">{error}</Text>}
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href="/(auth)/login">
+          <Link href="/auth/login">
             <Text textAlign="center">
               Remember your password?
               <Text color="$accentColor"> Log In</Text>

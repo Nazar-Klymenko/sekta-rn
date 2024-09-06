@@ -82,7 +82,12 @@ export const EventCard: React.FC<EventCardProps> = ({
 
   return (
     <CardContainer onPress={() => router.push(`/${hrefSource}/${event.id}`)}>
-      <YStack position="relative" borderRadius={"$4"} overflow="hidden">
+      <YStack
+        position="relative"
+        borderTopRightRadius="$4"
+        borderTopLeftRadius="$4"
+        overflow="hidden"
+      >
         <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
         <LinearGradient
           colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
@@ -127,7 +132,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           alignItems="center"
         >
           <YStack>
-            <Text fontSize="$6" fontWeight="bold" color="white">
+            <Text fontSize="$8" fontWeight="bold" color="white">
               {event.title}
             </Text>
             <DateContainer marginTop="$1">
@@ -144,7 +149,7 @@ export const EventCard: React.FC<EventCardProps> = ({
           />
         </XStack>
       </YStack>
-      <YStack paddingTop="$4" backgroundColor="$backgroundStrong">
+      <YStack paddingTop="$4" padding="$4" backgroundColor="$backgroundHover">
         <Paragraph color="$gray10Light" numberOfLines={2} ellipsizeMode="tail">
           {event.caption}
         </Paragraph>
@@ -162,13 +167,18 @@ export const EventCard: React.FC<EventCardProps> = ({
 };
 
 const CardContainer = styled(YStack, {
-  // padding: "$4",
   borderRadius: "$4",
   overflow: "hidden",
   marginVertical: "$3",
   alignSelf: "center",
   width: "100%",
   cursor: "pointer",
+  animation: "quickest",
+  borderWidth: 1,
+  borderColor: "$borderColor",
+  hoverStyle: {
+    borderColor: "$borderColorHover",
+  },
 });
 
 const DateContainer = styled(XStack, {

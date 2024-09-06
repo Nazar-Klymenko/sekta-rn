@@ -2,7 +2,6 @@
 import {
   EmailAuthProvider,
   User,
-  createUserWithEmailAndPassword,
   deleteUser,
   signOut as firebaseSignOut,
   reauthenticateWithCredential,
@@ -16,60 +15,52 @@ import {
   doc,
   getDoc,
   getDocs,
-  setDoc,
 } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { sendEmailVerification } from "firebase/auth";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
-import { removeItem, setItem } from "@/utils/asyncStorage";
+import { setAuthToken, removeAuthToken } from "@/utils/tokenStorage";
 
 export const signUp = async (
   email: string,
   password: string,
   username: string,
   agreeTos: boolean,
-  agreeEmail?: boolean
+  agreeEmail?: boolean,
 ): Promise<User> => {
-  let userCredential;
-  try {
-    userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await setItem("userToken", await userCredential.user.getIdToken());
-  } catch (error) {
-    console.error("Failed to create user account:", error);
-    throw new Error("Failed to create user account");
-  }
+  const functions = getFunctions();
+  const createUserFunction = httpsCallable(functions, "createUser");
 
-  try {
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email,
-      username,
-      agreeTos,
-      agreeEmail,
-    });
-  } catch (error) {
-    console.error("Failed to save user data to Firestore:", error);
-    // If Firestore write fails, delete the created auth user
-    await userCredential.user.delete();
-    throw new Error("Failed to save user data");
-  }
+  await createUserFunction({
+    email,
+    password,
+    username,
+    agreeTos,
+    agreeEmail,
+  });
 
-  return userCredential.user;
+  // Sign in the user
+  await signInWithEmailAndPassword(auth, email, password);
+
+  // Store the user token
+  const token = await auth.currentUser!.getIdToken();
+  await setAuthToken(token);
+  return auth.currentUser!;
 };
 
 export const signIn = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<User> => {
   const userCredential = await signInWithEmailAndPassword(
     auth,
     email,
-    password
+    password,
   );
-  await setItem("userToken", await userCredential.user.getIdToken());
+  const token = await userCredential.user.getIdToken();
+  await setAuthToken(token);
   return userCredential.user;
 };
 
@@ -83,9 +74,10 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
     return null;
   }
 };
+
 export const changePassword = async (
   currentPassword: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<void> => {
   const user = auth.currentUser;
   if (!user) {
@@ -97,9 +89,11 @@ export const changePassword = async (
 
   await updatePassword(user, newPassword);
 };
+
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
+
 export const deleteAccount = async (password: string): Promise<void> => {
   const user = auth.currentUser;
   if (user && user.email) {
@@ -109,21 +103,32 @@ export const deleteAccount = async (password: string): Promise<void> => {
     await deleteDoc(doc(db, "users", user.uid));
 
     await deleteUser(user);
-
-    await removeItem("userToken");
+    await removeAuthToken();
   } else {
     throw new Error("No user is currently signed in");
   }
 };
+
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
-  await removeItem("userToken");
+  await removeAuthToken();
 };
+
 const usersCollection = collection(db, "users");
 
 export const fetchUsers = async (): Promise<UserData[]> => {
   const snapshot = await getDocs(usersCollection);
   return snapshot.docs.map(
-    (doc) => ({ id: doc.id, ...doc.data() } as UserData)
+    (doc) => ({ id: doc.id, ...doc.data() }) as UserData,
   );
+};
+
+export const sendVerificationEmail = async () => {
+  const user = auth.currentUser;
+  if (user && !user.emailVerified) {
+    await sendEmailVerification(user);
+    return "Verification email sent successfully";
+  } else {
+    throw new Error("No user found or email already verified");
+  }
 };

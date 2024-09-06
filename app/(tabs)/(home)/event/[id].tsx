@@ -99,12 +99,8 @@ export default function EventDetailsPage() {
   );
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
-  const stickyButton = (
-    <PrimaryButton text="Buy ticket 🎟️" onPress={handleBuyTicket} />
-  );
-
   return (
-    <PageContainer stickyBottom={stickyButton}>
+    <PageContainer>
       <YStack gap="$4">
         <YStack position="relative" gap="$4">
           <XStack display="flex" jc="space-between" ai="center">
@@ -168,7 +164,7 @@ export default function EventDetailsPage() {
             <Text fontSize="$6" fontWeight="bold">
               About this event
             </Text>
-            <Paragraph color="$color10">{event.caption}</Paragraph>
+            <Paragraph color="$color10Light">{event.caption}</Paragraph>
             <Text fontSize="$6" fontWeight="bold">
               Lineup
             </Text>
@@ -186,7 +182,7 @@ export default function EventDetailsPage() {
               ))}
             </XStack>
           </YStack>
-          {md && (
+          {/* {md && (
             <Separator alignSelf="stretch" vertical marginHorizontal={15} />
           )}
           <YStack
@@ -200,59 +196,8 @@ export default function EventDetailsPage() {
               onPress={handleBuyTicket}
               style={{ width: "100%" }}
             />
-          </YStack>
+          </YStack> */}
         </XStack>
-        {/* <XStack display="flex" flex={1} gap="$4">
-          <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
-            <InfoItem
-              icon={<Calendar color={theme.accentColor.get()} size={24} />}
-              title="Date"
-              value={`${formattedDate} • ${formattedTime}`}
-            />
-            <InfoItem
-              icon={<MapPin color={theme.accentColor.get()} size={24} />}
-              title="Location"
-              value={event?.location || "Nowa 3/3, Kraków"}
-            />
-            <InfoItem
-              icon={<CreditCard color={theme.accentColor.get()} size={24} />}
-              title="Price"
-              value={`${event?.price || "20.00"} PLN`}
-            />
-            <Text fontSize="$6" fontWeight="bold">
-              About this event
-            </Text>
-            <Paragraph color="$color10">{event.caption}</Paragraph>
-            <Text fontSize="$6" fontWeight="bold">
-              Lineup
-            </Text>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.lineup.map((artist, index) => (
-                <Tag tag={artist} key={index} />
-              ))}
-            </XStack>
-            <Text fontSize="$6" fontWeight="bold">
-              Genres
-            </Text>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.genres.map((genre, index) => (
-                <Tag tag={genre} key={index} />
-              ))}
-            </XStack>
-          </YStack>
-          {md && (
-            <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-          )}
-          {md && (
-            <YStack flex={1} width="33%" minWidth={200} maxWidth={300}>
-              <PrimaryButton
-                text="Buy ticket 🎟️"
-                onPress={handleBuyTicket}
-                style={{ width: "100%" }}
-              />
-            </YStack>
-          )}
-        </XStack> */}
       </YStack>
     </PageContainer>
   );

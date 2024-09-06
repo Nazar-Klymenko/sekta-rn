@@ -1,24 +1,20 @@
 // src/screens/UserListScreen.tsx
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Search,
-  X,
-} from "@tamagui/lucide-icons";
-
+import { Check, Search, X, Minus } from "@tamagui/lucide-icons";
 import React, { useMemo, useState } from "react";
-
 import { useUsers } from "@/hooks/useUserData";
 import { UserData } from "@/models/UserData";
-
-import { Button, Input, ScrollView, Text, XStack, YStack } from "tamagui";
-
+import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
 import { Table } from "@/components/Table";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Form } from "@/components/form/Form";
+import { Input } from "@/components/form/Input";
+import { Pagination } from "@/components/navigation/Pagination";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
 
 const ITEMS_PER_PAGE = 10;
-
 type Column = {
   header: string;
   accessor: keyof UserData;
@@ -33,40 +29,45 @@ const columns: Column[] = [
   {
     header: "Agree ToS",
     accessor: "agreeTos",
-    render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
   {
     header: "Agree Email",
     accessor: "agreeEmail",
-    render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
   {
     header: "Is Admin",
     accessor: "isAdmin",
-    render: (value: boolean) =>
-      value ? <Check color="$green9Light" /> : <X color="$red9Light" />,
-  },
-  {
-    header: "Deletion Requested",
-    accessor: "deletionRequestedAt",
-    render: (value: Date | undefined) => value?.toLocaleString() || "N/A",
+    render: (value: boolean) => (value ? <Check /> : <Minus />),
   },
 ];
 
+const searchEventsSchema = yup.object().shape({
+  searchQuery: yup.string(),
+});
+type FormValues = yup.InferType<typeof searchEventsSchema>;
+
 export default function UserListScreen() {
-  const { data: users, isLoading, error } = useUsers();
+  const { data: users, isLoading, isError } = useUsers();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(searchEventsSchema),
+    defaultValues: {
+      searchQuery: "",
+    },
+    mode: "onTouched",
+  });
 
   const filteredUsers = useMemo(() => {
     return users?.filter((user) =>
       Object.values(user).some(
         (value) =>
           value &&
-          value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-      )
+          value.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
     );
   }, [users, searchTerm]);
 
@@ -77,12 +78,16 @@ export default function UserListScreen() {
 
   const totalPages = Math.ceil((filteredUsers?.length || 0) / ITEMS_PER_PAGE);
 
-  if (isLoading) return <Text>Loading...</Text>;
-  if (error) return <Text>An error occurred: {error.message}</Text>;
+  if (isLoading) return <FullPageLoading />;
+  if (isError) return <Text>Error loading users</Text>;
 
   const renderCell = ({ item, column }: { item: UserData; column: Column }) => {
     const value = item[column.accessor];
-    return column.render ? column.render(value) : value?.toString() || "N/A";
+    return column.render ? (
+      column.render(value)
+    ) : (
+      <Text fontSize={"$3"}>{value?.toString() || <Minus />}</Text>
+    );
   };
 
   return (
@@ -90,14 +95,18 @@ export default function UserListScreen() {
       <Text fontSize="$6" fontWeight="bold">
         All Users
       </Text>
-      <XStack alignItems="center" space="$2">
-        <Search size="$1" />
-        <Input
-          flex={1}
-          placeholder="Search users..."
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-        />
+      <XStack alignItems="center" gap="$2">
+        <Form methods={methods} flex={1}>
+          <Input
+            placeholder="Search user (coming soon)"
+            name="searchQuery"
+            id="search-users"
+            label=""
+            onChangeText={setSearchTerm}
+            icon={Search}
+            disabled
+          />
+        </Form>
       </XStack>
       <ScrollView horizontal>
         <Table>
@@ -105,7 +114,9 @@ export default function UserListScreen() {
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell key={column.accessor}>
-                  <Text fontWeight="bold">{column.header}</Text>
+                  <Text fontSize={"$3"} fontWeight={"bold"}>
+                    {column.header}
+                  </Text>
                 </Table.HeaderCell>
               ))}
             </Table.Row>
@@ -123,25 +134,11 @@ export default function UserListScreen() {
           </Table.Body>
         </Table>
       </ScrollView>
-      <XStack justifyContent="space-between" alignItems="center">
-        <Text>
-          Page {currentPage} of {totalPages}
-        </Text>
-        <XStack gap="$2">
-          <Button
-            icon={ChevronLeft}
-            disabled={currentPage === 1}
-            onPress={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          />
-          <Button
-            icon={ChevronRight}
-            disabled={currentPage === totalPages}
-            onPress={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-          />
-        </XStack>
-      </XStack>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </PageContainer>
   );
 }

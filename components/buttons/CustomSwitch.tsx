@@ -20,7 +20,7 @@ const CustomThumb = styled(Stack, {
 const AnimatedThumb = ({ checked }: { checked: boolean }) => (
   <AnimatePresence>
     <CustomThumb
-      animation="quick"
+      animation="quickest"
       x={checked ? 24 : 0}
       opacity={1}
       scale={1}
@@ -42,7 +42,7 @@ const Switch = ({
   return (
     <CustomSwitch
       onPress={onPress}
-      animation="quick"
+      animation="quickest"
       backgroundColor={
         checked ? theme.accentColor.get() : theme.gray5Light.get()
       }

@@ -1,62 +1,38 @@
-// index.tsx
-import { Search, SlidersHorizontal } from "@tamagui/lucide-icons";
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-
-import React, { useState } from "react";
-
-import { ActivityIndicator, FlatList, Platform } from "react-native";
-
-import { fetchFilteredEvents } from "@/api/events";
+import { Search } from "@tamagui/lucide-icons";
+import React, { useState, useEffect } from "react";
+import { ActivityIndicator, FlatList } from "react-native";
 import { useFavoriteEventsId } from "@/hooks/useEvents";
-import { Event } from "@/models/Event";
-
-import { Stack, useRouter } from "expo-router";
+import { useEvents } from "@/hooks/useEvents";
 import { useForm } from "react-hook-form";
-import { Button, Text, XStack, YStack, useTheme } from "tamagui";
-
+import { YStack, useTheme } from "tamagui";
 import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { FilterDialog, FilterValues } from "@/components/FilterDialog";
-import { FilterButton, RetryButton } from "@/components/buttons/IconButtons";
+import { RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { Typography } from "@/components/Typography";
+import { debounce } from "lodash";
 
 const searchEventsSchema = yup.object().shape({
   searchQuery: yup.string(),
 });
 type FormValues = yup.InferType<typeof searchEventsSchema>;
 
-const ITEMS_PER_PAGE = 6;
-
 export default function HomeScreen() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const theme = useTheme();
+  const { data: likedEvents } = useFavoriteEventsId();
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(searchEventsSchema),
     defaultValues: {
       searchQuery: "",
     },
+    mode: "onTouched",
   });
-  const theme = useTheme();
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<FilterValues>({
-    priceSort: false,
-    selectedGenres: [],
-    selectedArtists: [],
-    includeOldEvents: false,
-  });
-
-  const { data: likedEvents } = useFavoriteEventsId();
 
   const {
     data,
@@ -65,74 +41,48 @@ export default function HomeScreen() {
     isFetchingNextPage,
     status,
     error,
-    refetch,
     isLoading,
-  } = useInfiniteQuery<
-    Event[],
-    Error,
-    InfiniteData<Event[]>,
-    [string, FilterValues],
-    number
-  >({
-    queryKey: ["events", filters],
-    queryFn: async ({ pageParam }) => {
-      const events = await fetchFilteredEvents(
-        filters,
-        pageParam,
-        ITEMS_PER_PAGE,
-      );
-      return events;
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined;
-    },
-  });
+    refetch,
+  } = useEvents(searchQuery);
 
-  const flattenedEvents = data?.pages.flat() || [];
+  useEffect(() => {
+    const debouncedSearch = debounce((value: string) => {
+      setSearchQuery(value);
+    }, 300);
+
+    const subscription = methods.watch((value) => {
+      debouncedSearch(value.searchQuery || "");
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      debouncedSearch.cancel();
+    };
+  }, [methods]);
 
   const loadMore = () => {
-    if (hasNextPage) {
+    if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   };
 
-  const appliedFiltersCount = Object.values(filters).filter((value) => {
-    if (Array.isArray(value)) return value.length > 0;
-    if (typeof value === "boolean") return value;
-    return value !== null;
-  }).length;
-
-  const handleApplyFilters = (newFilters: FilterValues) => {
-    setFilters(newFilters);
-    queryClient.resetQueries({ queryKey: ["events", newFilters] });
-  };
-
-  const handleResetFilters = () => {
-    setFilters({
-      priceSort: false,
-      selectedGenres: [],
-      selectedArtists: [],
-      includeOldEvents: false,
-    });
-  };
-  // if (status === "pending") return <FullPageLoading />;
-  if (status === "error")
+  if (status === "error") {
     return (
       <YStack flex={1} justifyContent="flex-start" alignItems="center">
-        <Text>Error: {(error as Error).message}</Text>
+        <Typography variant="body1">
+          Error: {(error as Error).message}
+        </Typography>
         <RetryButton onPress={() => refetch()} size="lg" />
       </YStack>
     );
+  }
+
+  const flattenedEvents = data?.pages.flatMap((page) => page) || [];
 
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
-        style={{ flex: 1, width: "100%" }}
-        showsVerticalScrollIndicator={Platform.OS == "web"}
-        contentContainerStyle={{
-          marginHorizontal: Platform.OS == "web" ? "auto" : undefined,
-        }}
+        style={{ flex: 1, width: "100%", paddingHorizontal: 16 }}
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
@@ -156,7 +106,6 @@ export default function HomeScreen() {
           <Form
             methods={methods}
             style={{ maxWidth: 720 }}
-            paddingHorizontal="$4"
             paddingTop="$4"
             flexDirection="row"
             ai={"center"}
@@ -164,33 +113,23 @@ export default function HomeScreen() {
             <Input
               flex={1}
               placeholder="Search events"
-              name="search-events"
+              name="searchQuery"
               id="search-events"
               label=""
               icon={Search}
             />
-            <FilterButton
-              setOpen={setOpen}
-              appliedFiltersCount={appliedFiltersCount}
-            />
           </Form>
         }
         ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
+          <Typography variant="body1">
+            No events found. Pull to refresh or check back later.
+          </Typography>
         )}
         ListFooterComponent={() =>
           isFetchingNextPage ? (
             <ActivityIndicator size="large" color={theme.accentColor.get()} />
           ) : null
         }
-      />
-      <FilterDialog
-        open={open}
-        onOpenChange={setOpen}
-        events={flattenedEvents}
-        onApplyFilters={handleApplyFilters}
-        onResetFilters={handleResetFilters}
-        currentFilters={filters}
       />
     </PageContainer>
   );

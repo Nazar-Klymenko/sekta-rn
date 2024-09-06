@@ -1,4 +1,10 @@
-import { ChevronRight, Play, Ticket, Users } from "@tamagui/lucide-icons";
+import {
+  BoomBox,
+  ChevronRight,
+  Play,
+  Ticket,
+  Users,
+} from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 import { Timestamp } from "firebase/firestore";
 
@@ -62,6 +68,11 @@ export default function EventCreationPage() {
           title="All Events"
           onPress={() => router.push("/admin/events")}
           icon={Ticket}
+        />
+        <MenuItem
+          title="All Residents"
+          onPress={() => router.push("/admin/residents")}
+          icon={BoomBox}
         />
         <MenuItem
           title="All play submissions"

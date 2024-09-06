@@ -20,6 +20,7 @@ export const SecondaryButton = ({
     <Button
       onPress={onPress}
       htmlFor={htmlFor}
+      minHeight={54}
       icon={isLoading ? <Spinner /> : undefined}
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       {...props}

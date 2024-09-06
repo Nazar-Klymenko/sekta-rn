@@ -20,7 +20,7 @@ export const MenuButton = ({
     <Button
       size="$3"
       borderColor="$borderColor"
-      animation="quick"
+      animation="quickest"
       onPress={onPress}
       htmlFor={htmlFor}
       icon={isLoading ? <Spinner /> : undefined}

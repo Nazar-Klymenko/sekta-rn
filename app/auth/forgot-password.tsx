@@ -17,6 +17,8 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
+import { useToastController } from "@tamagui/toast";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),
@@ -25,6 +27,8 @@ type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
   const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const toast = useToastController();
+  const handleFirebaseError = useFirebaseErrorHandler();
 
   const router = useRouter();
   const methods = useForm<FormValues>({
@@ -32,6 +36,7 @@ export default function ForgotPasswordScreen() {
     defaultValues: {
       email: "",
     },
+    mode: "onTouched",
   });
 
   const sendPasswordResetMutation = useSendPasswordReset();
@@ -39,10 +44,17 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     sendPasswordResetMutation.mutate(data.email, {
       onSuccess: () => {
+        toast.show("Application Submitted", {
+          message: "Password reset email sent! Please check your inbox.",
+          variant: "success",
+        });
         router.push({
           pathname: "/auth/forgot-password-success",
           params: { returnTo },
         });
+      },
+      onError: (error) => {
+        handleFirebaseError(error);
       },
     });
   };
@@ -51,12 +63,7 @@ export default function ForgotPasswordScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text
-            fontSize={24}
-            fontWeight="bold"
-            textAlign="center"
-            marginBottom="$4"
-          >
+          <Text fontSize={40} fontWeight="bold" textAlign="center">
             Forgot Password
           </Text>
 
@@ -74,18 +81,7 @@ export default function ForgotPasswordScreen() {
             isLoading={sendPasswordResetMutation.isPending}
             disabled={sendPasswordResetMutation.isPending}
           />
-          {sendPasswordResetMutation.isError && (
-            <Text color="red" textAlign="center" marginTop="$2">
-              {sendPasswordResetMutation.error instanceof Error
-                ? sendPasswordResetMutation.error.message
-                : "An error occurred"}
-            </Text>
-          )}
-          {sendPasswordResetMutation.isSuccess && (
-            <Text color="green" textAlign="center" marginTop="$2">
-              Password reset email sent. Please check your inbox.
-            </Text>
-          )}
+
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Text color="$accentColor" textAlign="center">
