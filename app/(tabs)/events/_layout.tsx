@@ -35,7 +35,9 @@ export default function HomeLayout() {
       />
       <Stack.Screen
         name="(event)"
-        options={{ animation: "fade_from_bottom" }}
+        options={{
+          animation: "fade_from_bottom",
+        }}
       />
     </Stack>
   );

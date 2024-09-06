@@ -1,6 +1,6 @@
 import React from "react";
 import { Platform } from "react-native";
-import { Slot, Tabs } from "expo-router";
+import { Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserData } from "@/hooks/useUserData";
@@ -17,6 +17,8 @@ export default function TabLayout() {
   const theme = useTheme();
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
+  const pathname = usePathname();
+  const isEventDetailsPage = pathname.startsWith("/events/");
 
   if (Platform.OS === "web") {
     return <Slot />;
@@ -27,6 +29,7 @@ export default function TabLayout() {
     animation: "fade_from_bottom",
 
     tabBarStyle: {
+      display: isEventDetailsPage ? "none" : "flex",
       backgroundColor: theme.gray2Dark.get(),
       borderTopWidth: 0,
     },

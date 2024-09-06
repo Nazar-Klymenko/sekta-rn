@@ -46,7 +46,7 @@ export function PageContainer({
   };
   const md = media.gtMd;
 
-  const stickyBottomHeight = md ? 0 : 70;
+  const stickyBottomHeight = md ? 0 : 86;
 
   const content = (
     <YStack flex={1} {...containerStyle} paddingBottom={stickyBottom ? 16 : 0}>
@@ -72,6 +72,9 @@ export function PageContainer({
       borderTopWidth={1}
       borderTopColor="$borderColor"
       padding="$3"
+      paddingVertical="$4"
+      display="flex"
+      justifyContent="center"
     >
       {stickyBottom}
     </YStack>

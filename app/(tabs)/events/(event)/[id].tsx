@@ -10,8 +10,15 @@ import {
 } from "@/hooks/useEvents";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import {
+  Stack,
+  useLocalSearchParams,
+  usePathname,
+  useRouter,
+} from "expo-router";
+import {
+  H1,
+  H2,
   Image,
   Paragraph,
   Text,
@@ -27,6 +34,7 @@ import { Tag } from "@/components/Tag";
 import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -85,14 +93,14 @@ export default function EventDetailsPage() {
 
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
+  const stickyBottom = (
+    <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
+  );
   return (
-    <PageContainer>
-      <YStack gap="$4">
-        <YStack position="relative" gap="$4">
-          <XStack display="flex" jc="space-between" ai="center">
-            <Text fontSize="$8" fontWeight="bold" color="white" flex={1}>
-              {event.title}
-            </Text>
+    <PageContainer stickyBottom={stickyBottom}>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
             <XStack columnGap="$2">
               <LikeButton
                 isLiked={optimisticIsLiked}
@@ -101,9 +109,12 @@ export default function EventDetailsPage() {
               />
               <ShareButton size="sm" />
             </XStack>
-          </XStack>
-
-          <Image source={{ uri: event.image.url }} aspectRatio={16 / 9} />
+          ),
+        }}
+      />
+      <YStack gap="$4">
+        <YStack position="relative" gap="$4">
+          <Image source={{ uri: event.image.publicUrl }} aspectRatio={3 / 2} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}
@@ -125,7 +136,9 @@ export default function EventDetailsPage() {
             alignItems="flex-end"
           ></XStack>
         </YStack>
-
+        <H1 fontWeight="bold" color="white" flex={1}>
+          {event.title}
+        </H1>
         <XStack display="flex" flex={1} gap="$4">
           <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
             <InfoItem
@@ -143,21 +156,15 @@ export default function EventDetailsPage() {
               title="Price"
               value={`${event?.price || "20.00"} PLN`}
             />
-            <Text fontSize="$6" fontWeight="bold">
-              About this event
-            </Text>
+            <H2 fontWeight="bold">About this event</H2>
             <Paragraph color="$color10">{event.caption}</Paragraph>
-            <Text fontSize="$6" fontWeight="bold">
-              Lineup
-            </Text>
+            <H2 fontWeight="bold">Lineup</H2>
             <XStack flexWrap="wrap" gap="$2">
               {event.lineup.map((artist, index) => (
                 <Tag tag={artist} key={index} />
               ))}
             </XStack>
-            <Text fontSize="$6" fontWeight="bold">
-              Genres
-            </Text>
+            <H2 fontWeight="bold">Genres</H2>
             <XStack flexWrap="wrap" gap="$2">
               {event.genres.map((genre, index) => (
                 <Tag tag={genre} key={index} />

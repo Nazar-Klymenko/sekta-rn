@@ -13,6 +13,8 @@ import { isAfter } from "date-fns";
 import { Link, usePathname, useRouter } from "expo-router";
 import {
   Button,
+  H1,
+  H2,
   Image,
   Paragraph,
   Text,
@@ -88,7 +90,7 @@ export const EventCard: React.FC<EventCardProps> = ({
         borderTopLeftRadius="$4"
         overflow="hidden"
       >
-        <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
+        <Image source={{ uri: event.image.publicUrl }} aspectRatio={3 / 2} />
         <LinearGradient
           colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
           start={[0, 0]}
@@ -132,9 +134,6 @@ export const EventCard: React.FC<EventCardProps> = ({
           alignItems="center"
         >
           <YStack>
-            <Text fontSize="$8" fontWeight="bold" color="white">
-              {event.title}
-            </Text>
             <DateContainer marginTop="$1">
               <Text fontSize="$3" color="white">
                 {formattedDate}
@@ -149,7 +148,15 @@ export const EventCard: React.FC<EventCardProps> = ({
           />
         </XStack>
       </YStack>
-      <YStack paddingTop="$4" padding="$4" backgroundColor="$backgroundHover">
+      <YStack
+        paddingTop="$4"
+        padding="$4"
+        backgroundColor="$backgroundHover"
+        gap="$3"
+      >
+        <H2 fontWeight="bold" color="white" flex={1}>
+          {event.title}
+        </H2>
         <Paragraph color="$gray10Light" numberOfLines={2} ellipsizeMode="tail">
           {event.caption}
         </Paragraph>
@@ -176,6 +183,11 @@ const CardContainer = styled(YStack, {
   animation: "quickest",
   borderWidth: 1,
   borderColor: "$borderColor",
+  elevation: "$1",
+  pressStyle: {
+    elevation: "$3",
+    borderColor: "$borderColorHover",
+  },
   hoverStyle: {
     borderColor: "$borderColorHover",
   },

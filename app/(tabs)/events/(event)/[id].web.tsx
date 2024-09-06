@@ -117,7 +117,7 @@ export default function EventDetailsPage() {
             </XStack>
           </XStack>
 
-          <Image source={{ uri: event.image.url }} aspectRatio={16 / 9} />
+          <Image source={{ uri: event.image.url }} aspectRatio={3 / 2} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}
@@ -182,7 +182,7 @@ export default function EventDetailsPage() {
               ))}
             </XStack>
           </YStack>
-          {/* {md && (
+          {md && (
             <Separator alignSelf="stretch" vertical marginHorizontal={15} />
           )}
           <YStack
@@ -192,11 +192,11 @@ export default function EventDetailsPage() {
             maxWidth={md ? 300 : "none"}
           >
             <PrimaryButton
-              text="Buy ticket 🎟️"
+              text="I will attend 🎟️"
               onPress={handleBuyTicket}
               style={{ width: "100%" }}
             />
-          </YStack> */}
+          </YStack>
         </XStack>
       </YStack>
     </PageContainer>

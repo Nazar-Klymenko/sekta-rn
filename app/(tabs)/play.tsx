@@ -11,6 +11,7 @@ import {
   Youtube,
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
+import MaskedView from "@react-native-masked-view/masked-view";
 
 import React, { useRef } from "react";
 
@@ -30,9 +31,11 @@ import {
   ScrollView,
   Separator,
   Text,
+  TextStyle,
   View,
   XStack,
   YStack,
+  styled,
   useTheme,
   useWindowDimensions,
 } from "tamagui";
@@ -208,31 +211,18 @@ export default function PlayScreen() {
 const EnhancedHeroSection = () => {
   const { width, height } = useWindowDimensions();
   const isWideScreen = width > height;
-  const imageHeight = Platform.OS === "web" ? "100vh" : "100vh";
-  const nextSectionRef = useRef(null);
-
-  const scrollToNextSection = () => {
-    if (nextSectionRef.current) {
-      nextSectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+  const imageHeight =
+    Platform.OS === "web" ? (isWideScreen ? "95vh" : 500) : 600;
   return (
     <>
       <YStack height={imageHeight} overflow="hidden">
-        <BlurView
-          intensity={15}
-          tint="dark"
-          style={{ position: "absolute", width: "100%", height: "100%" }}
-        >
-          <Image
-            source={require("@/assets/images/play_bg.jpg")}
-            alt="Venue background"
-            width="100%"
-            height="100%"
-            objectFit="cover"
-          />
-        </BlurView>
+        <Image
+          source={require("@/assets/images/play_bg.jpg")}
+          alt="Venue background"
+          width="100%"
+          height="100%"
+          objectFit="cover"
+        />
         <LinearGradient
           colors={["rgba(0,0,0,0.4)", "rgba(0,0,0,0.6)", "rgba(0,0,0,0.8)"]}
           style={{
@@ -248,32 +238,30 @@ const EnhancedHeroSection = () => {
         >
           <Animated.View entering={FadeInDown.duration(400)}>
             <YStack gap="$4" alignItems="center">
-              <BlurView
-                intensity={80}
-                tint="dark"
-                style={{ borderRadius: 50, padding: 15 }}
-              >
-                <Disc size={50} color="white" />
-              </BlurView>
+              {Platform.OS !== "android" && (
+                <BlurView
+                  intensity={80}
+                  tint="dark"
+                  style={{ borderRadius: 50, padding: 15 }}
+                >
+                  <Disc size={50} color="white" />
+                </BlurView>
+              )}
               <YStack>
-                <Text
-                  fontSize={72}
-                  fontWeight="900"
-                  textAlign="center"
+                <GradientText
+                  text="Play at SEKTA SELEKTA"
+                  colors={[
+                    "#FF1493",
+                    "#FF4500",
+                    "#FFD700",
+                    "#00CED1",
+                    "#8A2BE2",
+                  ]}
                   style={{
-                    textTransform: "uppercase",
-                    letterSpacing: -2,
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    backgroundImage:
-                      "linear-gradient(45deg, #FF1493, #FF4500, #FFD700, #00CED1, #8A2BE2)",
                     paddingLeft: 4,
                     paddingRight: 4,
                   }}
-                >
-                  Play at SEKTA SELEKTA
-                </Text>
+                />
               </YStack>
               <Text
                 fontSize={24}
@@ -289,25 +277,10 @@ const EnhancedHeroSection = () => {
               >
                 Perform a set at our venue with other artists
               </Text>
-              <XStack gap="$4" marginTop="$6">
-                <Button
-                  size="$6"
-                  theme="active"
-                  borderRadius="$4"
-                  animation="bouncy"
-                  scale={0.9}
-                  hoverStyle={{ scale: 0.95 }}
-                  pressStyle={{ scale: 0.85 }}
-                  onPress={scrollToNextSection}
-                >
-                  Apply Now
-                </Button>
-              </XStack>
             </YStack>
           </Animated.View>
         </LinearGradient>
       </YStack>
-      <View ref={nextSectionRef} />
     </>
   );
 };
@@ -366,3 +339,50 @@ const VenueInfoSection = () => (
     </Card.Footer>
   </Card>
 );
+const StyledText = styled(Text, {
+  fontSize: 72,
+  fontWeight: "900",
+  textAlign: "center",
+  textTransform: "uppercase",
+  letterSpacing: -2,
+});
+
+interface GradientTextProps {
+  text: string;
+  colors: string[];
+  style?: TextStyle;
+}
+
+export const GradientText: React.FC<GradientTextProps> = ({
+  text,
+  colors,
+  style,
+}) => {
+  if (Platform.OS === "web") {
+    return (
+      <StyledText
+        style={{
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          backgroundImage: `linear-gradient(45deg, ${colors.join(", ")})`,
+          ...style,
+        }}
+      >
+        {text}
+      </StyledText>
+    );
+  }
+
+  return (
+    <MaskedView maskElement={<StyledText>{text}</StyledText>}>
+      <LinearGradient
+        colors={colors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <StyledText style={{ opacity: 0 }}>{text}</StyledText>
+      </LinearGradient>
+    </MaskedView>
+  );
+};
