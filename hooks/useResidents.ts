@@ -1,6 +1,7 @@
 // /hooks/useResidents.ts
 import { useQuery } from "@tanstack/react-query";
-import { fetchResidents, fetchResidentById } from "@/api/residents";
+
+import { fetchResidentById, fetchResidents } from "@/api/residents";
 import { ResidentData } from "@/models/ResidentData";
 
 export const useResidents = () => {

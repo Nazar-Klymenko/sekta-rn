@@ -1,3 +1,4 @@
+import MaskedView from "@react-native-masked-view/masked-view";
 import {
   AudioLines,
   Facebook,
@@ -10,19 +11,19 @@ import {
   Square,
   Youtube,
 } from "@tamagui/lucide-icons";
+import { Disc } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
-import MaskedView from "@react-native-masked-view/masked-view";
 
 import React, { useRef } from "react";
 
 import { Platform } from "react-native";
 
 import { usePlaySubmission } from "@/hooks/usePlay";
+import { emailSchema } from "@/utils/validationSchemas";
 
-import { Disc } from "@tamagui/lucide-icons";
 import { BlurView } from "expo-blur";
-
 import { useForm } from "react-hook-form";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Button,
@@ -49,8 +50,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import { emailSchema } from "@/utils/validationSchemas";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 const playSchema = yup.object({

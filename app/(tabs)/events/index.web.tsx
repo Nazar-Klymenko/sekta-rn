@@ -1,19 +1,25 @@
 import { Search } from "@tamagui/lucide-icons";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import { useFavoriteEventsId } from "@/hooks/useEvents";
 import { useEvents } from "@/hooks/useEvents";
+
+import { debounce } from "lodash";
 import { useForm } from "react-hook-form";
-import { YStack, XStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Typography } from "@/components/Typography";
+import { RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
-import { RetryButton } from "@/components/buttons/IconButtons";
-import { Typography } from "@/components/Typography";
-import { debounce } from "lodash";
 
 const searchEventsSchema = yup.object().shape({
   searchQuery: yup.string(),

@@ -1,5 +1,5 @@
 // components/Typography.tsx
-import { styled, Text, TextProps } from "tamagui";
+import { Text, TextProps, styled } from "tamagui";
 
 export const Typography = styled(Text, {
   variants: {

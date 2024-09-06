@@ -1,11 +1,14 @@
 // app/(tabs)/play/index.tsx
 import React from "react";
+
 import { useResidents } from "@/hooks/useResidents";
-import { ResidentCard } from "@/components/ResidentCard";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Text, YStack, XStack } from "tamagui";
+
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { Text, XStack, YStack } from "tamagui";
+
+import { ResidentCard } from "@/components/ResidentCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function ResidentScreen() {
   const { data: residents, isLoading, error } = useResidents();

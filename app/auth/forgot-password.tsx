@@ -1,8 +1,11 @@
+import { useToastController } from "@tamagui/toast";
+
 import React from "react";
 
 import { View } from "react-native";
 
 import { useSendPasswordReset } from "@/hooks/useAuthOperations";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { FormProvider, useForm } from "react-hook-form";
@@ -17,8 +20,6 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
-import { useToastController } from "@tamagui/toast";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),

@@ -20,9 +20,8 @@ const getInitialTheme = (): ThemeColorType => {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [themeColor, setThemeColor] = useState<ThemeColorType>(
-    getInitialTheme()
-  );
+  const [themeColor, setThemeColor] =
+    useState<ThemeColorType>(getInitialTheme());
 
   useEffect(() => {
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {

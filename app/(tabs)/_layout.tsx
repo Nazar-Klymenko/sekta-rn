@@ -1,9 +1,3 @@
-import React from "react";
-import { Platform } from "react-native";
-import { Slot, Tabs, usePathname } from "expo-router";
-import { useTheme } from "tamagui";
-import { useAuth } from "@/hooks/useAuth";
-import { useUserData } from "@/hooks/useUserData";
 import {
   BoomBox,
   Heart,
@@ -12,6 +6,16 @@ import {
   User,
   UserRoundCheck,
 } from "@tamagui/lucide-icons";
+
+import React from "react";
+
+import { Platform } from "react-native";
+
+import { useAuth } from "@/hooks/useAuth";
+import { useUserData } from "@/hooks/useUserData";
+
+import { Slot, Tabs, usePathname } from "expo-router";
+import { useTheme } from "tamagui";
 
 export default function TabLayout() {
   const theme = useTheme();

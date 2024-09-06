@@ -32,9 +32,9 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import { Tag } from "@/components/Tag";
 import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();

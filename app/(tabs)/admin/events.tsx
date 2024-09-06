@@ -1,12 +1,18 @@
-import React from "react";
-import { FlatList, Platform } from "react-native";
-import { Button, Card, Paragraph, Text, XStack, YStack } from "tamagui";
-import { useEvents } from "@/hooks/useEvents"; // Assume this hook exists
-import { PageContainer } from "@/components/layout/PageContainer";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { Link } from "expo-router";
 import { Plus } from "@tamagui/lucide-icons";
+
+import React from "react";
+
+import { FlatList, Platform } from "react-native";
+
+import { useEvents } from "@/hooks/useEvents";
 import { Event } from "@/models/Event";
+
+import { Link } from "expo-router";
+import { Button, Card, Paragraph, Text, XStack, YStack } from "tamagui";
+
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+// Assume this hook exists
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function AdminEventsPage() {
   const { data: events, isLoading, isError } = useEvents("");

@@ -1,11 +1,15 @@
 import React from "react";
-import { useResidents } from "@/hooks/useResidents";
-import { ResidentCard } from "@/components/ResidentCard";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Text, useMedia } from "tamagui";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
+
 import { FlatList, View } from "react-native";
+
+import { useResidents } from "@/hooks/useResidents";
 import { ResidentData } from "@/models/ResidentData";
+
+import { Text, useMedia } from "tamagui";
+
+import { ResidentCard } from "@/components/ResidentCard";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function ResidentScreen() {
   const { data: residents, isLoading, error } = useResidents();

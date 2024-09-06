@@ -1,22 +1,28 @@
-import { useEffect, useState } from "react";
+import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
+
+import { useEffect, useState } from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useUpdateUsername } from "@/hooks/useAuthOperations";
 import { useUserData } from "@/hooks/useUserData";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
+import { usernameSchema } from "@/utils/validationSchemas";
+
 import { useForm } from "react-hook-form";
-import { Text, XStack, YStack, Button } from "tamagui";
+import { Button, Text, XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { MenuButton } from "@/components/buttons/MenuButton";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
-import { usernameSchema } from "@/utils/validationSchemas";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { Info } from "@tamagui/lucide-icons";
 
 const profileUpdateSchema = yup.object().shape({
   username: usernameSchema,

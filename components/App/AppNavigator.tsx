@@ -1,14 +1,21 @@
-import React from "react";
-import { Platform } from "react-native";
-import { Slot, Stack } from "expo-router";
-import { useTheme, YStack } from "tamagui";
-import { useAuth } from "@/hooks/useAuth";
-import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
-import { Footer } from "@/components/navigation/Footer";
-import { CurrentToast } from "@/components/Toast";
 import { ToastViewport } from "@tamagui/toast";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Drawer } from "expo-router/drawer";
+
+import React from "react";
+
+import { Platform } from "react-native";
+
+import { useAuth } from "@/hooks/useAuth";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+
+import { Slot, Stack } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { YStack, useTheme } from "tamagui";
+
+import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
+import { CurrentToast } from "@/components/Toast";
+import { Footer } from "@/components/navigation/Footer";
 
 export function AppNavigator() {
   const { user } = useAuth();
@@ -37,7 +44,7 @@ export function AppNavigator() {
   }
 
   return (
-    <YStack f={1}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -68,6 +75,6 @@ export function AppNavigator() {
         right={right}
         flexDirection="column-reverse"
       />
-    </YStack>
+    </GestureHandlerRootView>
   );
 }

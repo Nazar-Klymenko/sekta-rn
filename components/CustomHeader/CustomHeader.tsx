@@ -1,5 +1,6 @@
 import {
   Bell,
+  BoomBox,
   Heart,
   Home,
   LogIn,
@@ -9,34 +10,34 @@ import {
   Settings,
   User,
   UserRoundCheck,
-  BoomBox,
   X,
 } from "@tamagui/lucide-icons";
 import { User as FirebaseUser } from "firebase/auth";
-import { signOut } from "@/api/auth";
 
 import React, { useEffect, useState } from "react";
 
+import { signOut } from "@/api/auth";
+import { useAuth } from "@/hooks/useAuth";
+import { useDisableScroll } from "@/hooks/useDisableScroll";
+import { useUserData } from "@/hooks/useUserData";
+
 import { Link, useRouter } from "expo-router";
 import {
+  AnimatePresence,
   Avatar,
   Button,
+  Image,
+  Stack,
+  StackProps,
   Text,
   XStack,
   YStack,
   styled,
   useMedia,
-  Stack,
-  StackProps,
-  AnimatePresence,
-  Image,
 } from "tamagui";
 
-import { useDisableScroll } from "@/hooks/useDisableScroll";
 import { Tooltip } from "../Tooltip";
 import { NavLink, NavLinkButton } from "./NavLink";
-import { useUserData } from "@/hooks/useUserData";
-import { useAuth } from "@/hooks/useAuth";
 
 // Interfaces
 interface HeaderProps {

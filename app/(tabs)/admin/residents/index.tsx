@@ -1,19 +1,25 @@
 // src/screens/AllResidentsScreen.tsx
 import { Check, Pencil, Search, X } from "@tamagui/lucide-icons";
+
 import React, { useMemo, useState } from "react";
+
 import { useResidents } from "@/hooks/useResidents";
 import { ResidentData } from "@/models/ResidentData";
-import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
-import { Table } from "@/components/Table";
-import { PageContainer } from "@/components/layout/PageContainer";
+
+import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Table } from "@/components/Table";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { Pagination } from "@/components/navigation/Pagination";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { useRouter } from "expo-router";
+import { PageContainer } from "@/components/layout/PageContainer";
+import { Pagination } from "@/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 

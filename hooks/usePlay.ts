@@ -19,7 +19,7 @@ export const usePlaySubmission = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["playInfo"] });
       },
-    }
+    },
   );
 };
 

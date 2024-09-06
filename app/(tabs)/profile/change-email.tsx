@@ -1,12 +1,17 @@
 // src/screens/UpdateEmailScreen.tsx
+import { useToastController } from "@tamagui/toast";
 
 import React, { useState } from "react";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useUpdateEmail } from "@/hooks/useAuthOperations";
-import { useToastController } from "@tamagui/toast";
+import { emailSchema } from "@/utils/validationSchemas";
+
 import { useForm } from "react-hook-form";
 import { Text, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
@@ -15,7 +20,6 @@ import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
-import { emailSchema } from "@/utils/validationSchemas";
 
 const updateEmailSchema = yup.object().shape({
   newEmail: emailSchema,

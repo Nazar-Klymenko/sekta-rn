@@ -1,7 +1,8 @@
 import { ChevronLeft, ChevronRight } from "@tamagui/lucide-icons";
+
 import React, { useMemo, useState } from "react";
 
-import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
 
 interface PaginationProps {
   currentPage: number;

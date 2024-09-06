@@ -1,4 +1,5 @@
 import { GestureResponderEvent } from "react-native";
+
 import {
   Button,
   ButtonProps,
@@ -7,6 +8,7 @@ import {
   Text,
   styled,
 } from "tamagui";
+
 import { LinearGradient } from "tamagui/linear-gradient";
 
 interface PrimaryButtonTypes extends ButtonProps {

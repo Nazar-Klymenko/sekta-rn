@@ -1,13 +1,18 @@
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+
 import React, { useState } from "react";
+
 import { Alert } from "react-native";
-import { Button, Input, YStack, Form, Label, Image, Select } from "tamagui";
-import { useRouter } from "expo-router";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/services/firebase";
-import { PageContainer } from "@/components/layout/PageContainer";
-import * as ImagePicker from "expo-image-picker";
+
 import { Event } from "@/models/Event";
+import { db, storage } from "@/services/firebase";
+
+import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
+import { Button, Form, Image, Input, Label, Select, YStack } from "tamagui";
+
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function CreateEventPage() {
   const [title, setTitle] = useState("");

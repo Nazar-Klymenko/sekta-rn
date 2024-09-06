@@ -1,8 +1,8 @@
 import {
-  styled,
-  Text,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
+  Text,
+  styled,
   useTheme,
 } from "tamagui";
 

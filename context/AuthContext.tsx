@@ -18,7 +18,7 @@ export type AuthContextType = {
 };
 
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
+  undefined,
 );
 
 const userQueryKey = ["user"];
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       isInitialized: !isLoading,
       isLoggedIn: !!user,
     }),
-    [user, isLoading]
+    [user, isLoading],
   );
 
   return (

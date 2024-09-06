@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   updatePassword,
 } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 import {
   collection,
   deleteDoc,
@@ -17,11 +18,10 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { sendEmailVerification } from "firebase/auth";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
-import { setAuthToken, removeAuthToken } from "@/utils/tokenStorage";
+import { removeAuthToken, setAuthToken } from "@/utils/tokenStorage";
 
 export const signUp = async (
   email: string,

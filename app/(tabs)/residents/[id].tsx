@@ -1,20 +1,6 @@
-import React from "react";
-import { useResident } from "@/hooks/useResidents";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { PageContainer } from "@/components/layout/PageContainer";
-
-import {
-  Text,
-  YStack,
-  XStack,
-  Image,
-  styled,
-  Button,
-  Theme,
-  GetProps,
-} from "tamagui";
 import { AnimatePresence } from "@tamagui/animate-presence";
 import {
+  ArrowLeft,
   AudioLines,
   Facebook,
   Instagram,
@@ -22,12 +8,31 @@ import {
   MapPin,
   Phone,
   Youtube,
-  ArrowLeft,
 } from "@tamagui/lucide-icons";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { LinearGradient } from "tamagui/linear-gradient";
+
+import React from "react";
+
+import { useResident } from "@/hooks/useResidents";
+
 import { BlurView } from "expo-blur";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
+import {
+  Button,
+  GetProps,
+  Image,
+  Text,
+  Theme,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
+
+import { LinearGradient } from "tamagui/linear-gradient";
+
+import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
+
 const HeroContainer = styled(YStack, {
   height: 500,
   width: "100%",

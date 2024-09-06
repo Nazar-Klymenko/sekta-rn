@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+
+import tamaguiConfig from "@/tamagui.config";
+
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { TamaguiProvider } from "tamagui";
+
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import tamaguiConfig from "@/tamagui.config";
 
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
