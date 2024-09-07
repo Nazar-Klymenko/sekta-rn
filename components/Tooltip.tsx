@@ -1,10 +1,11 @@
 import React from "react";
+
 import {
+  Stack,
   Tooltip as TamaguiTooltip,
+  Text,
   TooltipProps,
   styled,
-  Stack,
-  Text,
 } from "tamagui";
 
 interface CustomTooltipProps extends Omit<TooltipProps, "children"> {

@@ -1,7 +1,6 @@
 // src/utils/firebaseErrorHandler.ts
-
-import { FirebaseError } from "firebase/app";
 import { useToastController } from "@tamagui/toast";
+import { FirebaseError } from "firebase/app";
 
 type ErrorMessages = {
   [key: string]: string;

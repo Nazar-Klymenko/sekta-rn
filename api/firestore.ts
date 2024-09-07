@@ -1,4 +1,13 @@
 import {
+  EmailAuthProvider,
+  User,
+  signOut as firebaseSignOut,
+  reauthenticateWithCredential,
+  sendEmailVerification,
+  updateEmail,
+  verifyBeforeUpdateEmail,
+} from "firebase/auth";
+import {
   collection,
   doc,
   getDoc,
@@ -11,17 +20,7 @@ import {
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { UserData } from "@/models/UserData";
-
 import { auth, db } from "@/services/firebase";
-import {
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-  sendEmailVerification,
-  updateEmail,
-  User,
-  verifyBeforeUpdateEmail,
-  signOut as firebaseSignOut,
-} from "firebase/auth";
 
 export const getUserData = async (userId: string): Promise<UserData | null> => {
   const userDoc = await getDoc(doc(db, "users", userId));

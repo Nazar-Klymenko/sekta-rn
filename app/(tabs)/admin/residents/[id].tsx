@@ -1,17 +1,23 @@
 // src/screens/ResidentDetailsScreen.tsx
+import { useToastController } from "@tamagui/toast";
+
 import React from "react";
+
 import { useResident } from "@/hooks/useResidents";
 import { ResidentData } from "@/models/ResidentData";
-import { Button, Text, XStack, YStack, Image } from "tamagui";
-import { PageContainer } from "@/components/layout/PageContainer";
+
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
+import { Button, Image, Text, XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useToastController } from "@tamagui/toast";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const residentSchema = yup.object().shape({
   displayName: yup.string().required("Display name is required"),

@@ -1,22 +1,29 @@
 // src/pages/AdminPlaySubmissions.tsx
 import { Search, Trash2 } from "@tamagui/lucide-icons";
+
 import React, { useMemo, useState } from "react";
+
 import { Alert, Platform } from "react-native";
+
 import {
   useDeletePlaySubmission,
   useFetchPlaySubmissions,
 } from "@/hooks/usePlay";
 import { PlayData } from "@/models/PlayData";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
-import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
-import { Table } from "@/components/Table";
-import { PageContainer } from "@/components/layout/PageContainer";
+
 import { useForm } from "react-hook-form";
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Table } from "@/components/Table";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { Pagination } from "@/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;

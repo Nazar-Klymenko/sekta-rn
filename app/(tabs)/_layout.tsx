@@ -2,7 +2,6 @@ import {
   BoomBox,
   Heart,
   Home,
-  List,
   Play,
   User,
   UserRoundCheck,
@@ -15,43 +14,44 @@ import { Platform } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserData } from "@/hooks/useUserData";
 
-import { Link, Slot, Tabs, usePathname } from "expo-router";
+import { Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
-
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
   const theme = useTheme();
   const { isLoggedIn, user } = useAuth();
-  const pathname = usePathname();
   const { data: userData } = useUserData(user?.uid || "");
-  const isEventDetailsPage = pathname.startsWith("/event/");
+  const pathname = usePathname();
+  const isEventDetailsPage = pathname.startsWith("/events/");
 
   if (Platform.OS === "web") {
     return <Slot />;
   }
-  return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: theme.gray2Dark.get(),
-          borderTopWidth: 0,
-        },
-        tabBarActiveTintColor: theme.color.get(),
-        tabBarInactiveTintColor: theme.gray9Light.get(),
-        headerStyle: {
-          backgroundColor: theme.background.get(),
-          elevation: 0,
-        },
 
-        headerTintColor: theme.color.get(),
-        tabBarIconStyle: { marginTop: 4 },
-        tabBarLabelStyle: { paddingBottom: 4 },
-      }}
-    >
+  const screenOptions = {
+    headerShown: false,
+    animation: "fade_from_bottom",
+
+    tabBarStyle: {
+      display: isEventDetailsPage ? "none" : "flex",
+      backgroundColor: theme.gray2Dark.get(),
+      borderTopWidth: 0,
+    },
+    tabBarActiveTintColor: theme.color.get(),
+    tabBarInactiveTintColor: theme.gray9Light.get(),
+    headerStyle: {
+      backgroundColor: theme.background.get(),
+      elevation: 0,
+    },
+    headerTintColor: theme.color.get(),
+    tabBarIconStyle: { marginTop: 4 },
+    tabBarLabelStyle: { paddingBottom: 4 },
+  };
+
+  return (
+    <Tabs screenOptions={screenOptions}>
       <Tabs.Screen
-        name="(home)"
+        name="events"
         options={{
           title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
@@ -60,18 +60,14 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favourite"
         options={{
-          headerShown: false,
           title: "Favourite",
-          tabBarItemStyle: {
-            display: isLoggedIn ? "flex" : "none",
-          },
+          tabBarItemStyle: { display: isLoggedIn ? "flex" : "none" },
           tabBarIcon: ({ color, size }) => <Heart color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="play"
         options={{
-          headerShown: false,
           title: "Play",
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
@@ -79,7 +75,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="residents"
         options={{
-          headerShown: false,
           title: "Residents",
           tabBarIcon: ({ color, size }) => (
             <BoomBox color={color} size={size} />
@@ -96,7 +91,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="admin"
         options={{
-          headerShown: false,
           title: "Admin",
           tabBarItemStyle: {
             display: isLoggedIn && userData?.isAdmin ? "flex" : "none",

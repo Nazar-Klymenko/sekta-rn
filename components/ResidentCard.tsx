@@ -1,7 +1,10 @@
 import React from "react";
-import { Card, Image, Text, YStack, XStack, styled } from "tamagui";
+
 import { ResidentData } from "@/models/ResidentData";
+
 import { useRouter } from "expo-router";
+import { Card, Image, Text, XStack, YStack, styled } from "tamagui";
+
 import { LinearGradient } from "tamagui/linear-gradient";
 
 const StyledCard = styled(Card, {

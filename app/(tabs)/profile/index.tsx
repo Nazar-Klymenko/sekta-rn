@@ -45,13 +45,13 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { VerifyEmail } from "@/components/VerifyEmail";
 import { Switch } from "@/components/buttons/CustomSwitch";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Form } from "@/components/form/Form";
 import { Select } from "@/components/form/Select";
 import { PageContainer } from "@/components/layout/PageContainer";
-import { VerifyEmail } from "@/components/VerifyEmail";
 
 const schema = yup.object().shape({
   selectLanguage: yup.string().oneOf(["en", "pl", "ru", "ua"]).default("en"),

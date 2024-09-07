@@ -1,4 +1,5 @@
 // useAuthOperations.ts
+import { useToastController } from "@tamagui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
 import { User } from "firebase/auth";
@@ -12,11 +13,10 @@ import {
   signOut,
   signUp,
 } from "@/api/auth";
-import { updateUsername, updateUserProfile } from "@/api/firestore";
+import { updateUserProfile, updateUsername } from "@/api/firestore";
 import { UserData } from "@/models/UserData";
 
 import { useAuth } from "./useAuth";
-import { useToastController } from "@tamagui/toast";
 
 type SignUpData = Omit<UserData, "email" | "id"> & {
   email: string;

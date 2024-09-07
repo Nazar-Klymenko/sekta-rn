@@ -1,5 +1,6 @@
 // hooks/useDisableScroll.ts
 import { useEffect } from "react";
+
 import { useWindowDimensions } from "react-native";
 
 export const useDisableScroll = (shouldDisable: boolean) => {

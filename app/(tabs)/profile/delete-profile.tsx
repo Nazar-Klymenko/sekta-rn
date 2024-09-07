@@ -13,14 +13,14 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { Dialog } from "@/components/Dialog";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Form } from "@/components/form/Form";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
-import { Dialog } from "@/components/Dialog";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 
 const deleteAccountSchema = yup.object().shape({
   password: yup
@@ -53,7 +53,7 @@ export default function DeleteAccountScreen() {
           message: "Your account has been successfully deleted.",
           variant: "success",
         });
-        router.replace("/(tabs)/(home)/");
+        // router.replace("/(tabs)/events/");
       },
       onError: (error) => {
         setError("password", { message: "Wrong password" });

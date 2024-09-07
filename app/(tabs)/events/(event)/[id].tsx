@@ -1,10 +1,4 @@
-import {
-  Calendar,
-  CreditCard,
-  Heart,
-  MapPin,
-  Users,
-} from "@tamagui/lucide-icons";
+import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
 import React, { useEffect, useState } from "react";
 
@@ -16,13 +10,17 @@ import {
 } from "@/hooks/useEvents";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import {
-  Button,
+  Stack,
+  useLocalSearchParams,
+  usePathname,
+  useRouter,
+} from "expo-router";
+import {
+  H1,
+  H2,
   Image,
   Paragraph,
-  Separator,
-  Stack,
   Text,
   XStack,
   YStack,
@@ -88,25 +86,21 @@ export default function EventDetailsPage() {
     }
   };
 
-  const handleBuyTicket = () => {
-    // Implement buy ticket functionality
-    console.log("Buy ticket for event:", event.id);
-  };
-
   const formattedDate = formatFirestoreTimestamp(
     event.date,
     "EEEE, MMMM do yyyy",
   );
+
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
+  const stickyBottom = (
+    <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
+  );
   return (
-    <PageContainer>
-      <YStack gap="$4">
-        <YStack position="relative" gap="$4">
-          <XStack display="flex" jc="space-between" ai="center">
-            <Text fontSize="$8" fontWeight="bold" color="white" flex={1}>
-              {event.title}
-            </Text>
+    <PageContainer stickyBottom={stickyBottom}>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
             <XStack columnGap="$2">
               <LikeButton
                 isLiked={optimisticIsLiked}
@@ -115,9 +109,12 @@ export default function EventDetailsPage() {
               />
               <ShareButton size="sm" />
             </XStack>
-          </XStack>
-
-          <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
+          ),
+        }}
+      />
+      <YStack gap="$4">
+        <YStack position="relative" gap="$4">
+          <Image source={{ uri: event.image.publicUrl }} aspectRatio={3 / 2} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}
@@ -139,12 +136,10 @@ export default function EventDetailsPage() {
             alignItems="flex-end"
           ></XStack>
         </YStack>
-        <XStack
-          display="flex"
-          flex={1}
-          gap="$4"
-          flexDirection={md ? "row" : "column"}
-        >
+        <H1 fontWeight="bold" color="white" flex={1}>
+          {event.title}
+        </H1>
+        <XStack display="flex" flex={1} gap="$4">
           <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
             <InfoItem
               icon={<Calendar color={theme.accentColor.get()} size={24} />}
@@ -161,42 +156,21 @@ export default function EventDetailsPage() {
               title="Price"
               value={`${event?.price || "20.00"} PLN`}
             />
-            <Text fontSize="$6" fontWeight="bold">
-              About this event
-            </Text>
-            <Paragraph color="$color10Light">{event.caption}</Paragraph>
-            <Text fontSize="$6" fontWeight="bold">
-              Lineup
-            </Text>
+            <H2 fontWeight="bold">About this event</H2>
+            <Paragraph color="$color10">{event.caption}</Paragraph>
+            <H2 fontWeight="bold">Lineup</H2>
             <XStack flexWrap="wrap" gap="$2">
               {event.lineup.map((artist, index) => (
                 <Tag tag={artist} key={index} />
               ))}
             </XStack>
-            <Text fontSize="$6" fontWeight="bold">
-              Genres
-            </Text>
+            <H2 fontWeight="bold">Genres</H2>
             <XStack flexWrap="wrap" gap="$2">
               {event.genres.map((genre, index) => (
                 <Tag tag={genre} key={index} />
               ))}
             </XStack>
           </YStack>
-          {/* {md && (
-            <Separator alignSelf="stretch" vertical marginHorizontal={15} />
-          )}
-          <YStack
-            flex={1}
-            width={md ? "33%" : "100%"}
-            minWidth={md ? 200 : "auto"}
-            maxWidth={md ? 300 : "none"}
-          >
-            <PrimaryButton
-              text="Buy ticket 🎟️"
-              onPress={handleBuyTicket}
-              style={{ width: "100%" }}
-            />
-          </YStack> */}
         </XStack>
       </YStack>
     </PageContainer>

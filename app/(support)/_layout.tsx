@@ -1,7 +1,8 @@
-import { Platform } from "react-native";
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import { Stack } from "expo-router";
 
+import { Platform } from "react-native";
+
+import { Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
 export default function SupportLayout() {

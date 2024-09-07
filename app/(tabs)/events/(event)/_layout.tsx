@@ -7,6 +7,7 @@ import { useTheme } from "tamagui";
 
 export default function HomeLayout() {
   const theme = useTheme();
+
   if (Platform.OS === "web") {
     return <Slot />;
   }

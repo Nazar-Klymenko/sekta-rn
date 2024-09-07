@@ -1,10 +1,19 @@
 import { GestureResponderEvent } from "react-native";
-import { Button, ButtonProps, Spinner, Text, styled } from "tamagui";
+
+import {
+  Button,
+  ButtonProps,
+  ButtonText,
+  Spinner,
+  Text,
+  styled,
+} from "tamagui";
+
 import { LinearGradient } from "tamagui/linear-gradient";
 
 interface PrimaryButtonTypes extends ButtonProps {
   onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
-  text: string;
+  text?: string;
   htmlFor?: string;
   isLoading?: boolean;
 }
@@ -21,6 +30,7 @@ export const PrimaryButton = ({
   text,
   isLoading,
   htmlFor,
+  children,
   ...props
 }: PrimaryButtonTypes): JSX.Element => {
   return (
@@ -33,7 +43,7 @@ export const PrimaryButton = ({
       {...props}
     >
       <LinearGradient
-        colors={["$pink8Light", "$accentBackground"]}
+        colors={["$pink9Light", "$accentBackground"]}
         start={[0, 0]}
         end={[1, 1]}
         style={{
@@ -44,9 +54,14 @@ export const PrimaryButton = ({
           bottom: 0,
         }}
       />
-      <Text color="$colorContrast" fontWeight="bold" zIndex={1}>
-        {text}
-      </Text>
+      <ButtonText
+        color="$colorContrast"
+        fontWeight="bold"
+        zIndex={1}
+        fontSize={16}
+      >
+        {text} {children}
+      </ButtonText>
     </StyledButton>
   );
 };

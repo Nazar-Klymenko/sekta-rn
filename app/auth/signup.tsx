@@ -3,6 +3,7 @@ import { useToastController } from "@tamagui/toast";
 import React from "react";
 
 import { useSignUp } from "@/hooks/useAuthOperations";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
   passwordSchema,
@@ -25,7 +26,6 @@ import { PasswordInput } from "@/components/form/PasswordInput";
 import { PasswordRequirements } from "@/components/form/PasswordRequirements";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 export const signUpSchema = yup.object().shape({
   email: emailSchema,

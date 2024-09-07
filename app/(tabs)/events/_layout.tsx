@@ -11,17 +11,17 @@ export default function HomeLayout() {
     return <Slot />;
   }
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="index"
         options={{
           title: "Events",
-          animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
+          animation: "fade_from_bottom",
 
           headerSearchBarOptions: {
             shouldShowHintSearchIcon: false,
@@ -33,22 +33,9 @@ export default function HomeLayout() {
           },
         }}
       />
-      {/* <Stack.Screen
-        name="upcoming"
-        options={{
-          title: "Upcoming events",
-          animation: "fade_from_bottom",
-          headerShown: true || Platform.OS !== "web",
-          headerStyle: {
-            backgroundColor: theme.background.get(),
-          },
-          headerTintColor: theme.color.get(),
-        }}
-      /> */}
       <Stack.Screen
-        name="event"
+        name="(event)"
         options={{
-          headerShown: false,
           animation: "fade_from_bottom",
         }}
       />

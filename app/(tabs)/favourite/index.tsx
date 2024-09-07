@@ -1,14 +1,18 @@
+import { ArrowRight, Heart } from "@tamagui/lucide-icons";
+
 import React from "react";
+
+import { useAuth } from "@/hooks/useAuth";
 import { useFavoriteEventsId, useFavoriteEventsList } from "@/hooks/useEvents";
+
 import { useRouter } from "expo-router";
-import { Text, YStack, XStack, ScrollView, Button } from "tamagui";
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
+
+import { Typography } from "@/components/Typography";
+import { RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
-import { Typography } from "@/components/Typography";
-import { RetryButton } from "@/components/buttons/IconButtons";
-import { useAuth } from "@/hooks/useAuth";
-import { ArrowRight, Heart } from "@tamagui/lucide-icons";
 
 export default function LikedEventsPage() {
   const {

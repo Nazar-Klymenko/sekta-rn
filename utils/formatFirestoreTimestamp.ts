@@ -10,7 +10,7 @@ type TimestampLike =
 
 export const formatFirestoreTimestamp = (
   timestamp: TimestampLike,
-  dateFormat: string
+  dateFormat: string,
 ): string => {
   let date: Date;
 

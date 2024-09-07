@@ -1,12 +1,18 @@
 // hooks/usePushNotifications.ts
-import { useState, useEffect, useRef } from "react";
-import * as Notifications from "expo-notifications";
-import * as Device from "expo-device";
-import { Platform } from "react-native";
+import { params } from "firebase-functions/v1";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/services/firebase";
+
+import { useEffect, useRef, useState } from "react";
+
+import { Platform } from "react-native";
+
 import { useAuth } from "@/hooks/useAuth";
+import { db } from "@/services/firebase";
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -66,7 +72,10 @@ export function usePushNotifications() {
     console.log("Notification data:", data);
     if (data.type === "event" && data.eventId) {
       console.log("Navigating to event:", data.eventId);
-      router.push(`/(tabs)/(home)/event/${data.eventId}`);
+      router.push({
+        pathname: "/(tabs)/events/[id]",
+        params: { id: data.eventId },
+      });
     }
   };
 

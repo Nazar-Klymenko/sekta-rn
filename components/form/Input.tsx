@@ -8,13 +8,14 @@ import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
   Stack,
-  styled,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   Text,
   XStack,
   YStack,
+  styled,
 } from "tamagui";
+
 import { BaseInput, MaxLength } from "./shared/BaseInput";
 
 interface InputProps extends TamaguiInputProps {

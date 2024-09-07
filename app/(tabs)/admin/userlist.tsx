@@ -1,18 +1,24 @@
 // src/screens/UserListScreen.tsx
-import { Check, Search, X, Minus } from "@tamagui/lucide-icons";
+import { Check, Minus, Search, X } from "@tamagui/lucide-icons";
+
 import React, { useMemo, useState } from "react";
+
 import { useUsers } from "@/hooks/useUserData";
 import { UserData } from "@/models/UserData";
-import { Button, Text, XStack, YStack, ScrollView } from "tamagui";
-import { Table } from "@/components/Table";
-import { PageContainer } from "@/components/layout/PageContainer";
+
 import { useForm } from "react-hook-form";
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
+
 import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { Table } from "@/components/Table";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
-import { Pagination } from "@/components/navigation/Pagination";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import { PageContainer } from "@/components/layout/PageContainer";
+import { Pagination } from "@/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 type Column = {

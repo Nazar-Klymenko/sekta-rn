@@ -3,6 +3,7 @@ import { Toast, useToastController } from "@tamagui/toast";
 import React from "react";
 
 import { useSignIn } from "@/hooks/useAuthOperations";
+import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
@@ -19,7 +20,6 @@ import { Input } from "@/components/form/Input";
 import { PasswordInput } from "@/components/form/PasswordInput";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
 
 const loginSchema = yup.object().shape({
   email: emailSchema,

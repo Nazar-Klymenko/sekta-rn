@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { styled, XStack, Text } from "tamagui";
+import { Text, XStack, styled } from "tamagui";
 
 interface NavLinkProps {
   href: string;

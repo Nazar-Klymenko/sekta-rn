@@ -4,12 +4,12 @@ import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { db } from "../services/firebase";
 
 const checkUsernameAvailability = async (
-  username: string
+  username: string,
 ): Promise<boolean> => {
   const q = query(
     collection(db, "users"),
     where("username", "==", username),
-    limit(1)
+    limit(1),
   );
 
   const querySnapshot = await getDocs(q);

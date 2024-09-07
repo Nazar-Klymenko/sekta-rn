@@ -1,15 +1,17 @@
+import { Facebook, Instagram, Twitter } from "@tamagui/lucide-icons";
+
 import React from "react";
+
 import { Link } from "expo-router";
 import {
+  Separator,
+  Stack,
+  Text,
   XStack,
   YStack,
-  Text,
-  Separator,
-  useTheme,
   useMedia,
-  Stack,
+  useTheme,
 } from "tamagui";
-import { Facebook, Instagram, Twitter } from "@tamagui/lucide-icons";
 
 export const Footer = () => {
   const theme = useTheme();

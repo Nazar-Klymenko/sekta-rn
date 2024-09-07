@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
 import { getFunctions, httpsCallable } from "firebase/functions";
+
+import { useEffect, useState } from "react";
+
+import { useAuth } from "@/hooks/useAuth";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
+
 import { Text, XStack, YStack } from "tamagui";
+
 import { Switch } from "@/components/buttons/CustomSwitch";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { usePushNotifications } from "@/hooks/usePushNotifications";
 
 const functions = getFunctions();
 const sendPushNotification = httpsCallable(functions, "sendPushNotification");

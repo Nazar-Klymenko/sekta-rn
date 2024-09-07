@@ -1,17 +1,10 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
-import { ScrollView, ViewStyle } from "react-native";
+import { Spinner, Stack, StackProps, YStack, useTheme } from "tamagui";
 
-import {
-  Spinner,
-  Stack,
-  StackProps,
-  YStack,
-  useMedia,
-  useTheme,
-} from "tamagui";
-
-export function FullPageLoading() {
+export const FullPageLoading: React.FC<PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const theme = useTheme();
 
   const containerStyle: StackProps = {
@@ -22,7 +15,7 @@ export function FullPageLoading() {
     marginHorizontal: "auto",
   };
 
-  const content = (
+  return (
     <YStack flex={1} backgroundColor="$background">
       <YStack
         {...containerStyle}
@@ -33,9 +26,8 @@ export function FullPageLoading() {
         alignItems="center"
       >
         <Spinner color="$accentColor" size="large" />
+        {children}
       </YStack>
     </YStack>
   );
-
-  return content;
-}
+};

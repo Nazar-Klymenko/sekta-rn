@@ -29,7 +29,7 @@ import { LikeButton } from "@/components/buttons/IconButtons";
 
 interface EventCardProps {
   event: Event;
-  hrefSource: "event" | "favourite";
+  hrefSource: "events" | "favourite";
   isLiked: boolean;
 }
 
@@ -50,7 +50,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   }, [isLiked]);
 
   const handleLike = (
-    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -64,20 +64,20 @@ export const EventCard: React.FC<EventCardProps> = ({
           onError: () => {
             setOptimisticIsLiked((prev) => !prev);
           },
-        }
+        },
       );
     }
   };
 
   const formattedDate = formatFirestoreTimestamp(
     event.date,
-    "dd MMM yyyy • HH:mm"
+    "dd MMM yyyy • HH:mm",
   );
   const formattedDayName = formatFirestoreTimestamp(event.date, "EEE");
   const formattedDay = formatFirestoreTimestamp(event.date, "dd.MM");
   const isPastEvent = isAfter(
     new Date(),
-    new Date(event.date.seconds * 1000 + event.date.nanoseconds / 1000000)
+    new Date(event.date.seconds * 1000 + event.date.nanoseconds / 1000000),
   );
 
   return (

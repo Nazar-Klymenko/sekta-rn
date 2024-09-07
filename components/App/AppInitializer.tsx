@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+
+import tamaguiConfig from "@/tamagui.config";
+
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { TamaguiProvider } from "tamagui";
+
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import tamaguiConfig from "@/tamagui.config";
 
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+    SektaFont: require("../../assets/fonts/SektaFont-Regular.ttf"),
     Lato_900Black: require("@expo-google-fonts/lato/Lato_900Black.ttf"),
   });
 

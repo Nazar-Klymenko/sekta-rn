@@ -1,3 +1,6 @@
+import { Info } from "@tamagui/lucide-icons";
+import { useQueryClient } from "@tanstack/react-query";
+
 import React, { useEffect, useState } from "react";
 
 import { queryUserByUsername } from "@/api/firestore";
@@ -18,8 +21,6 @@ import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
-import { Info } from "@tamagui/lucide-icons";
-import { useQueryClient } from "@tanstack/react-query";
 
 const usernameBridgeSchema = yup.object().shape({
   username: usernameSchema,

@@ -55,10 +55,10 @@ export function FilterDialog({
     { handleSubmit, reset } = methods;
 
   const uniqueGenres = Array.from(
-    new Set(events.flatMap((event) => event.genres))
+    new Set(events.flatMap((event) => event.genres)),
   );
   const uniqueArtists = Array.from(
-    new Set(events.flatMap((event) => event.lineup))
+    new Set(events.flatMap((event) => event.lineup)),
   );
 
   const onSubmit = (data: FilterValues) => {

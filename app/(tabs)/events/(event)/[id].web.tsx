@@ -117,7 +117,7 @@ export default function EventDetailsPage() {
             </XStack>
           </XStack>
 
-          <Image source={{ uri: event.image.publicUrl }} aspectRatio={16 / 9} />
+          <Image source={{ uri: event.image.url }} aspectRatio={3 / 2} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}
@@ -139,8 +139,12 @@ export default function EventDetailsPage() {
             alignItems="flex-end"
           ></XStack>
         </YStack>
-
-        <XStack display="flex" flex={1} gap="$4">
+        <XStack
+          display="flex"
+          flex={1}
+          gap="$4"
+          flexDirection={md ? "row" : "column"}
+        >
           <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
             <InfoItem
               icon={<Calendar color={theme.accentColor.get()} size={24} />}
@@ -160,7 +164,7 @@ export default function EventDetailsPage() {
             <Text fontSize="$6" fontWeight="bold">
               About this event
             </Text>
-            <Paragraph color="$color10">{event.caption}</Paragraph>
+            <Paragraph color="$color10Light">{event.caption}</Paragraph>
             <Text fontSize="$6" fontWeight="bold">
               Lineup
             </Text>
@@ -178,18 +182,21 @@ export default function EventDetailsPage() {
               ))}
             </XStack>
           </YStack>
-          {/* {md && (
+          {md && (
             <Separator alignSelf="stretch" vertical marginHorizontal={15} />
           )}
-          {md && (
-            <YStack flex={1} width="33%" minWidth={200} maxWidth={300}>
-              <PrimaryButton
-                text="Buy ticket 🎟️"
-                onPress={handleBuyTicket}
-                style={{ width: "100%" }}
-              />
-            </YStack>
-          )} */}
+          <YStack
+            flex={1}
+            width={md ? "33%" : "100%"}
+            minWidth={md ? 200 : "auto"}
+            maxWidth={md ? 300 : "none"}
+          >
+            <PrimaryButton
+              text="I will attend 🎟️"
+              onPress={handleBuyTicket}
+              style={{ width: "100%" }}
+            />
+          </YStack>
         </XStack>
       </YStack>
     </PageContainer>
