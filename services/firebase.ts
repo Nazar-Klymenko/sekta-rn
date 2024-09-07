@@ -1,14 +1,7 @@
-// firebaseConfig.ts
 import { FirebaseApp, getApps, initializeApp } from "firebase/app";
-import { Auth, getAuth, initializeAuth } from "firebase/auth";
+import { Auth, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-
-import {
-  getAuthToken,
-  removeAuthToken,
-  setAuthToken,
-} from "@/utils/tokenStorage";
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
@@ -25,12 +18,11 @@ let auth: Auth;
 
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
-  auth = initializeAuth(app);
 } else {
   app = getApps()[0];
-  auth = getAuth(app);
 }
 
+auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
