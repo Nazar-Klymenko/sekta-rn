@@ -1,9 +1,11 @@
+// src/components/AppProviders.tsx
 import { ToastProvider } from "@tamagui/toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import React from "react";
 
 import { AuthProvider } from "@/context/AuthContext";
+import { DrawerProvider } from "@/context/DrawerContext";
 import { useThemeContext } from "@/context/ThemeContext";
 import tamaguiConfig from "@/tamagui.config";
 
@@ -12,7 +14,7 @@ import { TamaguiProvider } from "tamagui";
 
 const queryClient = new QueryClient();
 
-export function AppProviders({ children }: { children: any }) {
+export function AppProviders({ children }: { children: React.ReactNode }) {
   const { themeColor } = useThemeContext();
 
   return (
@@ -20,7 +22,9 @@ export function AppProviders({ children }: { children: any }) {
       <SafeAreaProvider>
         <TamaguiProvider config={tamaguiConfig} defaultTheme={themeColor}>
           <ToastProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+              <DrawerProvider>{children}</DrawerProvider>
+            </AuthProvider>
           </ToastProvider>
         </TamaguiProvider>
       </SafeAreaProvider>

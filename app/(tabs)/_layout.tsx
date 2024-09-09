@@ -69,6 +69,7 @@ export default function TabLayout() {
         name="play"
         options={{
           title: "Play",
+          headerShown: true,
           tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
       />

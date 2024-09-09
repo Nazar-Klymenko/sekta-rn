@@ -3,6 +3,7 @@ import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 import React, { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useDrawer } from "@/hooks/useDrawer";
 import {
   useEvent,
   useFavoriteEventsId,
@@ -17,6 +18,7 @@ import {
   useRouter,
 } from "expo-router";
 import {
+  Button,
   H1,
   H2,
   Image,
@@ -46,6 +48,7 @@ export default function EventDetailsPage() {
   const router = useRouter();
   const pathname = usePathname();
   const media = useMedia();
+  const { openDrawer } = useDrawer();
 
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
   const md = media.gtMd;

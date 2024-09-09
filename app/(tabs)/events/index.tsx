@@ -9,12 +9,13 @@ import { useEvents } from "@/hooks/useEvents";
 
 import { debounce } from "lodash";
 import { useForm } from "react-hook-form";
-import { YStack, useTheme } from "tamagui";
+import { XStack, YStack, useTheme } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { DrawerButton } from "@/components/DrawerButton";
 import { Typography } from "@/components/Typography";
 import { RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";

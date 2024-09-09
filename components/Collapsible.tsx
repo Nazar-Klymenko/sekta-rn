@@ -4,7 +4,7 @@ import { PropsWithChildren, useState } from "react";
 
 import { StyleSheet, TouchableOpacity, useColorScheme } from "react-native";
 
-import { XStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
 
 import { ThemedText } from "@/components/ThemedText";
 
@@ -16,7 +16,7 @@ export function Collapsible({
   const theme = useColorScheme() ?? "light";
 
   return (
-    <XStack>
+    <YStack>
       <TouchableOpacity
         style={styles.heading}
         onPress={() => setIsOpen((value) => !value)}
@@ -28,8 +28,8 @@ export function Collapsible({
         />
         <ThemedText type="defaultSemiBold">{title}</ThemedText>
       </TouchableOpacity>
-      {isOpen && <XStack style={styles.content}>{children}</XStack>}
-    </XStack>
+      {isOpen && <YStack style={styles.content}>{children}</YStack>}
+    </YStack>
   );
 }
 
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   heading: {
     flexDirection: "row",
     alignItems: "center",
+    color: "white",
     gap: 6,
   },
   content: {

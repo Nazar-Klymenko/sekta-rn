@@ -17,6 +17,8 @@ import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
 import { CurrentToast } from "@/components/Toast";
 import { Footer } from "@/components/navigation/Footer";
 
+import { DrawerLayout } from "../DrawerLayout";
+
 export function AppNavigator() {
   const { user } = useAuth();
   const { left, top, right } = useSafeAreaInsets();
@@ -45,36 +47,38 @@ export function AppNavigator() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{ headerShown: false, animation: "fade_from_bottom" }}
+      <DrawerLayout>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{ headerShown: false, animation: "fade_from_bottom" }}
+          />
+          <Stack.Screen
+            name="auth"
+            options={{
+              headerShown: false,
+              animation: "fade_from_bottom",
+              presentation: "modal",
+            }}
+          />
+          <Stack.Screen
+            name="(support)"
+            options={{
+              headerShown: false,
+              animation: "fade_from_bottom",
+              presentation: "modal",
+            }}
+          />
+          <Stack.Screen name="+not-found" options={{ presentation: "modal" }} />
+        </Stack>
+        <CurrentToast />
+        <ToastViewport
+          top={top}
+          left={left}
+          right={right}
+          flexDirection="column-reverse"
         />
-        <Stack.Screen
-          name="auth"
-          options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
-            presentation: "modal",
-          }}
-        />
-        <Stack.Screen
-          name="(support)"
-          options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
-            presentation: "modal",
-          }}
-        />
-        <Stack.Screen name="+not-found" options={{ presentation: "modal" }} />
-      </Stack>
-      <CurrentToast />
-      <ToastViewport
-        top={top}
-        left={left}
-        right={right}
-        flexDirection="column-reverse"
-      />
+      </DrawerLayout>
     </GestureHandlerRootView>
   );
 }
