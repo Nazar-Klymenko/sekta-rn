@@ -17,7 +17,7 @@ import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
 import { CurrentToast } from "@/components/Toast";
 import { Footer } from "@/components/navigation/Footer";
 
-import { DrawerLayout } from "../DrawerLayout";
+import { DrawerLayout } from "../components/drawer/DrawerLayout";
 
 export function AppNavigator() {
   const { user } = useAuth();

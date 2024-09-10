@@ -1,10 +1,9 @@
 import React from "react";
 
 import { ThemeProvider } from "@/context/ThemeContext";
-
-import { AppInitializer } from "@/components/App/AppInitializer";
-import { AppNavigator } from "@/components/App/AppNavigator";
-import { AppProviders } from "@/components/App/AppProviders";
+import { AppInitializer } from "@/initialization/AppInitializer";
+import { AppNavigator } from "@/initialization/AppNavigator";
+import { AppProviders } from "@/initialization/AppProviders";
 
 export default function RootLayout() {
   return (

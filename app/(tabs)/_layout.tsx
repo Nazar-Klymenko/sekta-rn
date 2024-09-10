@@ -1,4 +1,5 @@
 import {
+  Bookmark,
   BoomBox,
   Heart,
   Home,
@@ -30,8 +31,6 @@ export default function TabLayout() {
 
   const screenOptions = {
     headerShown: false,
-    animation: "fade_from_bottom",
-
     tabBarStyle: {
       display: isEventDetailsPage ? "none" : "flex",
       backgroundColor: theme.gray2Dark.get(),
@@ -58,11 +57,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="favourite"
+        name="saved"
         options={{
-          title: "Favourite",
+          title: "Saved",
           tabBarItemStyle: { display: isLoggedIn ? "flex" : "none" },
-          tabBarIcon: ({ color, size }) => <Heart color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Bookmark color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen

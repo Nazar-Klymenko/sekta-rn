@@ -38,26 +38,34 @@ import {
   useTheme,
 } from "tamagui";
 
-import { Collapsible } from "./Collapsible";
-import { PrimaryButton } from "./buttons/PrimaryButton";
+import { Collapsible } from "../Collapsible";
+import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
   {
     title: `Home`,
     icon: Home,
+    url: "/events",
+  },
+  {
+    title: `Profile`,
+    icon: User,
+    url: "/profile",
   },
   {
     title: `Saved`,
     icon: Bookmark,
+    url: "/favorite",
   },
   {
     title: `Residents`,
     icon: BoomBox,
+    url: "/residents",
   },
-
   {
     title: `Play at our venue`,
     icon: Play,
+    url: "/play",
   },
 ];
 
@@ -110,7 +118,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             title={item.title}
             icon={item.icon}
             onPress={() => {
-              router.navigate("/residents");
+              router.push(item.url);
               closeDrawer();
             }}
           />
@@ -172,24 +180,6 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-const ResponsiveStack = styled(Button, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  pressStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  padding: "$4",
-  minHeight: 54,
-  borderRadius: "$2",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  backgroundColor: "transparent",
-  borderWidth: 0,
-  marginBottom: 8,
-});
-
 const MenuItem = ({
   title,
   onPress,
@@ -200,12 +190,32 @@ const MenuItem = ({
   icon: React.ElementType;
 }) => (
   <ResponsiveStack onPress={onPress}>
-    <XStack flex={1} alignItems="center" gap="$3">
+    <XStack flex={1} alignItems="center" justifyContent="flex-start" gap="$3">
       <Icon size="$1" color="$gray10Light" />
-      <Text fontSize="$4">{title}</Text>
+      <Text fontSize="$6">{title}</Text>
     </XStack>
   </ResponsiveStack>
 );
+
+const ResponsiveStack = styled(Button, {
+  hoverStyle: {
+    backgroundColor: "$backgroundHover",
+  },
+  pressStyle: {
+    backgroundColor: "$backgroundHover",
+  },
+  padding: "$4",
+  minHeight: "$6",
+  borderRadius: "$2",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  backgroundColor: "transparent",
+  borderWidth: 0,
+  marginBottom: 8,
+  size: "$5",
+});
 
 const UserPreview = styled(XStack, {
   alignItems: "center",

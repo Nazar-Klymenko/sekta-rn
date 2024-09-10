@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import { Slot, Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
-import { DrawerButton } from "@/components/DrawerButton";
+import { DrawerButton } from "@/components/drawer/DrawerButton";
 
 export default function HomeLayout() {
   const theme = useTheme();

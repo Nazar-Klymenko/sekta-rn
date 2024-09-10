@@ -15,9 +15,9 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { DrawerButton } from "@/components/DrawerButton";
 import { Typography } from "@/components/Typography";
 import { RetryButton } from "@/components/buttons/IconButtons";
+import { DrawerButton } from "@/components/drawer/DrawerButton";
 import { EventCard } from "@/components/event/EventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
 import { Form } from "@/components/form/Form";

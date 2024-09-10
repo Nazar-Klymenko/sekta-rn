@@ -1,4 +1,4 @@
-import { ArrowRight, Heart } from "@tamagui/lucide-icons";
+import { ArrowRight, Bookmark, Heart } from "@tamagui/lucide-icons";
 
 import React from "react";
 
@@ -49,13 +49,14 @@ export default function LikedEventsPage() {
         paddingVertical="$8"
         gap="$4"
       >
-        <Heart size={100} color="$gray8Light" />
+        <Bookmark size={100} color="$gray8Light" />
         <Typography variant="h5" textAlign="center">
-          {user?.displayName ? `${user.displayName}, your` : "Your"} favorites
-          list is empty
+          {user?.displayName ? `${user.displayName}, your` : "Your"} Saved
+          events list is empty
         </Typography>
         <Typography variant="body1" textAlign="center" color="$gray10Light">
-          Like events to add them to your favorites and easily find them later.
+          Bookmark events to add them to your saved list and easily find them
+          later.
         </Typography>
         <SecondaryButton
           size="$4"
@@ -63,7 +64,7 @@ export default function LikedEventsPage() {
           onPress={() => router.push("/")}
           icon={<ArrowRight size={16} />}
           text="Discover Events"
-        ></SecondaryButton>
+        />
       </YStack>
     );
   };
