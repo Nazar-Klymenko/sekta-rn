@@ -5,6 +5,8 @@ import { Platform } from "react-native";
 import { Slot, Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
+import { DrawerButton } from "@/components/drawer/DrawerButton";
+
 export default function HomeLayout() {
   const theme = useTheme();
   if (Platform.OS === "web") {
@@ -17,6 +19,7 @@ export default function HomeLayout() {
         options={{
           title: "Admin",
           animation: "fade_from_bottom",
+          headerLeft: () => <DrawerButton />,
           headerShown: true || Platform.OS !== "web",
           headerStyle: {
             backgroundColor: theme.background.get(),
