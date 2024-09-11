@@ -6,6 +6,7 @@ import {
   FileText,
   HelpCircle,
   Home,
+  LogOut,
   Play,
   Save,
   SeparatorHorizontal,
@@ -15,13 +16,14 @@ import {
 
 import React from "react";
 
-import { FlatList, Platform } from "react-native";
+import { FlatList, Platform, TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useSignOut } from "@/hooks/useAuthOperations";
 import { useDrawer } from "@/hooks/useDrawer";
 import { useUserData } from "@/hooks/useUserData";
 
-import { useRouter, useSegments } from "expo-router";
+import { Href, useRouter, useSegments } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
 import {
   SafeAreaView,
@@ -31,6 +33,7 @@ import {
   Avatar,
   Button,
   Separator,
+  Stack,
   Text,
   XStack,
   YStack,
@@ -77,6 +80,12 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
   const [segment] = useSegments() as [SharedSegment];
+  const signOutMutation = useSignOut();
+
+  const handleSignOut = () => {
+    signOutMutation.mutate();
+  };
+
   const renderDrawerContent = () => (
     <SafeAreaView style={{ flex: 1 }}>
       <UserPreview
@@ -113,7 +122,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
         data={menuItems}
         renderItem={({ item }) => (
           <MenuItem
-            title={item.title}
+            title={item.title + segment}
             icon={item.icon}
             onPress={() => {
               router.push(`${item.url}`);
@@ -127,17 +136,26 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
           <Collapsible title="Legal">
             <MenuItem
               title="Terms of Service"
-              onPress={() => router.push("/tos")}
+              onPress={() => {
+                router.push("/tos");
+                closeDrawer();
+              }}
               icon={FileText}
             />
             <MenuItem
               title="Privacy policy"
-              onPress={() => router.push("/privacy-policy")}
+              onPress={() => {
+                router.push("/privacy-policy");
+                closeDrawer();
+              }}
               icon={ShieldCheck}
             />
             <MenuItem
               title="Contact us"
-              onPress={() => router.push("/profile/contact")}
+              onPress={() => {
+                router.push("/profile/contact");
+                closeDrawer();
+              }}
               icon={HelpCircle}
             />
           </Collapsible>
@@ -156,7 +174,26 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
         display="flex"
         justifyContent="center"
       >
-        <PrimaryButton width="100%">Log in</PrimaryButton>
+        {!isLoggedIn ? (
+          <PrimaryButton
+            width="100%"
+            onPress={() => {
+              router.push("/auth/login");
+              closeDrawer();
+            }}
+          >
+            Log in
+          </PrimaryButton>
+        ) : (
+          <MenuItem
+            title="Sign Out"
+            onPress={() => {
+              handleSignOut();
+              closeDrawer();
+            }}
+            icon={LogOut}
+          />
+        )}
       </XStack>
     </SafeAreaView>
   );
@@ -166,6 +203,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
       open={isOpen}
       onOpen={openDrawer}
       onClose={closeDrawer}
+      drawerType="back"
       drawerStyle={{
         backgroundColor: theme.background.get(),
         borderRightColor: theme.borderColor.get(),
@@ -177,7 +215,6 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
     </Drawer>
   );
 };
-
 const MenuItem = ({
   title,
   onPress,
@@ -194,8 +231,7 @@ const MenuItem = ({
     </XStack>
   </ResponsiveStack>
 );
-
-const ResponsiveStack = styled(Button, {
+const ResponsiveStack = styled(Stack, {
   hoverStyle: {
     backgroundColor: "$backgroundHover",
   },
@@ -207,12 +243,11 @@ const ResponsiveStack = styled(Button, {
   borderRadius: "$2",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "flex-start",
   width: "100%",
   backgroundColor: "transparent",
   borderWidth: 0,
   marginBottom: 8,
-  size: "$5",
 });
 
 const UserPreview = styled(XStack, {

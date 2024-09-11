@@ -1,67 +1,129 @@
-import { GestureResponderEvent } from "react-native";
+import React, { forwardRef } from "react";
+
+import { GestureResponderEvent, Platform } from "react-native";
 
 import {
-  Button,
-  ButtonProps,
   ButtonText,
+  GetProps,
   Spinner,
-  Text,
+  Stack,
+  TamaguiElement,
+  XStack,
   styled,
 } from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
-interface PrimaryButtonTypes extends ButtonProps {
-  onPress?: ((event: GestureResponderEvent) => void) | null | undefined;
+type ButtonFrameProps = GetProps<typeof Stack>;
+
+interface PrimaryButtonProps extends ButtonFrameProps {
   text?: string;
-  htmlFor?: string;
   isLoading?: boolean;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
-const StyledButton = styled(Button, {
+const ButtonFrame = styled(Stack, {
+  name: "ButtonFrame",
+  tag: "button",
   backgroundColor: "transparent",
   borderRadius: "$4",
-  overflow: "hidden",
+  overflow: "visible",
   minHeight: 54,
+  justifyContent: "center",
+  alignItems: "center",
+  cursor: "pointer",
+  borderWidth: 0,
+
+  ...(Platform.OS === "web"
+    ? {
+        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
+      }
+    : {
+        elevation: 3,
+      }),
+
+  hoverStyle: {
+    opacity: 0.9,
+    ...(Platform.OS === "web"
+      ? {
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.20)",
+        }
+      : {
+          elevation: 5,
+        }),
+  },
+
+  focusStyle: {
+    outlineColor: "$accentColor",
+    outlineStyle: "solid",
+    outlineWidth: 2,
+  },
+
+  pressStyle: {
+    opacity: 0.8,
+    ...(Platform.OS === "web"
+      ? {
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.12)",
+        }
+      : {
+          scale: 0.97,
+          elevation: 2,
+        }),
+  },
+
+  variants: {
+    disabled: {
+      true: {
+        opacity: 0.5,
+        pointerEvents: "none",
+        ...(Platform.OS === "web"
+          ? {
+              boxShadow: "none",
+            }
+          : {
+              elevation: 0,
+            }),
+      },
+    },
+  } as const,
 });
 
-export const PrimaryButton = ({
-  onPress,
-  text,
-  isLoading,
-  htmlFor,
-  children,
-  ...props
-}: PrimaryButtonTypes): JSX.Element => {
-  return (
-    <StyledButton
-      onPress={onPress}
-      htmlFor={htmlFor}
-      iconAfter={isLoading ? <Spinner /> : undefined}
-      disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
-      pressStyle={{ opacity: 0.8 }}
-      {...props}
-    >
-      <LinearGradient
-        colors={["$pink9Light", "$accentBackground"]}
-        start={[0, 0]}
-        end={[1, 1]}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-        }}
-      />
-      <ButtonText
-        color="$colorContrast"
-        fontWeight="bold"
-        zIndex={1}
-        fontSize={16}
+const GradientContainer = styled(Stack, {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  overflow: "hidden",
+  borderRadius: "$4",
+});
+
+export const PrimaryButton = forwardRef<TamaguiElement, PrimaryButtonProps>(
+  ({ onPress, text, isLoading, children, disabled, ...props }, ref) => {
+    return (
+      <ButtonFrame
+        {...props}
+        ref={ref}
+        onPress={onPress}
+        disabled={disabled || isLoading}
       >
-        {text} {children}
-      </ButtonText>
-    </StyledButton>
-  );
-};
+        <GradientContainer>
+          <LinearGradient
+            colors={["$pink9Light", "$accentBackground"]}
+            start={[0, 0]}
+            end={[1, 1]}
+            fullscreen
+          />
+        </GradientContainer>
+        <XStack gap="$2" alignItems="center" zIndex={1}>
+          {isLoading && <Spinner color="$colorContrast" />}
+          <ButtonText color="$colorContrast" fontWeight="bold" fontSize={16}>
+            {text} {children}
+          </ButtonText>
+        </XStack>
+      </ButtonFrame>
+    );
+  },
+);
+
+PrimaryButton.displayName = "PrimaryButton";
