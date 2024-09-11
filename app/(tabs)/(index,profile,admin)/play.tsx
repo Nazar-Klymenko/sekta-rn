@@ -22,6 +22,7 @@ import { usePlaySubmission } from "@/hooks/usePlay";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { BlurView } from "expo-blur";
+import { Stack } from "expo-router";
 import { useForm } from "react-hook-form";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -133,8 +134,18 @@ export default function PlayScreen() {
 
   return (
     <PageContainer fullWidth>
+      <Stack.Screen
+        options={{
+          animation: "fade_from_bottom",
+          title: "Play",
+          headerShown: true || Platform.OS !== "web",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
       <EnhancedHeroSection />
-
       <YStack
         backgroundColor="$background"
         padding="$4"

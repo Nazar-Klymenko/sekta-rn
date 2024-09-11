@@ -88,7 +88,7 @@ export default function LikedEventsPage() {
             >
               <EventCard
                 event={event}
-                hrefSource="favourite"
+                hrefSource="saved"
                 isLiked={isLiked || false}
               />
             </YStack>

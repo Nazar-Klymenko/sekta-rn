@@ -21,7 +21,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useDrawer } from "@/hooks/useDrawer";
 import { useUserData } from "@/hooks/useUserData";
 
-import { useRouter } from "expo-router";
+import { useRouter, useSegments } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
 import {
   SafeAreaView,
@@ -43,11 +43,6 @@ import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
   {
-    title: `Home`,
-    icon: Home,
-    url: "/events",
-  },
-  {
     title: `Profile`,
     icon: User,
     url: "/profile",
@@ -55,7 +50,7 @@ const menuItems = [
   {
     title: `Saved`,
     icon: Bookmark,
-    url: "/favorite",
+    url: "/saved",
   },
   {
     title: `Residents`,
@@ -68,6 +63,9 @@ const menuItems = [
     url: "/play",
   },
 ];
+type Group<T extends string> = `(${T})`;
+
+type SharedSegment = Group<"index"> | Group<"profile"> | Group<"admin">;
 
 export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -78,7 +76,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   const insets = useSafeAreaInsets();
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-
+  const [segment] = useSegments() as [SharedSegment];
   const renderDrawerContent = () => (
     <SafeAreaView style={{ flex: 1 }}>
       <UserPreview
@@ -118,7 +116,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             title={item.title}
             icon={item.icon}
             onPress={() => {
-              router.push(item.url);
+              router.push(`${item.url}`);
               closeDrawer();
             }}
           />

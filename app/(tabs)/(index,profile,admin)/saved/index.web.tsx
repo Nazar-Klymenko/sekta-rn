@@ -80,7 +80,7 @@ export default function LikedEventsPage() {
                 <YStack key={event.id} width="100%" marginBottom="$4">
                   <EventCard
                     event={event}
-                    hrefSource="favourite"
+                    hrefSource="saved"
                     isLiked={likedEvents?.includes(event.id) || false}
                   />
                 </YStack>

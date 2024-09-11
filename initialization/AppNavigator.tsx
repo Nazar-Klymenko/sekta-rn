@@ -48,11 +48,12 @@ export function AppNavigator() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <DrawerLayout>
-        <Stack>
+        <Stack initialRouteName="(tabs)">
           <Stack.Screen
             name="(tabs)"
             options={{ headerShown: false, animation: "fade_from_bottom" }}
           />
+
           <Stack.Screen
             name="auth"
             options={{
