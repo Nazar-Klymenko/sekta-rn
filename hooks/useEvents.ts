@@ -17,10 +17,10 @@ import {
 
 import {
   fetchEventById,
-  fetchEvents,
-  fetchFilteredEvents,
   fetchLikedEvents,
   fetchLikedEventsId,
+  fetchPreviousEvents,
+  fetchUpcomingEvents,
 } from "@/api/events";
 import { Event } from "@/models/Event";
 import { db } from "@/services/firebase";
@@ -29,22 +29,28 @@ import { useAuth } from "./useAuth";
 
 const ITEMS_PER_PAGE = 10;
 
-export const useEvents = (searchQuery: string) => {
+export const usePreviousEvents = () => {
   return useInfiniteQuery<
     Event[],
     Error,
     InfiniteData<Event[]>,
-    [string, string],
+    ["previousEvents"],
     number
   >({
-    queryKey: ["events", searchQuery],
+    queryKey: ["previousEvents"],
     queryFn: async ({ pageParam = 0 }) => {
-      return fetchFilteredEvents(searchQuery, pageParam, ITEMS_PER_PAGE);
+      return fetchPreviousEvents(pageParam, ITEMS_PER_PAGE);
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === ITEMS_PER_PAGE ? allPages.length : undefined;
     },
+  });
+};
+export const useUpcomingEvents = (limit: number = 3) => {
+  return useQuery<Event[], Error>({
+    queryKey: ["upcomingEvents", limit],
+    queryFn: () => fetchUpcomingEvents(limit),
   });
 };
 export const useEvent = (id: string) => {

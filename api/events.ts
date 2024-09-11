@@ -4,6 +4,7 @@ import {
   addDoc,
   collection,
   doc,
+  limit as firestoreLimit,
   getDoc,
   getDocs,
   limit,
@@ -78,21 +79,16 @@ export const fetchLikedEventsId = async (userId: string): Promise<string[]> => {
   return userDoc.data()?.likedEvents || [];
 };
 
-export const fetchFilteredEvents = async (
-  searchQuery: string,
+export const fetchPreviousEvents = async (
   pageParam: number,
   pageSize: number,
 ): Promise<Event[]> => {
-  let q = query(collection(db, "events"), orderBy("date", "desc"));
-
-  if (searchQuery) {
-    const lowercaseQuery = searchQuery.toLowerCase();
-    q = query(
-      q,
-      where("title_lowercase", ">=", lowercaseQuery),
-      where("title_lowercase", "<=", lowercaseQuery + "\uf8ff"),
-    );
-  }
+  const now = new Date();
+  let q = query(
+    collection(db, "events"),
+    where("date", "<", now),
+    orderBy("date", "desc"),
+  );
 
   // Apply pagination
   if (pageParam > 0) {
@@ -108,6 +104,22 @@ export const fetchFilteredEvents = async (
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
 };
+
+export const fetchUpcomingEvents = async (
+  count: number = 3,
+): Promise<Event[]> => {
+  const now = new Date();
+  const q = query(
+    collection(db, "events"),
+    where("date", ">=", now),
+    orderBy("date", "asc"),
+    firestoreLimit(count),
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+};
+
 // async function getLastVisibleDocument(
 //   q: Query,
 //   page: number,

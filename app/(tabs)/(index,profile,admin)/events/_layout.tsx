@@ -36,6 +36,12 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
+        name="upcoming"
+        options={{
+          animation: "fade_from_bottom",
+        }}
+      />
+      <Stack.Screen
         name="(event)"
         options={{
           animation: "fade_from_bottom",
