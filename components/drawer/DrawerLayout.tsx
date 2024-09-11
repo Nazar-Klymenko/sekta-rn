@@ -21,9 +21,14 @@ import { FlatList, Platform, TouchableOpacity } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useSignOut } from "@/hooks/useAuthOperations";
 import { useDrawer } from "@/hooks/useDrawer";
+import {
+  createTabUrl,
+  useCustomNavigation,
+  useSegments,
+} from "@/hooks/useSegments";
 import { useUserData } from "@/hooks/useUserData";
 
-import { Href, useRouter, useSegments } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
 import {
   SafeAreaView,
@@ -66,9 +71,9 @@ const menuItems = [
     url: "/play",
   },
 ];
-type Group<T extends string> = `(${T})`;
+// type Group<T extends string> = `(${T})`;
 
-type SharedSegment = Group<"index"> | Group<"profile"> | Group<"admin">;
+// type SharedSegment = Group<"index"> | Group<"profile"> | Group<"admin">;
 
 export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -79,8 +84,9 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   const insets = useSafeAreaInsets();
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-  const [segment] = useSegments() as [SharedSegment];
+  const segment = useSegments();
   const signOutMutation = useSignOut();
+  const { navigate } = useCustomNavigation(closeDrawer);
 
   const handleSignOut = () => {
     signOutMutation.mutate();
@@ -122,12 +128,9 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
         data={menuItems}
         renderItem={({ item }) => (
           <MenuItem
-            title={item.title + segment}
+            title={item.title}
             icon={item.icon}
-            onPress={() => {
-              router.push(`${item.url}`);
-              closeDrawer();
-            }}
+            onPress={() => navigate(item.url)}
           />
         )}
         keyExtractor={(item) => item.title}
