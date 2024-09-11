@@ -20,15 +20,12 @@ import { FlatList, Platform, TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useSignOut } from "@/hooks/useAuthOperations";
+import { useCustomNavigation } from "@/hooks/useCustomNavigation";
 import { useDrawer } from "@/hooks/useDrawer";
-import {
-  createTabUrl,
-  useCustomNavigation,
-  useSegments,
-} from "@/hooks/useSegments";
 import { useUserData } from "@/hooks/useUserData";
 
 import { Href, useRouter } from "expo-router";
+import { useSegments as useExpoRouterSegments } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
 import {
   SafeAreaView,
@@ -47,6 +44,7 @@ import {
 } from "tamagui";
 
 import { Collapsible } from "../Collapsible";
+import { MenuItem } from "../buttons/MenuItem";
 import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
@@ -71,9 +69,8 @@ const menuItems = [
     url: "/play",
   },
 ];
-// type Group<T extends string> = `(${T})`;
-
-// type SharedSegment = Group<"index"> | Group<"profile"> | Group<"admin">;
+const isAuthRoute = (segments: string[]) =>
+  segments[0] === "auth" || segments[0] === "(support)";
 
 export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -84,12 +81,13 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   const insets = useSafeAreaInsets();
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-  const segment = useSegments();
   const signOutMutation = useSignOut();
   const { navigate } = useCustomNavigation(closeDrawer);
-
+  const segments = useExpoRouterSegments();
+  const isInAuthModal = isAuthRoute(segments);
   const handleSignOut = () => {
     signOutMutation.mutate();
+    closeDrawer();
   };
 
   const renderDrawerContent = () => (
@@ -131,6 +129,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             title={item.title}
             icon={item.icon}
             onPress={() => navigate(item.url)}
+            fontSize="$6"
           />
         )}
         keyExtractor={(item) => item.title}
@@ -140,26 +139,26 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             <MenuItem
               title="Terms of Service"
               onPress={() => {
-                router.push("/tos");
-                closeDrawer();
+                navigate("/tos");
               }}
               icon={FileText}
+              fontSize="$6"
             />
             <MenuItem
               title="Privacy policy"
               onPress={() => {
-                router.push("/privacy-policy");
-                closeDrawer();
+                navigate("/privacy-policy");
               }}
               icon={ShieldCheck}
+              fontSize="$6"
             />
             <MenuItem
               title="Contact us"
               onPress={() => {
-                router.push("/profile/contact");
-                closeDrawer();
+                navigate("/contact");
               }}
               icon={HelpCircle}
+              fontSize="$6"
             />
           </Collapsible>
         }
@@ -203,7 +202,8 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <Drawer
-      open={isOpen}
+      open={isOpen && !isInAuthModal}
+      gestureHandlerProps={{ enabled: !isInAuthModal }}
       onOpen={openDrawer}
       onClose={closeDrawer}
       drawerType="back"
@@ -218,40 +218,6 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
     </Drawer>
   );
 };
-const MenuItem = ({
-  title,
-  onPress,
-  icon: Icon,
-}: {
-  title: string;
-  onPress: () => void;
-  icon: React.ElementType;
-}) => (
-  <ResponsiveStack onPress={onPress}>
-    <XStack flex={1} alignItems="center" justifyContent="flex-start" gap="$3">
-      <Icon size="$1" color="$gray10Light" />
-      <Text fontSize="$6">{title}</Text>
-    </XStack>
-  </ResponsiveStack>
-);
-const ResponsiveStack = styled(Stack, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  pressStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  padding: "$4",
-  minHeight: "$6",
-  borderRadius: "$2",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  width: "100%",
-  backgroundColor: "transparent",
-  borderWidth: 0,
-  marginBottom: 8,
-});
 
 const UserPreview = styled(XStack, {
   alignItems: "center",
