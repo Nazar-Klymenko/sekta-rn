@@ -47,6 +47,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { VerifyEmail } from "@/components/VerifyEmail";
 import { Switch } from "@/components/buttons/CustomSwitch";
+import { MenuItem } from "@/components/buttons/MenuItem";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { Form } from "@/components/form/Form";
@@ -187,40 +188,6 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   </Text>
 );
 
-const ResponsiveStack = styled(Button, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  pressStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  padding: "$4",
-  minHeight: 54,
-  borderRadius: "$2",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  backgroundColor: "transparent",
-  borderWidth: 0,
-});
-
-const MenuItem = ({
-  title,
-  onPress,
-  icon: Icon,
-}: {
-  title: string;
-  onPress: () => void;
-  icon: React.ElementType;
-}) => (
-  <ResponsiveStack onPress={onPress}>
-    <XStack flex={1} alignItems="center" gap="$3">
-      <Icon size="$1" color="$gray10Light" />
-      <Text fontSize="$4">{title}</Text>
-    </XStack>
-    <ChevronRight size="$1" color="$color" />
-  </ResponsiveStack>
-);
 // const languages = [
 //   { value: "pl", label: "Polish" },
 //   { value: "en", label: "English" },

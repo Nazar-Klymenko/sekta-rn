@@ -3,11 +3,6 @@ import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
 import { ThemedText } from "@/components/ThemedText";
 
-const StyledLink = styled(Button, {
-  marginTop: "$4",
-  paddingVertical: "$4",
-});
-
 export default function NotFoundScreen() {
   const theme = useTheme();
 

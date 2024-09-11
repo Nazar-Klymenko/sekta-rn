@@ -19,6 +19,7 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { MenuItem } from "@/components/buttons/MenuItem";
 import { Input as FormInput } from "@/components/form/Input";
 import { PageContainer } from "@/components/layout/PageContainer";
 
@@ -92,34 +93,4 @@ const SectionTitle = ({ children }: { children: React.ReactNode }) => (
   <Text fontSize="$5" fontWeight="bold" marginBottom="$2">
     {children}
   </Text>
-);
-
-const ResponsiveStack = styled(XStack, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-    cursor: "pointer",
-  },
-  pressStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  padding: "$4",
-  borderRadius: "$2",
-  justifyContent: "space-between",
-});
-const MenuItem = ({
-  title,
-  onPress,
-  icon: Icon,
-}: {
-  title: string;
-  onPress: () => void;
-  icon: React.ElementType;
-}) => (
-  <ResponsiveStack onPress={onPress}>
-    <XStack alignItems="center" gap="$3">
-      <Icon size="$1" color="$gray10Light" />
-      <Text fontSize="$4">{title}</Text>
-    </XStack>
-    <ChevronRight size="$1" color="$color" />
-  </ResponsiveStack>
 );
