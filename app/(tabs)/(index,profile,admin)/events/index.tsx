@@ -7,7 +7,7 @@ import { ActivityIndicator, FlatList, ScrollView } from "react-native";
 import { useFavoriteEventsId } from "@/hooks/useEvents";
 import { usePreviousEvents, useUpcomingEvents } from "@/hooks/useEvents";
 
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import {
   Button,
   H1,
@@ -31,6 +31,7 @@ const ITEMS_PER_PAGE = 10;
 export default function HomeScreen() {
   const theme = useTheme();
   const { data: likedEvents } = useFavoriteEventsId();
+  const router = useRouter();
 
   const {
     data: upcomingEvents,
@@ -102,16 +103,18 @@ export default function HomeScreen() {
               paddingHorizontal="$4"
             >
               <H2>Upcoming Events</H2>
-              <Link href="/upcoming">
-                <XStack
-                  alignItems="center"
-                  justifyContent="center"
-                  display="flex"
-                >
-                  <Text>View all</Text>
-                  <ChevronRight />
-                </XStack>
-              </Link>
+              {/* <Link href="/upcoming"> */}
+              <XStack
+                alignItems="center"
+                justifyContent="center"
+                display="flex"
+              >
+                <Text onPress={() => router.push("/events/upcoming")}>
+                  View all
+                </Text>
+                <ChevronRight />
+              </XStack>
+              {/* </Link> */}
             </XStack>
             <ScrollView
               horizontal

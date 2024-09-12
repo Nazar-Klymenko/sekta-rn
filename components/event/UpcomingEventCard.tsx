@@ -1,3 +1,5 @@
+import { Clock, MapPin } from "@tamagui/lucide-icons";
+
 import React from "react";
 
 import { Event } from "@/models/Event";
@@ -22,89 +24,102 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   const theme = useTheme();
   const router = useRouter();
 
-  const formattedDate = formatFirestoreTimestamp(event.date, "dd MMM");
+  const formattedDate = formatFirestoreTimestamp(event.date, "EEE, MMM d");
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
   const formattedDay = formatFirestoreTimestamp(event.date, "dd");
   const formattedMonth = formatFirestoreTimestamp(event.date, "MMM");
 
   return (
-    <CardContainer onPress={() => router.push(`/events/${event.id}`)}>
-      <ImageContainer>
-        <Image
-          source={{ uri: event.image.publicUrl }}
-          width={360}
-          height={220}
-        />
-        <LinearGradient
-          colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0)"]}
-          start={[0, 0]}
-          end={[0, 0.5]}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 100,
-          }}
-        />
-        <DateBadge>
-          <Text color="white" fontSize="$5" fontWeight="bold">
-            {formattedDay}
+    <CardOuterContainer onPress={() => router.push(`/events/${event.id}`)}>
+      <CardInnerContainer>
+        <ImageContainer>
+          <Image
+            source={{ uri: event.image.publicUrl }}
+            width={360}
+            height={240}
+          />
+
+          <DateBadge>
+            <Text color="white" fontSize="$7" fontWeight="bold">
+              {formattedDay}
+            </Text>
+            <Text color="white" fontSize="$3" textTransform="uppercase">
+              {formattedMonth}
+            </Text>
+          </DateBadge>
+          <PriceBadge>
+            <Text color="white" fontSize="$4" fontWeight="bold">
+              {event.price === 0 ? "FREE" : `${event.price} PLN`}
+            </Text>
+          </PriceBadge>
+        </ImageContainer>
+        <ContentContainer>
+          <Text
+            fontSize="$7"
+            fontWeight="bold"
+            numberOfLines={2}
+            color="$color"
+          >
+            {event.title}
           </Text>
-          <Text color="white" fontSize="$3" textTransform="uppercase">
-            {formattedMonth}
+          <XStack alignItems="center" space="$2">
+            <Clock size={16} color={theme.gray11Light.get()} />
+            <Text fontSize="$3" color="$gray11Light">
+              {formattedDate} • {formattedTime}
+            </Text>
+          </XStack>
+          <XStack alignItems="center" space="$2">
+            <MapPin size={16} color={theme.gray11Light.get()} />
+            <Text fontSize="$3" color="$gray11Light">
+              {event.location || "Venue TBA"}
+            </Text>
+          </XStack>
+          <Text
+            fontSize="$4"
+            color="$gray11Light"
+            numberOfLines={2}
+            marginTop="$2"
+          >
+            {event.caption}
           </Text>
-        </DateBadge>
-        <PriceBadge>
-          <Text color="white" fontSize="$4" fontWeight="bold">
-            {event.price === 0 ? "FREE" : `${event.price} PLN`}
-          </Text>
-        </PriceBadge>
-      </ImageContainer>
-      <ContentContainer>
-        <Text fontSize="$6" fontWeight="bold" numberOfLines={2} color="$color">
-          {event.title}
-        </Text>
-        <Text fontSize="$4" color="$gray11Light" numberOfLines={2}>
-          {event.caption}
-        </Text>
-        <Text fontSize="$3" color="$gray10Light">
-          {formattedTime}
-        </Text>
-        <XStack flexWrap="wrap" gap="$2" marginTop="$2">
-          {event.genres.slice(0, 3).map((genre, index) => (
-            <Tag tag={genre} key={genre + index} />
-          ))}
-          {event.genres.length > 3 && (
-            <Tag tag={`+${event.genres.length - 3}`} />
-          )}
-        </XStack>
-      </ContentContainer>
-    </CardContainer>
+          <XStack flexWrap="wrap" gap="$2" marginTop="$3">
+            {event.genres.slice(0, 3).map((genre, index) => (
+              <Tag key={genre + index} tag={genre} />
+            ))}
+            {event.genres.length > 3 && (
+              <Tag tag={`+${event.genres.length - 3}`} />
+            )}
+          </XStack>
+        </ContentContainer>
+      </CardInnerContainer>
+    </CardOuterContainer>
   );
 };
 
-const CardContainer = styled(YStack, {
+const CardOuterContainer = styled(YStack, {
   width: 360,
-  borderRadius: "$4",
-  overflow: "hidden",
-  borderWidth: 1,
-  borderColor: "$borderColor",
-  backgroundColor: "$backgroundHover",
+  marginVertical: 10,
+  marginHorizontal: 5,
   shadowColor: "$shadowColor",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.1,
-  shadowRadius: 8,
-  elevation: 5,
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 0.3,
+  shadowRadius: 20,
+  elevation: 10,
   pressStyle: {
-    shadowOpacity: 0.2,
-    elevation: 8,
+    shadowOpacity: 0.4,
+    elevation: 15,
     scale: 0.98,
   },
   hoverStyle: {
-    borderColor: "$borderColorHover",
-    scale: 1.02,
+    scale: 1.03,
+    shadowOpacity: 0.4,
   },
+});
+
+const CardInnerContainer = styled(YStack, {
+  borderRadius: "$4",
+  overflow: "hidden",
+  backgroundColor: "$backgroundStrong",
 });
 
 const ImageContainer = styled(Stack, {
@@ -113,23 +128,23 @@ const ImageContainer = styled(Stack, {
 
 const DateBadge = styled(YStack, {
   position: "absolute",
-  top: 0,
+  top: 20,
   left: 20,
   backgroundColor: "$accentColor",
-  borderBottomLeftRadius: 8,
-  borderBottomRightRadius: 8,
-  paddingHorizontal: 12,
-  paddingVertical: 8,
+  borderRadius: "$6",
+  paddingHorizontal: 16,
+  paddingVertical: 10,
   alignItems: "center",
 });
 
 const PriceBadge = styled(YStack, {
   position: "absolute",
-  top: 10,
-  right: 10,
-  backgroundColor: "rgba(0,0,0,0.6)",
-  borderRadius: 8,
-  padding: 8,
+  top: 20,
+  right: 20,
+  backgroundColor: "rgba(0,0,0,0.7)",
+  borderRadius: "$5",
+  paddingHorizontal: 16,
+  paddingVertical: 10,
 });
 
 const ContentContainer = styled(YStack, {
@@ -138,3 +153,15 @@ const ContentContainer = styled(YStack, {
 });
 
 export default UpcomingEventCard;
+{
+  /* <LinearGradient
+  position="absolute"
+  top="0"
+  left="0"
+  right="0"
+  bottom="0"
+  colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0)"]}
+  start={[0, 0]}
+  end={[0, 1]}
+/>; */
+}

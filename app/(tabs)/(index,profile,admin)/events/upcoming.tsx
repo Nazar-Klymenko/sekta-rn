@@ -28,7 +28,7 @@ import { PageContainer } from "@/components/layout/PageContainer";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function HomeScreen() {
+export default function UpcomingEventsScreen() {
   const theme = useTheme();
   const { data: likedEvents } = useFavoriteEventsId();
 
