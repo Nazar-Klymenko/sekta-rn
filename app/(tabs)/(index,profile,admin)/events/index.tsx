@@ -5,6 +5,7 @@ import React from "react";
 import {
   ActivityIndicator,
   FlatList,
+  Pressable,
   ScrollView,
   useWindowDimensions,
 } from "react-native";
@@ -84,10 +85,15 @@ export default function HomeScreen() {
         >
           <H2>Upcoming Events</H2>
           <XStack alignItems="center" justifyContent="center" display="flex">
-            <Text onPress={() => router.push("/events/upcoming")}>
-              View all
-            </Text>
-            <ChevronRight />
+            <Pressable
+              onPress={() => router.push("/events/upcoming")}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <XStack alignItems="center" gap="$2">
+                <Text>View all</Text>
+                <ChevronRight />
+              </XStack>
+            </Pressable>
           </XStack>
         </XStack>
         <UpcomingEventsScrollView
@@ -102,10 +108,15 @@ export default function HomeScreen() {
         >
           <H2>Previous Events</H2>
           <XStack alignItems="center" justifyContent="center" display="flex">
-            <Text onPress={() => router.push("/events/previous")}>
-              View all
-            </Text>
-            <ChevronRight />
+            <Pressable
+              onPress={() => router.push("/events/previous")}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <XStack alignItems="center" gap="$2">
+                <Text>View all</Text>
+                <ChevronRight />
+              </XStack>
+            </Pressable>
           </XStack>
         </XStack>
         <YStack paddingHorizontal="$4">
