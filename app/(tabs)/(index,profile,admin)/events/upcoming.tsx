@@ -8,19 +8,28 @@ import { useAuth } from "@/hooks/useAuth";
 import { useFavoriteEventsId, useUpcomingEvents } from "@/hooks/useEvents";
 
 import { useRouter } from "expo-router";
-import { H2, Text, XStack, YStack, useTheme } from "tamagui";
+import {
+  H2,
+  Text,
+  XStack,
+  YStack,
+  useTheme,
+  useWindowDimensions,
+} from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import { RetryButton } from "@/components/buttons/IconButtons";
 import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
+import { SkeletonUpcomingEventCard } from "@/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/components/event/UpcomingEventCard";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function UpcomingEventsScreen() {
   const theme = useTheme();
   const { data: likedEvents } = useFavoriteEventsId();
+  const { width: windowWidth } = useWindowDimensions();
 
   const {
     data,
@@ -52,6 +61,8 @@ export default function UpcomingEventsScreen() {
   if (!isLoading && flattenedEvents.length === 0) {
     return <EmptyUpcomingEvents />;
   }
+  const cardWidth = windowWidth - 32; // Full width minus padding
+
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
@@ -59,7 +70,15 @@ export default function UpcomingEventsScreen() {
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
-            <SkeletonEventCard />
+            <YStack
+              style={{
+                maxWidth: 720,
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+              }}
+            >
+              <SkeletonUpcomingEventCard cardWidth={cardWidth} />
+            </YStack>
           ) : (
             <YStack
               style={{
@@ -68,7 +87,7 @@ export default function UpcomingEventsScreen() {
                 paddingVertical: 8,
               }}
             >
-              <UpcomingEventCard event={event} totalEvents={1} />
+              <UpcomingEventCard event={event} cardWidth={cardWidth} />
             </YStack>
           )
         }

@@ -9,6 +9,7 @@ import { H2, Text, YStack, useTheme } from "tamagui";
 import { RetryButton } from "@/components/buttons/IconButtons";
 import PreviousEventCard from "@/components/event/PreviousEventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
+import { SkeletonPreviousEventCard } from "@/components/event/SkeletonPreviousEventCard";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function PreviousEventsScreen() {
@@ -49,7 +50,15 @@ export default function PreviousEventsScreen() {
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
-            <SkeletonEventCard />
+            <YStack
+              style={{
+                maxWidth: 720,
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+              }}
+            >
+              <SkeletonPreviousEventCard />
+            </YStack>
           ) : (
             <YStack
               style={{

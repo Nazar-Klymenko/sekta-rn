@@ -113,7 +113,15 @@ export default function HomeScreen() {
             ? Array(4)
                 .fill(null)
                 .map((_, index) => (
-                  <SkeletonPreviousEventCard key={`skeleton-${index}`} />
+                  <YStack
+                    key={index}
+                    style={{
+                      maxWidth: 720,
+                      paddingVertical: 8,
+                    }}
+                  >
+                    <SkeletonPreviousEventCard />
+                  </YStack>
                 ))
             : previousEvents?.map((event) => (
                 <YStack
