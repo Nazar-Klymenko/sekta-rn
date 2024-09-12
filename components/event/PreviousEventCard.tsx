@@ -25,7 +25,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
         source={{ uri: event.image.publicUrl }}
         width={100}
         height={100}
-        borderRadius="$2"
+        borderRadius="$6"
       />
       <ContentContainer>
         <YStack flex={1} gap="$2">
@@ -54,8 +54,8 @@ const CardContainer = styled(XStack, {
   borderRadius: "$6",
   overflow: "hidden",
   borderWidth: 1,
-  borderColor: "$borderColor",
-  backgroundColor: "$backgroundHover",
+  borderColor: "$gray2Dark",
+  backgroundColor: "$background",
   padding: "$2",
   gap: "$3",
   alignItems: "center",

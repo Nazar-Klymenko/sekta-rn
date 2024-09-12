@@ -24,7 +24,6 @@ export default function TabLayout() {
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
   const pathname = usePathname();
-  const isEventDetailsPage = pathname.startsWith("/events/");
 
   if (Platform.OS === "web") {
     return <Slot />;
@@ -36,7 +35,6 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          display: isEventDetailsPage ? "none" : "flex",
           backgroundColor: theme.gray2Dark.get(),
           borderTopWidth: 0,
         },

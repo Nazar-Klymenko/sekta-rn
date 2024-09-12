@@ -19,20 +19,7 @@ import {
 import { Event } from "@/models/Event";
 import { db } from "@/services/firebase";
 
-import { FilterValues } from "@/components/FilterDialog";
-
 const eventsCollection = collection(db, "events");
-
-export const fetchEvents = async (): Promise<Event[]> => {
-  const snapshot = await getDocs(eventsCollection);
-  return snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      }) as Event,
-  );
-};
 
 export const fetchEventById = async (id: string): Promise<Event> => {
   const docRef = doc(eventsCollection, id);
@@ -78,34 +65,8 @@ export const fetchLikedEventsId = async (userId: string): Promise<string[]> => {
   }
   return userDoc.data()?.likedEvents || [];
 };
-
-export const fetchPreviousEvents = async (
-  pageParam: number,
-  pageSize: number,
-): Promise<Event[]> => {
-  const now = new Date();
-  let q = query(
-    collection(db, "events"),
-    where("date", "<", now),
-    orderBy("date", "desc"),
-  );
-
-  // Apply pagination
-  if (pageParam > 0) {
-    const snapshot = await getDocs(q);
-    const lastVisible = snapshot.docs[pageParam * pageSize - 1];
-    if (lastVisible) {
-      q = query(q, startAfter(lastVisible));
-    }
-  }
-
-  q = query(q, limit(pageSize));
-
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
-};
-
-export const fetchUpcomingEvents = async (
+// For previews (limited events)
+export const fetchUpcomingEventsPreview = async (
   count: number = 3,
 ): Promise<Event[]> => {
   const now = new Date();
@@ -120,90 +81,68 @@ export const fetchUpcomingEvents = async (
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
 };
 
-// async function getLastVisibleDocument(
-//   q: Query,
-//   page: number,
-//   pageSize: number,
-// ) {
-//   if (page === 0) return null;
-//   const lastVisibleSnapshot = await getDocs(query(q, limit(page * pageSize)));
-//   return lastVisibleSnapshot.docs[lastVisibleSnapshot.docs.length - 1];
-// }
-// export const fetchFilteredEventsBySearch = async (
-//   searchQuery: string,
-//   lastDoc: any | null,
-//   pageSize: number,
-// ): Promise<{ events: Event[]; lastDoc: any }> => {
-//   let q = query(collection(db, "events"), orderBy("date", "desc"));
+export const fetchPreviousEventsPreview = async (
+  count: number = 4,
+): Promise<Event[]> => {
+  const now = new Date();
+  const q = query(
+    collection(db, "events"),
+    where("date", "<", now),
+    orderBy("date", "desc"),
+    firestoreLimit(count),
+  );
 
-//   if (searchQuery) {
-//     q = query(
-//       q,
-//       where("searchableFields", "array-contains", searchQuery.toLowerCase()),
-//     );
-//   }
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+};
 
-//   q = query(q, limit(pageSize));
+// For paginated events (no limit)
+export const fetchPreviousEvents = async (
+  pageParam: number,
+  pageSize: number,
+): Promise<Event[]> => {
+  const now = new Date();
+  let q = query(
+    collection(db, "events"),
+    where("date", "<", now),
+    orderBy("date", "desc"),
+  );
 
-//   if (lastDoc) {
-//     q = query(q, startAfter(lastDoc));
-//   }
+  if (pageParam > 0) {
+    const snapshot = await getDocs(q);
+    const lastVisible = snapshot.docs[pageParam * pageSize - 1];
+    if (lastVisible) {
+      q = query(q, startAfter(lastVisible));
+    }
+  }
 
-//   const snapshot = await getDocs(q);
-//   const events = snapshot.docs.map(
-//     (doc) => ({ id: doc.id, ...doc.data() }) as Event,
-//   );
-//   const newLastDoc = snapshot.docs[snapshot.docs.length - 1];
+  q = query(q, firestoreLimit(pageSize));
 
-//   return { events, lastDoc: newLastDoc };
-// };
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+};
 
-// export async function fetchFilteredEvents(
-//   filters: FilterValues,
-//   page: number,
-//   pageSize: number,
-// ): Promise<Event[]> {
-//   const eventsRef = collection(db, "events");
-//   let q = query(eventsRef);
+export const fetchUpcomingEvents = async (
+  pageParam: number,
+  pageSize: number,
+): Promise<Event[]> => {
+  const now = new Date();
+  let q = query(
+    collection(db, "events"),
+    where("date", ">=", now),
+    orderBy("date", "asc"),
+  );
 
-//   // Apply filters
-//   if (filters.selectedGenres.length > 0) {
-//     q = query(q, where("genres", "array-contains-any", filters.selectedGenres));
-//   }
+  if (pageParam > 0) {
+    const snapshot = await getDocs(q);
+    const lastVisible = snapshot.docs[pageParam * pageSize - 1];
+    if (lastVisible) {
+      q = query(q, startAfter(lastVisible));
+    }
+  }
 
-//   if (filters.selectedArtists.length > 0) {
-//     q = query(
-//       q,
-//       where("lineup", "array-contains-any", filters.selectedArtists),
-//     );
-//   }
+  q = query(q, firestoreLimit(pageSize));
 
-//   if (filters.includeOldEvents) {
-//     q = query(q, where("date", ">=", new Date()));
-//   }
-
-//   // Apply sorting
-//   if (filters.priceSort === "lowToHigh") {
-//     q = query(q, orderBy("price", "asc"));
-//   } else if (filters.priceSort === "highToLow") {
-//     q = query(q, orderBy("price", "desc"));
-//   } else if (filters.priceSort === "free") {
-//     q = query(q, where("price", "==", 0));
-//   } else {
-//     q = query(q, orderBy("date", "desc"));
-//   }
-
-//   // Apply pagination
-//   q = query(q, limit(pageSize));
-//   if (page > 0) {
-//     const lastVisible = await getLastVisibleDocument(q, page, pageSize);
-//     if (lastVisible) {
-//       q = query(q, startAfter(lastVisible));
-//     }
-//   }
-
-//   const snapshot = await getDocs(q);
-//   return snapshot.docs.map(
-//     (doc) => ({ id: doc.id, ...doc.data() }) as unknown as Event,
-//   );
-// }
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+};

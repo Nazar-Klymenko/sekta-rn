@@ -13,6 +13,7 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
   Stack,
+  Tabs,
   useLocalSearchParams,
   usePathname,
   useRouter,
@@ -101,6 +102,7 @@ export default function EventDetailsPage() {
   );
   return (
     <PageContainer stickyBottom={stickyBottom}>
+      <Tabs.Screen options={{ href: null, tabBarStyle: { display: "none" } }} />
       <Stack.Screen
         options={{
           headerRight: () => (

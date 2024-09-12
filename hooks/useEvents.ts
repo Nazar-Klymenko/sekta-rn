@@ -20,15 +20,33 @@ import {
   fetchLikedEvents,
   fetchLikedEventsId,
   fetchPreviousEvents,
+  fetchPreviousEventsPreview,
   fetchUpcomingEvents,
+  fetchUpcomingEventsPreview,
 } from "@/api/events";
 import { Event } from "@/models/Event";
 import { db } from "@/services/firebase";
 
 import { useAuth } from "./useAuth";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
+// For previews (limited events)
+export const useUpcomingEventsPreview = (count: number = 3) => {
+  return useQuery<Event[], Error>({
+    queryKey: ["upcomingEventsPreview", count],
+    queryFn: () => fetchUpcomingEventsPreview(count),
+  });
+};
+
+export const usePreviousEventsPreview = (count: number = 4) => {
+  return useQuery<Event[], Error>({
+    queryKey: ["previousEventsPreview", count],
+    queryFn: () => fetchPreviousEventsPreview(count),
+  });
+};
+
+// For paginated events (no limit)
 export const usePreviousEvents = () => {
   return useInfiniteQuery<
     Event[],
@@ -47,10 +65,23 @@ export const usePreviousEvents = () => {
     },
   });
 };
-export const useUpcomingEvents = (limit: number = 3) => {
-  return useQuery<Event[], Error>({
-    queryKey: ["upcomingEvents", limit],
-    queryFn: () => fetchUpcomingEvents(limit),
+
+export const useUpcomingEvents = () => {
+  return useInfiniteQuery<
+    Event[],
+    Error,
+    InfiniteData<Event[]>,
+    ["upcomingEvents"],
+    number
+  >({
+    queryKey: ["upcomingEvents"],
+    queryFn: async ({ pageParam = 0 }) => {
+      return fetchUpcomingEvents(pageParam, ITEMS_PER_PAGE);
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === ITEMS_PER_PAGE ? allPages.length : undefined;
+    },
   });
 };
 export const useEvent = (id: string) => {

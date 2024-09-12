@@ -1,53 +1,37 @@
-import { ChevronRight } from "@tamagui/lucide-icons";
+import { Calendar, Info } from "@tamagui/lucide-icons";
 
 import React from "react";
 
-import { ActivityIndicator, FlatList, ScrollView } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 
-import { useFavoriteEventsId } from "@/hooks/useEvents";
-import { usePreviousEvents, useUpcomingEvents } from "@/hooks/useEvents";
+import { useAuth } from "@/hooks/useAuth";
+import { useFavoriteEventsId, useUpcomingEvents } from "@/hooks/useEvents";
 
-import { Link } from "expo-router";
-import {
-  Button,
-  H1,
-  H2,
-  Heading,
-  Text,
-  XStack,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { useRouter } from "expo-router";
+import { H2, Text, XStack, YStack, useTheme } from "tamagui";
+
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import { RetryButton } from "@/components/buttons/IconButtons";
-import { EventCard } from "@/components/event/EventCard";
-import PreviousEventCard from "@/components/event/PreviousEventCard";
+import { SecondaryButton } from "@/components/buttons/SecondaryButton";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
 import UpcomingEventCard from "@/components/event/UpcomingEventCard";
 import { PageContainer } from "@/components/layout/PageContainer";
-
-const ITEMS_PER_PAGE = 10;
 
 export default function UpcomingEventsScreen() {
   const theme = useTheme();
   const { data: likedEvents } = useFavoriteEventsId();
 
   const {
-    data: upcomingEvents,
-    isLoading: isUpcomingLoading,
-    error: upcomingError,
-  } = useUpcomingEvents(3); // Fetch 3 upcoming events
-
-  const {
-    data: previousEventsData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     status,
-    error: previousEventsError,
-    isLoading: isPreviousEventsLoading,
+    error,
+    isLoading,
     refetch,
-  } = usePreviousEvents();
+  } = useUpcomingEvents();
 
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -55,94 +39,51 @@ export default function UpcomingEventsScreen() {
     }
   };
 
-  if (status === "error" || upcomingError) {
+  if (status === "error") {
     return (
-      <YStack flex={1} justifyContent="flex-start" alignItems="center">
-        <Text>
-          Error: {((previousEventsError || upcomingError) as Error).message}
-        </Text>
+      <YStack flex={1} justifyContent="center" alignItems="center">
+        <Text>Error: {(error as Error).message}</Text>
         <RetryButton onPress={() => refetch()} size="lg" />
       </YStack>
     );
   }
 
-  const flattenedPreviousEvents =
-    previousEventsData?.pages.flatMap((page) => page) || [];
-
+  const flattenedEvents = data?.pages.flatMap((page) => page) || [];
+  if (!isLoading && flattenedEvents.length === 0) {
+    return <EmptyUpcomingEvents />;
+  }
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
-        data={
-          isPreviousEventsLoading ? Array(5).fill({}) : flattenedPreviousEvents
-        }
+        data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
-          isPreviousEventsLoading ? (
+          isLoading ? (
             <SkeletonEventCard />
           ) : (
             <YStack
               style={{
                 maxWidth: 720,
-                padding: 16,
-              }}
-            >
-              <PreviousEventCard event={event} />
-            </YStack>
-          )
-        }
-        keyExtractor={(item, index) => item.id || index.toString()}
-        refreshing={isPreviousEventsLoading}
-        onRefresh={refetch}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.1}
-        ListHeaderComponent={
-          <YStack gap="$4" paddingTop="$4">
-            <XStack
-              justifyContent="space-between"
-              alignItems="center"
-              paddingHorizontal="$4"
-            >
-              <H2>Upcoming Events</H2>
-              <Link href="/upcoming">
-                <XStack
-                  alignItems="center"
-                  justifyContent="center"
-                  display="flex"
-                >
-                  <Text>View all</Text>
-                  <ChevronRight />
-                </XStack>
-              </Link>
-            </XStack>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
                 paddingHorizontal: 16,
                 paddingVertical: 8,
               }}
             >
-              {isUpcomingLoading
-                ? Array(3)
-                    .fill(null)
-                    .map((_, index) => (
-                      <XStack key={`skeleton-${index}`} paddingRight="$4">
-                        <SkeletonEventCard />
-                      </XStack>
-                    ))
-                : upcomingEvents?.map((event) => (
-                    <XStack key={event.id} paddingRight="$4">
-                      <UpcomingEventCard
-                        event={event}
-                        isLiked={likedEvents?.includes(event.id) || false}
-                      />
-                    </XStack>
-                  ))}
-            </ScrollView>
-            <H2 paddingHorizontal="$4">Previous Events</H2>
-          </YStack>
+              <UpcomingEventCard
+                event={event}
+                isLiked={likedEvents?.includes(event.id) || false}
+              />
+            </YStack>
+          )
         }
+        keyExtractor={(item, index) => item.id || index.toString()}
+        refreshing={isLoading}
+        onRefresh={refetch}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.1}
+        ListHeaderComponent={<InfoBanner />}
         ListEmptyComponent={() => (
-          <Text>No events found. Pull to refresh or check back later.</Text>
+          <Text padding="$4">
+            No upcoming events found. Pull to refresh or check back later.
+          </Text>
         )}
         ListFooterComponent={() =>
           isFetchingNextPage ? (
@@ -153,3 +94,59 @@ export default function UpcomingEventsScreen() {
     </PageContainer>
   );
 }
+const EmptyUpcomingEvents = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  return (
+    <YStack
+      flex={1}
+      justifyContent="flex-start"
+      alignItems="center"
+      paddingVertical="$8"
+      gap="$4"
+    >
+      <Calendar size={100} color="$gray8Light" />
+      <Text fontSize="$6" fontWeight="bold" textAlign="center">
+        Sorry {user?.displayName || `${user?.displayName}`}, We don't have any
+        upcoming events
+      </Text>
+      <Text fontSize="$4" textAlign="center" color="$gray10Light">
+        Come back later, and enable push notifications to not miss any new
+        events
+      </Text>
+    </YStack>
+  );
+};
+const InfoBanner = () => {
+  return (
+    <YStack margin="$4">
+      <LinearGradient
+        colors={["$pink9Light", "$accentBackground"]}
+        start={[0, 0]}
+        end={[1, 1]}
+        borderRadius="$4"
+        padding={2}
+      >
+        <XStack
+          backgroundColor="$backgroundHover"
+          paddingVertical="$3"
+          paddingHorizontal="$4"
+          borderRadius="$3" // Slightly smaller to fit inside the gradient
+          alignItems="center"
+          gap="$2"
+        >
+          <Info size={20} />
+          <YStack gap="$1">
+            <Text paddingLeft="$2" fontSize={16} fontWeight="bold">
+              Get a discount at the entrance!
+            </Text>
+            <Text paddingLeft="$2" fontSize="$3" color="$gray10Light">
+              Click the attend button in the event and show it at the entrance!
+            </Text>
+          </YStack>
+        </XStack>
+      </LinearGradient>
+    </YStack>
+  );
+};

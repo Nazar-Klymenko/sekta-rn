@@ -39,6 +39,19 @@ export default function HomeLayout() {
         name="upcoming"
         options={{
           title: "Upcoming events",
+
+          headerShown: true,
+          animation: "fade_from_bottom",
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+        }}
+      />
+      <Stack.Screen
+        name="previous"
+        options={{
+          title: "Previous events",
           headerShown: true,
           animation: "fade_from_bottom",
           headerStyle: {
