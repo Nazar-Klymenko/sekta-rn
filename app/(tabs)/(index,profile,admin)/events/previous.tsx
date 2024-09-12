@@ -67,7 +67,6 @@ export default function PreviousEventsScreen() {
         onRefresh={refetch}
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
-        ListHeaderComponent={<H2 paddingHorizontal="$4">Previous Events</H2>}
         ListEmptyComponent={() => (
           <Text padding="$4">
             No events found. Pull to refresh or check back later.

@@ -25,14 +25,6 @@ export default function HomeLayout() {
           headerTintColor: theme.color.get(),
           animation: "fade_from_bottom",
           headerLeft: () => <DrawerButton />,
-          headerSearchBarOptions: {
-            shouldShowHintSearchIcon: false,
-            headerIconColor: theme.color.get(),
-            hintTextColor: theme.placeholderColor.get(),
-            textColor: theme.color.get(),
-            placeholder: "Search events",
-            hideWhenScrolling: true,
-          },
         }}
       />
       <Stack.Screen
@@ -46,6 +38,14 @@ export default function HomeLayout() {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
+          headerSearchBarOptions: {
+            shouldShowHintSearchIcon: false,
+            headerIconColor: theme.color.get(),
+            hintTextColor: theme.placeholderColor.get(),
+            textColor: theme.color.get(),
+            placeholder: "Search events",
+            hideWhenScrolling: true,
+          },
         }}
       />
       <Stack.Screen

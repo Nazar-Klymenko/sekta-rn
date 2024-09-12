@@ -6,7 +6,16 @@ import { Event } from "@/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { useRouter } from "expo-router";
-import { Image, Stack, Text, XStack, YStack, styled, useTheme } from "tamagui";
+import {
+  Image,
+  Stack,
+  Text,
+  XStack,
+  YStack,
+  styled,
+  useTheme,
+  useWindowDimensions,
+} from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
@@ -14,15 +23,16 @@ import { Tag } from "@/components/Tag";
 
 interface UpcomingEventCardProps {
   event: Event;
-  isLiked: boolean;
+  cardWidth: number;
 }
 
 const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   event,
-  isLiked,
+  cardWidth,
 }) => {
   const theme = useTheme();
   const router = useRouter();
+  const { width: windowWidth } = useWindowDimensions();
 
   const formattedDate = formatFirestoreTimestamp(event.date, "EEE, MMM d");
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
@@ -30,11 +40,14 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   const formattedMonth = formatFirestoreTimestamp(event.date, "MMM");
 
   return (
-    <CardContainer onPress={() => router.push(`/events/${event.id}`)}>
+    <CardContainer
+      onPress={() => router.push(`/events/${event.id}`)}
+      width={cardWidth}
+    >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={360}
+          width={cardWidth}
           height={240}
         />
         <LinearGradient
@@ -99,15 +112,12 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 };
 
 const CardContainer = styled(YStack, {
-  width: 360,
   borderRadius: "$6",
   overflow: "hidden",
   borderColor: "$gray2Dark",
   backgroundColor: "$background",
   elevation: "$1",
-
   marginVertical: 10,
-  marginHorizontal: 5,
   pressStyle: {
     elevation: 8,
     scale: 0.98,

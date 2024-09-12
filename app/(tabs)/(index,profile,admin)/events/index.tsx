@@ -2,7 +2,12 @@ import { ChevronRight } from "@tamagui/lucide-icons";
 
 import React from "react";
 
-import { ActivityIndicator, FlatList, ScrollView } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 
 import {
   useFavoriteEventsId,
@@ -10,6 +15,7 @@ import {
   useUpcomingEventsPreview,
 } from "@/hooks/useEvents";
 import { usePreviousEvents, useUpcomingEvents } from "@/hooks/useEvents";
+import { Event } from "@/models/Event";
 
 import { Link, useRouter } from "expo-router";
 import {
@@ -29,6 +35,8 @@ import { RetryButton } from "@/components/buttons/IconButtons";
 import { EventCard } from "@/components/event/EventCard";
 import PreviousEventCard from "@/components/event/PreviousEventCard";
 import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
+import { SkeletonPreviousEventCard } from "@/components/event/SkeletonPreviousEventCard";
+import { SkeletonUpcomingEventCard } from "@/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/components/event/UpcomingEventCard";
 import { PageContainer } from "@/components/layout/PageContainer";
 
@@ -82,31 +90,10 @@ export default function HomeScreen() {
             <ChevronRight />
           </XStack>
         </XStack>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-          }}
-        >
-          {isUpcomingLoading
-            ? Array(3)
-                .fill(null)
-                .map((_, index) => (
-                  <XStack key={`skeleton-${index}`} paddingRight="$4">
-                    <SkeletonEventCard />
-                  </XStack>
-                ))
-            : upcomingEvents?.map((event) => (
-                <XStack key={event.id} paddingRight="$4">
-                  <UpcomingEventCard
-                    event={event}
-                    isLiked={likedEvents?.includes(event.id) || false}
-                  />
-                </XStack>
-              ))}
-        </ScrollView>
+        <UpcomingEventsScrollView
+          upcomingEvents={upcomingEvents}
+          isUpcomingLoading={isUpcomingLoading}
+        />
         <Separator marginHorizontal="$4" />
         <XStack
           justifyContent="space-between"
@@ -126,7 +113,7 @@ export default function HomeScreen() {
             ? Array(4)
                 .fill(null)
                 .map((_, index) => (
-                  <SkeletonEventCard key={`skeleton-${index}`} />
+                  <SkeletonPreviousEventCard key={`skeleton-${index}`} />
                 ))
             : previousEvents?.map((event) => (
                 <YStack
@@ -144,3 +131,59 @@ export default function HomeScreen() {
     </PageContainer>
   );
 }
+interface UpcomingEventsScrollViewProps {
+  upcomingEvents: Event[] | undefined;
+  isUpcomingLoading: boolean;
+  fullWidth?: boolean;
+}
+
+const UpcomingEventsScrollView: React.FC<UpcomingEventsScrollViewProps> = ({
+  upcomingEvents,
+  isUpcomingLoading,
+  fullWidth = false,
+}) => {
+  const { width: windowWidth } = useWindowDimensions();
+  const totalEvents = upcomingEvents?.length || 0;
+
+  const cardWidth =
+    fullWidth || totalEvents === 1
+      ? windowWidth - 32 // Full width minus padding
+      : (windowWidth - 32) * 0.9; // 90% of available width
+
+  const snapToInterval = cardWidth + (fullWidth || totalEvents === 1 ? 0 : 16);
+
+  return (
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+      }}
+      snapToInterval={snapToInterval}
+      decelerationRate="fast"
+      snapToAlignment="start"
+    >
+      {isUpcomingLoading
+        ? Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <XStack key={`skeleton-${index}`} paddingRight="$4">
+                <SkeletonUpcomingEventCard cardWidth={cardWidth} />
+              </XStack>
+            ))
+        : upcomingEvents?.map((event, index) => (
+            <XStack
+              key={event.id}
+              paddingRight={
+                fullWidth || totalEvents === 1 || index === totalEvents - 1
+                  ? 0
+                  : "$4"
+              }
+            >
+              <UpcomingEventCard event={event} cardWidth={cardWidth} />
+            </XStack>
+          ))}
+    </ScrollView>
+  );
+};

@@ -55,6 +55,7 @@ export default function UpcomingEventsScreen() {
   return (
     <PageContainer scrollable={false} fullWidth>
       <FlatList
+        contentContainerStyle={{ paddingHorizontal: 0 }} // Remove default padding
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
@@ -67,10 +68,7 @@ export default function UpcomingEventsScreen() {
                 paddingVertical: 8,
               }}
             >
-              <UpcomingEventCard
-                event={event}
-                isLiked={likedEvents?.includes(event.id) || false}
-              />
+              <UpcomingEventCard event={event} totalEvents={1} />
             </YStack>
           )
         }
@@ -95,7 +93,6 @@ export default function UpcomingEventsScreen() {
   );
 }
 const EmptyUpcomingEvents = () => {
-  const router = useRouter();
   const { user } = useAuth();
 
   return (
