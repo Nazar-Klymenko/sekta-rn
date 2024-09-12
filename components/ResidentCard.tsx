@@ -11,7 +11,7 @@ const StyledCard = styled(Card, {
   maxWidth: "100%",
   width: 400,
   height: 500,
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
   backgroundColor: "transparent",
   cursor: "pointer",

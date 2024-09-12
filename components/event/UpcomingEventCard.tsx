@@ -117,7 +117,7 @@ const CardOuterContainer = styled(YStack, {
 });
 
 const CardInnerContainer = styled(YStack, {
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
   backgroundColor: "$backgroundStrong",
 });

@@ -13,7 +13,7 @@ const StyledToast = styled(Toast, {
   borderColor: "$borderColor",
   borderWidth: 1,
   alignItems: "center",
-  borderRadius: "$2",
+  borderRadius: "$6",
   margin: "$4",
   variants: {
     variant: {

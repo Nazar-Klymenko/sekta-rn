@@ -26,7 +26,7 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ icon, label, value }) => (
       shadowRadius: "$2",
     }}
     padding="$4"
-    borderRadius="$2"
+    borderRadius="$6"
   >
     <XStack alignItems="center" gap="$4">
       {icon}

@@ -60,7 +60,7 @@ const GenreTag = styled(Text, {
   fontWeight: "bold",
   color: "white",
   backgroundColor: "rgba(255,255,255,0.2)",
-  borderRadius: 20,
+  borderRadius: "$6",
   paddingVertical: 8,
   paddingHorizontal: 16,
   marginRight: 10,
@@ -69,7 +69,7 @@ const GenreTag = styled(Text, {
 
 const InfoCard = styled(YStack, {
   backgroundColor: "rgba(255,255,255,0.1)",
-  borderRadius: 20,
+  borderRadius: "$6",
   padding: 20,
   backdropFilter: "blur(10px)",
   marginBottom: 20,
@@ -77,7 +77,7 @@ const InfoCard = styled(YStack, {
 
 const SocialButton = styled(Button, {
   backgroundColor: "rgba(255,255,255,0.2)",
-  borderRadius: 50,
+  borderRadius: "$6",
   padding: 15,
 });
 

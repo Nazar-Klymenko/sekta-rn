@@ -26,7 +26,7 @@ const ButtonFrame = styled(Stack, {
   name: "ButtonFrame",
   tag: "button",
   backgroundColor: "transparent",
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "visible",
   minHeight: 54,
   justifyContent: "center",
@@ -95,7 +95,7 @@ const GradientContainer = styled(Stack, {
   right: 0,
   bottom: 0,
   overflow: "hidden",
-  borderRadius: "$4",
+  borderRadius: "$6",
 });
 
 export const PrimaryButton = forwardRef<TamaguiElement, PrimaryButtonProps>(

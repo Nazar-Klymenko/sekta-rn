@@ -51,7 +51,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 
 const CardContainer = styled(XStack, {
   width: "100%",
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
   borderWidth: 1,
   borderColor: "$borderColor",

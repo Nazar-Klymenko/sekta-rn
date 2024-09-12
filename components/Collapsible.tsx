@@ -83,7 +83,7 @@ const ResponsiveStack = styled(Button, {
   },
   padding: "$4",
   minHeight: "$6",
-  borderRadius: "$2",
+  borderRadius: "$6",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

@@ -185,7 +185,7 @@ const InfoItem = ({ icon, title, value }: any) => (
     <YStack
       width={50}
       height={50}
-      borderRadius="$2"
+      borderRadius="$6"
       justifyContent="center"
       alignItems="center"
     >
