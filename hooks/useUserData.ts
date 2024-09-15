@@ -13,6 +13,7 @@ export const useUserData = (userId: string) => {
     retry: false,
   });
 };
+
 export const useUsers = () => {
   return useQuery<UserData[], Error>({
     queryKey: ["users"],
