@@ -15,9 +15,9 @@ web-build/
 
 
 .env
-/.tamagui
-.tamagui
-.tamagui/tamagui.config.json
+
+.tamagui/
+
 .firebase/hosting.ZGlzdA.cache
 /ios
 /android
@@ -28,4 +28,4 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
-.tamagui/tamagui.config.cjs
+
