@@ -19,6 +19,7 @@ export interface Event {
     url: string;
     path: string;
     altText?: string; // For accessibility
+    publicUrl?: string; //legacy, use url
   };
 
   attendeeCount: number;

@@ -19,7 +19,7 @@ interface DialogProps extends TamaguiDialogProps {
 
 const StyledDialogContent = styled(TamaguiDialog.Content, {
   backgroundColor: "$background",
-  borderRadius: "$4",
+  borderRadius: "$6",
   padding: "$4",
   maxWidth: 500,
   width: "90%",

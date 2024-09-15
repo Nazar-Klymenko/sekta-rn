@@ -25,6 +25,7 @@ export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
       icon={<Share size={size === "sm" ? 20 : 24} />}
       //   onPress={(e) => handleShare(e)}
       backgroundColor={"$colorTransparent"}
+      borderWidth={0}
     />
   );
 };
@@ -43,6 +44,7 @@ export const RetryButton = ({ size = "sm", onPress }: RetryButtonProps) => {
       icon={<RefreshCcw size={size === "sm" ? 20 : 24} />}
       onPress={onPress}
       backgroundColor={"$colorTransparent"}
+      borderWidth={0}
     />
   );
 };
@@ -60,6 +62,7 @@ export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
     <Button
       size={size === "sm" ? "$3" : "$5"}
       circular
+      borderWidth={0}
       icon={
         <Heart
           size={size === "sm" ? 20 : 24}

@@ -21,7 +21,6 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { UserData } from "@/models/UserData";
 import { auth, db } from "@/services/firebase";
-import { removeAuthToken, setAuthToken } from "@/utils/tokenStorage";
 
 export const signUp = async (
   email: string,
@@ -46,7 +45,6 @@ export const signUp = async (
 
   // Store the user token
   const token = await auth.currentUser!.getIdToken();
-  await setAuthToken(token);
   return auth.currentUser!;
 };
 
@@ -60,7 +58,6 @@ export const signIn = async (
     password,
   );
   const token = await userCredential.user.getIdToken();
-  await setAuthToken(token);
   return userCredential.user;
 };
 
@@ -103,7 +100,6 @@ export const deleteAccount = async (password: string): Promise<void> => {
     await deleteDoc(doc(db, "users", user.uid));
 
     await deleteUser(user);
-    await removeAuthToken();
   } else {
     throw new Error("No user is currently signed in");
   }
@@ -111,7 +107,6 @@ export const deleteAccount = async (password: string): Promise<void> => {
 
 export const signOut = async (): Promise<void> => {
   await firebaseSignOut(auth);
-  await removeAuthToken();
 };
 
 const usersCollection = collection(db, "users");

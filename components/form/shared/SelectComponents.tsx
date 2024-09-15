@@ -24,7 +24,7 @@ export const ScrollUpButton = () => {
         end={[0, 1]}
         fullscreen
         colors={["$background", "transparent"]}
-        borderRadius="$4"
+        borderRadius="$6"
       />
     </Select.ScrollUpButton>
   );
@@ -47,7 +47,7 @@ export const ScrollDownButton = () => {
         end={[0, 1]}
         fullscreen
         colors={["transparent", "$background"]}
-        borderRadius="$4"
+        borderRadius="$6"
       />
     </Select.ScrollDownButton>
   );

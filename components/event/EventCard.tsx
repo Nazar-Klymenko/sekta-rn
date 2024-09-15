@@ -31,7 +31,7 @@ import { LikeButton } from "@/components/buttons/IconButtons";
 
 interface EventCardProps {
   event: Event;
-  hrefSource: "events" | "favourite";
+  hrefSource: "events" | "saved";
   isLiked: boolean;
 }
 
@@ -174,7 +174,7 @@ export const EventCard: React.FC<EventCardProps> = ({
 };
 
 const CardContainer = styled(YStack, {
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
   marginVertical: "$3",
   alignSelf: "center",

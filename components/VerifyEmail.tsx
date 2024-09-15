@@ -15,7 +15,7 @@ import { SecondaryButton } from "./buttons/SecondaryButton";
 const VerifyEmailContainer = styled(YStack, {
   width: "100%",
   padding: "$4",
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
 });
 

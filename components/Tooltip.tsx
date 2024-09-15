@@ -15,7 +15,7 @@ interface CustomTooltipProps extends Omit<TooltipProps, "children"> {
 
 const TooltipContent = styled(Stack, {
   backgroundColor: "$backgroundStrong",
-  borderRadius: "$4",
+  borderRadius: "$6",
 });
 
 export const Tooltip: React.FC<CustomTooltipProps> = ({

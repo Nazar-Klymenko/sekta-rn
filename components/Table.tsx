@@ -11,7 +11,7 @@ import {
 } from "tamagui";
 
 const TableComponent = styled(ThemeableStack, {
-  borderRadius: "$4",
+  borderRadius: "$6",
   overflow: "hidden",
   width: "100%",
   flex: 1,
@@ -19,7 +19,7 @@ const TableComponent = styled(ThemeableStack, {
 
 const TableHead = styled(ThemeableStack, {
   backgroundColor: "$backgroundStrong",
-  borderRadius: "$4",
+  borderRadius: "$6",
 });
 
 const TableBody = styled(ThemeableStack, {
@@ -28,7 +28,7 @@ const TableBody = styled(ThemeableStack, {
 
 const Row = styled(ThemeableStack, {
   flexDirection: "row",
-  borderRadius: "$4",
+  borderRadius: "$6",
   marginVertical: 2,
   display: "flex",
   alignItems: "center",
@@ -39,7 +39,7 @@ const Row = styled(ThemeableStack, {
     isHeader: {
       true: {
         height: 54,
-        borderRadius: "$4",
+        borderRadius: "$6",
         backgroundColor: "$backgroundHover",
         hoverStyle: {
           backgroundColor: "$backgroundHover",
