@@ -3,8 +3,6 @@ import React from "react";
 
 import {
   GetProps,
-  Text,
-  Theme,
   ThemeableStack,
   styled,
   withStaticProperties,
@@ -39,7 +37,7 @@ const Row = styled(ThemeableStack, {
     isHeader: {
       true: {
         height: 54,
-        borderRadius: "$6",
+        // borderRadius: "$6",
         backgroundColor: "$backgroundHover",
         hoverStyle: {
           backgroundColor: "$backgroundHover",

@@ -1,43 +1,40 @@
-import { ChevronLeft, ChevronRight } from "@tamagui/lucide-icons";
+// src/components/navigation/Pagination.tsx
+import React from "react";
 
-import React, { useMemo, useState } from "react";
+import { Button, Text, XStack } from "tamagui";
 
-import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
-
-interface PaginationProps {
+export interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  setCurrentPage: (value: React.SetStateAction<number>) => void;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const Pagination = ({
+export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   setCurrentPage,
-}: PaginationProps) => {
+}) => {
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
   return (
-    <XStack
-      justifyContent="space-between"
-      alignItems="center"
-      marginVertical="$4"
-    >
-      <Text>
-        Page {currentPage} of {totalPages}
-      </Text>
-      <XStack gap="$2">
-        <Button
-          icon={ChevronLeft}
-          disabled={currentPage === 1}
-          onPress={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        />
-        <Button
-          icon={ChevronRight}
-          disabled={currentPage === totalPages}
-          onPress={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-        />
-      </XStack>
+    <XStack justifyContent="center" alignItems="center" gap="$2">
+      <Button
+        onPress={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        <Text>Previous</Text>
+      </Button>
+      <Button>
+        <Text>{currentPage.toString()}</Text>
+      </Button>
+      <Button
+        onPress={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+      >
+        <Text>Next</Text>
+      </Button>
     </XStack>
   );
 };
