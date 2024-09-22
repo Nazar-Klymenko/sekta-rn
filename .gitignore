@@ -17,6 +17,7 @@ web-build/
 .env
 
 .tamagui/
+tamagui-web.css
 
 .firebase/hosting.ZGlzdA.cache
 /ios
