@@ -49,11 +49,6 @@ import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
   {
-    title: `Profile`,
-    icon: User,
-    url: "/profile",
-  },
-  {
     title: `Saved`,
     icon: Bookmark,
     url: "/saved",
@@ -94,7 +89,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
     <SafeAreaView style={{ flex: 1 }}>
       <UserPreview
         onPress={() => {
-          router.navigate("/profile");
+          router.push("/(tabs)/(profile)/profile");
           closeDrawer();
         }}
       >

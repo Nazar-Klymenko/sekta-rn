@@ -24,6 +24,10 @@ export default function TabLayout() {
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
   const pathname = usePathname();
+  const shouldHideTabBar =
+    pathname.startsWith("/events/") &&
+    !pathname.includes("/events/upcoming") &&
+    !pathname.includes("/events/previous");
 
   if (Platform.OS === "web") {
     return <Slot />;
@@ -31,12 +35,13 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="(index)"
+      initialRouteName="(profile)"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.gray2Dark.get(),
           borderTopWidth: 0,
+          display: shouldHideTabBar ? "none" : "flex",
         },
         tabBarActiveTintColor: theme.color.get(),
         tabBarInactiveTintColor: theme.gray9Light.get(),

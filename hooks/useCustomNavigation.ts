@@ -27,7 +27,24 @@ export const useCustomNavigation = (closeDrawer: () => void) => {
     [router, currentSegment, closeDrawer, fullPath],
   );
 
-  return { navigate };
+  const navigateFromTabs = useCallback(
+    (url: string) => {
+      const targetPath = createTabUrlTabs(url, currentSegment);
+      const normalizedFullPath = normalizePath(fullPath);
+      const normalizedTargetPath = normalizePath(targetPath);
+
+      if (normalizedFullPath === normalizedTargetPath) {
+        closeDrawer();
+      } else {
+        alert(targetPath);
+        router.push(targetPath);
+        closeDrawer();
+      }
+    },
+    [router, currentSegment, closeDrawer, fullPath],
+  );
+
+  return { navigate, navigateFromTabs };
 };
 
 const isTabRoute = (segments: string[]) =>
@@ -40,6 +57,10 @@ export const useSegments = (): string => {
 
 export const createTabUrl = (baseUrl: string, segment: string): Href<string> =>
   `${segment}${baseUrl}` as Href<string>;
+export const createTabUrlTabs = (
+  baseUrl: string,
+  segment: string,
+): Href<string> => `/(tabs)${segment}${baseUrl}` as Href<string>;
 
 export const useFullPath = (): string => {
   const segments = useExpoRouterSegments();
