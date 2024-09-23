@@ -3,8 +3,8 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
+import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
 import { useAuth } from "@/hooks/useAuth";
-import { useVerifyEmail } from "@/hooks/useAuthOperations";
 
 import { Mail } from "@tamagui/lucide-icons";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { signOut } from "@/api/auth";
+import { useSignOut } from "@/features/auth/hooks/useSignOut";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserData } from "@/hooks/useUserData";
 
@@ -15,7 +15,7 @@ import {
   User2,
 } from "@tamagui/lucide-icons";
 
-import { Separator, YStack, styled } from "tamagui";
+import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -29,9 +29,12 @@ import { ProfileHeader, SectionTitle, VerifyEmail } from "../components";
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-
+  const signOutMutation = useSignOut();
   const router = useRouter();
 
+  const handleSignOut = () => {
+    signOutMutation.mutate();
+  };
   return (
     <PageContainer formContainer>
       <YStack gap="$4">
@@ -90,7 +93,7 @@ export default function ProfileScreen() {
           />
           <MenuItem
             title="Contact us"
-            onPress={() => router.push("/profile/contact")}
+            onPress={() => router.push("/contact")}
             icon={HelpCircle}
           />
         </YStack>
@@ -102,7 +105,7 @@ export default function ProfileScreen() {
           marginTop="$4"
         >
           {isLoggedIn ? (
-            <PrimaryButton onPress={signOut} text="Sign Out" />
+            <PrimaryButton onPress={handleSignOut} text="Sign Out" />
           ) : (
             <YStack gap="$4">
               <PrimaryButton

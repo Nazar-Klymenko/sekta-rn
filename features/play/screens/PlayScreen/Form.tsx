@@ -1,3 +1,7 @@
+import React from "react";
+
+import { emailSchema } from "@/utils/validationSchemas";
+
 import {
   AudioLines,
   Facebook,
@@ -8,12 +12,9 @@ import {
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import React from "react";
-
-import { emailSchema } from "@/utils/validationSchemas";
+import { Text } from "tamagui";
 
 import { useForm } from "react-hook-form";
-import { Text } from "tamagui";
 
 import * as yup from "yup";
 
@@ -23,7 +24,7 @@ import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
 
-import { useSubmitPlay } from "../hooks/useSubmitPlay";
+import { useSubmitPlay } from "../../hooks/useSubmitPlay";
 
 const playSchema = yup.object({
   email: emailSchema,

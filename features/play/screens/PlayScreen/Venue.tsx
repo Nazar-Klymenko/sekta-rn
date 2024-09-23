@@ -1,10 +1,10 @@
-import { Instagram, MapPin, Square } from "@tamagui/lucide-icons";
-
 import React from "react";
+
+import { Instagram, MapPin, Square } from "@tamagui/lucide-icons";
 
 import { Card, Separator, Text, XStack, YStack } from "tamagui";
 
-import { VenueInfoItem } from "../types";
+import { VenueInfoItem } from "../../types";
 
 const venueInfo: VenueInfoItem[] = [
   { title: "Location", content: "Nowa 3/3, Kraków", icon: MapPin },

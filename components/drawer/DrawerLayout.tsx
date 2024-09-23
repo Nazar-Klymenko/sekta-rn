@@ -1,4 +1,14 @@
 // src/components/DrawerLayout.tsx
+import React from "react";
+
+import { FlatList, Platform, TouchableOpacity } from "react-native";
+
+import { useSignOut } from "@/features/auth/hooks/useSignOut";
+import { useAuth } from "@/hooks/useAuth";
+import { useCustomNavigation } from "@/hooks/useCustomNavigation";
+import { useDrawer } from "@/hooks/useDrawer";
+import { useUserData } from "@/hooks/useUserData";
+
 import {
   Bookmark,
   BoomBox,
@@ -14,23 +24,6 @@ import {
   User,
 } from "@tamagui/lucide-icons";
 
-import React from "react";
-
-import { FlatList, Platform, TouchableOpacity } from "react-native";
-
-import { useAuth } from "@/hooks/useAuth";
-import { useSignOut } from "@/hooks/useAuthOperations";
-import { useCustomNavigation } from "@/hooks/useCustomNavigation";
-import { useDrawer } from "@/hooks/useDrawer";
-import { useUserData } from "@/hooks/useUserData";
-
-import { Href, useRouter } from "expo-router";
-import { useSegments as useExpoRouterSegments } from "expo-router";
-import { Drawer } from "react-native-drawer-layout";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
 import {
   Avatar,
   Button,
@@ -42,6 +35,14 @@ import {
   styled,
   useTheme,
 } from "tamagui";
+
+import { Href, useRouter } from "expo-router";
+import { useSegments as useExpoRouterSegments } from "expo-router";
+import { Drawer } from "react-native-drawer-layout";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import { Collapsible } from "../Collapsible";
 import { MenuItem } from "../buttons/MenuItem";

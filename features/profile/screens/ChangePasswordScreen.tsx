@@ -1,7 +1,7 @@
 import React from "react";
 
+import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
 import { useAuth } from "@/hooks/useAuth";
-import { useChangePassword } from "@/hooks/useAuthOperations";
 import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
