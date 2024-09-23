@@ -10,7 +10,6 @@ import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpc
 import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
 import { useAuth } from "@/shared/hooks/useAuth";
-import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
 
 import { Calendar, Info } from "@tamagui/lucide-icons";
 
@@ -27,7 +26,6 @@ import { Stack, useRouter } from "expo-router";
 
 export default function UpcomingEventsScreen() {
   const theme = useTheme();
-  const { data: likedEvents } = useFavoriteEventsId();
   const { width: windowWidth } = useWindowDimensions();
 
   const {

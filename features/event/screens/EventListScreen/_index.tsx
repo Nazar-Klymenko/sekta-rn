@@ -1,7 +1,6 @@
 import React from "react";
 
 import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
 
 import { Separator, YStack } from "tamagui";
 
@@ -17,7 +16,6 @@ import {
 
 export default function EventListScreen() {
   const router = useRouter();
-  const { data: likedEvents } = useFavoriteEventsId();
 
   const {
     data: upcomingEvents,

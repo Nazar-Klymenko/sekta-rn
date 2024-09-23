@@ -5,10 +5,6 @@ import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/shared/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/shared/hooks/useAnimatedScroll";
 import { useAuth } from "@/shared/hooks/useAuth";
-import {
-  useFavoriteEventsId,
-  useToggleEventLike,
-} from "@/shared/hooks/useEvents";
 
 import { Text, YStack } from "tamagui";
 
@@ -28,19 +24,10 @@ import {
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
-  const { data: likedEvents } = useFavoriteEventsId();
-  const toggleLike = useToggleEventLike();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
   const { scrollHandler, scrollEventThrottle, scrollY } = useAnimatedScroll();
-
-  useEffect(() => {
-    if (likedEvents && event) {
-      setOptimisticIsLiked(likedEvents.includes(event.id));
-    }
-  }, [likedEvents, event]);
 
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
@@ -56,33 +43,13 @@ export default function EventDetailsScreen() {
       </ReanimatedPageContainer>
     );
 
-  const handleLike = () => {
-    if (!isLoggedIn) {
-      router.push({ pathname: "/auth/login", params: { returnTo: pathname } });
-    } else {
-      setOptimisticIsLiked((prev) => !prev);
-      toggleLike.mutate(
-        { eventId: event.id, isLiked: optimisticIsLiked },
-        {
-          onError: () => {
-            setOptimisticIsLiked((prev) => !prev);
-          },
-        },
-      );
-    }
-  };
-
   const stickyBottom = (
     <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
   );
 
   return (
     <>
-      <EventHeader
-        optimisticIsLiked={optimisticIsLiked}
-        handleLike={handleLike}
-        scrollY={scrollY}
-      />
+      <EventHeader scrollY={scrollY} />
       <ReanimatedPageContainer
         scrollable
         fullWidth={false}

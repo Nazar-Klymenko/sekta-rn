@@ -1,3 +1,5 @@
+import { GestureResponderEvent, Platform } from "react-native";
+
 import {
   Bookmark,
   Heart,
@@ -5,8 +7,6 @@ import {
   Share,
   SlidersHorizontal,
 } from "@tamagui/lucide-icons";
-
-import { GestureResponderEvent, Platform } from "react-native";
 
 import { Button, Text, YStack, useTheme } from "tamagui";
 
@@ -95,7 +95,6 @@ export const FilterButton = ({
       icon={SlidersHorizontal}
       circular
       onPress={() => setOpen(true)}
-      theme="active"
     />
     {appliedFiltersCount > 0 && (
       <YStack

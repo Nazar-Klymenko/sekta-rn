@@ -50,11 +50,6 @@ import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
   {
-    title: `Saved`,
-    icon: Bookmark,
-    url: "/saved",
-  },
-  {
     title: `Residents`,
     icon: BoomBox,
     url: "/residents",

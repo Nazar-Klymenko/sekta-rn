@@ -3,14 +3,9 @@ import React from "react";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import {
-  LikeButton,
-  ShareButton,
-} from "@/shared/components/buttons/IconButtons";
-
 import { ArrowLeft } from "@tamagui/lucide-icons";
 
-import { XStack, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
 import { Stack as TamaguiStack } from "tamagui";
 
 import { Stack, useRouter } from "expo-router";
@@ -18,22 +13,14 @@ import Animated, {
   Extrapolation,
   SharedValue,
   interpolate,
-  useAnimatedScrollHandler,
   useAnimatedStyle,
-  useSharedValue,
 } from "react-native-reanimated";
 
 interface EventHeaderProps {
-  optimisticIsLiked: boolean;
-  handleLike: () => void;
   scrollY: SharedValue<number>;
 }
 
-const EventHeader: React.FC<EventHeaderProps> = ({
-  optimisticIsLiked,
-  handleLike,
-  scrollY,
-}) => {
+const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -74,16 +61,6 @@ const EventHeader: React.FC<EventHeaderProps> = ({
               <ArrowLeft />
             </TouchableOpacity>
           </TamaguiStack>
-        ),
-        headerRight: () => (
-          <XStack columnGap="$2">
-            <LikeButton
-              isLiked={optimisticIsLiked}
-              handleLike={handleLike}
-              size="sm"
-            />
-            <ShareButton size="sm" />
-          </XStack>
         ),
       }}
     />
