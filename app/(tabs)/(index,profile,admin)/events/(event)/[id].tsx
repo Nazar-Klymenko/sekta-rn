@@ -2,6 +2,8 @@ import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
 import React, { useEffect, useState } from "react";
 
+import { Platform, Pressable, StyleSheet, TextStyle, View } from "react-native";
+
 import { useAuth } from "@/hooks/useAuth";
 import { useDrawer } from "@/hooks/useDrawer";
 import {
@@ -18,6 +20,13 @@ import {
   usePathname,
   useRouter,
 } from "expo-router";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import {
   Button,
   H1,
@@ -34,6 +43,8 @@ import {
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
+import CountdownBanner from "@/components/CountDownBanner";
+import CountdownTimer from "@/components/CountDownTimer";
 import { Tag } from "@/components/Tag";
 import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
@@ -50,8 +61,26 @@ export default function EventDetailsPage() {
   const router = useRouter();
   const pathname = usePathname();
   const media = useMedia();
-  const { openDrawer } = useDrawer();
+  const scrollY = useSharedValue(0);
 
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
+
+  const headerAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 100],
+      [0, 1],
+      Extrapolate.CLAMP,
+    );
+    return {
+      opacity,
+      backgroundColor: "red",
+    };
+  });
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
   const md = media.gtMd;
 
@@ -102,9 +131,18 @@ export default function EventDetailsPage() {
     <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
   );
   return (
-    <PageContainer stickyBottom={stickyBottom} fullWidth>
+    <Animated.ScrollView
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+      contentContainerStyle={styles.scrollViewContent}
+    >
       <Stack.Screen
         options={{
+          headerBackground: () => (
+            <Animated.View
+              style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
+            />
+          ),
           headerRight: () => (
             <XStack columnGap="$2">
               <LikeButton
@@ -145,6 +183,7 @@ export default function EventDetailsPage() {
           <H1 fontWeight="bold" color="white" flex={1}>
             {event.title}
           </H1>
+          <CountdownBanner targetDate={event.date} />
           <XStack display="flex" flex={1} gap="$4">
             <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
               <InfoItem
@@ -181,7 +220,7 @@ export default function EventDetailsPage() {
           </XStack>
         </YStack>
       </YStack>
-    </PageContainer>
+    </Animated.ScrollView>
   );
 }
 
@@ -216,3 +255,9 @@ const InfoItem = ({
     </YStack>
   </XStack>
 );
+const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    backgroundColor: "black",
+  },
+});
