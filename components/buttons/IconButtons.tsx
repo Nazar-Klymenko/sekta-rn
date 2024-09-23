@@ -24,7 +24,7 @@ export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
       circular
       icon={<Share size={size === "sm" ? 20 : 24} />}
       //   onPress={(e) => handleShare(e)}
-      backgroundColor={"$colorTransparent"}
+      backgroundColor={"$background075"}
       borderWidth={0}
     />
   );
@@ -71,7 +71,7 @@ export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
         />
       }
       onPress={(e) => handleLike(e)}
-      backgroundColor={"$colorTransparent"}
+      backgroundColor={"$background075"}
     />
   );
 };

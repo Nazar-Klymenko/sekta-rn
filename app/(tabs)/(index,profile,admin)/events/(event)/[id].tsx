@@ -1,11 +1,10 @@
-import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
+import { ArrowLeft, Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
 import React, { useEffect, useState } from "react";
 
-import { Platform, Pressable, StyleSheet, TextStyle, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/hooks/useAuth";
-import { useDrawer } from "@/hooks/useDrawer";
 import {
   useEvent,
   useFavoriteEventsId,
@@ -15,20 +14,18 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
   Stack,
-  Tabs,
   useLocalSearchParams,
   usePathname,
   useRouter,
 } from "expo-router";
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
 import {
-  Button,
   H1,
   H2,
   Image,
@@ -40,16 +37,16 @@ import {
   useMedia,
   useTheme,
 } from "tamagui";
+import { Stack as TamaguiStack } from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import CountdownBanner from "@/components/CountDownBanner";
-import CountdownTimer from "@/components/CountDownTimer";
 import { Tag } from "@/components/Tag";
 import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
+import { ReanimatedPageContainer } from "@/components/layout/ReanimatedPageContainer";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -74,13 +71,14 @@ export default function EventDetailsPage() {
       scrollY.value,
       [0, 100],
       [0, 1],
-      Extrapolate.CLAMP,
+      Extrapolation.CLAMP,
     );
     return {
       opacity,
-      backgroundColor: "red",
+      backgroundColor: "hsla(240, 7%, 8%, 1)",
     };
   });
+
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
   const md = media.gtMd;
 
@@ -93,15 +91,15 @@ export default function EventDetailsPage() {
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
-      <PageContainer>
+      <ReanimatedPageContainer>
         <Text>Error: {error.message}</Text>
-      </PageContainer>
+      </ReanimatedPageContainer>
     );
   if (!event)
     return (
-      <PageContainer>
+      <ReanimatedPageContainer>
         <Text>Event not found</Text>
-      </PageContainer>
+      </ReanimatedPageContainer>
     );
 
   const handleLike = () => {
@@ -124,14 +122,17 @@ export default function EventDetailsPage() {
     event.date,
     "EEEE, MMMM do yyyy",
   );
-
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 
   const stickyBottom = (
     <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
   );
+
   return (
-    <Animated.ScrollView
+    <ReanimatedPageContainer
+      scrollable
+      fullWidth={false}
+      stickyBottom={stickyBottom}
       onScroll={scrollHandler}
       scrollEventThrottle={16}
       contentContainerStyle={styles.scrollViewContent}
@@ -142,6 +143,23 @@ export default function EventDetailsPage() {
             <Animated.View
               style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
             />
+          ),
+          headerLeft: ({ canGoBack }) => (
+            <TamaguiStack
+              style={{
+                backgroundColor: theme.background075.get(),
+                borderWidth: 0,
+                borderColor: theme.gray2Dark.get(),
+                borderRadius: 20,
+                padding: 6,
+                marginHorizontal: 10,
+                overflow: "hidden",
+              }}
+            >
+              <TouchableOpacity onPress={() => canGoBack && router.back()}>
+                <ArrowLeft />
+              </TouchableOpacity>
+            </TamaguiStack>
           ),
           headerRight: () => (
             <XStack columnGap="$2">
@@ -170,20 +188,12 @@ export default function EventDetailsPage() {
               height: 100,
             }}
           />
-          <XStack
-            position="absolute"
-            bottom={10}
-            left={10}
-            right={10}
-            justifyContent="space-between"
-            alignItems="flex-end"
-          ></XStack>
         </YStack>
-        <YStack paddingHorizontal="$4">
+
+        <YStack paddingHorizontal="$4" gap="$4">
           <H1 fontWeight="bold" color="white" flex={1}>
             {event.title}
           </H1>
-          <CountdownBanner targetDate={event.date} />
           <XStack display="flex" flex={1} gap="$4">
             <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
               <InfoItem
@@ -201,6 +211,9 @@ export default function EventDetailsPage() {
                 title="Price"
                 value={event.price === 0 ? "FREE" : `${event.price} PLN`}
               />
+              <Separator />
+              <H2 fontWeight="bold">Event starts in:</H2>
+              <CountdownBanner targetDate={event.date} />
               <Separator />
               <H2 fontWeight="bold">About this event</H2>
               <Paragraph color="$color10">{event.caption}</Paragraph>
@@ -220,7 +233,7 @@ export default function EventDetailsPage() {
           </XStack>
         </YStack>
       </YStack>
-    </Animated.ScrollView>
+    </ReanimatedPageContainer>
   );
 }
 
@@ -255,9 +268,10 @@ const InfoItem = ({
     </YStack>
   </XStack>
 );
+
 const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
-    backgroundColor: "black",
+    backgroundColor: "#0e0e11",
   },
 });

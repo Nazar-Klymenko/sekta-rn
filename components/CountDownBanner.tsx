@@ -1,10 +1,16 @@
-import { Clock } from "@tamagui/lucide-icons";
+import {
+  CheckCircle,
+  Clock,
+  Heart,
+  HeartCrack,
+  XCircle,
+} from "@tamagui/lucide-icons";
 import { Timestamp } from "firebase/firestore";
 
 import React from "react";
 import { useEffect, useState } from "react";
 
-import { Card, Text, XStack, YStack, styled, useTheme } from "tamagui";
+import { Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
@@ -13,49 +19,56 @@ interface CountdownBannerProps {
 }
 
 interface TimeLeft {
+  total: number;
   days: number;
   hours: number;
   minutes: number;
   seconds: number;
 }
 
-const useCountdown = (targetDate: Timestamp) => {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+const useCountdown = (targetDate: Timestamp): TimeLeft => {
+  const calculateTimeLeft = (): TimeLeft => {
+    const difference = targetDate.toDate().getTime() - new Date().getTime();
+
+    if (difference > 0) {
+      return {
+        total: difference,
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      return {
+        total: difference, // This will be negative for passed events
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
+  };
+
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const difference = targetDate.toDate().getTime() - new Date().getTime();
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const timer = setInterval(() => {
+      const newTimeLeft = calculateTimeLeft();
+      setTimeLeft(newTimeLeft);
+      if (newTimeLeft.total <= 0) {
+        clearInterval(timer);
       }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
+    }, 1000);
 
     return () => clearInterval(timer);
   }, [targetDate]);
 
   return timeLeft;
 };
-
 export const CountdownBanner: React.FC<CountdownBannerProps> = ({
   targetDate,
 }) => {
-  const { days, hours, minutes, seconds } = useCountdown(targetDate);
+  const timeLeft = useCountdown(targetDate);
   const theme = useTheme();
 
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
@@ -77,58 +90,65 @@ export const CountdownBanner: React.FC<CountdownBannerProps> = ({
     </TimeUnitContainer>
   );
 
+  const renderContent = () => {
+    const currentTime = new Date().getTime();
+    const eventTime = targetDate.toDate().getTime();
+    const timeSinceEvent = currentTime - eventTime;
+    const eightHoursInMs = 8 * 60 * 60 * 1000;
+
+    if (timeSinceEvent > eightHoursInMs) {
+      // More than 8 hours after start
+      return (
+        <StatusContainer>
+          <Heart size={32} color="white" />
+          <StatusText>Event Has Passed</StatusText>
+        </StatusContainer>
+      );
+    } else if (timeSinceEvent > 0) {
+      // Event has started but within 8 hours
+      return (
+        <StatusContainer>
+          <CheckCircle size={32} color="white" />
+          <StatusText>Event Has Started</StatusText>
+        </StatusContainer>
+      );
+    } else {
+      // Event hasn't started yet
+      return (
+        <>
+          <XStack justifyContent="space-between" width="100%" marginTop="$4">
+            <TimeUnit value={timeLeft.days} label="Days" />
+            <TimeUnit value={timeLeft.hours} label="Hours" />
+            <TimeUnit value={timeLeft.minutes} label="Mins" />
+            <TimeUnit value={timeLeft.seconds} label="Secs" />
+          </XStack>
+        </>
+      );
+    }
+  };
+
   return (
     <CountdownContainer>
-      <LinearGradient
-        colors={[theme.accentColor.get(), "$pink9Light"]}
-        start={[0, 0]}
-        end={[1, 1]}
-      >
-        <ContentWrapper>
-          {/* <HeaderContainer>
-            <Clock size={32} color="white" />
-            <HeaderText>Event Countdown</HeaderText>
-          </HeaderContainer> */}
-          <XStack justifyContent="space-between" width="100%" marginTop="$4">
-            <TimeUnit value={days} label="Days" />
-            <TimeUnit value={hours} label="Hours" />
-            <TimeUnit value={minutes} label="Mins" />
-            <TimeUnit value={seconds} label="Secs" />
-          </XStack>
-        </ContentWrapper>
-      </LinearGradient>
+      <View style={{ borderRadius: 20, overflow: "hidden" }}>
+        <LinearGradient
+          colors={[theme.accentColor.get(), "$pink9Light"]}
+          start={[0, 0]}
+          end={[1, 1]}
+        >
+          <ContentWrapper>{renderContent()}</ContentWrapper>
+        </LinearGradient>
+      </View>
     </CountdownContainer>
   );
 };
 
 const CountdownContainer = styled(YStack, {
   width: "100%",
-  borderRadius: 20,
-  overflow: "hidden",
   elevation: 10,
-});
-
-const BackgroundGradient = styled(LinearGradient, {
-  borderRadius: 20,
 });
 
 const ContentWrapper = styled(YStack, {
   padding: "$4",
-});
-
-const HeaderContainer = styled(XStack, {
-  alignItems: "center",
-  justifyContent: "center",
-  marginBottom: "$4",
-});
-
-const HeaderText = styled(Text, {
-  fontSize: 28,
-  fontWeight: "900",
-  color: "white",
-  marginLeft: "$2",
-  textTransform: "uppercase",
-  letterSpacing: 1,
 });
 
 const TimeUnitContainer = styled(YStack, {
@@ -146,6 +166,20 @@ const GlassContainer = styled(YStack, {
   height: 80,
   borderWidth: 2,
   borderColor: "rgba(255, 255, 255, 0.3)",
+});
+
+const StatusContainer = styled(XStack, {
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+const StatusText = styled(Text, {
+  fontSize: 24,
+  fontWeight: "900",
+  color: "white",
+  marginLeft: "$2",
+  textTransform: "uppercase",
+  letterSpacing: 1,
 });
 
 export default CountdownBanner;

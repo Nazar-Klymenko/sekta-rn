@@ -27,27 +27,6 @@ export default function HomeLayout() {
           headerShown: true,
           headerTransparent: true,
           headerTintColor: theme.color.get(), // Use theme color for header tint
-          headerLeft: ({ canGoBack }) => (
-            <TamaguiStack
-              style={{
-                backgroundColor: theme.backgroundHover.get(),
-                borderWidth: 1,
-                borderColor: theme.gray2Dark.get(),
-                borderRadius: 20,
-                padding: 6,
-                marginHorizontal: 10,
-                overflow: "hidden",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  if (canGoBack) router.back();
-                }}
-              >
-                <ArrowLeft />
-              </TouchableOpacity>
-            </TamaguiStack>
-          ),
         }}
       />
     </Stack>
