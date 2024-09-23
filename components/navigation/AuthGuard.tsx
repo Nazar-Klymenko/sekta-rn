@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import { Spinner, Stack } from "tamagui";
+
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 
 import { FullPageLoading } from "../layout/FullPageLoading";
 

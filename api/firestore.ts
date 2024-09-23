@@ -51,11 +51,6 @@ export const queryUserByUsername = async (username: string) => {
     return false;
   }
 };
-export const updateUsername = async (newUsername: string) => {
-  const functions = getFunctions();
-  const updateUsernameFunc = httpsCallable(functions, "updateUsername");
-  return await updateUsernameFunc({ username: newUsername });
-};
 
 export const updateUserProfile = async (
   user: User,

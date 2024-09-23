@@ -1,15 +1,16 @@
-import { Info } from "@tamagui/lucide-icons";
 import { useQueryClient } from "@tanstack/react-query";
 
 import React, { useEffect, useState } from "react";
 
-import { queryUserByUsername } from "@/api/firestore";
 import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 import { usernameSchema } from "@/utils/validationSchemas";
 
+import { Info } from "@tamagui/lucide-icons";
+
+import { Text, XStack, YStack } from "tamagui";
+
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
-import { Text, XStack, YStack } from "tamagui";
 
 import * as yup from "yup";
 

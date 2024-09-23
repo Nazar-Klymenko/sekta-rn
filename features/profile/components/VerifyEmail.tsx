@@ -1,23 +1,16 @@
 // components/VerifyEmail.tsx
-import { Mail } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useVerifyEmail } from "@/hooks/useAuthOperations";
 
+import { Mail } from "@tamagui/lucide-icons";
+
 import { Button, Text, XStack, YStack, styled } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
-
 import { SecondaryButton } from "../../../components/buttons/SecondaryButton";
-
-const VerifyEmailContainer = styled(YStack, {
-  width: "100%",
-  padding: "$4",
-  borderRadius: "$6",
-  overflow: "hidden",
-});
 
 export const VerifyEmail = () => {
   const { user } = useAuth();
@@ -57,3 +50,12 @@ export const VerifyEmail = () => {
     </VerifyEmailContainer>
   );
 };
+const VerifyEmailContainer = styled(YStack, {
+  width: "100%",
+  padding: "$4",
+  borderRadius: "$6",
+  overflow: "hidden",
+  borderWidth: 1,
+  borderColor: "$borderColor",
+  elevation: 5,
+});

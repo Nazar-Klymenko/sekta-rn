@@ -1,5 +1,5 @@
-import { PlayForm } from "./Form";
-import { HeroSection } from "./Hero";
-import { VenueInfoSection } from "./Venue";
+import { ProfileHeader } from "./ProfileHeader";
+import { SectionTitle } from "./SectionTitle";
+import { VerifyEmail } from "./VerifyEmail";
 
-export { PlayForm, HeroSection, VenueInfoSection };
+export { VerifyEmail, ProfileHeader, SectionTitle };
