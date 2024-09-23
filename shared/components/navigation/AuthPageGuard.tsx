@@ -1,10 +1,11 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/shared/hooks/useAuth";
+
+import { Spinner, Stack } from "tamagui";
 
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
-import { Spinner, Stack } from "tamagui";
 
 import { FullPageLoading } from "../layout/FullPageLoading";
 

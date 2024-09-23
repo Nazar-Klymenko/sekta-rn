@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, View } from "react-native";
+import { Stack, View, YStack, styled } from "tamagui";
 
 import Animated from "react-native-reanimated";
 
@@ -13,6 +13,34 @@ interface ReanimatedPageContainerProps {
   scrollable?: boolean;
   fullWidth?: boolean;
 }
+
+const Container = styled(YStack, {
+  flex: 1,
+  backgroundColor: "$background",
+});
+
+const ContentContainer = styled(Stack, {
+  flexGrow: 1,
+  paddingBottom: 100, // Adjust to ensure space for sticky bottom if necessary
+  variants: {
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+    },
+  },
+});
+
+const StickyBottom = styled(View, {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "$background",
+  padding: "$4",
+  borderTopWidth: 1,
+  borderTopColor: "$borderColor",
+});
 
 export const ReanimatedPageContainer: React.FC<
   ReanimatedPageContainerProps
@@ -28,43 +56,15 @@ export const ReanimatedPageContainer: React.FC<
   const Wrapper = scrollable ? Animated.ScrollView : View;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Wrapper
         onScroll={onScroll}
         scrollEventThrottle={scrollEventThrottle}
-        contentContainerStyle={[
-          styles.contentContainer,
-          contentContainerStyle,
-          fullWidth && styles.fullWidth,
-        ]}
+        contentContainerStyle={[contentContainerStyle]}
       >
-        {children}
+        <ContentContainer fullWidth={fullWidth}>{children}</ContentContainer>
       </Wrapper>
-      {stickyBottom && <View style={styles.stickyBottom}>{stickyBottom}</View>}
-    </View>
+      {stickyBottom && <StickyBottom>{stickyBottom}</StickyBottom>}
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0e0e11", // Default background color, adjust as needed
-  },
-  contentContainer: {
-    flexGrow: 1,
-    paddingBottom: 100, // Adjust to ensure space for sticky bottom if necessary
-  },
-  fullWidth: {
-    width: "100%", // Ensure full width for content when fullWidth prop is true
-  },
-  stickyBottom: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#0e0e11", // Adjust the background color to match your theme
-    padding: 16, // Add padding for the sticky bottom content
-    borderTopWidth: 1,
-    borderTopColor: "hsla(240, 9%, 17%, 1)",
-  },
-});

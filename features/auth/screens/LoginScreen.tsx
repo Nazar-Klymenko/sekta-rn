@@ -10,12 +10,12 @@ import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
 import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
 
-import { Toast, useToastController } from "@tamagui/toast";
+import { useToastController } from "@tamagui/toast";
 
 import { Text, YStack, useTheme } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 

@@ -32,7 +32,6 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 }) => {
   const theme = useTheme();
   const router = useRouter();
-  const { width: windowWidth } = useWindowDimensions();
 
   const formattedDate = formatFirestoreTimestamp(event.date, "EEE, MMM d");
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");

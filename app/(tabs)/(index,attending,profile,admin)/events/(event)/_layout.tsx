@@ -1,17 +1,13 @@
-import { Ionicons } from "@expo/vector-icons";
-import { ArrowLeft } from "@tamagui/lucide-icons";
-
 import React from "react";
 
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
 
-import { Slot, Stack, useRouter } from "expo-router";
-// Or any icon library you prefer
-import { Stack as TamaguiStack, View, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
+
+import { Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
-  const router = useRouter(); // Use Expo Router for navigation
 
   if (Platform.OS === "web") {
     return <Slot />;
@@ -26,7 +22,7 @@ export default function HomeLayout() {
           title: "",
           headerShown: true,
           headerTransparent: true,
-          headerTintColor: theme.color.get(), // Use theme color for header tint
+          headerTintColor: theme.color.get(),
         }}
       />
     </Stack>

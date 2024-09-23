@@ -64,7 +64,6 @@ export default function LikedEventsPage() {
         </Typography>
         <Button
           size="$4"
-          theme="active"
           onPress={() => router.push("/")}
           icon={<ArrowRight size={16} />}
         >

@@ -1,3 +1,10 @@
+import { LinearGradient } from "tamagui/linear-gradient";
+
+import React from "react";
+import { useEffect, useState } from "react";
+
+import { Timestamp } from "firebase/firestore";
+
 import {
   CheckCircle,
   Clock,
@@ -5,69 +12,10 @@ import {
   HeartCrack,
   XCircle,
 } from "@tamagui/lucide-icons";
-import { Timestamp } from "firebase/firestore";
 
-import React from "react";
-import { useEffect, useState } from "react";
+import { H2, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
-import { Text, View, XStack, YStack, styled, useTheme } from "tamagui";
-
-import { LinearGradient } from "tamagui/linear-gradient";
-
-interface CountdownBannerProps {
-  targetDate: Timestamp;
-}
-
-interface TimeLeft {
-  total: number;
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const useCountdown = (targetDate: Timestamp): TimeLeft => {
-  const calculateTimeLeft = (): TimeLeft => {
-    const difference = targetDate.toDate().getTime() - new Date().getTime();
-
-    if (difference > 0) {
-      return {
-        total: difference,
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    } else {
-      return {
-        total: difference, // This will be negative for passed events
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      };
-    }
-  };
-
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const newTimeLeft = calculateTimeLeft();
-      setTimeLeft(newTimeLeft);
-      if (newTimeLeft.total <= 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
-  return timeLeft;
-};
-export const CountdownBanner: React.FC<CountdownBannerProps> = ({
-  targetDate,
-}) => {
+const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   const timeLeft = useCountdown(targetDate);
   const theme = useTheme();
 
@@ -129,6 +77,7 @@ export const CountdownBanner: React.FC<CountdownBannerProps> = ({
 
   return (
     <CountdownContainer>
+      <H2 fontWeight="bold">Event starts in:</H2>
       <View style={{ borderRadius: 20, overflow: "hidden" }}>
         <LinearGradient
           colors={[theme.accentColor.get(), "$pink9Light"]}
@@ -142,9 +91,62 @@ export const CountdownBanner: React.FC<CountdownBannerProps> = ({
   );
 };
 
+interface CountdownBannerProps {
+  targetDate: Timestamp;
+}
+
+interface TimeLeft {
+  total: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const useCountdown = (targetDate: Timestamp): TimeLeft => {
+  const calculateTimeLeft = (): TimeLeft => {
+    const difference = targetDate.toDate().getTime() - new Date().getTime();
+
+    if (difference > 0) {
+      return {
+        total: difference,
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      return {
+        total: difference, // This will be negative for passed events
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+    }
+  };
+
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const newTimeLeft = calculateTimeLeft();
+      setTimeLeft(newTimeLeft);
+      if (newTimeLeft.total <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  return timeLeft;
+};
+
 const CountdownContainer = styled(YStack, {
   width: "100%",
   elevation: 10,
+  gap: "$2",
 });
 
 const ContentWrapper = styled(YStack, {

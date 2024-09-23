@@ -2,10 +2,11 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Slot, Stack } from "expo-router";
+import { DrawerButton } from "@/shared/components/drawer/DrawerButton";
+
 import { useTheme } from "tamagui";
 
-import { DrawerButton } from "@/components/drawer/DrawerButton";
+import { Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
@@ -75,18 +76,6 @@ export default function HomeLayout() {
           headerTintColor: theme.color.get(),
         }}
       />
-      {/* <Stack.Screen
-        name="[id]"
-        options={{
-          animation: "fade_from_bottom",
-          title: "Event",
-          headerShown: true || Platform.OS !== "web",
-          headerStyle: {
-            backgroundColor: theme.background.get(),
-          },
-          headerTintColor: theme.color.get(),
-        }}
-      /> */}
     </Stack>
   );
 }

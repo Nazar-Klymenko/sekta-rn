@@ -63,7 +63,6 @@ export default function LikedEventsPage() {
         </Typography>
         <SecondaryButton
           size="$4"
-          theme="active"
           onPress={() => router.push("/")}
           icon={<ArrowRight size={16} />}
           text="Discover Events"

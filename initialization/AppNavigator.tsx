@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 
 import { CustomHeader } from "@/shared/components/CustomHeader/CustomHeader";
 import { CurrentToast } from "@/shared/components/Toast";
+import { DrawerLayout } from "@/shared/components/drawer/DrawerLayout";
 import { Footer } from "@/shared/components/navigation/Footer";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { usePushNotifications } from "@/shared/hooks/usePushNotifications";
@@ -17,8 +18,6 @@ import { YStack, useTheme } from "tamagui";
 import { Slot, Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { DrawerLayout } from "../components/drawer/DrawerLayout";
 
 export function AppNavigator() {
   const { user } = useAuth();
