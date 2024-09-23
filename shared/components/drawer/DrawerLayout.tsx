@@ -4,10 +4,10 @@ import React from "react";
 import { FlatList, Platform, TouchableOpacity } from "react-native";
 
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
-import { useAuth } from "@/shared/hooks/useAuth";
+import { useAuth } from "@/features/core/hooks/useAuth";
+import { useUserData } from "@/features/core/hooks/useUserData";
 import { useCustomNavigation } from "@/shared/hooks/useCustomNavigation";
 import { useDrawer } from "@/shared/hooks/useDrawer";
-import { useUserData } from "@/shared/hooks/useUserData";
 
 import {
   Bookmark,

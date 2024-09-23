@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { User as FirebaseUser } from "firebase/auth";
 
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
-import { useAuth } from "@/shared/hooks/useAuth";
+import { useAuth } from "@/features/core/hooks/useAuth";
+import { useUserData } from "@/features/core/hooks/useUserData";
 import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
-import { useUserData } from "@/shared/hooks/useUserData";
 
 import {
   Bell,

@@ -1,12 +1,12 @@
 import React from "react";
 
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
+import { useAuth } from "@/features/core/hooks/useAuth";
+import { useUserData } from "@/features/core/hooks/useUserData";
 import { MenuItem } from "@/shared/components/buttons/MenuItem";
 import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
 import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { useAuth } from "@/shared/hooks/useAuth";
-import { useUserData } from "@/shared/hooks/useUserData";
 
 import {
   Bell,

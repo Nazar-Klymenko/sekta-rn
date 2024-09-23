@@ -3,7 +3,7 @@ import React from "react";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
 import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
 
-import { YStack } from "tamagui";
+import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -53,6 +53,7 @@ export default function EventListScreen() {
           isUpcomingLoading={isUpcomingLoading}
           onViewAllPress={() => router.push("/events/upcoming")}
         />
+        <Separator marginHorizontal="$4" />
         <PreviousEventsSection
           previousEvents={previousEvents}
           isPreviousEventsLoading={isPreviousEventsLoading}
