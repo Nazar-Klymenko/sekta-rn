@@ -91,15 +91,3 @@ const EventHeader: React.FC<EventHeaderProps> = ({
 };
 
 export default EventHeader;
-
-export const useEventScroll = () => {
-  const scrollY = useSharedValue(0);
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollY.value = event.contentOffset.y;
-    },
-  });
-
-  return { scrollHandler, scrollEventThrottle: 16, scrollY };
-};

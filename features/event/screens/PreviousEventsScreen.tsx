@@ -7,12 +7,11 @@ import PreviousEventCard from "@/shared/components/event/PreviousEventCard";
 import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
 import { SkeletonPreviousEventCard } from "@/shared/components/event/SkeletonPreviousEventCard";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
-import {
-  useFavoriteEventsId,
-  usePreviousEvents,
-} from "@/shared/hooks/useEvents";
+import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
 
 import { H2, Text, YStack, useTheme } from "tamagui";
+
+import { usePreviousEvents } from "../hooks/usePreviousEvents";
 
 export default function PreviousEventsScreen() {
   const theme = useTheme();

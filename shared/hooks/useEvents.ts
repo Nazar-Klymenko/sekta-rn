@@ -18,18 +18,13 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+import { Event } from "@/features/event/models/Event";
 import {
   fetchAllEvents,
-  fetchEventById,
   fetchLikedEvents,
   fetchLikedEventsId,
   fetchPaginatedEvents,
-  fetchPreviousEvents,
-  fetchPreviousEventsPreview,
-  fetchUpcomingEvents,
-  fetchUpcomingEventsPreview,
 } from "@/shared/api/events";
-import { Event } from "@/shared/models/Event";
 import { db } from "@/shared/services/firebase";
 
 import { useAuth } from "./useAuth";
@@ -78,66 +73,6 @@ export const usePaginatedEvents = () => {
     hasNextPage: data ? data.length === ITEMS_PER_PAGE : false,
     hasPreviousPage: !!currentPage,
   };
-};
-// For previews (limited events)
-export const useUpcomingEventsPreview = (count: number = 3) => {
-  return useQuery<Event[], Error>({
-    queryKey: ["upcomingEventsPreview", count],
-    queryFn: () => fetchUpcomingEventsPreview(count),
-  });
-};
-
-export const usePreviousEventsPreview = (count: number = 4) => {
-  return useQuery<Event[], Error>({
-    queryKey: ["previousEventsPreview", count],
-    queryFn: () => fetchPreviousEventsPreview(count),
-  });
-};
-
-// For paginated events (no limit)
-export const usePreviousEvents = () => {
-  return useInfiniteQuery<
-    Event[],
-    Error,
-    InfiniteData<Event[]>,
-    ["previousEvents"],
-    number
-  >({
-    queryKey: ["previousEvents"],
-    queryFn: async ({ pageParam = 0 }) => {
-      return fetchPreviousEvents(pageParam, ITEMS_PER_PAGE);
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === ITEMS_PER_PAGE ? allPages.length : undefined;
-    },
-  });
-};
-
-export const useUpcomingEvents = () => {
-  return useInfiniteQuery<
-    Event[],
-    Error,
-    InfiniteData<Event[]>,
-    ["upcomingEvents"],
-    number
-  >({
-    queryKey: ["upcomingEvents"],
-    queryFn: async ({ pageParam = 0 }) => {
-      return fetchUpcomingEvents(pageParam, ITEMS_PER_PAGE);
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === ITEMS_PER_PAGE ? allPages.length : undefined;
-    },
-  });
-};
-export const useEvent = (id: string) => {
-  return useQuery<Event, Error>({
-    queryKey: ["event", id],
-    queryFn: () => fetchEventById(id),
-    enabled: !!id,
-  });
 };
 
 export const useFavoriteEventsList = () => {

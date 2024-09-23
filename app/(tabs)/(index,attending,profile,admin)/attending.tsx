@@ -4,17 +4,13 @@ import React from "react";
 
 import { ActivityIndicator, FlatList } from "react-native";
 
+import { useUpcomingEvents } from "@/features/event/hooks/useUpcomingEvents";
 import { RetryButton } from "@/shared/components/buttons/IconButtons";
-import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
-import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
 import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
 import { useAuth } from "@/shared/hooks/useAuth";
-import {
-  useFavoriteEventsId,
-  useUpcomingEvents,
-} from "@/shared/hooks/useEvents";
+import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
 
 import { Calendar, Info } from "@tamagui/lucide-icons";
 

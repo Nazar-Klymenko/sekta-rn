@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Event } from "@/shared/models/Event";
+import { Event } from "@/features/event/models/Event";
 
 import { Filter, SlidersHorizontal, X } from "@tamagui/lucide-icons";
 

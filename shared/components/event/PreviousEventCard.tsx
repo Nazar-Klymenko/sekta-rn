@@ -1,8 +1,8 @@
 import React from "react";
 
+import { Event } from "@/features/event/models/Event";
 import { Tag } from "@/shared/components/Tag";
 import { LikeButton } from "@/shared/components/buttons/IconButtons";
-import { Event } from "@/shared/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Image, Text, XStack, YStack, styled, useTheme } from "tamagui";

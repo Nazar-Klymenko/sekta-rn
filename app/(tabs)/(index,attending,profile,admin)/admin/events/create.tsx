@@ -5,8 +5,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { Alert } from "react-native";
 
+import { Event } from "@/features/event/models/Event";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { Event } from "@/shared/models/Event";
 import { db, storage } from "@/shared/services/firebase";
 
 import { Button, Form, Image, Input, Label, Select, YStack } from "tamagui";

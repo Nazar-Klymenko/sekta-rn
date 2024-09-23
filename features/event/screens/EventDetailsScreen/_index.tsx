@@ -1,14 +1,11 @@
-// EventDetailsScreen.tsx
 import React, { useEffect, useState } from "react";
-
-import { StyleSheet } from "react-native";
 
 import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/shared/components/layout/ReanimatedPageContainer";
+import { useAnimatedScroll } from "@/shared/hooks/useAnimatedScroll";
 import { useAuth } from "@/shared/hooks/useAuth";
 import {
-  useEvent,
   useFavoriteEventsId,
   useToggleEventLike,
 } from "@/shared/hooks/useEvents";
@@ -17,6 +14,7 @@ import { Text, YStack } from "tamagui";
 
 import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 
+import { useFetchEvent } from "../../hooks/useFetchEvent";
 import {
   CountdownBanner,
   EventDescription,
@@ -26,18 +24,17 @@ import {
   EventInfo,
   EventLineup,
 } from "./components";
-import { useEventScroll } from "./components/EventHeader";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: event, isLoading, isError, error } = useEvent(id || "");
+  const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
   const { data: likedEvents } = useFavoriteEventsId();
   const toggleLike = useToggleEventLike();
   const { isLoggedIn } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [optimisticIsLiked, setOptimisticIsLiked] = useState(false);
-  const { scrollHandler, scrollEventThrottle, scrollY } = useEventScroll();
+  const { scrollHandler, scrollEventThrottle, scrollY } = useAnimatedScroll();
 
   useEffect(() => {
     if (likedEvents && event) {
@@ -92,7 +89,6 @@ export default function EventDetailsScreen() {
         stickyBottom={stickyBottom}
         onScroll={scrollHandler}
         scrollEventThrottle={scrollEventThrottle}
-        contentContainerStyle={styles.scrollViewContent}
       >
         <YStack gap="$4">
           <EventHero event={event} />
@@ -108,10 +104,3 @@ export default function EventDetailsScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-    backgroundColor: "#0e0e11",
-  },
-});

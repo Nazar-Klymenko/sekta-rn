@@ -2,6 +2,7 @@ import React from "react";
 
 import { FlatList, Platform } from "react-native";
 
+import { Event } from "@/features/event/models/Event";
 import Typography from "@/shared/components/Typography";
 import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
 import { EventCard } from "@/shared/components/event/EventCard";
@@ -12,7 +13,6 @@ import {
   useFavoriteEventsId,
   useFavoriteEventsList,
 } from "@/shared/hooks/useEvents";
-import { Event } from "@/shared/models/Event";
 
 import { ArrowRight, Bookmark, Heart } from "@tamagui/lucide-icons";
 

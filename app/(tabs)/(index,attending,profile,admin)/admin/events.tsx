@@ -1,10 +1,10 @@
 import React from "react";
 
+import { Event } from "@/features/event/models/Event";
 import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import { PageContainer } from "@/shared/components/layout/PageContainer";
 import { Column, GenericTable } from "@/shared/components/tables/GenericTable";
 import { usePaginatedEvents } from "@/shared/hooks/useEvents";
-import { Event } from "@/shared/models/Event";
 
 import { Plus } from "@tamagui/lucide-icons";
 

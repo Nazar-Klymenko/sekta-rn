@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 
 import { GestureResponderEvent } from "react-native";
 
+import { Event } from "@/features/event/models/Event";
 import { Tag } from "@/shared/components/Tag";
 import { LikeButton } from "@/shared/components/buttons/IconButtons";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useToggleEventLike } from "@/shared/hooks/useEvents";
-import { Event } from "@/shared/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Heart } from "@tamagui/lucide-icons";
