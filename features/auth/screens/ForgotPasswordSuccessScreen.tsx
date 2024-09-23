@@ -1,9 +1,9 @@
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+
 import { Text, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams } from "expo-router";
-
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 export default function ForgotPasswordSuccessScreen() {
   const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();

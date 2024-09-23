@@ -1,3 +1,11 @@
+import React, { useState } from "react";
+
+import { Timestamp } from "firebase/firestore";
+
+import { MenuItem } from "@/shared/components/buttons/MenuItem";
+import { Input as FormInput } from "@/shared/components/form/Input";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+
 import {
   BoomBox,
   ChevronRight,
@@ -6,22 +14,15 @@ import {
   Users,
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
-import { Timestamp } from "firebase/firestore";
 
-import React, { useState } from "react";
+import { Button, Input, Spinner, Text, XStack, YStack, styled } from "tamagui";
 
-// import { useCreateEvent } from "@/hooks/useEvents";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Input, Spinner, Text, XStack, YStack, styled } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { MenuItem } from "@/components/buttons/MenuItem";
-import { Input as FormInput } from "@/components/form/Input";
-import { PageContainer } from "@/components/layout/PageContainer";
 
 const eventSchema = yup.object({
   title: yup.string().required("Title is required"),

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 
+import { Dialog } from "@/shared/components/Dialog";
+import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { PasswordInput } from "@/shared/components/form/PasswordInput";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+
 import { useToastController } from "@tamagui/toast";
 
 import { Text, useTheme } from "tamagui";
@@ -9,13 +16,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Dialog } from "@/components/Dialog";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
-import { Form } from "@/components/form/Form";
-import { PasswordInput } from "@/components/form/PasswordInput";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 import { useDeleteProfile } from "../hooks/useDeleteProfile";
 

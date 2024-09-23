@@ -1,30 +1,28 @@
-import { ArrowLeft, Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React, { useEffect, useState } from "react";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { useAuth } from "@/hooks/useAuth";
+import CountdownBanner from "@/shared/components/CountDownBanner";
+import { Tag } from "@/shared/components/Tag";
+import {
+  LikeButton,
+  ShareButton,
+} from "@/shared/components/buttons/IconButtons";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { ReanimatedPageContainer } from "@/shared/components/layout/ReanimatedPageContainer";
+import { useAuth } from "@/shared/hooks/useAuth";
 import {
   useEvent,
   useFavoriteEventsId,
   useToggleEventLike,
-} from "@/hooks/useEvents";
+} from "@/shared/hooks/useEvents";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import {
-  Stack,
-  useLocalSearchParams,
-  usePathname,
-  useRouter,
-} from "expo-router";
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+import { ArrowLeft, Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
+
 import {
   H1,
   H2,
@@ -39,14 +37,19 @@ import {
 } from "tamagui";
 import { Stack as TamaguiStack } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
-
-import CountdownBanner from "@/components/CountDownBanner";
-import { Tag } from "@/components/Tag";
-import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { ReanimatedPageContainer } from "@/components/layout/ReanimatedPageContainer";
+import {
+  Stack,
+  useLocalSearchParams,
+  usePathname,
+  useRouter,
+} from "expo-router";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();

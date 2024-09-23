@@ -1,7 +1,8 @@
-import { Link, Stack } from "expo-router";
+import { ThemedText } from "@/shared/components/ThemedText";
+
 import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
-import { ThemedText } from "@/components/ThemedText";
+import { Link, Stack } from "expo-router";
 
 export default function NotFoundScreen() {
   const theme = useTheme();

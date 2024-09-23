@@ -1,7 +1,12 @@
 import React from "react";
 
 import { useSendPasswordReset } from "@/features/auth/hooks/useSendPasswordReset";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
 
 import { useToastController } from "@tamagui/toast";
 
@@ -13,12 +18,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const forgotPasswordSchema = yup.object().shape({
   email: yup.string().required("Email is required").email("Invalid email"),

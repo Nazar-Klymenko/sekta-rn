@@ -1,7 +1,15 @@
 import React from "react";
 
 import { useSignUp } from "@/features/auth/hooks/useSignUp";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Checkbox } from "@/shared/components/form/Checkbox";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { PasswordInput } from "@/shared/components/form/PasswordInput";
+import { PasswordRequirements } from "@/shared/components/form/PasswordRequirements";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
   passwordSchema,
@@ -18,15 +26,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { Checkbox } from "@/components/form/Checkbox";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { PasswordInput } from "@/components/form/PasswordInput";
-import { PasswordRequirements } from "@/components/form/PasswordRequirements";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 export const signUpSchema = yup.object().shape({
   email: emailSchema,

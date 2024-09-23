@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { UserData } from "@/models/UserData";
 import { db } from "@/services/firebase";
+import { UserData } from "@/shared/models/UserData";
 
 export const getUserData = async (userId: string): Promise<UserData | null> => {
   const userDoc = await getDoc(doc(db, "users", userId));

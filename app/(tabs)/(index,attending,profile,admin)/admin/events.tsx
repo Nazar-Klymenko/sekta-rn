@@ -1,16 +1,16 @@
-import { Plus } from "@tamagui/lucide-icons";
-
 import React from "react";
 
-import { usePaginatedEvents } from "@/hooks/useEvents";
-import { Event } from "@/models/Event";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { Column, GenericTable } from "@/shared/components/tables/GenericTable";
+import { usePaginatedEvents } from "@/shared/hooks/useEvents";
+import { Event } from "@/shared/models/Event";
 
-import { Link } from "expo-router";
+import { Plus } from "@tamagui/lucide-icons";
+
 import { Button, Text, XStack, YStack } from "tamagui";
 
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Column, GenericTable } from "@/components/tables/GenericTable";
+import { Link } from "expo-router";
 
 const columns: Column<Event>[] = [
   { header: "Title", accessor: "title" },

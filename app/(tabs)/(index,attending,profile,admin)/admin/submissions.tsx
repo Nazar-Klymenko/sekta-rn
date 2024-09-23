@@ -1,30 +1,30 @@
 // src/pages/AdminPlaySubmissions.tsx
-import { Search, Trash2 } from "@tamagui/lucide-icons";
-
 import React, { useMemo, useState } from "react";
 
 import { Alert, Platform } from "react-native";
 
+import { Table } from "@/shared/components/Table";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { Pagination } from "@/shared/components/navigation/Pagination";
 import {
   useDeletePlaySubmission,
   useFetchPlaySubmissions,
-} from "@/hooks/usePlay";
-import { PlayData } from "@/models/PlayData";
+} from "@/shared/hooks/usePlay";
+import { PlayData } from "@/shared/models/PlayData";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { useForm } from "react-hook-form";
+import { Search, Trash2 } from "@tamagui/lucide-icons";
+
 import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
+
+import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Table } from "@/components/Table";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Pagination } from "@/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 

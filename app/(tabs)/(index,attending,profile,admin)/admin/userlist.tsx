@@ -1,16 +1,15 @@
 // src/screens/UserListScreen.tsx
-import { Check, Minus } from "@tamagui/lucide-icons";
-
 import React, { useMemo, useState } from "react";
 
-import { useUsers } from "@/hooks/useUserData";
-import { UserData } from "@/models/UserData";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { Column, GenericTable } from "@/shared/components/tables/GenericTable";
+import { useUsers } from "@/shared/hooks/useUserData";
+import { UserData } from "@/shared/models/UserData";
+
+import { Check, Minus } from "@tamagui/lucide-icons";
 
 import { Text } from "tamagui";
-
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Column, GenericTable } from "@/components/tables/GenericTable";
 
 const ITEMS_PER_PAGE = 10;
 

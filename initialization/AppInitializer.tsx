@@ -13,6 +13,7 @@ import {
 
 import React, { useEffect, useState } from "react";
 
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import tamaguiConfig from "@/tamagui.config";
 
 import * as SplashScreen from "expo-splash-screen";

@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 
 import { getFunctions, httpsCallable } from "firebase/functions";
 
-import { useAuth } from "@/hooks/useAuth";
-import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { Switch } from "@/shared/components/buttons/CustomSwitch";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+import { useAuth } from "@/shared/hooks/useAuth";
+import { usePushNotifications } from "@/shared/hooks/usePushNotifications";
 
 import { Text, XStack, YStack } from "tamagui";
-
-import { Switch } from "@/components/buttons/CustomSwitch";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 const functions = getFunctions();
 const sendPushNotification = httpsCallable(functions, "sendPushNotification");

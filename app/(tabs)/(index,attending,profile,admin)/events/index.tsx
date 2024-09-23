@@ -1,5 +1,3 @@
-import { ChevronRight } from "@tamagui/lucide-icons";
-
 import React from "react";
 
 import {
@@ -10,15 +8,24 @@ import {
   useWindowDimensions,
 } from "react-native";
 
+import { RetryButton } from "@/shared/components/buttons/IconButtons";
+import { EventCard } from "@/shared/components/event/EventCard";
+import PreviousEventCard from "@/shared/components/event/PreviousEventCard";
+import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
+import { SkeletonPreviousEventCard } from "@/shared/components/event/SkeletonPreviousEventCard";
+import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
 import {
   useFavoriteEventsId,
   usePreviousEventsPreview,
   useUpcomingEventsPreview,
-} from "@/hooks/useEvents";
-import { usePreviousEvents, useUpcomingEvents } from "@/hooks/useEvents";
-import { Event } from "@/models/Event";
+} from "@/shared/hooks/useEvents";
+import { usePreviousEvents, useUpcomingEvents } from "@/shared/hooks/useEvents";
+import { Event } from "@/shared/models/Event";
 
-import { Link, useRouter } from "expo-router";
+import { ChevronRight } from "@tamagui/lucide-icons";
+
 import {
   Button,
   H1,
@@ -32,14 +39,7 @@ import {
   useTheme,
 } from "tamagui";
 
-import { RetryButton } from "@/components/buttons/IconButtons";
-import { EventCard } from "@/components/event/EventCard";
-import PreviousEventCard from "@/components/event/PreviousEventCard";
-import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
-import { SkeletonPreviousEventCard } from "@/components/event/SkeletonPreviousEventCard";
-import { SkeletonUpcomingEventCard } from "@/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/components/event/UpcomingEventCard";
-import { PageContainer } from "@/components/layout/PageContainer";
+import { Link, useRouter } from "expo-router";
 
 export default function HomeScreen() {
   const theme = useTheme();

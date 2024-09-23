@@ -2,7 +2,9 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
-import { useResident } from "@/hooks/useResidents";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { useResident } from "@/shared/hooks/useResidents";
 
 import { AnimatePresence } from "@tamagui/animate-presence";
 import {
@@ -30,9 +32,6 @@ import {
 import { BlurView } from "expo-blur";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
-
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
 
 const HeroContainer = styled(YStack, {
   height: 500,

@@ -2,15 +2,17 @@ import React from "react";
 
 import { ActivityIndicator, FlatList } from "react-native";
 
-import { useFavoriteEventsId, usePreviousEvents } from "@/hooks/useEvents";
+import { RetryButton } from "@/shared/components/buttons/IconButtons";
+import PreviousEventCard from "@/shared/components/event/PreviousEventCard";
+import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
+import { SkeletonPreviousEventCard } from "@/shared/components/event/SkeletonPreviousEventCard";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import {
+  useFavoriteEventsId,
+  usePreviousEvents,
+} from "@/shared/hooks/useEvents";
 
 import { H2, Text, YStack, useTheme } from "tamagui";
-
-import { RetryButton } from "@/components/buttons/IconButtons";
-import PreviousEventCard from "@/components/event/PreviousEventCard";
-import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
-import { SkeletonPreviousEventCard } from "@/components/event/SkeletonPreviousEventCard";
-import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function PreviousEventsScreen() {
   const theme = useTheme();

@@ -1,25 +1,25 @@
-import { Search } from "@tamagui/lucide-icons";
-
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { useFavoriteEventsId } from "@/hooks/useEvents";
-import { useEvents } from "@/hooks/useEvents";
+import { Typography } from "@/shared/components/Typography";
+import { RetryButton } from "@/shared/components/buttons/IconButtons";
+import { EventCard } from "@/shared/components/event/EventCard";
+import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { useFavoriteEventsId } from "@/shared/hooks/useEvents";
+import { useEvents } from "@/shared/hooks/useEvents";
+
+import { Search } from "@tamagui/lucide-icons";
+
+import { XStack, YStack } from "tamagui";
 
 import { debounce } from "lodash";
 import { useForm } from "react-hook-form";
-import { XStack, YStack } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Typography } from "@/components/Typography";
-import { RetryButton } from "@/components/buttons/IconButtons";
-import { EventCard } from "@/components/event/EventCard";
-import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { PageContainer } from "@/components/layout/PageContainer";
 
 const searchEventsSchema = yup.object().shape({
   searchQuery: yup.string(),

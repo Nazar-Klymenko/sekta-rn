@@ -1,7 +1,7 @@
 // useUserData.ts
 import { useQuery } from "@tanstack/react-query";
 
-import { UserData } from "@/models/UserData";
+import { UserData } from "@/shared/models/UserData";
 
 import { getUserData } from "../api/getUserData";
 

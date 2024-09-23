@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import { useAuth } from "@/hooks/useAuth";
+import { Switch } from "@/shared/components/buttons/CustomSwitch";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+import { useAuth } from "@/shared/hooks/useAuth";
 
 import { Text, XStack, YStack } from "tamagui";
-
-import { Switch } from "@/components/buttons/CustomSwitch";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthGuard } from "@/components/navigation/AuthGuard";
 
 export default function EmailNotificationScreen() {
   const { isLoggedIn } = useAuth();

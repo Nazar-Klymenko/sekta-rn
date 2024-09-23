@@ -1,21 +1,22 @@
-import { ToastViewport } from "@tamagui/toast";
 import { Drawer } from "expo-router/drawer";
 
 import React from "react";
 
 import { Platform } from "react-native";
 
-import { useAuth } from "@/hooks/useAuth";
-import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { CustomHeader } from "@/shared/components/CustomHeader/CustomHeader";
+import { CurrentToast } from "@/shared/components/Toast";
+import { Footer } from "@/shared/components/navigation/Footer";
+import { useAuth } from "@/shared/hooks/useAuth";
+import { usePushNotifications } from "@/shared/hooks/usePushNotifications";
+
+import { ToastViewport } from "@tamagui/toast";
+
+import { YStack, useTheme } from "tamagui";
 
 import { Slot, Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { YStack, useTheme } from "tamagui";
-
-import { CustomHeader } from "@/components/CustomHeader/CustomHeader";
-import { CurrentToast } from "@/components/Toast";
-import { Footer } from "@/components/navigation/Footer";
 
 import { DrawerLayout } from "../components/drawer/DrawerLayout";
 

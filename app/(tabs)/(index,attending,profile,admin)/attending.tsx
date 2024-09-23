@@ -1,13 +1,23 @@
-import { Calendar, Info } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
 import { ActivityIndicator, FlatList } from "react-native";
 
-import { useAuth } from "@/hooks/useAuth";
-import { useFavoriteEventsId, useUpcomingEvents } from "@/hooks/useEvents";
+import { RetryButton } from "@/shared/components/buttons/IconButtons";
+import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
+import { SkeletonEventCard } from "@/shared/components/event/SkeletonEventCard";
+import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { useAuth } from "@/shared/hooks/useAuth";
+import {
+  useFavoriteEventsId,
+  useUpcomingEvents,
+} from "@/shared/hooks/useEvents";
 
-import { Stack, useRouter } from "expo-router";
+import { Calendar, Info } from "@tamagui/lucide-icons";
+
 import {
   H2,
   Text,
@@ -17,14 +27,7 @@ import {
   useWindowDimensions,
 } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
-
-import { RetryButton } from "@/components/buttons/IconButtons";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
-import { SkeletonEventCard } from "@/components/event/SkeletonEventCard";
-import { SkeletonUpcomingEventCard } from "@/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/components/event/UpcomingEventCard";
-import { PageContainer } from "@/components/layout/PageContainer";
+import { Stack, useRouter } from "expo-router";
 
 export default function UpcomingEventsScreen() {
   const theme = useTheme();

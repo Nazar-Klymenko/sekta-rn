@@ -1,5 +1,8 @@
 import React from "react";
 
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import {
@@ -19,10 +22,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
 
 import { useSubmitPlay } from "../../hooks/useSubmitPlay";
 

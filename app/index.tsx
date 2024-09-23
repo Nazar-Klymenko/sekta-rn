@@ -1,7 +1,7 @@
-import { Redirect, Stack } from "expo-router";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
 
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
+import { Redirect, Stack } from "expo-router";
 
 export default function Index() {
   return (

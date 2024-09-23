@@ -1,3 +1,23 @@
+import { LinearGradient } from "tamagui/linear-gradient";
+
+import React, { useEffect, useState } from "react";
+
+import { Tag } from "@/shared/components/Tag";
+import {
+  LikeButton,
+  ShareButton,
+} from "@/shared/components/buttons/IconButtons";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { useAuth } from "@/shared/hooks/useAuth";
+import {
+  useEvent,
+  useFavoriteEventsId,
+  useToggleEventLike,
+} from "@/shared/hooks/useEvents";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
+
 import {
   Calendar,
   CreditCard,
@@ -6,17 +26,6 @@ import {
   Users,
 } from "@tamagui/lucide-icons";
 
-import React, { useEffect, useState } from "react";
-
-import { useAuth } from "@/hooks/useAuth";
-import {
-  useEvent,
-  useFavoriteEventsId,
-  useToggleEventLike,
-} from "@/hooks/useEvents";
-import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
-
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 import {
   Button,
   Image,
@@ -30,13 +39,7 @@ import {
   useTheme,
 } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
-
-import { Tag } from "@/components/Tag";
-import { LikeButton, ShareButton } from "@/components/buttons/IconButtons";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
+import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 
 export default function EventDetailsPage() {
   const { id } = useLocalSearchParams<{ id: string }>();

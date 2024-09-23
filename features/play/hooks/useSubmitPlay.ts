@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { FirebaseError } from "firebase/app";
 
-import { PlayData } from "@/models/PlayData";
+import { PlayData } from "@/shared/models/PlayData";
 
 import { submitPlay } from "../api/submitPlay";
 

@@ -1,25 +1,25 @@
 // src/screens/AllResidentsScreen.tsx
-import { Check, Pencil, Search, X } from "@tamagui/lucide-icons";
-
 import React, { useMemo, useState } from "react";
 
-import { useResidents } from "@/hooks/useResidents";
-import { ResidentData } from "@/models/ResidentData";
+import { Table } from "@/shared/components/Table";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { Pagination } from "@/shared/components/navigation/Pagination";
+import { useResidents } from "@/shared/hooks/useResidents";
+import { ResidentData } from "@/shared/models/ResidentData";
+
+import { Check, Pencil, Search, X } from "@tamagui/lucide-icons";
+
+import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
-import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
 
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Table } from "@/components/Table";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { Pagination } from "@/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 

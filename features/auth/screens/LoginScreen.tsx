@@ -1,7 +1,13 @@
 import React from "react";
 
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
-import { useFirebaseErrorHandler } from "@/hooks/useFirebaseErrorHelper";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { PasswordInput } from "@/shared/components/form/PasswordInput";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { Toast, useToastController } from "@tamagui/toast";
@@ -14,13 +20,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { Form } from "@/components/form/Form";
-import { Input } from "@/components/form/Input";
-import { PasswordInput } from "@/components/form/PasswordInput";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { AuthPageGuard } from "@/components/navigation/AuthPageGuard";
 
 const loginSchema = yup.object().shape({
   email: emailSchema,

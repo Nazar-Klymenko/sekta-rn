@@ -1,7 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
-import { PlayData } from "@/models/PlayData";
 import { db } from "@/services/firebase";
+import { PlayData } from "@/shared/models/PlayData";
 
 export const submitPlay = async (
   data: Omit<PlayData, "id" | "submittedAt">,

@@ -1,8 +1,12 @@
 import React from "react";
 
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
-import { useAuth } from "@/hooks/useAuth";
-import { useUserData } from "@/hooks/useUserData";
+import { MenuItem } from "@/shared/components/buttons/MenuItem";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { useAuth } from "@/shared/hooks/useAuth";
+import { useUserData } from "@/shared/hooks/useUserData";
 
 import {
   Bell,
@@ -18,11 +22,6 @@ import {
 import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
-
-import { MenuItem } from "@/components/buttons/MenuItem";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { SecondaryButton } from "@/components/buttons/SecondaryButton";
-import { PageContainer } from "@/components/layout/PageContainer";
 
 import { ProfileHeader, SectionTitle, VerifyEmail } from "../components";
 
