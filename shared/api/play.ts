@@ -10,8 +10,7 @@ import {
 
 import { PlayData } from "@/shared/models/PlayData";
 import { UserData } from "@/shared/models/UserData";
-
-import { db } from "../services/firebase";
+import { db } from "@/shared/services/firebase";
 
 const playCollection = collection(db, "play");
 export const submitPlay = async (

@@ -2,11 +2,11 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+
 import { Text, YStack, useTheme } from "tamagui";
 
 import { Stack } from "expo-router";
-
-import { PageContainer } from "@/components/layout/PageContainer";
 
 import { PlayForm } from "./Form";
 import { HeroSection } from "./Hero";

@@ -1,8 +1,8 @@
 // /api/residents.ts
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
-import { db } from "@/services/firebase";
 import { ResidentData } from "@/shared/models/ResidentData";
+import { db } from "@/shared/services/firebase";
 
 export const fetchResidents = async (): Promise<ResidentData[]> => {
   const residentsCollection = collection(db, "residents");

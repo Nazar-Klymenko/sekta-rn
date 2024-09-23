@@ -18,7 +18,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { db } from "@/services/firebase";
 import {
   fetchAllEvents,
   fetchEventById,
@@ -31,6 +30,7 @@ import {
   fetchUpcomingEventsPreview,
 } from "@/shared/api/events";
 import { Event } from "@/shared/models/Event";
+import { db } from "@/shared/services/firebase";
 
 import { useAuth } from "./useAuth";
 

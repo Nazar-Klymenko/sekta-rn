@@ -19,8 +19,8 @@ import {
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
-import { auth, db } from "@/services/firebase";
 import { UserData } from "@/shared/models/UserData";
+import { auth, db } from "@/shared/services/firebase";
 
 const usersCollection = collection(db, "users");
 
