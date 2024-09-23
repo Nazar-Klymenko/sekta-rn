@@ -10,7 +10,6 @@ import { useToastController } from "@tamagui/toast";
 
 import React from "react";
 
-import { usePlaySubmission } from "@/hooks/usePlay";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { useForm } from "react-hook-form";
@@ -23,6 +22,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { Form } from "@/components/form/Form";
 import { Input } from "@/components/form/Input";
+
+import { useSubmitPlay } from "../hooks/useSubmitPlay";
 
 const playSchema = yup.object({
   email: emailSchema,
@@ -66,9 +67,9 @@ const portfolioLinks = [
   },
 ];
 
-export default function PlayScreenForm() {
+export function PlayForm() {
   const toast = useToastController();
-  const playSubmission = usePlaySubmission();
+  const playSubmission = useSubmitPlay();
   const methods = useForm<FormValues>({
     resolver: yupResolver(playSchema),
     defaultValues: {

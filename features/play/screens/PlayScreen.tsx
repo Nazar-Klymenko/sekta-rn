@@ -7,9 +7,7 @@ import { Text, YStack, useTheme } from "tamagui";
 
 import { PageContainer } from "@/components/layout/PageContainer";
 
-import { EnhancedHeroSection } from "../components/Hero";
-import { VenueInfoSection } from "../components/Venue";
-import PlayScreenForm from "../forms/PlayScreenForm";
+import { HeroSection, PlayForm, VenueInfoSection } from "../components";
 
 export default function PlayScreen() {
   const theme = useTheme();
@@ -27,7 +25,7 @@ export default function PlayScreen() {
           headerTintColor: theme.color.get(),
         }}
       />
-      <EnhancedHeroSection />
+      <HeroSection />
       <YStack
         backgroundColor="$background"
         padding="$4"
@@ -47,7 +45,7 @@ export default function PlayScreen() {
           </Text>
         </YStack>
 
-        <PlayScreenForm></PlayScreenForm>
+        <PlayForm />
       </YStack>
     </PageContainer>
   );

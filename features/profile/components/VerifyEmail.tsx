@@ -10,7 +10,7 @@ import { Button, Text, XStack, YStack, styled } from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
-import { SecondaryButton } from "./buttons/SecondaryButton";
+import { SecondaryButton } from "../../../components/buttons/SecondaryButton";
 
 const VerifyEmailContainer = styled(YStack, {
   width: "100%",

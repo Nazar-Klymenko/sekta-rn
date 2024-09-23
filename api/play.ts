@@ -14,7 +14,7 @@ import { UserData } from "@/models/UserData";
 import { db } from "../services/firebase";
 
 const playCollection = collection(db, "play");
-export const submitPlayInfo = async (
+export const submitPlay = async (
   data: Omit<PlayData, "id" | "submittedAt">,
 ) => {
   const docRef = await addDoc(collection(db, "play"), {

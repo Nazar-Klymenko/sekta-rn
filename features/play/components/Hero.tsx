@@ -1,3 +1,4 @@
+import MaskedView from "@react-native-masked-view/masked-view";
 import { Disc } from "@tamagui/lucide-icons";
 
 import React from "react";
@@ -6,11 +7,19 @@ import { Platform } from "react-native";
 
 import { BlurView } from "expo-blur";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { Image, Text, YStack, useWindowDimensions } from "tamagui";
+import {
+  ColorProp,
+  Image,
+  Text,
+  TextStyle,
+  YStack,
+  styled,
+  useWindowDimensions,
+} from "tamagui";
 
 import { LinearGradient } from "tamagui/linear-gradient";
 
-export const EnhancedHeroSection = () => {
+export const HeroSection = () => {
   const { width, height } = useWindowDimensions();
   const isWideScreen = width > height;
   const imageHeight =
@@ -40,8 +49,30 @@ export const EnhancedHeroSection = () => {
         >
           <Animated.View entering={FadeInDown.duration(400)}>
             <YStack gap="$4" alignItems="center">
+              {Platform.OS !== "android" && (
+                <BlurView
+                  intensity={80}
+                  tint="dark"
+                  style={{ borderRadius: 50, padding: 15 }}
+                >
+                  <Disc size={50} color="white" />
+                </BlurView>
+              )}
               <YStack>
-                <Text>Play at SEKTA SELEKTA</Text>
+                <GradientText
+                  text="Play at SEKTA SELEKTA"
+                  colors={[
+                    "#FF1493",
+                    "#FF4500",
+                    "#FFD700",
+                    "#00CED1",
+                    "#8A2BE2",
+                  ]}
+                  style={{
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                  }}
+                />
               </YStack>
               <Text
                 fontSize={24}
@@ -62,5 +93,52 @@ export const EnhancedHeroSection = () => {
         </LinearGradient>
       </YStack>
     </>
+  );
+};
+const StyledText = styled(Text, {
+  fontSize: 72,
+  fontWeight: "900",
+  textAlign: "center",
+  textTransform: "uppercase",
+  letterSpacing: -2,
+});
+
+interface GradientTextProps {
+  text: string;
+  colors: string[];
+  style?: TextStyle;
+}
+
+export const GradientText: React.FC<GradientTextProps> = ({
+  text,
+  colors,
+  style,
+}) => {
+  if (Platform.OS === "web") {
+    return (
+      <StyledText
+        style={{
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          backgroundImage: `linear-gradient(45deg, ${colors.join(", ")})`,
+          ...style,
+        }}
+      >
+        {text}
+      </StyledText>
+    );
+  }
+
+  return (
+    <MaskedView maskElement={<StyledText>{text}</StyledText>}>
+      <LinearGradient
+        colors={colors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <StyledText style={{ opacity: 0 }}>{text}</StyledText>
+      </LinearGradient>
+    </MaskedView>
   );
 };
