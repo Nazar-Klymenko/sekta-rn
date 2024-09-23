@@ -4,19 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { Event } from "@/features/event/models/Event";
-import { fetchAllEvents, fetchPaginatedEvents } from "@/shared/api/events";
+
+import { fetchPaginatedEvents } from "../repository/fetchPaginatedEvents";
 
 const ITEMS_PER_PAGE = 5;
 
-export const useAllEvents = () => {
-  return useQuery<Event[], Error>({
-    queryKey: ["allEvents"],
-    queryFn: fetchAllEvents,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
-};
-
-export const usePaginatedEvents = () => {
+export const useFetchPaginatedEvents = () => {
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const [direction, setDirection] = useState<"forward" | "backward">("forward");
 

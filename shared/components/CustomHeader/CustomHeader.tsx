@@ -61,11 +61,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
   const navLinks = [
     { href: "/", icon: <Home size={24} color="$color" />, label: "Home" },
     {
-      href: "/saved",
-      icon: <Heart size={24} color="$color" />,
-      label: "Favorites",
-    },
-    {
       href: "/residents",
       icon: <BoomBox size={24} color="$color" />,
       label: "Residents",

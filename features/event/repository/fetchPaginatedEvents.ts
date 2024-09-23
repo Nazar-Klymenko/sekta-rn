@@ -1,3 +1,5 @@
+import { db } from "@/shared/services/firebase";
+
 import {
   collection,
   doc,
@@ -12,7 +14,6 @@ import {
 } from "firebase/firestore";
 
 import { Event } from "@/features/event/models/Event";
-import { db } from "@/shared/services/firebase";
 
 const eventsCollection = collection(db, "events");
 
@@ -39,11 +40,5 @@ export const fetchPaginatedEvents = async (
   }
 
   const snapshot = await getDocs(baseQuery);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
-};
-
-export const fetchAllEvents = async (): Promise<Event[]> => {
-  const q = query(eventsCollection, orderBy("date", "desc"));
-  const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
 };
