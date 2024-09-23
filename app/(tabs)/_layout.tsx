@@ -1,6 +1,7 @@
 import {
   Bookmark,
   BoomBox,
+  CalendarCheck,
   Heart,
   Home,
   Play,
@@ -37,7 +38,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="(profile)"
+      initialRouteName="(index)"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
@@ -68,6 +69,23 @@ export default function TabLayout() {
         options={{
           title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="(attending)"
+        listeners={{
+          tabPress: () => {
+            if (router.canDismiss()) {
+              if (segment[1] === "(attending)") router.dismissAll();
+            }
+          },
+        }}
+        options={{
+          title: "Attending events",
+          tabBarIcon: ({ color, size }) => (
+            <CalendarCheck color={color} size={size} />
+          ),
         }}
       />
 

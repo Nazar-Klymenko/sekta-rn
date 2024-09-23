@@ -1,4 +1,5 @@
 import {
+  Bookmark,
   Heart,
   RefreshCcw,
   Share,
@@ -64,7 +65,7 @@ export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {
       circular
       borderWidth={0}
       icon={
-        <Heart
+        <Bookmark
           size={size === "sm" ? 20 : 24}
           color={isLiked ? theme.red10Light.get() : "$color"}
           fill={isLiked ? theme.red10Light.get() : "transparent"}

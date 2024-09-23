@@ -6,11 +6,12 @@ export const unstable_settings = {
   admin: { initialRouteName: "admin" },
 };
 
-type Segment = "(profile)" | "(index)" | "(admin)";
+type Segment = "(profile)" | "(attending)" | "(index)" | "(admin)";
 
 // Define the mapping of segments to routes
 const segmentToRoute: Record<Segment, string> = {
   "(profile)": "profile",
+  "(attending)": "attending",
   "(index)": "events",
   "(admin)": "admin",
 };

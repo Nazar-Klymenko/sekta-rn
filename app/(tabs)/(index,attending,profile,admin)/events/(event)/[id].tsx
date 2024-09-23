@@ -217,12 +217,14 @@ export default function EventDetailsPage() {
               <Separator />
               <H2 fontWeight="bold">About this event</H2>
               <Paragraph color="$color10">{event.caption}</Paragraph>
+              <Separator />
               <H2 fontWeight="bold">Lineup</H2>
               <XStack flexWrap="wrap" gap="$2">
                 {event.lineup.map((artist, index) => (
                   <Tag tag={artist} key={index} />
                 ))}
               </XStack>
+              <Separator />
               <H2 fontWeight="bold">Genres</H2>
               <XStack flexWrap="wrap" gap="$2">
                 {event.genres.map((genre, index) => (
