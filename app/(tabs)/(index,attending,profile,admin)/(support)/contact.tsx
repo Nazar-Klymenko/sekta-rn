@@ -1,3 +1,3 @@
-import ContactScreen from "@/features/support/screens/ContactScreen";
+import ContactScreen from "@/features/screens/ContactScreen";
 
 export default ContactScreen;

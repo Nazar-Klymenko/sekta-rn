@@ -1,3 +1,3 @@
-import TosScreen from "@/features/support/screens/TosScreen";
+import TosScreen from "@/features/screens/TosScreen";
 
 export default TosScreen;
