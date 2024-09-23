@@ -15,7 +15,7 @@ import { Platform } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserData } from "@/hooks/useUserData";
 
-import { Stack } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
 import { Slot, Tabs, usePathname } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -24,6 +24,8 @@ export default function TabLayout() {
   const { isLoggedIn, user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
   const pathname = usePathname();
+  const router = useRouter();
+  const segment = useSegments();
   const shouldHideTabBar =
     pathname.startsWith("/events/") &&
     !pathname.includes("/events/upcoming") &&
@@ -56,6 +58,13 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="(index)"
+        listeners={{
+          tabPress: () => {
+            if (router.canDismiss()) {
+              if (segment[1] === "(index)") router.dismissAll();
+            }
+          },
+        }}
         options={{
           title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
@@ -64,6 +73,13 @@ export default function TabLayout() {
 
       <Tabs.Screen
         name="(profile)"
+        listeners={{
+          tabPress: () => {
+            if (router.canDismiss()) {
+              if (segment[1] === "(profile)") router.dismissAll();
+            }
+          },
+        }}
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
@@ -71,6 +87,13 @@ export default function TabLayout() {
       />
       <Tabs.Screen
         name="(admin)"
+        listeners={{
+          tabPress: () => {
+            if (router.canDismiss()) {
+              if (segment[1] === "(admin)") router.dismissAll();
+            }
+          },
+        }}
         options={{
           title: "Admin",
           headerShown: false,
