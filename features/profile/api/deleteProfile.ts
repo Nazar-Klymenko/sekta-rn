@@ -5,7 +5,7 @@ import {
 } from "firebase/auth";
 import { deleteDoc, doc } from "firebase/firestore";
 
-import { auth, db } from "@/shared/services/firebase";
+import { auth, db } from "@/services/firebase/firebase";
 
 export const deleteProfile = async (password: string): Promise<void> => {
   const user = auth.currentUser;

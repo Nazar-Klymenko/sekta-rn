@@ -1,14 +1,13 @@
 import MaskedView from "@react-native-masked-view/masked-view";
-import { Disc } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
 import { Platform } from "react-native";
 
-import { BlurView } from "expo-blur";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import { Disc } from "@tamagui/lucide-icons";
+
 import {
-  ColorProp,
   Image,
   Text,
   TextStyle,
@@ -17,7 +16,8 @@ import {
   useWindowDimensions,
 } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
+import { BlurView } from "expo-blur";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 export const HeroSection = () => {
   const { width, height } = useWindowDimensions();

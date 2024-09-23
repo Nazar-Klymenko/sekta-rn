@@ -6,13 +6,14 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Alert } from "react-native";
 
 import { Event } from "@/features/event/models/Event";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { db, storage } from "@/shared/services/firebase";
+import { db, storage } from "@/services/firebase/firebase";
 
 import { Button, Form, Image, Input, Label, Select, YStack } from "tamagui";
 
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
+
+import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 export default function EventCreateScreen() {
   const [title, setTitle] = useState("");

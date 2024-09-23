@@ -1,3 +1,3 @@
-import PrivacyPolicyScreen from "@/features/screens/PrivacyPolicyScreen";
+import PrivacyPolicyScreen from "@/features/core/screens/PrivacyPolicyScreen";
 
 export default PrivacyPolicyScreen;

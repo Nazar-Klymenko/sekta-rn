@@ -1,11 +1,12 @@
+import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
+
 import React, { useEffect, useState } from "react";
 
 import { User as FirebaseUser } from "firebase/auth";
 
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
-import { useAuth } from "@/features/core/hooks/useAuth";
-import { useUserData } from "@/features/core/hooks/useUserData";
-import { useDisableScroll } from "@/shared/hooks/useDisableScroll";
+import { useUserData } from "@/features/users/hooks/useUserData";
 
 import {
   Bell,

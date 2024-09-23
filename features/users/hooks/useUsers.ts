@@ -1,12 +1,12 @@
-// useUserData.ts
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchUsers } from "@/shared/api/auth";
-import { UserData } from "@/shared/models/UserData";
+import { User as UserData } from "@/features/users/models/User";
+
+import { getUsers } from "../repository/getUsers";
 
 export const useUsers = () => {
   return useQuery<UserData[], Error>({
     queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryFn: getUsers,
   });
 };

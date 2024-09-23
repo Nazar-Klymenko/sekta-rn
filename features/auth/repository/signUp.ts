@@ -1,7 +1,7 @@
 import { User, signInWithEmailAndPassword } from "firebase/auth";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
-import { auth } from "@/shared/services/firebase";
+import { auth } from "@/services/firebase/firebase";
 
 export const signUp = async (
   email: string,

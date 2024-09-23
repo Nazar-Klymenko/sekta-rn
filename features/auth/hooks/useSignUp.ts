@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { UserData } from "@/shared/models/UserData";
+import { User as UserData } from "@/features/users/models/User";
 
 import { signUp } from "../repository/signUp";
 

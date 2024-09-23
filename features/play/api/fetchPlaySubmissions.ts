@@ -1,16 +1,7 @@
-import { db } from "@/shared/services/firebase";
-
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  serverTimestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 import { PlaySubmission } from "@/features/play/models/PlaySubmission";
+import { db } from "@/services/firebase/firebase";
 
 const playCollection = collection(db, "play");
 

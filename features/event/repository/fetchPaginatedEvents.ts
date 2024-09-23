@@ -1,5 +1,3 @@
-import { db } from "@/shared/services/firebase";
-
 import {
   collection,
   doc,
@@ -14,6 +12,7 @@ import {
 } from "firebase/firestore";
 
 import { Event } from "@/features/event/models/Event";
+import { db } from "@/services/firebase/firebase";
 
 const eventsCollection = collection(db, "events");
 

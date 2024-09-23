@@ -1,10 +1,10 @@
 import React from "react";
 
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-
 import { Facebook, Instagram, Mail, Phone } from "@tamagui/lucide-icons";
 
-import { Card, Separator, Text, Theme, XStack, YStack } from "tamagui";
+import { Card, Text, XStack, YStack } from "tamagui";
+
+import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 type ContactInfoProps = {
   icon: React.ReactNode;

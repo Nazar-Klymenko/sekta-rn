@@ -1,9 +1,9 @@
 // useUserData.ts
 import { useQuery } from "@tanstack/react-query";
 
-import { UserData } from "@/shared/models/UserData";
+import { User as UserData } from "@/features/users/models/User";
 
-import { getUserData } from "../api/getUserData";
+import { getUserData } from "../repository/getUserData";
 
 export const useUserData = (userId: string) => {
   return useQuery<UserData | null, Error>({

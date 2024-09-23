@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 
 import { Event } from "@/features/event/models/Event";
-import { db } from "@/shared/services/firebase";
+import { db } from "@/services/firebase/firebase";
 
 const eventsCollection = collection(db, "events");
 

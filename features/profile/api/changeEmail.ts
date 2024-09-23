@@ -7,8 +7,8 @@ import {
 } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 
-import { UserData } from "@/shared/models/UserData";
-import { auth, db } from "@/shared/services/firebase";
+import { User as UserData } from "@/features/users/models/User";
+import { auth, db } from "@/services/firebase/firebase";
 
 export const changeEmail = async (
   user: User,

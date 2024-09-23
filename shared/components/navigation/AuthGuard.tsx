@@ -1,7 +1,7 @@
 // components/AuthGuard.tsx
 import React, { useEffect, useState } from "react";
 
-import { useAuth } from "@/shared/hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { Spinner, Stack } from "tamagui";
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import { User } from "firebase/auth";
 
-import { UserData } from "@/shared/models/UserData";
+import { User as UserData } from "@/features/users/models/User";
 
 import { User as UserIcon } from "@tamagui/lucide-icons";
 

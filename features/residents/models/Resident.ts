@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export interface ResidentData {
+export interface Resident {
   id: string;
   displayName: string;
   email?: string;

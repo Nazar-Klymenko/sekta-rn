@@ -2,13 +2,8 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { useResident } from "@/shared/hooks/useResidents";
-
 import { AnimatePresence } from "@tamagui/animate-presence";
 import {
-  ArrowLeft,
   AudioLines,
   Facebook,
   Instagram,
@@ -18,20 +13,14 @@ import {
   Youtube,
 } from "@tamagui/lucide-icons";
 
-import {
-  Button,
-  GetProps,
-  Image,
-  Text,
-  Theme,
-  XStack,
-  YStack,
-  styled,
-} from "tamagui";
+import { Button, Image, Text, Theme, XStack, YStack, styled } from "tamagui";
 
-import { BlurView } from "expo-blur";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
+
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+
+import { useResident } from "./hooks/useResidents";
 
 const HeroContainer = styled(YStack, {
   height: 500,

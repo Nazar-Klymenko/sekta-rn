@@ -2,13 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import React, { useEffect, useState } from "react";
 
-import { useUsernameAvailability } from "@/features/core/hooks/useUsernameAvailability";
-import { HelloWave } from "@/shared/components/HelloWave";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
 import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
@@ -21,6 +15,13 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { HelloWave } from "@/shared/components/HelloWave";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
 
 const usernameBridgeSchema = yup.object().shape({
   username: usernameSchema,

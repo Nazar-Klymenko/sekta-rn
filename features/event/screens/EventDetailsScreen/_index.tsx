@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useAnimatedScroll } from "@/shared/hooks/useAnimatedScroll";
+
+import React from "react";
+
+import { Text, YStack } from "tamagui";
+
+import { useLocalSearchParams } from "expo-router";
 
 import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/shared/components/layout/ReanimatedPageContainer";
-import { useAnimatedScroll } from "@/shared/hooks/useAnimatedScroll";
-import { useAuth } from "@/shared/hooks/useAuth";
-
-import { Text, YStack } from "tamagui";
-
-import { useLocalSearchParams, usePathname, useRouter } from "expo-router";
 
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import {
@@ -19,14 +19,11 @@ import {
   EventHero,
   EventInfo,
   EventLineup,
-} from "./components";
+} from "./index";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
-  const { isLoggedIn } = useAuth();
-  const router = useRouter();
-  const pathname = usePathname();
   const { scrollHandler, scrollEventThrottle, scrollY } = useAnimatedScroll();
 
   if (!id || isLoading) return <FullPageLoading />;

@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import { Switch } from "@/shared/components/buttons/CustomSwitch";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
-import { useAuth } from "@/shared/hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { Text, XStack, YStack } from "tamagui";
 
+import { Switch } from "@/shared/components/buttons/CustomSwitch";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+
 export default function EmailNotificationScreen() {
-  const { isLoggedIn } = useAuth();
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 

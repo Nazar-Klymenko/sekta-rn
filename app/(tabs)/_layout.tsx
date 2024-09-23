@@ -2,8 +2,8 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { useAuth } from "@/features/core/hooks/useAuth";
-import { useUserData } from "@/features/core/hooks/useUserData";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useUserData } from "@/features/users/hooks/useUserData";
 
 import {
   Bookmark,

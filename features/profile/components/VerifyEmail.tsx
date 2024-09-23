@@ -1,15 +1,15 @@
-// components/VerifyEmail.tsx
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
-import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
-import { useAuth } from "@/shared/hooks/useAuth";
 
 import { Mail } from "@tamagui/lucide-icons";
 
-import { Button, Text, XStack, YStack, styled } from "tamagui";
+import { Text, XStack, YStack, styled } from "tamagui";
+
+import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
 
 export const VerifyEmail = () => {
   const { user } = useAuth();

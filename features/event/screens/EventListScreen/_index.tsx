@@ -1,10 +1,10 @@
 import React from "react";
 
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-
 import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
+
+import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
 import { useUpcomingEventsPreview } from "../../hooks/useUpcomingEvents";
@@ -12,7 +12,7 @@ import {
   ErrorView,
   PreviousEventsSection,
   UpcomingEventsSection,
-} from "./components";
+} from "./index";
 
 export default function EventListScreen() {
   const router = useRouter();

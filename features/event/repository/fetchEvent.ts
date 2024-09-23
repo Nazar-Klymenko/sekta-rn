@@ -1,6 +1,6 @@
 import { collection, doc, getDoc } from "firebase/firestore";
 
-import { db } from "@/shared/services/firebase";
+import { db } from "@/services/firebase/firebase";
 
 import { Event } from "../models/Event";
 

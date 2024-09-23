@@ -1,14 +1,7 @@
 import React from "react";
 
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PasswordRequirements } from "@/shared/components/form/PasswordRequirements";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
-import { useAuth } from "@/shared/hooks/useAuth";
 import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
@@ -20,6 +13,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { PasswordInput } from "@/shared/components/form/PasswordInput";
+import { PasswordRequirements } from "@/shared/components/form/PasswordRequirements";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 const changePasswordSchema = yup.object().shape({
   currentPassword: yup.string().required("Current password is required"),

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useAuth } from "@/features/core/hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { changeUsername } from "../api/changeUsername";
 

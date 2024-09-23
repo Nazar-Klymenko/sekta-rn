@@ -1,13 +1,11 @@
-// src/screens/AllResidentsScreen.tsx
-import { useResidents } from "@/shared/hooks/useResidents";
-
 import React, { useMemo, useState } from "react";
+
+import { useResidents } from "@/features/residents/hooks/useResidents";
+import { Resident } from "@/features/residents/models/Resident";
 
 import { Check, Pencil, Search, X } from "@tamagui/lucide-icons";
 
 import { Button, ScrollView, Text, XStack, YStack } from "tamagui";
-
-import { ResidentData } from "@/shared/models/ResidentData";
 
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -27,8 +25,8 @@ const ITEMS_PER_PAGE = 10;
 
 type Column = {
   header: string;
-  accessor: keyof ResidentData | string;
-  render?: (value: any, resident: ResidentData) => React.ReactNode;
+  accessor: keyof Resident | string;
+  render?: (value: any, resident: Resident) => React.ReactNode;
 };
 
 const columns: Column[] = [
@@ -38,7 +36,7 @@ const columns: Column[] = [
   {
     header: "Social Media",
     accessor: "socialMedia",
-    render: (value: ResidentData["socialMedia"]) => (
+    render: (value: Resident["socialMedia"]) => (
       <XStack gap="$2">
         {Object.entries(value).map(([platform, url]) =>
           url ? <Text key={platform}>{platform}</Text> : null,
@@ -59,7 +57,7 @@ const columns: Column[] = [
   {
     header: "Actions",
     accessor: "actions",
-    render: (_, resident: ResidentData) => (
+    render: (_, resident: Resident) => (
       <Button
         icon={Pencil}
         onPress={() => router.push(`/admin/residents/${resident.id}`)}
@@ -111,16 +109,10 @@ export default function ResidentListScreen() {
   if (isLoading) return <FullPageLoading />;
   if (isError) return <Text>Error loading residents</Text>;
 
-  const renderCell = ({
-    item,
-    column,
-  }: {
-    item: ResidentData;
-    column: Column;
-  }) => {
+  const renderCell = ({ item, column }: { item: Resident; column: Column }) => {
     const value = column.accessor.includes(".")
       ? column.accessor.split(".").reduce((obj, key) => obj[key], item)
-      : item[column.accessor as keyof ResidentData];
+      : item[column.accessor as keyof Resident];
     return column.render ? (
       column.render(value, item)
     ) : (

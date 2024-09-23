@@ -1,15 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { useAuth } from "@/features/core/hooks/useAuth";
-import { useUserData } from "@/features/core/hooks/useUserData";
-import { useUsernameAvailability } from "@/features/core/hooks/useUsernameAvailability";
-import { MenuButton } from "@/shared/components/buttons/MenuButton";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
+import { useUserData } from "@/features/users/hooks/useUserData";
 import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
@@ -22,6 +15,14 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { MenuButton } from "@/shared/components/buttons/MenuButton";
+import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
+import { Form } from "@/shared/components/form/Form";
+import { Input } from "@/shared/components/form/Input";
+import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 import { useChangeUsername } from "../hooks/useChangeUsername";
 

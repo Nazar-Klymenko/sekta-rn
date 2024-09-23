@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useAuth } from "@/features/core/hooks/useAuth";
-import { UserData } from "@/shared/models/UserData";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { User as UserData } from "@/features/users/models/User";
 
 import { changeEmail } from "../api/changeEmail";
 
