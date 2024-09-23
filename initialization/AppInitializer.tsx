@@ -1,8 +1,20 @@
+import {
+  LeagueSpartan_100Thin,
+  LeagueSpartan_200ExtraLight,
+  LeagueSpartan_300Light,
+  LeagueSpartan_400Regular,
+  LeagueSpartan_500Medium,
+  LeagueSpartan_600SemiBold,
+  LeagueSpartan_700Bold,
+  LeagueSpartan_800ExtraBold,
+  LeagueSpartan_900Black,
+  useFonts,
+} from "@expo-google-fonts/league-spartan";
+
 import React, { useEffect, useState } from "react";
 
 import tamaguiConfig from "@/tamagui.config";
 
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { TamaguiProvider } from "tamagui";
 
@@ -11,10 +23,15 @@ import { FullPageLoading } from "@/components/layout/FullPageLoading";
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-    SektaFont: require("../assets/fonts/SektaFont-Regular.ttf"),
-    Lato_900Black: require("@expo-google-fonts/lato/Lato_900Black.ttf"),
+    LeagueSpartan_100Thin,
+    LeagueSpartan_200ExtraLight,
+    LeagueSpartan_300Light,
+    LeagueSpartan_400Regular,
+    LeagueSpartan_500Medium,
+    LeagueSpartan_600SemiBold,
+    LeagueSpartan_700Bold,
+    LeagueSpartan_800ExtraBold,
+    LeagueSpartan_900Black,
   });
 
   useEffect(() => {
