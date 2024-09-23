@@ -16,10 +16,9 @@ import React, { useEffect, useState } from "react";
 import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
 import tamaguiConfig from "@/tamagui.config";
 
-import * as SplashScreen from "expo-splash-screen";
 import { TamaguiProvider } from "tamagui";
 
-import { FullPageLoading } from "@/components/layout/FullPageLoading";
+import * as SplashScreen from "expo-splash-screen";
 
 export function AppInitializer({ children }: { children: any }) {
   const [appIsReady, setAppIsReady] = useState(false);
