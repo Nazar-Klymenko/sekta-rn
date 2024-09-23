@@ -24,6 +24,7 @@ import {
   H2,
   Image,
   Paragraph,
+  Separator,
   Text,
   XStack,
   YStack,
@@ -101,8 +102,7 @@ export default function EventDetailsPage() {
     <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
   );
   return (
-    <PageContainer stickyBottom={stickyBottom}>
-      <Tabs.Screen options={{ href: null, tabBarStyle: { display: "none" } }} />
+    <PageContainer stickyBottom={stickyBottom} fullWidth>
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -119,7 +119,7 @@ export default function EventDetailsPage() {
       />
       <YStack gap="$4">
         <YStack position="relative" gap="$4">
-          <Image source={{ uri: event.image.publicUrl }} aspectRatio={3 / 2} />
+          <Image source={{ uri: event.image.publicUrl }} aspectRatio={3 / 3} />
           <LinearGradient
             colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.8)"]}
             start={[0, 0]}
@@ -141,48 +141,59 @@ export default function EventDetailsPage() {
             alignItems="flex-end"
           ></XStack>
         </YStack>
-        <H1 fontWeight="bold" color="white" flex={1}>
-          {event.title}
-        </H1>
-        <XStack display="flex" flex={1} gap="$4">
-          <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
-            <InfoItem
-              icon={<Calendar color={theme.accentColor.get()} size={24} />}
-              title="Date"
-              value={`${formattedDate} • ${formattedTime}`}
-            />
-            <InfoItem
-              icon={<MapPin color={theme.accentColor.get()} size={24} />}
-              title="Location"
-              value={event?.location || "Nowa 3/3, Kraków"}
-            />
-            <InfoItem
-              icon={<CreditCard color={theme.accentColor.get()} size={24} />}
-              title="Price"
-              value={`${event?.price || "20.00"} PLN`}
-            />
-            <H2 fontWeight="bold">About this event</H2>
-            <Paragraph color="$color10">{event.caption}</Paragraph>
-            <H2 fontWeight="bold">Lineup</H2>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.lineup.map((artist, index) => (
-                <Tag tag={artist} key={index} />
-              ))}
-            </XStack>
-            <H2 fontWeight="bold">Genres</H2>
-            <XStack flexWrap="wrap" gap="$2">
-              {event.genres.map((genre, index) => (
-                <Tag tag={genre} key={index} />
-              ))}
-            </XStack>
-          </YStack>
-        </XStack>
+        <YStack paddingHorizontal="$4">
+          <H1 fontWeight="bold" color="white" flex={1}>
+            {event.title}
+          </H1>
+          <XStack display="flex" flex={1} gap="$4">
+            <YStack gap="$4" flex={md ? 2 : 1} width={md ? "66%" : "100%"}>
+              <InfoItem
+                icon={<Calendar color={theme.accentColor.get()} size={24} />}
+                title="Date"
+                value={`${formattedDate} • ${formattedTime}`}
+              />
+              <InfoItem
+                icon={<MapPin color={theme.accentColor.get()} size={24} />}
+                title="Location"
+                value={event?.location || "Nowa 3/3, Kraków"}
+              />
+              <InfoItem
+                icon={<CreditCard color={theme.accentColor.get()} size={24} />}
+                title="Price"
+                value={event.price === 0 ? "FREE" : `${event.price} PLN`}
+              />
+              <Separator />
+              <H2 fontWeight="bold">About this event</H2>
+              <Paragraph color="$color10">{event.caption}</Paragraph>
+              <H2 fontWeight="bold">Lineup</H2>
+              <XStack flexWrap="wrap" gap="$2">
+                {event.lineup.map((artist, index) => (
+                  <Tag tag={artist} key={index} />
+                ))}
+              </XStack>
+              <H2 fontWeight="bold">Genres</H2>
+              <XStack flexWrap="wrap" gap="$2">
+                {event.genres.map((genre, index) => (
+                  <Tag tag={genre} key={index} />
+                ))}
+              </XStack>
+            </YStack>
+          </XStack>
+        </YStack>
       </YStack>
     </PageContainer>
   );
 }
 
-const InfoItem = ({ icon, title, value }: any) => (
+const InfoItem = ({
+  icon,
+  title,
+  value,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  value: string;
+}) => (
   <XStack alignItems="center" gap="$3">
     <YStack
       width={50}
@@ -190,6 +201,8 @@ const InfoItem = ({ icon, title, value }: any) => (
       borderRadius="$6"
       justifyContent="center"
       alignItems="center"
+      backgroundColor="$backgroundHover"
+      style={{ boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}
     >
       {icon}
     </YStack>
