@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/features/core/hooks/useAuth";
 import { useUserData } from "@/features/core/hooks/useUserData";
 import { useUsernameAvailability } from "@/features/core/hooks/useUsernameAvailability";
-import { useUpdateUsername } from "@/hooks/useAuthOperations";
 import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
@@ -25,6 +24,8 @@ import { FullPageLoading } from "@/components/layout/FullPageLoading";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { AuthGuard } from "@/components/navigation/AuthGuard";
 
+import { useChangeUsername } from "../hooks/useChangeUsername";
+
 const profileUpdateSchema = yup.object().shape({
   username: usernameSchema,
 });
@@ -34,7 +35,7 @@ type FormValues = yup.InferType<typeof profileUpdateSchema>;
 export default function ChangeUsernameScreen() {
   const { user } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
-  const updateUsernameMutation = useUpdateUsername();
+  const changeUsernameMutation = useChangeUsername();
   const toast = useToastController();
 
   const methods = useForm({
@@ -70,7 +71,7 @@ export default function ChangeUsernameScreen() {
     try {
       const result = await checkUsernameAvailability();
       if (result.data) {
-        updateUsernameMutation.mutate(data.username, {
+        changeUsernameMutation.mutate(data.username, {
           onSuccess: () => {
             toast.show("Profile updated successfully", {
               message: "Your profile information has been updated.",
@@ -131,11 +132,11 @@ export default function ChangeUsernameScreen() {
             onPress={handleSubmit(onSubmit)}
             text="Update Username"
             isLoading={
-              updateUsernameMutation.isPending || isUsernameCheckLoading
+              changeUsernameMutation.isPending || isUsernameCheckLoading
             }
             disabled={
               !isDirty ||
-              updateUsernameMutation.isPending ||
+              changeUsernameMutation.isPending ||
               isUsernameCheckLoading
             }
           />

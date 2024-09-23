@@ -1,3 +1,10 @@
+import React from "react";
+
+import { Platform } from "react-native";
+
+import { useAuth } from "@/hooks/useAuth";
+import { useUserData } from "@/hooks/useUserData";
+
 import {
   Bookmark,
   BoomBox,
@@ -9,16 +16,10 @@ import {
   UserRoundCheck,
 } from "@tamagui/lucide-icons";
 
-import React from "react";
-
-import { Platform } from "react-native";
-
-import { useAuth } from "@/hooks/useAuth";
-import { useUserData } from "@/hooks/useUserData";
+import { useTheme } from "tamagui";
 
 import { Stack, useRouter, useSegments } from "expo-router";
 import { Slot, Tabs, usePathname } from "expo-router";
-import { useTheme } from "tamagui";
 
 export default function TabLayout() {
   const theme = useTheme();

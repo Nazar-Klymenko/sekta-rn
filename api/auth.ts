@@ -72,21 +72,6 @@ export const getUserData = async (userId: string): Promise<UserData | null> => {
   }
 };
 
-export const changePassword = async (
-  currentPassword: string,
-  newPassword: string,
-): Promise<void> => {
-  const user = auth.currentUser;
-  if (!user) {
-    throw new Error("No user is currently logged in");
-  }
-
-  const credential = EmailAuthProvider.credential(user.email!, currentPassword);
-  await reauthenticateWithCredential(user, credential);
-
-  await updatePassword(user, newPassword);
-};
-
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };

@@ -1,11 +1,10 @@
 // useAuthOperations.ts
-import { useToastController } from "@tamagui/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { FirebaseError } from "firebase/app";
 import { User } from "firebase/auth";
 
 import {
-  changePassword,
   deleteAccount,
   sendPasswordReset,
   sendVerificationEmail,
@@ -13,8 +12,9 @@ import {
   signOut,
   signUp,
 } from "@/api/auth";
-import { updateUserProfile, updateUsername } from "@/api/firestore";
 import { UserData } from "@/models/UserData";
+
+import { useToastController } from "@tamagui/toast";
 
 import { useAuth } from "./useAuth";
 
@@ -54,57 +54,9 @@ export const useSignIn = () => {
   });
 };
 
-export function useChangePassword() {
-  return useMutation({
-    mutationFn: ({
-      currentPassword,
-      newPassword,
-    }: {
-      currentPassword: string;
-      newPassword: string;
-    }) => changePassword(currentPassword, newPassword),
-  });
-}
-
 export const useSendPasswordReset = () => {
   return useMutation({
     mutationFn: (email: string) => sendPasswordReset(email),
-  });
-};
-
-export const useUpdateUsername = () => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (newUsername: string) => {
-      if (!user?.uid) throw new Error("User not authenticated");
-      await updateUsername(newUsername);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userData"] });
-    },
-  });
-};
-
-export const useUpdateEmail = () => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: ({
-      profileData,
-      currentPassword,
-    }: {
-      profileData: Partial<UserData>;
-      currentPassword?: string;
-    }) => updateUserProfile(user!, profileData, currentPassword),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["userData"] });
-      if (user) {
-        user.reload(); // Refresh the user object to get updated info
-      }
-    },
   });
 };
 
