@@ -2,8 +2,9 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Slot, Stack } from "expo-router";
 import { useTheme } from "tamagui";
+
+import { Slot, Stack } from "expo-router";
 
 import { DrawerButton } from "@/components/drawer/DrawerButton";
 
@@ -92,19 +93,6 @@ export default function HomeLayout() {
         name="email-notifications"
         options={{
           title: "Email notifications",
-          animation: "fade_from_bottom",
-          headerShown: true || Platform.OS !== "web",
-          headerStyle: {
-            backgroundColor: theme.background.get(),
-          },
-          headerTintColor: theme.color.get(),
-        }}
-      />
-
-      <Stack.Screen
-        name="contact"
-        options={{
-          title: "Contact us",
           animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
           headerStyle: {

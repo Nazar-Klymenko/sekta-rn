@@ -1,8 +1,8 @@
 // src/screens/UpdateEmailScreen.tsx
 import React, { useState } from "react";
 
+import { useChangeEmail } from "@/features/profile/hooks/useChangeEmail";
 import { useAuth } from "@/hooks/useAuth";
-import { useUpdateEmail } from "@/hooks/useAuthOperations";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
@@ -31,7 +31,7 @@ type FormValues = yup.InferType<typeof updateEmailSchema>;
 
 export default function ChangeEmailScreen() {
   const { user } = useAuth();
-  const updateEmailMutation = useUpdateEmail();
+  const updateEmailMutation = useChangeEmail();
   const toast = useToastController();
   const [isVerificationSent, setIsVerificationSent] = useState(false);
 

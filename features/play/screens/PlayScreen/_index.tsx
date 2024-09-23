@@ -2,12 +2,15 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Stack } from "expo-router";
 import { Text, YStack, useTheme } from "tamagui";
+
+import { Stack } from "expo-router";
 
 import { PageContainer } from "@/components/layout/PageContainer";
 
-import { HeroSection, PlayForm, VenueInfoSection } from "../components";
+import { PlayForm } from "./Form";
+import { HeroSection } from "./Hero";
+import { VenueInfoSection } from "./Venue";
 
 export default function PlayScreen() {
   const theme = useTheme();

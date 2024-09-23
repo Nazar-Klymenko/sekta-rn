@@ -61,33 +61,8 @@ export const signIn = async (
   return userCredential.user;
 };
 
-export const getUserData = async (userId: string): Promise<UserData | null> => {
-  const docRef = doc(db, "users", userId);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    return docSnap.data() as UserData;
-  } else {
-    return null;
-  }
-};
-
 export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
-};
-
-export const deleteAccount = async (password: string): Promise<void> => {
-  const user = auth.currentUser;
-  if (user && user.email) {
-    const credential = EmailAuthProvider.credential(user.email, password);
-    await reauthenticateWithCredential(user, credential);
-
-    await deleteDoc(doc(db, "users", user.uid));
-
-    await deleteUser(user);
-  } else {
-    throw new Error("No user is currently signed in");
-  }
 };
 
 export const signOut = async (): Promise<void> => {
@@ -101,14 +76,4 @@ export const fetchUsers = async (): Promise<UserData[]> => {
   return snapshot.docs.map(
     (doc) => ({ id: doc.id, ...doc.data() }) as UserData,
   );
-};
-
-export const sendVerificationEmail = async () => {
-  const user = auth.currentUser;
-  if (user && !user.emailVerified) {
-    await sendEmailVerification(user);
-    return "Verification email sent successfully";
-  } else {
-    throw new Error("No user found or email already verified");
-  }
 };
