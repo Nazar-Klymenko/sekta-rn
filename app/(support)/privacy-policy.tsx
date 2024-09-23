@@ -1,20 +1,3 @@
-import React from "react";
+import PrivacyPolicyScreen from "@/features/support/screens/PrivacyPolicyScreen";
 
-import { Text, XStack, YStack } from "tamagui";
-
-import { PageContainer } from "@/components/layout/PageContainer";
-
-export default function CookiePolicyScreen() {
-  return (
-    <PageContainer>
-      <YStack gap="$2">
-        <Text fontSize="$6" fontWeight="bold">
-          Cookie and Privacy policy page - add later
-        </Text>
-        <XStack>
-          <Text fontSize="$4">Policy itself</Text>
-        </XStack>
-      </YStack>
-    </PageContainer>
-  );
-}
+export default PrivacyPolicyScreen;
