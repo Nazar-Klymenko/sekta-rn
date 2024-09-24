@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { db } from "@/initialization/firebase/firebase";
+import { db } from "@/lib/firebase/firebase";
 
 import { User as UserData } from "../models/User";
 

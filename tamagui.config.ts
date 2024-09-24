@@ -2,7 +2,7 @@ import { config } from "@tamagui/config/v3";
 
 import { createFont, createTamagui } from "tamagui";
 
-import * as themes from "./initialization/theme/theme-output";
+import * as themes from "./lib/theme/theme-output";
 
 const leagueSpartanFace = {
   100: { normal: "LeagueSpartan_100Thin" },

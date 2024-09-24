@@ -9,7 +9,7 @@ import React, { ReactNode, createContext, useEffect } from "react";
 
 import { User } from "firebase/auth";
 
-import { auth } from "@/initialization/firebase/firebase";
+import { auth } from "@/lib/firebase/firebase";
 
 export type AuthContextType = {
   user: User | null;

@@ -4,7 +4,7 @@ import {
   updatePassword,
 } from "firebase/auth";
 
-import { auth } from "@/initialization/firebase/firebase";
+import { auth } from "@/lib/firebase/firebase";
 
 export const changePassword = async (
   currentPassword: string,
