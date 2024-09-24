@@ -47,7 +47,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         <Image
           source={{ uri: event.image.publicUrl }}
           width={cardWidth}
-          height={240}
+          height={cardWidth * 0.9}
         />
         <LinearGradient
           position="absolute"
@@ -69,13 +69,18 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         </DateBadge>
         <PriceBadge>
           <Paragraph color="white" fontSize="$4" fontWeight="bold">
-            {event.price === 0 ? "FREE" : `${event.price} PLN`}
+            {event.price === 0
+              ? "FREE"
+              : isNaN(event.price)
+                ? "N/A"
+                : `${event.price} PLN`}
           </Paragraph>
         </PriceBadge>
       </ImageContainer>
       <ContentContainer>
         <Paragraph
           fontSize={24}
+          lineHeight={24}
           fontWeight="bold"
           numberOfLines={2}
           color="$color"
@@ -141,7 +146,7 @@ const DateBadge = styled(YStack, {
   position: "absolute",
   top: 16,
   left: 16,
-  backgroundColor: "$accentColor",
+  backgroundColor: "rgba(0,0,0,0.7)",
   borderRadius: 12,
   paddingHorizontal: 16,
   paddingVertical: 10,
@@ -159,7 +164,8 @@ const PriceBadge = styled(YStack, {
 });
 
 const ContentContainer = styled(YStack, {
-  padding: 16,
+  paddingVertical: 24,
+  paddingHorizontal: 18,
   gap: 8,
 });
 

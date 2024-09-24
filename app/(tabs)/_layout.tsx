@@ -5,16 +5,7 @@ import { Platform } from "react-native";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
-import {
-  Bookmark,
-  BoomBox,
-  CalendarCheck,
-  Heart,
-  Home,
-  Play,
-  User,
-  UserRoundCheck,
-} from "@tamagui/lucide-icons";
+import { Home, Ticket, User, UserRoundCheck } from "@tamagui/lucide-icons";
 
 import { useTheme } from "tamagui";
 
@@ -46,25 +37,28 @@ export default function TabLayout() {
           backgroundColor: theme.gray2Dark.get(),
           borderTopWidth: 0,
           display: shouldHideTabBar ? "none" : "flex",
+          height: 54,
+          paddingBottom: 5,
+          paddingTop: 5,
         },
         tabBarActiveTintColor: theme.color.get(),
         tabBarInactiveTintColor: theme.gray9Light.get(),
-        headerStyle: {
-          backgroundColor: theme.background.get(),
-          elevation: 0,
+        tabBarIconStyle: { marginBottom: 3 },
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: "500",
         },
-        headerTintColor: theme.color.get(),
-        tabBarIconStyle: { marginTop: 4 },
-        tabBarLabelStyle: { paddingBottom: 4 },
+        tabBarItemStyle: {
+          paddingTop: 5,
+        },
       }}
     >
       <Tabs.Screen
         name="(index)"
         listeners={{
           tabPress: () => {
-            if (router.canDismiss()) {
-              if (segment[1] === "(index)") router.dismissAll();
-            }
+            if (router.canDismiss() && segment[1] === "(index)")
+              router.dismissAll();
           },
         }}
         options={{
@@ -77,16 +71,13 @@ export default function TabLayout() {
         name="(attending)"
         listeners={{
           tabPress: () => {
-            if (router.canDismiss()) {
-              if (segment[1] === "(attending)") router.dismissAll();
-            }
+            if (router.canDismiss() && segment[1] === "(attending)")
+              router.dismissAll();
           },
         }}
         options={{
-          title: "Attending events",
-          tabBarIcon: ({ color, size }) => (
-            <CalendarCheck color={color} size={size} />
-          ),
+          title: "Attending",
+          tabBarIcon: ({ color, size }) => <Ticket color={color} size={size} />,
         }}
       />
 
@@ -94,9 +85,8 @@ export default function TabLayout() {
         name="(profile)"
         listeners={{
           tabPress: () => {
-            if (router.canDismiss()) {
-              if (segment[1] === "(profile)") router.dismissAll();
-            }
+            if (router.canDismiss() && segment[1] === "(profile)")
+              router.dismissAll();
           },
         }}
         options={{
@@ -104,26 +94,24 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
       />
-      <Tabs.Screen
-        name="(admin)"
-        listeners={{
-          tabPress: () => {
-            if (router.canDismiss()) {
-              if (segment[1] === "(admin)") router.dismissAll();
-            }
-          },
-        }}
-        options={{
-          title: "Admin",
-          headerShown: false,
-          tabBarItemStyle: {
-            display: isLoggedIn && userData?.isAdmin ? "flex" : "none",
-          },
-          tabBarIcon: ({ color, size }) => (
-            <UserRoundCheck color={color} size={size} />
-          ),
-        }}
-      />
+
+      {isLoggedIn && userData?.isAdmin && (
+        <Tabs.Screen
+          name="(admin)"
+          listeners={{
+            tabPress: () => {
+              if (router.canDismiss() && segment[1] === "(admin)")
+                router.dismissAll();
+            },
+          }}
+          options={{
+            title: "Admin",
+            tabBarIcon: ({ color, size }) => (
+              <UserRoundCheck color={color} size={size} />
+            ),
+          }}
+        />
+      )}
     </Tabs>
   );
 }

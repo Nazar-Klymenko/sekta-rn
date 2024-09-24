@@ -15,7 +15,7 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Search, Trash2 } from "@tamagui/lucide-icons";
 
-import { Button, Paragraph, ScrollView, XStack, YStack } from "tamagui";
+import { Button, Paragraph, ScrollView, XStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
