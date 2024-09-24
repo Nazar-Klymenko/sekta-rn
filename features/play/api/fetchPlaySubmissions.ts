@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 
 import { PlaySubmission } from "@/features/play/models/PlaySubmission";
-import { db } from "@/services/firebase/firebase";
+import { db } from "@/initialization/firebase/firebase";
 
 const playCollection = collection(db, "play");
 

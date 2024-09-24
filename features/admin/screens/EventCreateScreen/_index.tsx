@@ -7,7 +7,7 @@ import { Alert } from "react-native";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Event } from "@/features/event/models/Event";
-import { db, storage } from "@/services/firebase/firebase";
+import { db, storage } from "@/initialization/firebase/firebase";
 
 import { Button, Form, Image, Input, Label, Select, YStack } from "tamagui";
 

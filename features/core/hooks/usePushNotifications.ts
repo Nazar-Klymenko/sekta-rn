@@ -8,7 +8,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { db } from "@/services/firebase/firebase";
+import { db } from "@/initialization/firebase/firebase";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";

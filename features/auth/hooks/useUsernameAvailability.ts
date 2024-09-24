@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 
-import { db } from "@/services/firebase/firebase";
+import { db } from "@/initialization/firebase/firebase";
 
 const checkUsernameAvailability = async (
   username: string,

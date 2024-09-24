@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 
-import { db } from "@/services/firebase/firebase";
+import { db } from "@/initialization/firebase/firebase";
 
 import { Resident } from "../models/Resident";
 

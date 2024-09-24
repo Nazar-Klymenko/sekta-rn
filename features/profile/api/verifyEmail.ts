@@ -1,6 +1,6 @@
 import { sendEmailVerification } from "firebase/auth";
 
-import { auth } from "@/services/firebase/firebase";
+import { auth } from "@/initialization/firebase/firebase";
 
 export const sendVerificationEmail = async () => {
   const user = auth.currentUser;
