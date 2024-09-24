@@ -1,5 +1,5 @@
 import {
-  SizableText,
+  Paragraph,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   styled,
@@ -33,8 +33,8 @@ export const MaxLength: React.FC<MaxLengthProps> = ({ length, maxLength }) => {
   const color = isOverLimit ? theme.red10Light.get() : theme.gray10Light.get();
 
   return (
-    <SizableText fontSize="$2" color={color}>
+    <Paragraph fontSize="$2" color={color}>
       {`${length} / ${maxLength}`}
-    </SizableText>
+    </Paragraph>
   );
 };

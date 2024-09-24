@@ -6,7 +6,7 @@ import { ResidentCard } from "@/features/core/components/ResidentCard";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { H1, SizableText, useMedia } from "tamagui";
+import { H1, Paragraph, useMedia } from "tamagui";
 
 import { useResidents } from "./hooks/useResidents";
 import { Resident } from "./models/Resident";
@@ -19,7 +19,7 @@ export default function ResidentListScreen() {
   if (error) {
     return (
       <PageContainer>
-        <SizableText>Error loading residents: {error.message}</SizableText>
+        <Paragraph>Error loading residents: {error.message}</Paragraph>
       </PageContainer>
     );
   }

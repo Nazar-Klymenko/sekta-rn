@@ -3,7 +3,7 @@ import React from "react";
 import {
   CheckboxProps,
   Label,
-  SizableText,
+  Paragraph,
   Checkbox as TamaguiCheckbox,
   XStack,
   YStack,
@@ -49,7 +49,7 @@ export function Checkbox({
           {...props}
         >
           <TamaguiCheckbox.Indicator>
-            <SizableText>✓</SizableText>
+            <Paragraph>✓</Paragraph>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
         <Label fontSize={12} htmlFor={id} lineHeight={"$1"}>
@@ -57,12 +57,12 @@ export function Checkbox({
         </Label>
       </XStack>
       {error && (
-        <SizableText
+        <Paragraph
           color={error ? "$red10Light" : "$colorTransparent"}
           fontSize="$2"
         >
           {error?.message}
-        </SizableText>
+        </Paragraph>
       )}
     </YStack>
   );

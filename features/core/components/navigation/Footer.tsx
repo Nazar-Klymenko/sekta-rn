@@ -3,8 +3,8 @@ import React from "react";
 import { Facebook, Instagram, Twitter } from "@tamagui/lucide-icons";
 
 import {
+  Paragraph,
   Separator,
-  SizableText,
   Stack,
   XStack,
   YStack,
@@ -37,9 +37,9 @@ export const Footer = () => {
           gap="$6"
         >
           <FooterColumn title="Sekta Selekta">
-            <SizableText fontSize="$3" color="$color9Light">
+            <Paragraph fontSize="$3" color="$color9Light">
               Bringing the best events to you. Nowa 3/3, Kraków.
-            </SizableText>
+            </Paragraph>
           </FooterColumn>
 
           <FooterColumn title="Explore">
@@ -49,12 +49,12 @@ export const Footer = () => {
           </FooterColumn>
 
           <FooterColumn title="Contact">
-            <SizableText fontSize="$3" color="$color9Light">
+            <Paragraph fontSize="$3" color="$color9Light">
               Email: info@sektaselekta.com
-            </SizableText>
-            <SizableText fontSize="$3" color="$color9Light">
+            </Paragraph>
+            <Paragraph fontSize="$3" color="$color9Light">
               Phone: +1 234 567 890
-            </SizableText>
+            </Paragraph>
           </FooterColumn>
 
           <FooterColumn title="Follow Us">
@@ -69,9 +69,9 @@ export const Footer = () => {
         <Separator marginVertical="$5" />
 
         <XStack justifyContent="space-between" flexWrap="wrap" gap="$4">
-          <SizableText fontSize="$2" color="$color8Light">
+          <Paragraph fontSize="$2" color="$color8Light">
             © 2024 Sekta Selekta
-          </SizableText>
+          </Paragraph>
           <XStack gap="$4">
             <FooterLink href="/privacy-policy" small>
               Privacy Policy
@@ -94,7 +94,7 @@ const FooterColumn = ({ title, children }: any) => (
     $gtSm={{ minWidth: 150 }}
     $gtMd={{ minWidth: 200 }}
   >
-    <SizableText
+    <Paragraph
       fontSize="$5"
       fontWeight="bold"
       color="$color"
@@ -103,21 +103,21 @@ const FooterColumn = ({ title, children }: any) => (
       paddingBottom="$2"
     >
       {title}
-    </SizableText>
+    </Paragraph>
     {children}
   </YStack>
 );
 
 const FooterLink = ({ href, children, small = false }: any) => (
   <Link href={href}>
-    <SizableText
+    <Paragraph
       fontSize={small ? "$2" : "$3"}
       color="$color7Light"
       hoverStyle={{ color: "$color9Light" }}
       transition="all 0.2s"
     >
       {children}
-    </SizableText>
+    </Paragraph>
   </Link>
 );
 

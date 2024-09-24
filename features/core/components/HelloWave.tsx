@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 
 import { Platform, Pressable, View } from "react-native";
 
-import { SizableText, styled, useTheme } from "tamagui";
+import { Paragraph, styled, useTheme } from "tamagui";
 
 import Animated, {
   useAnimatedStyle,
@@ -21,7 +21,7 @@ const WaveContainer = styled(View, {
   height: 48,
 });
 
-const WaveText = styled(SizableText, {
+const WaveText = styled(Paragraph, {
   fontSize: 40,
   lineHeight: 48,
 });

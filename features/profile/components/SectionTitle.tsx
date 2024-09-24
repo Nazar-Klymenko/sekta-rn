@@ -1,9 +1,9 @@
 import React from "react";
 
-import { SizableText } from "tamagui";
+import { Paragraph } from "tamagui";
 
 export const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <SizableText fontSize="$5" fontWeight="bold" marginBottom="$2">
+  <Paragraph size="$7" fontWeight={700}>
     {children}
-  </SizableText>
+  </Paragraph>
 );

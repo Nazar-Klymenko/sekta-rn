@@ -1,4 +1,4 @@
-import { SizableText, XStack, styled } from "tamagui";
+import { Paragraph, XStack, styled } from "tamagui";
 
 import { Link } from "expo-router";
 
@@ -39,7 +39,7 @@ const MenuLink = styled(XStack, {
   paddingHorizontal: "$2",
 });
 
-const MenuText = styled(SizableText, {
+const MenuText = styled(Paragraph, {
   fontSize: "$3",
   color: "$color",
 });

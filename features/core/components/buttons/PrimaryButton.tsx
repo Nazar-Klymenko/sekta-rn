@@ -1,3 +1,5 @@
+import { LinearGradient } from "tamagui/linear-gradient";
+
 import React, { forwardRef } from "react";
 
 import { GestureResponderEvent, Platform } from "react-native";
@@ -11,8 +13,6 @@ import {
   XStack,
   styled,
 } from "tamagui";
-
-import { LinearGradient } from "tamagui/linear-gradient";
 
 type ButtonFrameProps = GetProps<typeof Stack>;
 
@@ -96,6 +96,7 @@ const GradientContainer = styled(Stack, {
   bottom: 0,
   overflow: "hidden",
   borderRadius: "$6",
+  backgroundColor: "$accentBackground",
 });
 
 export const PrimaryButton = forwardRef<TamaguiElement, PrimaryButtonProps>(
@@ -108,16 +109,16 @@ export const PrimaryButton = forwardRef<TamaguiElement, PrimaryButtonProps>(
         disabled={disabled || isLoading}
       >
         <GradientContainer>
-          <LinearGradient
+          {/* <LinearGradient
             colors={["$pink9Light", "$accentBackground"]}
             start={[0, 0]}
             end={[1, 1]}
             fullscreen
-          />
+          /> */}
         </GradientContainer>
         <XStack gap="$2" alignItems="center" zIndex={1}>
           {isLoading && <Spinner color="$colorContrast" />}
-          <ButtonText color="$colorContrast" fontWeight="bold" fontSize={16}>
+          <ButtonText fontWeight={700} size="$7">
             {text} {children}
           </ButtonText>
         </XStack>

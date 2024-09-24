@@ -8,8 +8,8 @@ import {
   Adapt,
   FontSizeTokens,
   Label,
+  Paragraph,
   Sheet,
-  SizableText,
   Stack,
   Select as TamaguiSelect,
   SelectProps as TamaguiSelectProps,
@@ -119,12 +119,12 @@ export function Select({
         </Stack>
       </YStack>
       {!hideErrors && (
-        <SizableText
+        <Paragraph
           color={error ? "$red10Light" : "$colorTransparent"}
           fontSize="$2"
         >
           {error ? error?.message : "*"}
-        </SizableText>
+        </Paragraph>
       )}
     </YStack>
   );

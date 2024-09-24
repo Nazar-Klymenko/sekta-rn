@@ -5,7 +5,7 @@ import { Switch } from "@/features/core/components/buttons/CustomSwitch";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 
-import { SizableText, XStack, YStack } from "tamagui";
+import { Paragraph, XStack, YStack } from "tamagui";
 
 export default function EmailNotificationScreen() {
   const [isEnabled, setIsEnabled] = useState(true);
@@ -16,12 +16,12 @@ export default function EmailNotificationScreen() {
       <PageContainer>
         <XStack display="flex" justifyContent="space-between">
           <YStack>
-            <SizableText fontSize="$5" fontWeight="bold">
+            <Paragraph fontSize="$5" fontWeight="bold">
               Enable email notifications
-            </SizableText>
-            <SizableText fontSize="$3" color="$gray10Light">
+            </Paragraph>
+            <Paragraph fontSize="$3" color="$gray10Light">
               Enable notifications about new events and other news
-            </SizableText>
+            </Paragraph>
           </YStack>
           <Switch checked={isEnabled} onPress={toggleSwitch} />
         </XStack>

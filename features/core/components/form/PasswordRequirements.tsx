@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import { CheckCircle2, ChevronRight, User } from "@tamagui/lucide-icons";
 
-import { SizableText, XStack, YStack } from "tamagui";
+import { Paragraph, XStack, YStack } from "tamagui";
 
 const passwordChecks = [
   { rule: "8 or more characters", regex: /.{8,}/, status: false },
@@ -35,7 +35,7 @@ export const PasswordRequirements = ({ password }: { password: string }) => {
             }
             size="$1"
           />
-          <SizableText
+          <Paragraph
             fontSize={12}
             fontWeight="400"
             color={
@@ -43,7 +43,7 @@ export const PasswordRequirements = ({ password }: { password: string }) => {
             }
           >
             {text.rule}
-          </SizableText>
+          </Paragraph>
         </XStack>
       ))}
     </YStack>

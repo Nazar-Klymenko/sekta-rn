@@ -5,7 +5,7 @@ import React from "react";
 
 import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { SizableText, useTheme } from "tamagui";
+import { Paragraph, useTheme } from "tamagui";
 
 export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,
@@ -72,7 +72,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
                 size: 24,
                 focused: isFocused,
               })}
-            <SizableText
+            <Paragraph
               style={[
                 styles.tabLabel,
                 {
@@ -81,7 +81,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
               ]}
             >
               {label as string}
-            </SizableText>
+            </Paragraph>
           </TouchableOpacity>
         );
       })}

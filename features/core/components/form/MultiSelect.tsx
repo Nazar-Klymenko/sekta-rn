@@ -7,9 +7,9 @@ import { Check, ChevronDown, X } from "@tamagui/lucide-icons";
 
 import {
   Adapt,
+  Paragraph,
   Select,
   Sheet,
-  SizableText,
   SelectProps as TamaguiSelectProps,
   XStack,
   YStack,
@@ -68,7 +68,7 @@ export const MultiSelect = ({
 
   return (
     <YStack>
-      <SizableText>{label}</SizableText>
+      <Paragraph>{label}</Paragraph>
       <Select
         id={id}
         value={value.length > 0 ? value[value.length - 1] : undefined}
@@ -114,9 +114,9 @@ export const MultiSelect = ({
         </Select.Content>
       </Select>
       {error && (
-        <SizableText color="$red10" fontSize="$2">
+        <Paragraph color="$red10" fontSize="$2">
           {error.message}
-        </SizableText>
+        </Paragraph>
       )}
     </YStack>
   );

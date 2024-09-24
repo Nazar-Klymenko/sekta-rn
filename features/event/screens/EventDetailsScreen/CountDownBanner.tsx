@@ -5,23 +5,9 @@ import { useEffect, useState } from "react";
 
 import { Timestamp } from "firebase/firestore";
 
-import {
-  CheckCircle,
-  Clock,
-  Heart,
-  HeartCrack,
-  XCircle,
-} from "@tamagui/lucide-icons";
+import { CheckCircle, Heart } from "@tamagui/lucide-icons";
 
-import {
-  H2,
-  SizableText,
-  View,
-  XStack,
-  YStack,
-  styled,
-  useTheme,
-} from "tamagui";
+import { H2, Paragraph, View, XStack, YStack, styled, useTheme } from "tamagui";
 
 const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   const timeLeft = useCountdown(targetDate);
@@ -30,11 +16,11 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <TimeUnitContainer>
       <GlassContainer>
-        <SizableText fontSize={36} fontWeight="900" color="white">
+        <Paragraph fontSize={36} lineHeight={36} fontWeight="900" color="white">
           {value.toString().padStart(2, "0")}
-        </SizableText>
+        </Paragraph>
       </GlassContainer>
-      <SizableText
+      <Paragraph
         fontSize={16}
         fontWeight="600"
         color="white"
@@ -42,7 +28,7 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
         textTransform="uppercase"
       >
         {label}
-      </SizableText>
+      </Paragraph>
     </TimeUnitContainer>
   );
 
@@ -86,14 +72,20 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   return (
     <CountdownContainer>
       <H2 fontWeight="bold">Event starts in:</H2>
-      <View style={{ borderRadius: 20, overflow: "hidden" }}>
-        <LinearGradient
+      <View
+        style={{
+          borderRadius: 20,
+          overflow: "hidden",
+          backgroundColor: theme.accentBackground.get(),
+        }}
+      >
+        {/* <LinearGradient
           colors={[theme.accentColor.get(), "$pink9Light"]}
           start={[0, 0]}
           end={[1, 1]}
-        >
-          <ContentWrapper>{renderContent()}</ContentWrapper>
-        </LinearGradient>
+        > */}
+        <ContentWrapper>{renderContent()}</ContentWrapper>
+        {/* </LinearGradient> */}
       </View>
     </CountdownContainer>
   );
@@ -183,8 +175,9 @@ const StatusContainer = styled(XStack, {
   justifyContent: "center",
 });
 
-const StatusText = styled(SizableText, {
+const StatusText = styled(Paragraph, {
   fontSize: 24,
+  lineHeight: 24,
   fontWeight: "900",
   color: "white",
   marginLeft: "$2",

@@ -4,7 +4,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { Facebook, Instagram, Mail, Phone } from "@tamagui/lucide-icons";
 
-import { Card, SizableText, XStack, YStack } from "tamagui";
+import { Card, Paragraph, XStack, YStack } from "tamagui";
 
 type ContactInfoProps = {
   icon: React.ReactNode;
@@ -16,9 +16,9 @@ export default function ContactScreen() {
   return (
     <PageContainer>
       <YStack gap="$6" padding="$6">
-        <SizableText fontSize="$8" fontWeight="700" alignSelf="center">
+        <Paragraph fontSize="$8" fontWeight="700" alignSelf="center">
           Contact Us
-        </SizableText>
+        </Paragraph>
         <ContactInfo
           icon={<Mail size={24} color="$blue10Light" />}
           label="Email"
@@ -38,12 +38,9 @@ export default function ContactScreen() {
           icon={<Facebook size={24} color="#3b5998" />}
           label="Facebook"
           value={
-            <SizableText
-              href="https://facebook.com/sektaselekta"
-              target="_blank"
-            >
+            <Paragraph href="https://facebook.com/sektaselekta" target="_blank">
               link
-            </SizableText>
+            </Paragraph>
           }
         />
       </YStack>
@@ -69,12 +66,12 @@ const ContactInfo: React.FC<ContactInfoProps> = ({ icon, label, value }) => (
     <XStack alignItems="center" gap="$4">
       {icon}
       <YStack>
-        <SizableText fontSize="$5" fontWeight="600">
+        <Paragraph fontSize="$5" fontWeight="600">
           {label}
-        </SizableText>
-        <SizableText fontSize="$4" color="$gray11">
+        </Paragraph>
+        <Paragraph fontSize="$4" color="$gray11">
           {value}
-        </SizableText>
+        </Paragraph>
       </YStack>
     </XStack>
   </Card>

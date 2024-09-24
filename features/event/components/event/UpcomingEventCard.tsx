@@ -10,7 +10,7 @@ import { Clock, MapPin } from "@tamagui/lucide-icons";
 
 import {
   Image,
-  SizableText,
+  Paragraph,
   Stack,
   XStack,
   YStack,
@@ -60,48 +60,48 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           end={[0, 1]}
         />
         <DateBadge>
-          <SizableText color="white" fontSize="$7" fontWeight="bold">
+          <Paragraph color="white" fontSize="$7" fontWeight="bold">
             {formattedDay}
-          </SizableText>
-          <SizableText color="white" fontSize="$3" textTransform="uppercase">
+          </Paragraph>
+          <Paragraph color="white" fontSize="$3" textTransform="uppercase">
             {formattedMonth}
-          </SizableText>
+          </Paragraph>
         </DateBadge>
         <PriceBadge>
-          <SizableText color="white" fontSize="$4" fontWeight="bold">
+          <Paragraph color="white" fontSize="$4" fontWeight="bold">
             {event.price === 0 ? "FREE" : `${event.price} PLN`}
-          </SizableText>
+          </Paragraph>
         </PriceBadge>
       </ImageContainer>
       <ContentContainer>
-        <SizableText
+        <Paragraph
           fontSize={24}
           fontWeight="bold"
           numberOfLines={2}
           color="$color"
         >
           {event.title}
-        </SizableText>
+        </Paragraph>
         <XStack alignItems="center" gap="$2">
           <Clock size={16} color={theme.gray11Light.get()} />
-          <SizableText fontSize={15} color="$gray11Light">
+          <Paragraph fontSize={15} color="$gray11Light">
             {formattedDate} • {formattedTime}
-          </SizableText>
+          </Paragraph>
         </XStack>
         <XStack alignItems="center" gap="$2">
           <MapPin size={16} color={theme.gray11Light.get()} />
-          <SizableText fontSize={15} color="$gray11Light">
+          <Paragraph fontSize={15} color="$gray11Light">
             {event.location || "Venue TBA"}
-          </SizableText>
+          </Paragraph>
         </XStack>
-        <SizableText
+        <Paragraph
           fontSize={14}
           color="$gray11Light"
           numberOfLines={2}
           marginTop="$2"
         >
           {event.caption}
-        </SizableText>
+        </Paragraph>
         <XStack flexWrap="wrap" gap="$2" marginTop="$3">
           {event.genres.slice(0, 3).map((genre, index) => (
             <Tag key={genre + index} tag={genre} />

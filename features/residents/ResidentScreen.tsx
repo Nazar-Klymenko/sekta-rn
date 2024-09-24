@@ -19,7 +19,7 @@ import {
 import {
   Button,
   Image,
-  SizableText,
+  Paragraph,
   Theme,
   XStack,
   YStack,
@@ -46,13 +46,13 @@ const HeroContent = styled(YStack, {
   zIndex: 3, // Highest z-index to appear on top
 });
 
-const ResidentName = styled(SizableText, {
+const ResidentName = styled(Paragraph, {
   fontSize: 72,
   fontWeight: "900",
   color: "white",
 });
 
-const GenreTag = styled(SizableText, {
+const GenreTag = styled(Paragraph, {
   fontSize: 18,
   fontWeight: "bold",
   color: "white",
@@ -87,10 +87,10 @@ export default function ResidentScreen() {
   if (error || !resident) {
     return (
       <PageContainer>
-        <SizableText>
+        <Paragraph>
           Error loading resident details:{" "}
           {error?.message || "Resident not found"}
-        </SizableText>
+        </Paragraph>
       </PageContainer>
     );
   }
@@ -154,61 +154,61 @@ export default function ResidentScreen() {
 
         <YStack gap={30}>
           <InfoCard>
-            <SizableText
+            <Paragraph
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Locations
-            </SizableText>
+            </Paragraph>
             <XStack flexWrap="wrap" gap={10}>
               {resident.locations.map((location, index) => (
-                <SizableText key={index} fontSize={18} color="white">
+                <Paragraph key={index} fontSize={18} color="white">
                   <MapPin size={18} /> {location}
-                </SizableText>
+                </Paragraph>
               ))}
             </XStack>
           </InfoCard>
 
           <InfoCard>
-            <SizableText
+            <Paragraph
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Contact
-            </SizableText>
+            </Paragraph>
             <YStack gap={10}>
               {resident.email && (
                 <XStack alignItems="center" gap={10}>
                   <Mail size={18} color="white" />
-                  <SizableText fontSize={18} color="white">
+                  <Paragraph fontSize={18} color="white">
                     {resident.email}
-                  </SizableText>
+                  </Paragraph>
                 </XStack>
               )}
               {resident.phone && (
                 <XStack alignItems="center" gap={10}>
                   <Phone size={18} color="white" />
-                  <SizableText fontSize={18} color="white">
+                  <Paragraph fontSize={18} color="white">
                     {resident.phone}
-                  </SizableText>
+                  </Paragraph>
                 </XStack>
               )}
             </YStack>
           </InfoCard>
 
           <InfoCard>
-            <SizableText
+            <Paragraph
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Social Media
-            </SizableText>
+            </Paragraph>
             <XStack flexWrap="wrap" gap={20}>
               {resident.socialMedia.soundcloud && (
                 <SocialButton icon={<AudioLines color="white" />} />
@@ -227,17 +227,17 @@ export default function ResidentScreen() {
 
           {resident.additionalInfo && (
             <InfoCard>
-              <SizableText
+              <Paragraph
                 fontSize={24}
                 fontWeight="bold"
                 color="white"
                 marginBottom={10}
               >
                 Additional Info
-              </SizableText>
-              <SizableText fontSize={18} color="white">
+              </Paragraph>
+              <Paragraph fontSize={18} color="white">
                 {resident.additionalInfo}
-              </SizableText>
+              </Paragraph>
             </InfoCard>
           )}
         </YStack>

@@ -6,7 +6,7 @@ import { Mail } from "@tamagui/lucide-icons";
 
 import {
   Label,
-  SizableText,
+  Paragraph,
   Stack,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
@@ -100,13 +100,13 @@ export function Input({
         </Stack>
       </YStack>
       <XStack ai="center" marginTop="$2">
-        <SizableText
+        <Paragraph
           flex={1}
           color={error ? "$red10Light" : "$colorTransparent"}
           fontSize="$2"
         >
           {error ? error?.message : ""}
-        </SizableText>
+        </Paragraph>
         {maxLength && (
           <MaxLength length={value?.length || 0} maxLength={maxLength} />
         )}

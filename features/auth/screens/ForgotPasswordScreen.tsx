@@ -10,7 +10,7 @@ import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorH
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, SizableText, YStack } from "tamagui";
+import { H1, Paragraph, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -83,9 +83,9 @@ export default function ForgotPasswordScreen() {
 
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <SizableText color="$accentColor" textAlign="center">
+              <Paragraph color="$accentColor" textAlign="center">
                 Go back to login
-              </SizableText>
+              </Paragraph>
             </Link>
           </YStack>
         </Form>

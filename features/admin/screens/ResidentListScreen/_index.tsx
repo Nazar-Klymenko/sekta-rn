@@ -11,7 +11,7 @@ import { Resident } from "@/features/residents/models/Resident";
 
 import { Check, Pencil, Search, X } from "@tamagui/lucide-icons";
 
-import { Button, ScrollView, SizableText, XStack } from "tamagui";
+import { Button, Paragraph, ScrollView, XStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -38,7 +38,7 @@ const columns: Column[] = [
     render: (value: Resident["socialMedia"]) => (
       <XStack gap="$2">
         {Object.entries(value).map(([platform, url]) =>
-          url ? <SizableText key={platform}>{platform}</SizableText> : null,
+          url ? <Paragraph key={platform}>{platform}</Paragraph> : null,
         )}
       </XStack>
     ),
@@ -106,7 +106,7 @@ export default function ResidentListScreen() {
   );
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <SizableText>Error loading residents</SizableText>;
+  if (isError) return <Paragraph>Error loading residents</Paragraph>;
 
   const renderCell = ({ item, column }: { item: Resident; column: Column }) => {
     const value = column.accessor.includes(".")
@@ -115,15 +115,15 @@ export default function ResidentListScreen() {
     return column.render ? (
       column.render(value, item)
     ) : (
-      <SizableText>{value?.toString() || "N/A"}</SizableText>
+      <Paragraph>{value?.toString() || "N/A"}</Paragraph>
     );
   };
 
   return (
     <PageContainer fullWidth padding="$4">
-      <SizableText fontSize="$6" fontWeight="bold">
+      <Paragraph fontSize="$6" fontWeight="bold">
         All Residents
-      </SizableText>
+      </Paragraph>
       <XStack alignItems="center" gap="$2">
         <Form methods={methods} flex={1}>
           <Input
@@ -142,7 +142,7 @@ export default function ResidentListScreen() {
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell key={column.accessor}>
-                  <SizableText fontWeight="bold">{column.header}</SizableText>
+                  <Paragraph fontWeight="bold">{column.header}</Paragraph>
                 </Table.HeaderCell>
               ))}
             </Table.Row>

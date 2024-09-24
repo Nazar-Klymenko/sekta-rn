@@ -13,7 +13,7 @@ import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCa
 import { Calendar, Info } from "@tamagui/lucide-icons";
 
 import {
-  SizableText,
+  Paragraph,
   XStack,
   YStack,
   useTheme,
@@ -46,7 +46,7 @@ export default function UpcomingEventsScreen() {
   if (status === "error") {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
-        <SizableText>Error: {(error as Error).message}</SizableText>
+        <Paragraph>Error: {(error as Error).message}</Paragraph>
         <RetryButton onPress={() => refetch()} size="lg" />
       </YStack>
     );
@@ -93,9 +93,9 @@ export default function UpcomingEventsScreen() {
         onEndReachedThreshold={0.1}
         ListHeaderComponent={<InfoBanner />}
         ListEmptyComponent={() => (
-          <SizableText padding="$4">
+          <Paragraph padding="$4">
             No upcoming events found. Pull to refresh or check back later.
-          </SizableText>
+          </Paragraph>
         )}
         ListFooterComponent={() =>
           isFetchingNextPage ? (
@@ -118,14 +118,14 @@ const EmptyUpcomingEvents = () => {
       gap="$4"
     >
       <Calendar size={100} color="$gray8Light" />
-      <SizableText fontSize="$6" fontWeight="bold" textAlign="center">
+      <Paragraph fontSize="$6" fontWeight="bold" textAlign="center">
         Sorry {user?.displayName || `${user?.displayName}`}, We don't have any
         upcoming events
-      </SizableText>
-      <SizableText fontSize="$4" textAlign="center" color="$gray10Light">
+      </Paragraph>
+      <Paragraph fontSize="$4" textAlign="center" color="$gray10Light">
         Come back later, and enable push notifications to not miss any new
         events
-      </SizableText>
+      </Paragraph>
     </YStack>
   );
 };
@@ -149,12 +149,12 @@ const InfoBanner = () => {
         >
           <Info size={20} />
           <YStack gap="$1">
-            <SizableText paddingLeft="$2" fontSize={16} fontWeight="bold">
+            <Paragraph paddingLeft="$2" fontSize={16} fontWeight="bold">
               Get a discount at the entrance!
-            </SizableText>
-            <SizableText paddingLeft="$2" fontSize="$3" color="$gray10Light">
+            </Paragraph>
+            <Paragraph paddingLeft="$2" fontSize="$3" color="$gray10Light">
               Click the attend button in the event and show it at the entrance!
-            </SizableText>
+            </Paragraph>
           </YStack>
         </XStack>
       </LinearGradient>

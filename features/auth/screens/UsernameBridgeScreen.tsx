@@ -13,7 +13,7 @@ import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
 
-import { H1, SizableText, XStack, YStack } from "tamagui";
+import { H1, Paragraph, XStack, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -92,9 +92,9 @@ export default function UsernameBridgeScreen() {
             </H1>
             <HelloWave />
           </XStack>
-          <SizableText textAlign="center" color="$gray10Light">
+          <Paragraph textAlign="center" color="$gray10Light">
             Choose a username. Don't worry, you can always change it later.
-          </SizableText>
+          </Paragraph>
           <Input
             id="username"
             name="username"
@@ -106,10 +106,10 @@ export default function UsernameBridgeScreen() {
           />
           <XStack gap="$2">
             <Info color="$gray10Light" size={16} />
-            <SizableText fontSize="$3" color="$gray10Light">
+            <Paragraph fontSize="$3" color="$gray10Light">
               Username must be 3-20 characters long and can contain letters,
               numbers, and underscores.
-            </SizableText>
+            </Paragraph>
           </XStack>
           <PrimaryButton
             text="Continue"
@@ -119,10 +119,10 @@ export default function UsernameBridgeScreen() {
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <SizableText textAlign="center">
+              <Paragraph textAlign="center">
                 Already have an account?
-                <SizableText color="$accentColor"> Log in</SizableText>
-              </SizableText>
+                <Paragraph color="$accentColor"> Log in</Paragraph>
+              </Paragraph>
             </Link>
           </YStack>
         </Form>

@@ -5,7 +5,7 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
-import { SizableText, YStack } from "tamagui";
+import { Paragraph, YStack } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
 
@@ -29,13 +29,13 @@ export default function EventDetailsScreen() {
   if (isError)
     return (
       <ReanimatedPageContainer>
-        <SizableText>Error: {error.message}</SizableText>
+        <Paragraph>Error: {error.message}</Paragraph>
       </ReanimatedPageContainer>
     );
   if (!event)
     return (
       <ReanimatedPageContainer>
-        <SizableText>Event not found</SizableText>
+        <Paragraph>Event not found</Paragraph>
       </ReanimatedPageContainer>
     );
 

@@ -8,7 +8,7 @@ import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
 
 import { Mail } from "@tamagui/lucide-icons";
 
-import { SizableText, XStack, YStack, styled } from "tamagui";
+import { Paragraph, XStack, YStack, styled } from "tamagui";
 
 export const VerifyEmail = () => {
   const { user } = useAuth();
@@ -28,13 +28,13 @@ export const VerifyEmail = () => {
       <YStack alignItems="flex-start" gap="$3">
         <XStack alignItems="center" gap="$3">
           <Mail size={24} color="$yellow10Light" />
-          <SizableText fontSize="$5" fontWeight="bold" color="$yellow10">
+          <Paragraph fontSize="$5" fontWeight="bold" color="$yellow10">
             Verify Your Email
-          </SizableText>
+          </Paragraph>
         </XStack>
-        <SizableText marginTop="$2" fontSize="$5">
+        <Paragraph marginTop="$2" fontSize="$5">
           Please verify your email address to access all features.
-        </SizableText>
+        </Paragraph>
       </YStack>
 
       <SecondaryButton

@@ -12,7 +12,7 @@ import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, SizableText, YStack, useTheme } from "tamagui";
+import { H1, Paragraph, YStack, useTheme } from "tamagui";
 
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -106,12 +106,10 @@ export default function ChangePasswordScreen() {
             disabled={changePasswordMutation.isPending}
           />
           {changePasswordMutation.isError && (
-            <SizableText>
-              Error: {changePasswordMutation.error.message}
-            </SizableText>
+            <Paragraph>Error: {changePasswordMutation.error.message}</Paragraph>
           )}
           {changePasswordMutation.isSuccess && (
-            <SizableText>Password changed successfully</SizableText>
+            <Paragraph>Password changed successfully</Paragraph>
           )}
         </Form>
       </PageContainer>

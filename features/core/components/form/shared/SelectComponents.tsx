@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import { Check, ChevronDown } from "@tamagui/lucide-icons";
 
-import { Adapt, Select, Sheet, SizableText, XStack, YStack } from "tamagui";
+import { Adapt, Paragraph, Select, Sheet, XStack, YStack } from "tamagui";
 
 export const ScrollUpButton = () => {
   return (

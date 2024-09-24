@@ -1,20 +1,20 @@
-import { SizableText, Stack, XStack, styled } from "tamagui";
+import { Paragraph, Stack, XStack, styled } from "tamagui";
 
 export const MenuItem = ({
   title,
   onPress,
   icon: Icon,
-  fontSize = "$4",
 }: {
   title: string;
   onPress: () => void;
   icon: React.ElementType;
-  fontSize?: "$4" | "$6";
 }) => (
   <ResponsiveStack onPress={onPress}>
     <XStack flex={1} alignItems="center" justifyContent="flex-start" gap="$3">
       <Icon size="$1" color="$gray10Light" />
-      <SizableText fontSize={fontSize}>{title}</SizableText>
+      <Paragraph size={"$6"} fontWeight={700}>
+        {title}
+      </Paragraph>
     </XStack>
   </ResponsiveStack>
 );

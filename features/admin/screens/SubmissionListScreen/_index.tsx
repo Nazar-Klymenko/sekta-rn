@@ -15,7 +15,7 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Search, Trash2 } from "@tamagui/lucide-icons";
 
-import { Button, ScrollView, SizableText, XStack, YStack } from "tamagui";
+import { Button, Paragraph, ScrollView, XStack, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -43,9 +43,9 @@ const columns: Column[] = [
     header: "Submitted At",
     accessor: "submittedAt",
     render: (value: any) => (
-      <SizableText>
+      <Paragraph>
         {value && formatFirestoreTimestamp(value, "EEEE, MMMM do yyyy, HH:mm")}
-      </SizableText>
+      </Paragraph>
     ),
   },
 ];
@@ -89,7 +89,7 @@ export default function SubmissionListScreen() {
   );
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <SizableText>Error loading submissions</SizableText>;
+  if (isError) return <Paragraph>Error loading submissions</Paragraph>;
 
   const handleDelete = (id: string) => {
     Alert.alert(
@@ -119,9 +119,9 @@ export default function SubmissionListScreen() {
     if (column.accessor === "additionalInfo") {
       return (
         <XStack flex={1} alignItems="center" height={54}>
-          <SizableText numberOfLines={1} ellipsizeMode="tail">
+          <Paragraph numberOfLines={1} ellipsizeMode="tail">
             {value?.toString() || "N/A"}
-          </SizableText>
+          </Paragraph>
         </XStack>
       );
     }
@@ -129,16 +129,16 @@ export default function SubmissionListScreen() {
     return column.render ? (
       column.render(value)
     ) : (
-      <SizableText numberOfLines={1} ellipsizeMode="tail">
+      <Paragraph numberOfLines={1} ellipsizeMode="tail">
         {value?.toString() || "N/A"}
-      </SizableText>
+      </Paragraph>
     );
   };
   return (
     <PageContainer fullWidth padding="$4">
-      <SizableText fontSize="$6" fontWeight="bold">
+      <Paragraph fontSize="$6" fontWeight="bold">
         Play Submissions
-      </SizableText>
+      </Paragraph>
       <XStack alignItems="center" gap="$2">
         <Form methods={methods} flex={1}>
           <Input
@@ -157,7 +157,7 @@ export default function SubmissionListScreen() {
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell padded key={column.accessor}>
-                  <SizableText fontWeight="bold">{column.header}</SizableText>
+                  <Paragraph fontWeight="bold">{column.header}</Paragraph>
                 </Table.HeaderCell>
               ))}
             </Table.Row>

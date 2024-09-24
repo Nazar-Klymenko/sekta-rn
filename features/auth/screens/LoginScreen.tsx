@@ -12,7 +12,7 @@ import { emailSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, SizableText, YStack, useTheme } from "tamagui";
+import { H1, Paragraph, YStack, useTheme } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -91,13 +91,9 @@ export default function LoginScreen() {
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/forgot-password?returnTo=${returnTo}`}>
-              <SizableText
-                color="$accentColor"
-                textAlign="center"
-                fontSize="$3"
-              >
+              <Paragraph color="$accentColor" textAlign="center" fontSize="$3">
                 Forgot password?
-              </SizableText>
+              </Paragraph>
             </Link>
           </YStack>
           <PrimaryButton
@@ -113,13 +109,13 @@ export default function LoginScreen() {
                 params: { returnTo },
               }}
             >
-              <SizableText textAlign="center" fontSize="$3">
+              <Paragraph textAlign="center" fontSize="$3">
                 Don't have an account?
-                <SizableText color="$accentColor" fontSize="$3">
+                <Paragraph color="$accentColor" fontSize="$3">
                   {" "}
                   Sign Up
-                </SizableText>
-              </SizableText>
+                </Paragraph>
+              </Paragraph>
             </Link>
           </YStack>
         </Form>

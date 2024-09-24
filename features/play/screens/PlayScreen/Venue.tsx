@@ -2,7 +2,7 @@ import React from "react";
 
 import { Instagram, MapPin, Square } from "@tamagui/lucide-icons";
 
-import { Card, Separator, SizableText, XStack, YStack } from "tamagui";
+import { Card, Paragraph, Separator, XStack, YStack } from "tamagui";
 
 import { VenueInfoItem } from "../../types";
 
@@ -23,9 +23,9 @@ export const VenueInfoSection = () => (
     pressStyle={{ scale: 0.99 }}
   >
     <Card.Header padded>
-      <SizableText fontSize="$6" fontWeight="bold" color="$color12">
+      <Paragraph fontSize="$6" fontWeight="bold" color="$color12">
         Venue Details
-      </SizableText>
+      </Paragraph>
     </Card.Header>
     <Separator />
     <Card.Footer padded display="flex">
@@ -41,12 +41,12 @@ export const VenueInfoSection = () => (
           >
             <item.icon size={24} color="$color11Light" />
             <YStack alignItems="center">
-              <SizableText fontSize="$4" fontWeight="bold" color="$color11">
+              <Paragraph fontSize="$4" fontWeight="bold" color="$color11">
                 {item.title}
-              </SizableText>
-              <SizableText fontSize="$3" color="$color10" textAlign="center">
+              </Paragraph>
+              <Paragraph fontSize="$3" color="$color10" textAlign="center">
                 {item.content}
-              </SizableText>
+              </Paragraph>
             </YStack>
           </YStack>
         ))}

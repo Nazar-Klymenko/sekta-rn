@@ -5,7 +5,7 @@ import { ChevronDown } from "@tamagui/lucide-icons";
 import {
   AnimatePresence,
   Button,
-  SizableText,
+  Paragraph,
   XStack,
   YStack,
   styled,
@@ -65,7 +65,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
           justifyContent="flex-start"
           gap="$3"
         >
-          <SizableText fontSize="$6">{title}</SizableText>
+          <Paragraph fontSize="$6">{title}</Paragraph>
         </XStack>
         <Animated.View style={chevronStyle}>
           <ChevronDown size="$1" color="$gray10Light" />

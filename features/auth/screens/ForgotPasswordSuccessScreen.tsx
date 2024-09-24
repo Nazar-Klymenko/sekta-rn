@@ -1,7 +1,7 @@
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
 
-import { H1, SizableText, YStack } from "tamagui";
+import { H1, Paragraph, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams } from "expo-router";
 
@@ -17,9 +17,9 @@ export default function ForgotPasswordSuccessScreen() {
         </H1>
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login?returnTo=${returnTo}`}>
-            <SizableText color="$accentColor" textAlign="center">
+            <Paragraph color="$accentColor" textAlign="center">
               Go back to login
-            </SizableText>
+            </Paragraph>
           </Link>
         </YStack>
       </PageContainer>

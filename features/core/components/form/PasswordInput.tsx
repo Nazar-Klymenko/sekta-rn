@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "@tamagui/lucide-icons";
 import {
   Button,
   Label,
-  SizableText,
+  Paragraph,
   Input as TamaguiInput,
   XStack,
   YStack,
@@ -78,13 +78,13 @@ export function PasswordInput(
           backgroundColor="transparent"
         />
       </XStack>
-      <SizableText
+      <Paragraph
         color={error ? "$red10Light" : "$colorTransparent"}
         marginTop="$2"
         fontSize="$2"
       >
         {error ? error?.message : "*"}
-      </SizableText>
+      </Paragraph>
     </YStack>
   );
 }

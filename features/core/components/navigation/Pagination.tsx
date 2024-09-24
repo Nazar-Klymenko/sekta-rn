@@ -1,7 +1,7 @@
 // src/components/navigation/Pagination.tsx
 import React from "react";
 
-import { Button, SizableText, XStack } from "tamagui";
+import { Button, Paragraph, XStack } from "tamagui";
 
 export interface PaginationProps {
   currentPage: number;
@@ -24,16 +24,16 @@ export const Pagination: React.FC<PaginationProps> = ({
         onPress={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        <SizableText>Previous</SizableText>
+        <Paragraph>Previous</Paragraph>
       </Button>
       <Button>
-        <SizableText>{currentPage.toString()}</SizableText>
+        <Paragraph>{currentPage.toString()}</Paragraph>
       </Button>
       <Button
         onPress={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        <SizableText>Next</SizableText>
+        <Paragraph>Next</Paragraph>
       </Button>
     </XStack>
   );

@@ -14,7 +14,7 @@ import { usernameSchema } from "@/utils/validationSchemas";
 import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Button, H1, SizableText, XStack, YStack } from "tamagui";
+import { Button, H1, Paragraph, XStack, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -101,7 +101,7 @@ export default function ChangeUsernameScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <SizableText>Error loading user data</SizableText>;
+  if (isError) return <Paragraph>Error loading user data</Paragraph>;
 
   return (
     <AuthGuard>
@@ -119,10 +119,10 @@ export default function ChangeUsernameScreen() {
           />
           <XStack gap="$2">
             <Info color="$gray10Light" size={16} />
-            <SizableText fontSize="$3" color="$gray10Light">
+            <Paragraph fontSize="$3" color="$gray10Light">
               Your new username must be 3-20 characters long and can contain
               letters, numbers, and underscores.
-            </SizableText>
+            </Paragraph>
           </XStack>
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}

@@ -18,7 +18,7 @@ import {
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, SizableText, YStack, useTheme } from "tamagui";
+import { H1, Paragraph, YStack, useTheme } from "tamagui";
 
 import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -110,43 +110,38 @@ export default function SignupScreen() {
           />
           <YStack>
             <Checkbox name="agreeEmail" id="agree-email">
-              <SizableText>
+              <Paragraph>
                 I want to subscribe to newsletter to receive email notifications
                 about new events
-              </SizableText>
+              </Paragraph>
             </Checkbox>
             <Checkbox name="agreeTos" id="signup-agree-tos">
-              <SizableText>
+              <Paragraph>
                 I agree to Sekta Selekta's{" "}
                 <Link href="/tos" push>
-                  <SizableText color="$accentColor">
-                    Terms of service{" "}
-                  </SizableText>
+                  <Paragraph color="$accentColor">Terms of service </Paragraph>
                 </Link>
                 and
                 <Link href="/privacy-policy" push>
-                  <SizableText color="$accentColor">
-                    {" "}
-                    Privacy Policy*
-                  </SizableText>
+                  <Paragraph color="$accentColor"> Privacy Policy*</Paragraph>
                 </Link>
-              </SizableText>
+              </Paragraph>
             </Checkbox>
           </YStack>
 
           {signUpMutation.isError && (
-            <SizableText color="red" textAlign="center" marginTop="$2">
+            <Paragraph color="red" textAlign="center" marginTop="$2">
               {signUpMutation.error instanceof Error
                 ? signUpMutation.error.message
                 : "An error occurred during signup"}
-            </SizableText>
+            </Paragraph>
           )}
           <YStack alignItems="center" padding="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <SizableText textAlign="center">
+              <Paragraph textAlign="center">
                 Already have an account?
-                <SizableText color="$accentColor"> Log in</SizableText>
-              </SizableText>
+                <Paragraph color="$accentColor"> Log in</Paragraph>
+              </Paragraph>
             </Link>
           </YStack>
         </Form>
