@@ -15,7 +15,7 @@ export const Tag = ({ tag, onPress, selected, icon }: TagProps) => {
     <XStack
       borderRadius="$6"
       borderWidth={2}
-      borderColor={selected ? "$accentBackground" : theme.orange9Light.get()}
+      borderColor={selected ? "$accentBackground" : "$accentBackground"}
       paddingVertical="$2"
       paddingHorizontal="$4"
       backgroundColor={selected ? "$accentBackground" : "transparent"}

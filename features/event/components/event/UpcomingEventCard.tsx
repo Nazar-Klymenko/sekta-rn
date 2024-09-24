@@ -12,6 +12,9 @@ import {
   Image,
   Paragraph,
   Stack,
+  TamaguiProvider,
+  Theme,
+  ThemeableStack,
   XStack,
   YStack,
   styled,
@@ -77,45 +80,80 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           </Paragraph>
         </PriceBadge>
       </ImageContainer>
-      <ContentContainer>
-        <Paragraph
-          fontSize={24}
-          lineHeight={24}
-          fontWeight="bold"
-          numberOfLines={2}
-          color="$color"
-        >
-          {event.title}
-        </Paragraph>
-        <XStack alignItems="center" gap="$2">
-          <Clock size={16} color={theme.gray11Light.get()} />
-          <Paragraph fontSize={15} color="$gray11Light">
-            {formattedDate} • {formattedTime}
+      <TamaguiProvider defaultTheme={"dark"}>
+        <ContentContainer theme="surface1">
+          <ContentContainer theme="surface2">
+            <ContentContainer theme="surface3">
+              <ContentContainer theme="light_accent_surface1">
+                <Paragraph
+                  fontSize={24}
+                  lineHeight={24}
+                  fontWeight="bold"
+                  numberOfLines={2}
+                  color="$color"
+                >
+                  Surface 4
+                </Paragraph>
+              </ContentContainer>
+              <Paragraph
+                fontSize={24}
+                lineHeight={24}
+                fontWeight="bold"
+                numberOfLines={2}
+                color="$color"
+              >
+                Surface 3
+              </Paragraph>
+            </ContentContainer>
+            <Paragraph
+              fontSize={24}
+              lineHeight={24}
+              fontWeight="bold"
+              numberOfLines={2}
+              color="$color"
+            >
+              Surface 2
+            </Paragraph>
+          </ContentContainer>
+          <Paragraph
+            fontSize={24}
+            lineHeight={24}
+            fontWeight="bold"
+            numberOfLines={2}
+            color="$color"
+          >
+            Surface 1
           </Paragraph>
-        </XStack>
-        <XStack alignItems="center" gap="$2">
-          <MapPin size={16} color={theme.gray11Light.get()} />
-          <Paragraph fontSize={15} color="$gray11Light">
-            {event.location || "Venue TBA"}
+          <XStack alignItems="center" gap="$2">
+            <Clock size={16} color={theme.gray11Light.get()} />
+            <Paragraph fontSize={15} color="$gray11Light">
+              {formattedDate} • {formattedTime}
+            </Paragraph>
+          </XStack>
+          <XStack alignItems="center" gap="$2">
+            <MapPin size={16} color={theme.gray11Light.get()} />
+            <Paragraph fontSize={15} color="$gray11Light">
+              {event.location || "Venue TBA"}
+            </Paragraph>
+          </XStack>
+          <Paragraph
+            fontSize={14}
+            color="$gray11Light"
+            numberOfLines={2}
+            marginTop="$2"
+          >
+            {event.caption}
           </Paragraph>
-        </XStack>
-        <Paragraph
-          fontSize={14}
-          color="$gray11Light"
-          numberOfLines={2}
-          marginTop="$2"
-        >
-          {event.caption}
-        </Paragraph>
-        <XStack flexWrap="wrap" gap="$2" marginTop="$3">
-          {event.genres.slice(0, 3).map((genre, index) => (
-            <Tag key={genre + index} tag={genre} />
-          ))}
-          {event.genres.length > 3 && (
-            <Tag tag={`+${event.genres.length - 3}`} />
-          )}
-        </XStack>
-      </ContentContainer>
+          <XStack flexWrap="wrap" gap="$2" marginTop="$3">
+            {event.genres.slice(0, 3).map((genre, index) => (
+              <Tag key={genre + index} tag={genre} />
+            ))}
+            {event.genres.length > 3 && (
+              <Tag tag={`+${event.genres.length - 3}`} />
+            )}
+          </XStack>
+        </ContentContainer>
+      </TamaguiProvider>
     </CardContainer>
   );
 };
@@ -124,7 +162,6 @@ const CardContainer = styled(YStack, {
   borderRadius: "$6",
   overflow: "hidden",
   borderColor: "$gray2Dark",
-  backgroundColor: "$background",
   elevation: "$1",
   marginVertical: 10,
   pressStyle: {
@@ -164,6 +201,8 @@ const PriceBadge = styled(YStack, {
 });
 
 const ContentContainer = styled(YStack, {
+  backgroundColor: "$background",
+
   paddingVertical: 24,
   paddingHorizontal: 18,
   gap: 8,

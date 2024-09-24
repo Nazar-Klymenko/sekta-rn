@@ -7,6 +7,7 @@ import {
 } from "tamagui";
 
 export const BaseInput = styled(TamaguiInput, {
+  theme: "surface1",
   flex: 1,
   borderRadius: "$6",
   outlineColor: "$accentBackground",

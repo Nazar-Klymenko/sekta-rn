@@ -16,6 +16,7 @@ export const SecondaryButton = ({
 }: SecondaryButtonTypes): JSX.Element => {
   return (
     <Button
+      theme={"surface1"}
       onPress={onPress}
       htmlFor={htmlFor}
       borderRadius="$6"
