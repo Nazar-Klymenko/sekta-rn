@@ -2,9 +2,9 @@ import React from "react";
 
 import { Pressable } from "react-native";
 
+import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
+import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 import { Event } from "@/features/event/models/Event";
-import PreviousEventCard from "@/shared/components/event/PreviousEventCard";
-import { SkeletonPreviousEventCard } from "@/shared/components/event/SkeletonPreviousEventCard";
 
 import { ChevronRight } from "@tamagui/lucide-icons";
 

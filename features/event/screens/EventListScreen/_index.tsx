@@ -1,10 +1,10 @@
 import React from "react";
 
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+
 import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
-
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
 import { useUpcomingEventsPreview } from "../../hooks/useUpcomingEvents";

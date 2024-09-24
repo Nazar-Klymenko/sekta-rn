@@ -1,5 +1,11 @@
 import React from "react";
 
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import {
+  Column,
+  GenericTable,
+} from "@/features/core/components/tables/GenericTable";
 import { useFetchPaginatedEvents } from "@/features/event/hooks/useFetchPaginatedEvents";
 import { Event } from "@/features/event/models/Event";
 
@@ -8,10 +14,6 @@ import { Plus } from "@tamagui/lucide-icons";
 import { Button, Text, XStack, YStack } from "tamagui";
 
 import { Link } from "expo-router";
-
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { Column, GenericTable } from "@/shared/components/tables/GenericTable";
 
 const columns: Column<Event>[] = [
   { header: "Title", accessor: "title" },

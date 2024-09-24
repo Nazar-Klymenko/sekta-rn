@@ -2,6 +2,9 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+
 import { AnimatePresence } from "@tamagui/animate-presence";
 import {
   AudioLines,
@@ -16,9 +19,6 @@ import {
 import { Button, Image, Text, Theme, XStack, YStack, styled } from "tamagui";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
-
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 import { useResident } from "./hooks/useResidents";
 

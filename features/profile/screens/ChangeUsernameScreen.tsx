@@ -2,6 +2,13 @@ import { useEffect } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
+import { MenuButton } from "@/features/core/components/buttons/MenuButton";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useUserData } from "@/features/users/hooks/useUserData";
 import { usernameSchema } from "@/utils/validationSchemas";
 
@@ -15,14 +22,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { MenuButton } from "@/shared/components/buttons/MenuButton";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 import { useChangeUsername } from "../hooks/useChangeUsername";
 

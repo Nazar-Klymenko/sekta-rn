@@ -1,7 +1,7 @@
 import React from "react";
 
+import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
-import { Tag } from "@/shared/components/Tag";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Image, Text, XStack, YStack, styled, useTheme } from "tamagui";

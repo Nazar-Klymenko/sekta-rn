@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef } from "react";
 
-import { Platform, Pressable, StyleSheet, TextStyle, View } from "react-native";
+import { Platform, Pressable, View } from "react-native";
 
-import { ThemedText } from "@/shared/components/ThemedText";
+import { SizableText, styled, useTheme } from "tamagui";
 
 import Animated, {
   useAnimatedStyle,
@@ -12,7 +12,22 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+const WaveContainer = styled(View, {
+  justifyContent: "center",
+  alignItems: "center",
+  width: 48,
+  height: 48,
+});
+
+const WaveText = styled(SizableText, {
+  fontSize: 40,
+  lineHeight: 48,
+});
+
 export function HelloWave() {
+  const theme = useTheme();
   const rotationAnimation = useSharedValue(0);
   const viewRef = useRef<View>(null);
 
@@ -55,24 +70,10 @@ export function HelloWave() {
   }, [animate]);
 
   return (
-    <Pressable onPress={handleInteraction}>
-      <Animated.View ref={viewRef} style={[styles.container, animatedStyle]}>
-        <ThemedText style={styles.text}>👋</ThemedText>
-      </Animated.View>
-    </Pressable>
+    <AnimatedPressable onPress={handleInteraction} style={animatedStyle}>
+      <WaveContainer ref={viewRef}>
+        <WaveText color={theme.color}>👋</WaveText>
+      </WaveContainer>
+    </AnimatedPressable>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 48,
-    height: 48,
-  },
-  text: {
-    fontSize: 40,
-    lineHeight: 48,
-    ...(Platform.OS === "android" ? { includeFontPadding: false } : {}),
-  } as TextStyle,
-});

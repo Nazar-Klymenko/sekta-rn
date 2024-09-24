@@ -5,6 +5,10 @@ import React from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { RetryButton } from "@/features/core/components/buttons/IconButtons";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { useUpcomingEvents } from "@/features/event/hooks/useUpcomingEvents";
 
 import { Calendar, Info } from "@tamagui/lucide-icons";
@@ -19,11 +23,6 @@ import {
 } from "tamagui";
 
 import { Stack, useRouter } from "expo-router";
-
-import { RetryButton } from "@/shared/components/buttons/IconButtons";
-import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 export default function UpcomingEventsScreen() {
   const theme = useTheme();

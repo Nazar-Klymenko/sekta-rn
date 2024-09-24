@@ -5,15 +5,14 @@ import React from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { RetryButton } from "@/features/core/components/buttons/IconButtons";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 
 import { Calendar, Info } from "@tamagui/lucide-icons";
 
 import { Text, XStack, YStack, useTheme, useWindowDimensions } from "tamagui";
-
-import { RetryButton } from "@/shared/components/buttons/IconButtons";
-import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 import { useUpcomingEvents } from "../hooks/useUpcomingEvents";
 

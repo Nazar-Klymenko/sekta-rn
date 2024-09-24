@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Switch } from "@/features/core/components/buttons/CustomSwitch";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 
 import { Text, XStack, YStack } from "tamagui";
-
-import { Switch } from "@/shared/components/buttons/CustomSwitch";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 export default function EmailNotificationScreen() {
   const [isEnabled, setIsEnabled] = useState(true);

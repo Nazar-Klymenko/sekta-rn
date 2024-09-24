@@ -1,15 +1,15 @@
 import React from "react";
 
 import { useSignUp } from "@/features/auth/hooks/useSignUp";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Checkbox } from "@/shared/components/form/Checkbox";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PasswordRequirements } from "@/shared/components/form/PasswordRequirements";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
-import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Checkbox } from "@/features/core/components/form/Checkbox";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
+import { PasswordInput } from "@/features/core/components/form/PasswordInput";
+import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
   passwordSchema,

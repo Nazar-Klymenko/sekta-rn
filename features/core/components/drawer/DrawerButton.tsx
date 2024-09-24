@@ -3,7 +3,7 @@ import React from "react";
 
 import { Pressable } from "react-native";
 
-import { useDrawer } from "@/shared/hooks/useDrawer";
+import { useDrawer } from "@/features/core/hooks/useDrawer";
 
 import { Menu } from "@tamagui/lucide-icons";
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { Dialog } from "@/shared/components/Dialog";
-import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
+import { Dialog } from "@/features/core/components/Dialog";
+import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { PasswordInput } from "@/features/core/components/form/PasswordInput";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 
 import { useToastController } from "@tamagui/toast";
 

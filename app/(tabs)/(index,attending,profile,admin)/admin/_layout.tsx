@@ -2,7 +2,7 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { DrawerButton } from "@/shared/components/drawer/DrawerButton";
+import { DrawerButton } from "@/features/core/components/drawer/DrawerButton";
 
 import { useTheme } from "tamagui";
 

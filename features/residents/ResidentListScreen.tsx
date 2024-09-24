@@ -2,11 +2,11 @@ import React from "react";
 
 import { FlatList, View } from "react-native";
 
-import { Text, useMedia } from "tamagui";
+import { ResidentCard } from "@/features/core/components/ResidentCard";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { ResidentCard } from "@/shared/components/ResidentCard";
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { Text, useMedia } from "tamagui";
 
 import { useResidents } from "./hooks/useResidents";
 import { Resident } from "./models/Resident";

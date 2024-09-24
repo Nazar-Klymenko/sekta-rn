@@ -1,6 +1,6 @@
 import React from "react";
 
-import Skeleton from "@/shared/components/Skeleton";
+import Skeleton from "@/features/core/components/Skeleton";
 
 import { Stack, XStack, YStack } from "tamagui";
 

@@ -1,6 +1,12 @@
 import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { PasswordInput } from "@/features/core/components/form/PasswordInput";
+import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
 import { passwordSchema } from "@/utils/validationSchemas";
 
@@ -13,13 +19,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PasswordRequirements } from "@/shared/components/form/PasswordRequirements";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 const changePasswordSchema = yup.object().shape({
   currentPassword: yup.string().required("Current password is required"),

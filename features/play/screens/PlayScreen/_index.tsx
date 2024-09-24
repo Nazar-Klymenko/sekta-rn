@@ -2,7 +2,7 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { Text, YStack, useTheme } from "tamagui";
 

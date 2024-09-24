@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RetryButton } from "@/shared/components/buttons/IconButtons";
+import { RetryButton } from "@/features/core/components/buttons/IconButtons";
 
 import { Text, YStack } from "tamagui";
 

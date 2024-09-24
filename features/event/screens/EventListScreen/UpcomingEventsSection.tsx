@@ -2,9 +2,9 @@ import React from "react";
 
 import { Pressable, ScrollView, useWindowDimensions } from "react-native";
 
+import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { Event } from "@/features/event/models/Event";
-import { SkeletonUpcomingEventCard } from "@/shared/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/shared/components/event/UpcomingEventCard";
 
 import { ChevronRight } from "@tamagui/lucide-icons";
 

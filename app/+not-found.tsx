@@ -1,5 +1,3 @@
-import { ThemedText } from "@/shared/components/ThemedText";
-
 import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
 
 import { Link, Stack } from "expo-router";

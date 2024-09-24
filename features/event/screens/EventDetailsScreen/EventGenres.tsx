@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Tag } from "@/shared/components/Tag";
+import { Tag } from "@/features/core/components/Tag";
 
 import { H2, XStack, YStack } from "tamagui";
 

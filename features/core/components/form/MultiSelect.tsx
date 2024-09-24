@@ -1,7 +1,7 @@
 // src/components/form/MultiSelect.tsx
 import React, { useMemo, useState } from "react";
 
-import { Tag } from "@/shared/components/Tag";
+import { Tag } from "@/features/core/components/Tag";
 
 import { Check, ChevronDown, X } from "@tamagui/lucide-icons";
 

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
+import { PasswordInput } from "@/features/core/components/form/PasswordInput";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useChangeEmail } from "@/features/profile/hooks/useChangeEmail";
 import { emailSchema } from "@/utils/validationSchemas";
 
@@ -13,13 +19,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthGuard } from "@/shared/components/navigation/AuthGuard";
 
 const updateEmailSchema = yup.object().shape({
   newEmail: emailSchema,

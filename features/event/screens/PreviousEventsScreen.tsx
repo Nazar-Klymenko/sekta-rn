@@ -2,10 +2,10 @@ import React from "react";
 
 import { ActivityIndicator, FlatList } from "react-native";
 
-import { RetryButton } from "@/shared/components/buttons/IconButtons";
-import PreviousEventCard from "@/shared/components/event/PreviousEventCard";
-import { SkeletonPreviousEventCard } from "@/shared/components/event/SkeletonPreviousEventCard";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { RetryButton } from "@/features/core/components/buttons/IconButtons";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
+import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 
 import { H2, Text, YStack, useTheme } from "tamagui";
 

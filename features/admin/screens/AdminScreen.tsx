@@ -1,7 +1,7 @@
 import React from "react";
 
-import { MenuItem } from "@/shared/components/buttons/MenuItem";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { MenuItem } from "@/features/core/components/buttons/MenuItem";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { BoomBox, Play, Ticket, Users } from "@tamagui/lucide-icons";
 

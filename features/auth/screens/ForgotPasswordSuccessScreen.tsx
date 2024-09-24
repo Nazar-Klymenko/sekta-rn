@@ -1,5 +1,5 @@
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
 
 import { Text, YStack } from "tamagui";
 

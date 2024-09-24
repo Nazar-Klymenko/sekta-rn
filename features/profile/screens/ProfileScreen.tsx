@@ -2,6 +2,10 @@ import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
+import { MenuItem } from "@/features/core/components/buttons/MenuItem";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
 import {
@@ -18,11 +22,6 @@ import {
 import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
-
-import { MenuItem } from "@/shared/components/buttons/MenuItem";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 import { ProfileHeader, SectionTitle, VerifyEmail } from "../components";
 

@@ -1,8 +1,8 @@
 import React from "react";
 
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import {

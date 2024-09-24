@@ -1,14 +1,13 @@
-import { useAnimatedScroll } from "@/shared/hooks/useAnimatedScroll";
-
 import React from "react";
+
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
+import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import { Text, YStack } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
-
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { ReanimatedPageContainer } from "@/shared/components/layout/ReanimatedPageContainer";
 
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import {

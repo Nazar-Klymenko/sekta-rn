@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PageContainer } from "@/shared/components/layout/PageContainer";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { Text, XStack, YStack } from "tamagui";
 

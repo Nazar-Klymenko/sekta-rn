@@ -1,5 +1,11 @@
 import React, { useMemo, useState } from "react";
 
+import { Table } from "@/features/core/components/Table";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { Pagination } from "@/features/core/components/navigation/Pagination";
 import { useResidents } from "@/features/residents/hooks/useResidents";
 import { Resident } from "@/features/residents/models/Resident";
 
@@ -13,13 +19,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Table } from "@/shared/components/Table";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { Pagination } from "@/shared/components/navigation/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 

@@ -1,13 +1,13 @@
 import React from "react";
 
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
-import { PrimaryButton } from "@/shared/components/buttons/PrimaryButton";
-import { Form } from "@/shared/components/form/Form";
-import { Input } from "@/shared/components/form/Input";
-import { PasswordInput } from "@/shared/components/form/PasswordInput";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
-import { AuthPageGuard } from "@/shared/components/navigation/AuthPageGuard";
-import { useFirebaseErrorHandler } from "@/shared/hooks/useFirebaseErrorHelper";
+import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
+import { PasswordInput } from "@/features/core/components/form/PasswordInput";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";

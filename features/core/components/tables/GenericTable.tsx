@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Table } from "@/shared/components/Table";
+import { Table } from "@/features/core/components/Table";
 
 import { Minus } from "@tamagui/lucide-icons";
 

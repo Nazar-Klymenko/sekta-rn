@@ -1,4 +1,4 @@
-// @/shared/components/navigation/CustomTabBar.tsx
+// @/features/core/components/navigation/CustomTabBar.tsx
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import React from "react";

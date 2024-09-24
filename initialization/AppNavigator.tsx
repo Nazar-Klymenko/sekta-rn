@@ -1,4 +1,3 @@
-import { usePushNotifications } from "@/shared/hooks/usePushNotifications";
 import { Drawer } from "expo-router/drawer";
 
 import React from "react";
@@ -6,6 +5,11 @@ import React from "react";
 import { Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { CustomHeader } from "@/features/core/components/CustomHeader/CustomHeader";
+import { CurrentToast } from "@/features/core/components/Toast";
+import { DrawerLayout } from "@/features/core/components/drawer/DrawerLayout";
+import { Footer } from "@/features/core/components/navigation/Footer";
+import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
 import { ToastViewport } from "@tamagui/toast";
 
@@ -14,11 +18,6 @@ import { YStack, useTheme } from "tamagui";
 import { Slot, Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { CustomHeader } from "@/shared/components/CustomHeader/CustomHeader";
-import { CurrentToast } from "@/shared/components/Toast";
-import { DrawerLayout } from "@/shared/components/drawer/DrawerLayout";
-import { Footer } from "@/shared/components/navigation/Footer";
 
 export function AppNavigator() {
   const { user } = useAuth();

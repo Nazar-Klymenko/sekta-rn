@@ -1,13 +1,12 @@
 // src/components/DrawerLayout.tsx
-import { useCustomNavigation } from "@/shared/hooks/useCustomNavigation";
-import { useDrawer } from "@/shared/hooks/useDrawer";
-
 import React from "react";
 
 import { FlatList, Platform, TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
+import { useCustomNavigation } from "@/features/core/hooks/useCustomNavigation";
+import { useDrawer } from "@/features/core/hooks/useDrawer";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
 import {

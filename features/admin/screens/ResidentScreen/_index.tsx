@@ -1,5 +1,7 @@
 import React from "react";
 
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useResidents } from "@/features/residents/hooks/useResidents";
 
 import { useToastController } from "@tamagui/toast";
@@ -12,9 +14,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
-import { PageContainer } from "@/shared/components/layout/PageContainer";
 
 const residentSchema = yup.object().shape({
   displayName: yup.string().required("Display name is required"),

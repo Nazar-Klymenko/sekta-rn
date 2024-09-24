@@ -13,7 +13,7 @@ import {
 
 import React, { useEffect, useState } from "react";
 
-import { FullPageLoading } from "@/shared/components/layout/FullPageLoading";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import tamaguiConfig from "@/tamagui.config";
 
 import { TamaguiProvider } from "tamagui";

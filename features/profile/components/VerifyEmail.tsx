@@ -3,13 +3,12 @@ import { LinearGradient } from "tamagui/linear-gradient";
 import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
 import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
 
 import { Mail } from "@tamagui/lucide-icons";
 
 import { Text, XStack, YStack, styled } from "tamagui";
-
-import { SecondaryButton } from "@/shared/components/buttons/SecondaryButton";
 
 export const VerifyEmail = () => {
   const { user } = useAuth();
