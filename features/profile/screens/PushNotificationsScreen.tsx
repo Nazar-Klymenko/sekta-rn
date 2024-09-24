@@ -9,7 +9,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
-import { Text, XStack, YStack } from "tamagui";
+import { SizableText, XStack, YStack } from "tamagui";
 
 const functions = getFunctions();
 const sendPushNotification = httpsCallable(functions, "sendPushNotification");
@@ -52,12 +52,12 @@ export default function PushNotificationScreen() {
       <PageContainer>
         <XStack display="flex" justifyContent="space-between">
           <YStack>
-            <Text fontSize="$5" fontWeight="bold">
+            <SizableText fontSize="$5" fontWeight="bold">
               Enable push notifications
-            </Text>
-            <Text fontSize="$3" color="$gray10Light">
+            </SizableText>
+            <SizableText fontSize="$3" color="$gray10Light">
               Enable notifications for events that you plan to attend
-            </Text>
+            </SizableText>
           </YStack>
           <Switch checked={isEnabled} onPress={toggleSwitch} />
         </XStack>

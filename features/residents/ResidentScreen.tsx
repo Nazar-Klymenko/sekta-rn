@@ -16,7 +16,15 @@ import {
   Youtube,
 } from "@tamagui/lucide-icons";
 
-import { Button, Image, Text, Theme, XStack, YStack, styled } from "tamagui";
+import {
+  Button,
+  Image,
+  SizableText,
+  Theme,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 
@@ -38,13 +46,13 @@ const HeroContent = styled(YStack, {
   zIndex: 3, // Highest z-index to appear on top
 });
 
-const ResidentName = styled(Text, {
+const ResidentName = styled(SizableText, {
   fontSize: 72,
   fontWeight: "900",
   color: "white",
 });
 
-const GenreTag = styled(Text, {
+const GenreTag = styled(SizableText, {
   fontSize: 18,
   fontWeight: "bold",
   color: "white",
@@ -79,10 +87,10 @@ export default function ResidentScreen() {
   if (error || !resident) {
     return (
       <PageContainer>
-        <Text>
+        <SizableText>
           Error loading resident details:{" "}
           {error?.message || "Resident not found"}
-        </Text>
+        </SizableText>
       </PageContainer>
     );
   }
@@ -146,61 +154,61 @@ export default function ResidentScreen() {
 
         <YStack gap={30}>
           <InfoCard>
-            <Text
+            <SizableText
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Locations
-            </Text>
+            </SizableText>
             <XStack flexWrap="wrap" gap={10}>
               {resident.locations.map((location, index) => (
-                <Text key={index} fontSize={18} color="white">
+                <SizableText key={index} fontSize={18} color="white">
                   <MapPin size={18} /> {location}
-                </Text>
+                </SizableText>
               ))}
             </XStack>
           </InfoCard>
 
           <InfoCard>
-            <Text
+            <SizableText
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Contact
-            </Text>
+            </SizableText>
             <YStack gap={10}>
               {resident.email && (
                 <XStack alignItems="center" gap={10}>
                   <Mail size={18} color="white" />
-                  <Text fontSize={18} color="white">
+                  <SizableText fontSize={18} color="white">
                     {resident.email}
-                  </Text>
+                  </SizableText>
                 </XStack>
               )}
               {resident.phone && (
                 <XStack alignItems="center" gap={10}>
                   <Phone size={18} color="white" />
-                  <Text fontSize={18} color="white">
+                  <SizableText fontSize={18} color="white">
                     {resident.phone}
-                  </Text>
+                  </SizableText>
                 </XStack>
               )}
             </YStack>
           </InfoCard>
 
           <InfoCard>
-            <Text
+            <SizableText
               fontSize={24}
               fontWeight="bold"
               color="white"
               marginBottom={10}
             >
               Social Media
-            </Text>
+            </SizableText>
             <XStack flexWrap="wrap" gap={20}>
               {resident.socialMedia.soundcloud && (
                 <SocialButton icon={<AudioLines color="white" />} />
@@ -219,17 +227,17 @@ export default function ResidentScreen() {
 
           {resident.additionalInfo && (
             <InfoCard>
-              <Text
+              <SizableText
                 fontSize={24}
                 fontWeight="bold"
                 color="white"
                 marginBottom={10}
               >
                 Additional Info
-              </Text>
-              <Text fontSize={18} color="white">
+              </SizableText>
+              <SizableText fontSize={18} color="white">
                 {resident.additionalInfo}
-              </Text>
+              </SizableText>
             </InfoCard>
           )}
         </YStack>

@@ -13,7 +13,15 @@ import {
   XCircle,
 } from "@tamagui/lucide-icons";
 
-import { H2, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
+import {
+  H2,
+  SizableText,
+  View,
+  XStack,
+  YStack,
+  styled,
+  useTheme,
+} from "tamagui";
 
 const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   const timeLeft = useCountdown(targetDate);
@@ -22,11 +30,11 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <TimeUnitContainer>
       <GlassContainer>
-        <Text fontSize={36} fontWeight="900" color="white">
+        <SizableText fontSize={36} fontWeight="900" color="white">
           {value.toString().padStart(2, "0")}
-        </Text>
+        </SizableText>
       </GlassContainer>
-      <Text
+      <SizableText
         fontSize={16}
         fontWeight="600"
         color="white"
@@ -34,7 +42,7 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
         textTransform="uppercase"
       >
         {label}
-      </Text>
+      </SizableText>
     </TimeUnitContainer>
   );
 
@@ -175,7 +183,7 @@ const StatusContainer = styled(XStack, {
   justifyContent: "center",
 });
 
-const StatusText = styled(Text, {
+const StatusText = styled(SizableText, {
   fontSize: 24,
   fontWeight: "900",
   color: "white",

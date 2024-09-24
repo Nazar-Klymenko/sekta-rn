@@ -1,9 +1,9 @@
 import React from "react";
 
 import {
+  SizableText,
   Stack,
   Tooltip as TamaguiTooltip,
-  Text,
   TooltipProps,
   styled,
 } from "tamagui";
@@ -46,9 +46,9 @@ export const Tooltip: React.FC<CustomTooltipProps> = ({
         <TamaguiTooltip.Arrow />
         <TooltipContent>
           {typeof content === "string" ? (
-            <Text fontSize="$2" lineHeight="$1">
+            <SizableText fontSize="$2" lineHeight="$1">
               {content}
-            </Text>
+            </SizableText>
           ) : (
             content
           )}

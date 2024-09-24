@@ -9,7 +9,7 @@ import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text, useTheme } from "tamagui";
+import { H1, SizableText, useTheme } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -59,13 +59,13 @@ export default function DeleteProfileScreen() {
   return (
     <AuthGuard>
       <PageContainer formContainer>
-        <Text fontSize={40} fontWeight="bold" textAlign="center">
+        <H1 fontWeight="bold" textAlign="center">
           Delete Account
-        </Text>
-        <Text color="$gray10Light">
+        </H1>
+        <SizableText color="$gray10Light">
           Warning: This action is irreversible. All data will be permanently
           deleted.
-        </Text>
+        </SizableText>
 
         <SecondaryButton
           text="Delete Account"

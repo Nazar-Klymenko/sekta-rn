@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Text, XStack, YStack } from "tamagui";
+import { SizableText, XStack, YStack } from "tamagui";
 
 interface InfoItemProps {
   icon: React.ReactNode;
@@ -22,12 +22,12 @@ export const InfoItem: React.FC<InfoItemProps> = ({ icon, title, value }) => (
       {icon}
     </YStack>
     <YStack>
-      <Text fontSize="$3" color="$gray10Light">
+      <SizableText fontSize="$3" color="$gray10Light">
         {title}
-      </Text>
-      <Text fontSize="$4" fontWeight="bold">
+      </SizableText>
+      <SizableText fontSize="$4" fontWeight="bold">
         {value}
-      </Text>
+      </SizableText>
     </YStack>
   </XStack>
 );

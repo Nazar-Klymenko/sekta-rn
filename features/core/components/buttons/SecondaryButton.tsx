@@ -1,6 +1,4 @@
-import { GestureResponderEvent } from "react-native";
-
-import { Button, ButtonProps, Spinner, Text } from "tamagui";
+import { Button, ButtonProps, Spinner } from "tamagui";
 
 interface SecondaryButtonTypes extends ButtonProps {
   onPress?: () => void;

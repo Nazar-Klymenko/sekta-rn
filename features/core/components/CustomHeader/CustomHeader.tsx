@@ -27,9 +27,9 @@ import {
   Avatar,
   Button,
   Image,
+  SizableText,
   Stack,
   StackProps,
-  Text,
   XStack,
   YStack,
   styled,
@@ -207,12 +207,12 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
                   )}
                 </Avatar>
                 <YStack>
-                  <Text fontSize="$4" fontWeight="bold">
+                  <SizableText fontSize="$4" fontWeight="bold">
                     {user?.displayName || "Guest"}
-                  </Text>
-                  <Text fontSize="$3" color="$gray10Light">
+                  </SizableText>
+                  <SizableText fontSize="$3" color="$gray10Light">
                     {user?.email || "Not logged in"}
-                  </Text>
+                  </SizableText>
                 </YStack>
               </UserPreview>
 
@@ -275,7 +275,7 @@ const HeaderContainer = styled(XStack, {
   height: 60,
 });
 
-const LogoText = styled(Text, {
+const LogoText = styled(SizableText, {
   fontSize: "$5",
   fontWeight: "bold",
   color: "$color",

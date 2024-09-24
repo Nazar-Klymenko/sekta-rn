@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
-import { MenuButton } from "@/features/core/components/buttons/MenuButton";
 import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
@@ -15,7 +14,7 @@ import { usernameSchema } from "@/utils/validationSchemas";
 import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Button, Text, XStack, YStack } from "tamagui";
+import { Button, H1, SizableText, XStack, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -102,14 +101,12 @@ export default function ChangeUsernameScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <Text>Error loading user data</Text>;
+  if (isError) return <SizableText>Error loading user data</SizableText>;
 
   return (
     <AuthGuard>
       <PageContainer formContainer>
-        <Text fontSize={40} fontWeight="bold">
-          Change your username
-        </Text>
+        <H1 fontWeight="bold">Change your username</H1>
         <Form methods={methods}>
           <Input
             id="username"
@@ -122,10 +119,10 @@ export default function ChangeUsernameScreen() {
           />
           <XStack gap="$2">
             <Info color="$gray10Light" size={16} />
-            <Text fontSize="$3" color="$gray10Light">
+            <SizableText fontSize="$3" color="$gray10Light">
               Your new username must be 3-20 characters long and can contain
               letters, numbers, and underscores.
-            </Text>
+            </SizableText>
           </XStack>
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}

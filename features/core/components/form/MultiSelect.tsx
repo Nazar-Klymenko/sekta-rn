@@ -9,8 +9,8 @@ import {
   Adapt,
   Select,
   Sheet,
+  SizableText,
   SelectProps as TamaguiSelectProps,
-  Text,
   XStack,
   YStack,
 } from "tamagui";
@@ -68,7 +68,7 @@ export const MultiSelect = ({
 
   return (
     <YStack>
-      <Text>{label}</Text>
+      <SizableText>{label}</SizableText>
       <Select
         id={id}
         value={value.length > 0 ? value[value.length - 1] : undefined}
@@ -114,9 +114,9 @@ export const MultiSelect = ({
         </Select.Content>
       </Select>
       {error && (
-        <Text color="$red10" fontSize="$2">
+        <SizableText color="$red10" fontSize="$2">
           {error.message}
-        </Text>
+        </SizableText>
       )}
     </YStack>
   );

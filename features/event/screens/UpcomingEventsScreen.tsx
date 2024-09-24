@@ -12,7 +12,13 @@ import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCa
 
 import { Calendar, Info } from "@tamagui/lucide-icons";
 
-import { Text, XStack, YStack, useTheme, useWindowDimensions } from "tamagui";
+import {
+  SizableText,
+  XStack,
+  YStack,
+  useTheme,
+  useWindowDimensions,
+} from "tamagui";
 
 import { useUpcomingEvents } from "../hooks/useUpcomingEvents";
 
@@ -40,7 +46,7 @@ export default function UpcomingEventsScreen() {
   if (status === "error") {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
-        <Text>Error: {(error as Error).message}</Text>
+        <SizableText>Error: {(error as Error).message}</SizableText>
         <RetryButton onPress={() => refetch()} size="lg" />
       </YStack>
     );
@@ -87,9 +93,9 @@ export default function UpcomingEventsScreen() {
         onEndReachedThreshold={0.1}
         ListHeaderComponent={<InfoBanner />}
         ListEmptyComponent={() => (
-          <Text padding="$4">
+          <SizableText padding="$4">
             No upcoming events found. Pull to refresh or check back later.
-          </Text>
+          </SizableText>
         )}
         ListFooterComponent={() =>
           isFetchingNextPage ? (
@@ -112,14 +118,14 @@ const EmptyUpcomingEvents = () => {
       gap="$4"
     >
       <Calendar size={100} color="$gray8Light" />
-      <Text fontSize="$6" fontWeight="bold" textAlign="center">
+      <SizableText fontSize="$6" fontWeight="bold" textAlign="center">
         Sorry {user?.displayName || `${user?.displayName}`}, We don't have any
         upcoming events
-      </Text>
-      <Text fontSize="$4" textAlign="center" color="$gray10Light">
+      </SizableText>
+      <SizableText fontSize="$4" textAlign="center" color="$gray10Light">
         Come back later, and enable push notifications to not miss any new
         events
-      </Text>
+      </SizableText>
     </YStack>
   );
 };
@@ -143,12 +149,12 @@ const InfoBanner = () => {
         >
           <Info size={20} />
           <YStack gap="$1">
-            <Text paddingLeft="$2" fontSize={16} fontWeight="bold">
+            <SizableText paddingLeft="$2" fontSize={16} fontWeight="bold">
               Get a discount at the entrance!
-            </Text>
-            <Text paddingLeft="$2" fontSize="$3" color="$gray10Light">
+            </SizableText>
+            <SizableText paddingLeft="$2" fontSize="$3" color="$gray10Light">
               Click the attend button in the event and show it at the entrance!
-            </Text>
+            </SizableText>
           </YStack>
         </XStack>
       </LinearGradient>

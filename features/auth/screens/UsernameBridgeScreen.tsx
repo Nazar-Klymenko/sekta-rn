@@ -13,7 +13,7 @@ import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
 
-import { Text, XStack, YStack } from "tamagui";
+import { H1, SizableText, XStack, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -86,15 +86,15 @@ export default function UsernameBridgeScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <XStack justifyContent="center">
-            <Text fontSize={40} fontWeight="bold" textAlign="center">
+          <XStack justifyContent="center" alignItems="center">
+            <H1 fontWeight="bold" textAlign="center">
               Welcome!{"  "}
-            </Text>
+            </H1>
             <HelloWave />
           </XStack>
-          <Text textAlign="center" color="$gray10Light">
+          <SizableText textAlign="center" color="$gray10Light">
             Choose a username. Don't worry, you can always change it later.
-          </Text>
+          </SizableText>
           <Input
             id="username"
             name="username"
@@ -106,10 +106,10 @@ export default function UsernameBridgeScreen() {
           />
           <XStack gap="$2">
             <Info color="$gray10Light" size={16} />
-            <Text fontSize="$3" color="$gray10Light">
+            <SizableText fontSize="$3" color="$gray10Light">
               Username must be 3-20 characters long and can contain letters,
               numbers, and underscores.
-            </Text>
+            </SizableText>
           </XStack>
           <PrimaryButton
             text="Continue"
@@ -119,10 +119,10 @@ export default function UsernameBridgeScreen() {
           />
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <Text textAlign="center">
+              <SizableText textAlign="center">
                 Already have an account?
-                <Text color="$accentColor"> Log in</Text>
-              </Text>
+                <SizableText color="$accentColor"> Log in</SizableText>
+              </SizableText>
             </Link>
           </YStack>
         </Form>

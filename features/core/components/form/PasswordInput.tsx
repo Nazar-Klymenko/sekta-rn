@@ -1,19 +1,20 @@
-import { Eye, EyeOff } from "@tamagui/lucide-icons";
-
 import React, { useState } from "react";
 
 import { TextInputProps } from "react-native";
 
-import { useController, useFormContext } from "react-hook-form";
+import { Eye, EyeOff } from "@tamagui/lucide-icons";
+
 import {
   Button,
   Label,
+  SizableText,
   Input as TamaguiInput,
-  Text,
   XStack,
   YStack,
   useTheme,
 } from "tamagui";
+
+import { useController, useFormContext } from "react-hook-form";
 
 import { BaseInput } from "./shared/BaseInput";
 
@@ -77,13 +78,13 @@ export function PasswordInput(
           backgroundColor="transparent"
         />
       </XStack>
-      <Text
+      <SizableText
         color={error ? "$red10Light" : "$colorTransparent"}
         marginTop="$2"
         fontSize="$2"
       >
         {error ? error?.message : "*"}
-      </Text>
+      </SizableText>
     </YStack>
   );
 }

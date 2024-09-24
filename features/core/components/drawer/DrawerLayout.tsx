@@ -28,8 +28,8 @@ import {
   Avatar,
   Button,
   Separator,
+  SizableText,
   Stack,
-  Text,
   XStack,
   YStack,
   styled,
@@ -103,12 +103,12 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
           )}
         </Avatar>
         <YStack>
-          <Text fontSize="$4" fontWeight="bold">
+          <SizableText fontSize="$4" fontWeight="bold">
             {userData?.username || user?.displayName || "Guest"}
-          </Text>
-          <Text fontSize="$3" color="$gray10Light">
+          </SizableText>
+          <SizableText fontSize="$3" color="$gray10Light">
             {user?.email || "Not logged in"}
-          </Text>
+          </SizableText>
         </YStack>
       </UserPreview>
       <Separator marginHorizontal="$4" />

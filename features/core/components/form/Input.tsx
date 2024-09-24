@@ -1,20 +1,21 @@
-import { Mail } from "@tamagui/lucide-icons";
-
 import React, { useState } from "react";
 
 import { TextInputProps } from "react-native";
 
-import { useController, useFormContext } from "react-hook-form";
+import { Mail } from "@tamagui/lucide-icons";
+
 import {
   Label,
+  SizableText,
   Stack,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
-  Text,
   XStack,
   YStack,
   styled,
 } from "tamagui";
+
+import { useController, useFormContext } from "react-hook-form";
 
 import { BaseInput, MaxLength } from "./shared/BaseInput";
 
@@ -99,13 +100,13 @@ export function Input({
         </Stack>
       </YStack>
       <XStack ai="center" marginTop="$2">
-        <Text
+        <SizableText
           flex={1}
           color={error ? "$red10Light" : "$colorTransparent"}
           fontSize="$2"
         >
           {error ? error?.message : ""}
-        </Text>
+        </SizableText>
         {maxLength && (
           <MaxLength length={value?.length || 0} maxLength={maxLength} />
         )}

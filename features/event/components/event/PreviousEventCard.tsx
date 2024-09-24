@@ -4,7 +4,7 @@ import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Image, Text, XStack, YStack, styled, useTheme } from "tamagui";
+import { Image, SizableText, XStack, YStack, styled, useTheme } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -28,12 +28,12 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
       />
       <ContentContainer>
         <YStack flex={1} gap="$2">
-          <Text fontSize="$4" fontWeight="bold" numberOfLines={1}>
+          <SizableText fontSize="$4" fontWeight="bold" numberOfLines={1}>
             {event.title}
-          </Text>
-          <Text fontSize="$3" color="$gray10Light">
+          </SizableText>
+          <SizableText fontSize="$3" color="$gray10Light">
             {formattedDate}
-          </Text>
+          </SizableText>
           <XStack flexWrap="wrap" gap="$2">
             {event.genres.slice(0, 2).map((genre, index) => (
               <Tag tag={genre} key={genre + index} />

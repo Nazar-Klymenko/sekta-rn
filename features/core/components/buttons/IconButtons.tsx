@@ -8,7 +8,7 @@ import {
   SlidersHorizontal,
 } from "@tamagui/lucide-icons";
 
-import { Button, Text, YStack, useTheme } from "tamagui";
+import { Button, SizableText, YStack, useTheme } from "tamagui";
 
 interface ShareButtonProps {
   size: "sm" | "lg";
@@ -109,9 +109,9 @@ export const FilterButton = ({
         alignItems="center"
         zIndex={1}
       >
-        <Text color="white" fontSize={10}>
+        <SizableText color="white" fontSize={10}>
           {appliedFiltersCount}
-        </Text>
+        </SizableText>
       </YStack>
     )}
   </YStack>

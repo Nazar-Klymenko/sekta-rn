@@ -10,7 +10,7 @@ import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorH
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text, YStack } from "tamagui";
+import { H1, SizableText, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -62,9 +62,9 @@ export default function ForgotPasswordScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize={40} fontWeight="bold" textAlign="center">
+          <H1 fontWeight="bold" textAlign="center">
             Forgot Password
-          </Text>
+          </H1>
 
           <Input
             id="forgot-password-email"
@@ -83,9 +83,9 @@ export default function ForgotPasswordScreen() {
 
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <Text color="$accentColor" textAlign="center">
+              <SizableText color="$accentColor" textAlign="center">
                 Go back to login
-              </Text>
+              </SizableText>
             </Link>
           </YStack>
         </Form>

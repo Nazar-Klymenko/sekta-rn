@@ -1,17 +1,18 @@
-import { Facebook, Instagram, Twitter } from "@tamagui/lucide-icons";
-
 import React from "react";
 
-import { Link } from "expo-router";
+import { Facebook, Instagram, Twitter } from "@tamagui/lucide-icons";
+
 import {
   Separator,
+  SizableText,
   Stack,
-  Text,
   XStack,
   YStack,
   useMedia,
   useTheme,
 } from "tamagui";
+
+import { Link } from "expo-router";
 
 export const Footer = () => {
   const theme = useTheme();
@@ -36,9 +37,9 @@ export const Footer = () => {
           gap="$6"
         >
           <FooterColumn title="Sekta Selekta">
-            <Text fontSize="$3" color="$color9Light">
+            <SizableText fontSize="$3" color="$color9Light">
               Bringing the best events to you. Nowa 3/3, Kraków.
-            </Text>
+            </SizableText>
           </FooterColumn>
 
           <FooterColumn title="Explore">
@@ -48,12 +49,12 @@ export const Footer = () => {
           </FooterColumn>
 
           <FooterColumn title="Contact">
-            <Text fontSize="$3" color="$color9Light">
+            <SizableText fontSize="$3" color="$color9Light">
               Email: info@sektaselekta.com
-            </Text>
-            <Text fontSize="$3" color="$color9Light">
+            </SizableText>
+            <SizableText fontSize="$3" color="$color9Light">
               Phone: +1 234 567 890
-            </Text>
+            </SizableText>
           </FooterColumn>
 
           <FooterColumn title="Follow Us">
@@ -68,9 +69,9 @@ export const Footer = () => {
         <Separator marginVertical="$5" />
 
         <XStack justifyContent="space-between" flexWrap="wrap" gap="$4">
-          <Text fontSize="$2" color="$color8Light">
+          <SizableText fontSize="$2" color="$color8Light">
             © 2024 Sekta Selekta
-          </Text>
+          </SizableText>
           <XStack gap="$4">
             <FooterLink href="/privacy-policy" small>
               Privacy Policy
@@ -93,7 +94,7 @@ const FooterColumn = ({ title, children }: any) => (
     $gtSm={{ minWidth: 150 }}
     $gtMd={{ minWidth: 200 }}
   >
-    <Text
+    <SizableText
       fontSize="$5"
       fontWeight="bold"
       color="$color"
@@ -102,21 +103,21 @@ const FooterColumn = ({ title, children }: any) => (
       paddingBottom="$2"
     >
       {title}
-    </Text>
+    </SizableText>
     {children}
   </YStack>
 );
 
 const FooterLink = ({ href, children, small = false }: any) => (
   <Link href={href}>
-    <Text
+    <SizableText
       fontSize={small ? "$2" : "$3"}
       color="$color7Light"
       hoverStyle={{ color: "$color9Light" }}
       transition="all 0.2s"
     >
       {children}
-    </Text>
+    </SizableText>
   </Link>
 );
 

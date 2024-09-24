@@ -9,7 +9,7 @@ import { Disc } from "@tamagui/lucide-icons";
 
 import {
   Image,
-  Text,
+  SizableText,
   TextStyle,
   YStack,
   styled,
@@ -74,7 +74,7 @@ export const HeroSection = () => {
                   }}
                 />
               </YStack>
-              <Text
+              <SizableText
                 fontSize={24}
                 color="white"
                 opacity={0.9}
@@ -87,7 +87,7 @@ export const HeroSection = () => {
                 }}
               >
                 Perform a set at our venue with other artists
-              </Text>
+              </SizableText>
             </YStack>
           </Animated.View>
         </LinearGradient>
@@ -95,7 +95,7 @@ export const HeroSection = () => {
     </>
   );
 };
-const StyledText = styled(Text, {
+const StyledText = styled(SizableText, {
   fontSize: 72,
   fontWeight: "900",
   textAlign: "center",

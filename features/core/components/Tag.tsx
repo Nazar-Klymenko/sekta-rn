@@ -1,5 +1,5 @@
 // src/components/Tag.tsx
-import { Text, XStack, useTheme } from "tamagui";
+import { SizableText, XStack, useTheme } from "tamagui";
 
 interface TagProps {
   tag: string;
@@ -24,9 +24,9 @@ export const Tag = ({ tag, onPress, selected, icon }: TagProps) => {
       gap="$2"
       cursor={selected ? "pointer" : "unset"}
     >
-      <Text color="$color" fontSize="$3">
+      <SizableText color="$color" fontSize="$3">
         {tag}
-      </Text>
+      </SizableText>
       {icon}
     </XStack>
   );

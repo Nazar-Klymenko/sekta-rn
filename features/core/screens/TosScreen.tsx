@@ -2,17 +2,17 @@ import React from "react";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Text, XStack, YStack } from "tamagui";
+import { SizableText, XStack, YStack } from "tamagui";
 
 export default function TosScreen() {
   return (
     <PageContainer>
       <YStack gap="$2">
-        <Text fontSize="$6" fontWeight="bold">
+        <SizableText fontSize="$6" fontWeight="bold">
           Terms of service - add later
-        </Text>
+        </SizableText>
         <XStack>
-          <Text fontSize="$4">Tos itself</Text>
+          <SizableText fontSize="$4">Tos itself</SizableText>
         </XStack>
       </YStack>
     </PageContainer>

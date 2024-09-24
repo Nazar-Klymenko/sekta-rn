@@ -1,11 +1,11 @@
 // src/components/form/MultiSelect.tsx
-import { Check, ChevronDown } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React, { useState } from "react";
 
-import { Adapt, Select, Sheet, Text, XStack, YStack } from "tamagui";
+import { Check, ChevronDown } from "@tamagui/lucide-icons";
 
-import { LinearGradient } from "tamagui/linear-gradient";
+import { Adapt, Select, Sheet, SizableText, XStack, YStack } from "tamagui";
 
 export const ScrollUpButton = () => {
   return (

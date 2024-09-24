@@ -15,7 +15,7 @@ import {
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Text } from "tamagui";
+import { SizableText } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -104,9 +104,9 @@ export function PlayForm() {
 
   return (
     <Form methods={methods} maxWidth={740} flex={1}>
-      <Text fontSize={20} fontWeight="bold">
+      <SizableText fontSize={20} fontWeight="bold">
         Contact Information
-      </Text>
+      </SizableText>
       <Input
         id="play-email"
         name="email"
@@ -121,9 +121,9 @@ export function PlayForm() {
         placeholder="+48 577 925 024"
         icon={Phone}
       />
-      <Text fontSize={20} fontWeight="bold">
+      <SizableText fontSize={20} fontWeight="bold">
         Portfolio Links (Optional)
-      </Text>
+      </SizableText>
       {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
         <Input
           key={name + idx}

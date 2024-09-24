@@ -6,7 +6,7 @@ import { useResidents } from "@/features/residents/hooks/useResidents";
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text } from "tamagui";
+import { SizableText } from "tamagui";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -51,11 +51,11 @@ export default function ResidentScreen() {
   }, [resident]);
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <Text>Error loading resident details</Text>;
+  if (isError) return <SizableText>Error loading resident details</SizableText>;
 
   return (
     <PageContainer scrollable>
-      <Text>resident edit</Text>
+      <SizableText>resident edit</SizableText>
     </PageContainer>
   );
 }

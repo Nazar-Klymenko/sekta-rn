@@ -2,7 +2,7 @@ import React from "react";
 
 import { Resident } from "@/features/residents/models/Resident";
 
-import { Card, Image, Text, XStack, YStack, styled } from "tamagui";
+import { Card, Image, SizableText, XStack, YStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -64,13 +64,13 @@ const CardContent = styled(YStack, {
   padding: 20,
 });
 
-const ResidentName = styled(Text, {
+const ResidentName = styled(SizableText, {
   fontSize: 36,
   fontWeight: "900",
   color: "white",
 });
 
-const GenreTag = styled(Text, {
+const GenreTag = styled(SizableText, {
   fontSize: 16,
   fontWeight: "bold",
   color: "white",

@@ -6,7 +6,7 @@ import { User as UserData } from "@/features/users/models/User";
 
 import { User as UserIcon } from "@tamagui/lucide-icons";
 
-import { Avatar, Text, YStack } from "tamagui";
+import { Avatar, SizableText, YStack } from "tamagui";
 
 interface ProfileHeaderProps {
   user: User | null;
@@ -27,11 +27,11 @@ export const ProfileHeader = ({ user, userData }: ProfileHeaderProps) => (
         </Avatar.Fallback>
       )}
     </Avatar>
-    <Text fontSize="$6" fontWeight="bold">
+    <SizableText fontSize="$6" fontWeight="bold">
       {userData?.username || user?.displayName || "Guest"}
-    </Text>
-    <Text fontSize="$3" color="$gray10Light">
+    </SizableText>
+    <SizableText fontSize="$3" color="$gray10Light">
       {userData?.email || user?.email || "Not logged in"}
-    </Text>
+    </SizableText>
   </YStack>
 );

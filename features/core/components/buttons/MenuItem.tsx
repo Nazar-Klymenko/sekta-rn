@@ -1,4 +1,4 @@
-import { Stack, Text, XStack, styled } from "tamagui";
+import { SizableText, Stack, XStack, styled } from "tamagui";
 
 export const MenuItem = ({
   title,
@@ -14,7 +14,7 @@ export const MenuItem = ({
   <ResponsiveStack onPress={onPress}>
     <XStack flex={1} alignItems="center" justifyContent="flex-start" gap="$3">
       <Icon size="$1" color="$gray10Light" />
-      <Text fontSize={fontSize}>{title}</Text>
+      <SizableText fontSize={fontSize}>{title}</SizableText>
     </XStack>
   </ResponsiveStack>
 );

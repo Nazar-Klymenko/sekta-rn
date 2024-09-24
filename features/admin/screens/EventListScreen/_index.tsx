@@ -11,7 +11,7 @@ import { Event } from "@/features/event/models/Event";
 
 import { Plus } from "@tamagui/lucide-icons";
 
-import { Button, Text, XStack, YStack } from "tamagui";
+import { Button, SizableText, XStack, YStack } from "tamagui";
 
 import { Link } from "expo-router";
 
@@ -37,7 +37,7 @@ export default function EventListScreen() {
   } = useFetchPaginatedEvents();
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <Text>Error loading events</Text>;
+  if (isError) return <SizableText>Error loading events</SizableText>;
 
   return (
     <PageContainer fullWidth padding="$4">
@@ -46,14 +46,14 @@ export default function EventListScreen() {
         alignItems="center"
         paddingBottom="$4"
       >
-        <Text fontSize="$6" fontWeight="bold">
+        <SizableText fontSize="$6" fontWeight="bold">
           Events
-        </Text>
+        </SizableText>
         <Link href="/admin/events/create" asChild>
           <Button icon={Plus}>Create New Event</Button>
         </Link>
       </XStack>
-      <YStack space="$4">
+      <YStack gap="$4">
         <GenericTable data={events || []} columns={columns} />
         <XStack justifyContent="space-between">
           <Button onPress={goToPreviousPage} disabled={!hasPreviousPage}>

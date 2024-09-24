@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Text, YStack, useTheme } from "tamagui";
+import { SizableText, YStack, useTheme } from "tamagui";
 
 import { Stack } from "expo-router";
 
@@ -40,12 +40,12 @@ export default function PlayScreen() {
       >
         <VenueInfoSection />
         <YStack gap="$2">
-          <Text fontSize={24} fontWeight="bold">
+          <SizableText fontSize={24} fontWeight="bold">
             Apply to Play
-          </Text>
-          <Text fontSize="$4" color="$gray10Light">
+          </SizableText>
+          <SizableText fontSize="$4" color="$gray10Light">
             Share your details and we'll be in touch
-          </Text>
+          </SizableText>
         </YStack>
 
         <PlayForm />

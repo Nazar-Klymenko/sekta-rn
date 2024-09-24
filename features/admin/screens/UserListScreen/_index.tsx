@@ -11,7 +11,7 @@ import { User as UserData } from "@/features/users/models/User";
 
 import { Check, Minus } from "@tamagui/lucide-icons";
 
-import { Text } from "tamagui";
+import { SizableText } from "tamagui";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -49,7 +49,7 @@ export default function UserListScreen() {
   const totalPages = Math.ceil((users?.length || 0) / ITEMS_PER_PAGE);
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <Text>Error loading users</Text>;
+  if (isError) return <SizableText>Error loading users</SizableText>;
 
   return (
     <PageContainer fullWidth padding="$4">

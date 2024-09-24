@@ -1,6 +1,15 @@
+import React, { useState } from "react";
+
 import { ChevronDown } from "@tamagui/lucide-icons";
 
-import React, { useState } from "react";
+import {
+  AnimatePresence,
+  Button,
+  SizableText,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
 
 import Animated, {
   WithSpringConfig,
@@ -8,7 +17,6 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { AnimatePresence, Button, Text, XStack, YStack, styled } from "tamagui";
 
 interface CollapsibleProps {
   title: string;
@@ -57,7 +65,7 @@ export const Collapsible: React.FC<CollapsibleProps> = ({
           justifyContent="flex-start"
           gap="$3"
         >
-          <Text fontSize="$6">{title}</Text>
+          <SizableText fontSize="$6">{title}</SizableText>
         </XStack>
         <Animated.View style={chevronStyle}>
           <ChevronDown size="$1" color="$gray10Light" />

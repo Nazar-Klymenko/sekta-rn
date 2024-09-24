@@ -7,7 +7,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 
-import { H2, Text, YStack, useTheme } from "tamagui";
+import { H2, SizableText, YStack, useTheme } from "tamagui";
 
 import { usePreviousEvents } from "../hooks/usePreviousEvents";
 
@@ -34,7 +34,7 @@ export default function PreviousEventsScreen() {
   if (status === "error") {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
-        <Text>Error: {(error as Error).message}</Text>
+        <SizableText>Error: {(error as Error).message}</SizableText>
         <RetryButton onPress={() => refetch()} size="lg" />
       </YStack>
     );
@@ -75,9 +75,9 @@ export default function PreviousEventsScreen() {
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
         ListEmptyComponent={() => (
-          <Text padding="$4">
+          <SizableText padding="$4">
             No events found. Pull to refresh or check back later.
-          </Text>
+          </SizableText>
         )}
         ListFooterComponent={() =>
           isFetchingNextPage ? (

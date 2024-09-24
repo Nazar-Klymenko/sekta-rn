@@ -8,7 +8,7 @@ import { Event } from "@/features/event/models/Event";
 
 import { ChevronRight } from "@tamagui/lucide-icons";
 
-import { H2, Text, XStack, YStack } from "tamagui";
+import { H2, SizableText, XStack, YStack } from "tamagui";
 
 interface UpcomingEventsSectionProps {
   upcomingEvents: Event[] | undefined;
@@ -40,7 +40,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <XStack alignItems="center" gap="$2">
-            <Text>View all</Text>
+            <SizableText>View all</SizableText>
             <ChevronRight />
           </XStack>
         </Pressable>

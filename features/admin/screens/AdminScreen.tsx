@@ -5,7 +5,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { BoomBox, Play, Ticket, Users } from "@tamagui/lucide-icons";
 
-import { Text, YStack } from "tamagui";
+import { SizableText, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -14,9 +14,9 @@ export default function AdminScreen() {
 
   return (
     <PageContainer formContainer>
-      <Text fontSize={24} fontWeight="bold">
+      <SizableText fontSize={24} fontWeight="bold">
         Admin page
-      </Text>
+      </SizableText>
       <YStack gap="$2">
         <MenuItem
           title="All Events"

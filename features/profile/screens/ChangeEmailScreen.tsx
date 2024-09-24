@@ -12,7 +12,7 @@ import { emailSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text, YStack } from "tamagui";
+import { H1, SizableText, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -71,16 +71,17 @@ export default function ChangeEmailScreen() {
     <AuthGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize={40} fontWeight="bold" textAlign="center">
+          <H1 fontWeight="bold" textAlign="center">
             Change your email
-          </Text>
-          <Text color="$gray10Light">
+          </H1>
+          <SizableText color="$gray10Light">
             You will have to confirm you new email in your inbox before it will
             change. You will be logged out and will have to login again.
-          </Text>
-          <Text fontSize="$4" color="$gray10Light">
-            Current email: <Text color={"$color"}>{user?.email}</Text>
-          </Text>
+          </SizableText>
+          <SizableText fontSize="$4" color="$gray10Light">
+            Current email:{" "}
+            <SizableText color={"$color"}>{user?.email}</SizableText>
+          </SizableText>
           <Input
             id="new-email"
             name="newEmail"
@@ -104,10 +105,10 @@ export default function ChangeEmailScreen() {
           />
           {isVerificationSent && (
             <YStack marginTop="$4">
-              <Text textAlign="center" color="$green10">
+              <SizableText textAlign="center" color="$green10">
                 Verification email sent. Please check your new email inbox and
                 verify before logging in again.
-              </Text>
+              </SizableText>
             </YStack>
           )}
         </Form>

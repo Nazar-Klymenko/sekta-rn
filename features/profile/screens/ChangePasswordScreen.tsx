@@ -12,7 +12,7 @@ import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text, YStack, useTheme } from "tamagui";
+import { H1, SizableText, YStack, useTheme } from "tamagui";
 
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -74,9 +74,9 @@ export default function ChangePasswordScreen() {
     <AuthGuard>
       <PageContainer formContainer>
         <Form methods={methods}>
-          <Text fontSize={40} fontWeight="bold" textAlign="center">
+          <H1 fontWeight="bold" textAlign="center">
             Change Password
-          </Text>
+          </H1>
           <PasswordInput
             id="current-password"
             name="currentPassword"
@@ -106,10 +106,12 @@ export default function ChangePasswordScreen() {
             disabled={changePasswordMutation.isPending}
           />
           {changePasswordMutation.isError && (
-            <Text>Error: {changePasswordMutation.error.message}</Text>
+            <SizableText>
+              Error: {changePasswordMutation.error.message}
+            </SizableText>
           )}
           {changePasswordMutation.isSuccess && (
-            <Text>Password changed successfully</Text>
+            <SizableText>Password changed successfully</SizableText>
           )}
         </Form>
       </PageContainer>

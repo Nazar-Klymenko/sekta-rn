@@ -1,4 +1,4 @@
-import { Button, Text, View, XStack, YStack, styled, useTheme } from "tamagui";
+import { SizableText, YStack, useTheme } from "tamagui";
 
 import { Link, Stack } from "expo-router";
 
@@ -23,11 +23,16 @@ export default function NotFoundScreen() {
           headerTintColor: theme.color.get(),
         }}
       />
-      <Text fontSize="$6" fontWeight="bold" textAlign="center" color="$color">
+      <SizableText
+        fontSize="$6"
+        fontWeight="bold"
+        textAlign="center"
+        color="$color"
+      >
         404: This page doesn't exist.
-      </Text>
+      </SizableText>
       <Link href="/" replace>
-        <Text>Go to home screen!</Text>
+        <SizableText>Go to home screen!</SizableText>
       </Link>
     </YStack>
   );

@@ -4,7 +4,7 @@ import { Table } from "@/features/core/components/Table";
 
 import { Minus } from "@tamagui/lucide-icons";
 
-import { ScrollView, Text, YStack } from "tamagui";
+import { ScrollView, SizableText, YStack } from "tamagui";
 
 export type Column<T> = {
   header: string;
@@ -33,7 +33,7 @@ export function GenericTable<T extends { id: string }>({
       value.toString()
     );
 
-    return <Text fontSize="$3">{content}</Text>;
+    return <SizableText fontSize="$3">{content}</SizableText>;
   };
 
   return (
@@ -44,9 +44,9 @@ export function GenericTable<T extends { id: string }>({
             <Table.Row isHeader>
               {columns.map((column) => (
                 <Table.HeaderCell key={column.accessor as string}>
-                  <Text fontSize="$3" fontWeight="bold">
+                  <SizableText fontSize="$3" fontWeight="bold">
                     {column.header}
-                  </Text>
+                  </SizableText>
                 </Table.HeaderCell>
               ))}
             </Table.Row>

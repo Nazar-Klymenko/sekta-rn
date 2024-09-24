@@ -1,5 +1,6 @@
+import { SizableText, XStack, styled } from "tamagui";
+
 import { Link } from "expo-router";
-import { Text, XStack, styled } from "tamagui";
 
 interface NavLinkProps {
   href: string;
@@ -7,17 +8,6 @@ interface NavLinkProps {
   children: React.ReactNode;
   onPress?: () => void;
 }
-const MenuLink = styled(XStack, {
-  alignItems: "center",
-  gap: "$3",
-  paddingVertical: "$2",
-  paddingHorizontal: "$2",
-});
-
-const MenuText = styled(Text, {
-  fontSize: "$3",
-  color: "$color",
-});
 
 export const NavLink: React.FC<NavLinkProps> = ({
   href,
@@ -42,3 +32,14 @@ export const NavLinkButton: React.FC<Omit<NavLinkProps, "href">> = ({
     <MenuText>{children}</MenuText>
   </MenuLink>
 );
+const MenuLink = styled(XStack, {
+  alignItems: "center",
+  gap: "$3",
+  paddingVertical: "$2",
+  paddingHorizontal: "$2",
+});
+
+const MenuText = styled(SizableText, {
+  fontSize: "$3",
+  color: "$color",
+});

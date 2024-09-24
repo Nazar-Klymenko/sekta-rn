@@ -1,15 +1,16 @@
 import React from "react";
 
-import { Link } from "expo-router";
-import { useController, useFormContext } from "react-hook-form";
 import {
   CheckboxProps,
   Label,
+  SizableText,
   Checkbox as TamaguiCheckbox,
-  Text,
   XStack,
   YStack,
 } from "tamagui";
+
+import { Link } from "expo-router";
+import { useController, useFormContext } from "react-hook-form";
 
 interface CustomCheckboxProps
   extends Omit<CheckboxProps, "checked" | "onCheckedChange"> {
@@ -48,7 +49,7 @@ export function Checkbox({
           {...props}
         >
           <TamaguiCheckbox.Indicator>
-            <Text>✓</Text>
+            <SizableText>✓</SizableText>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
         <Label fontSize={12} htmlFor={id} lineHeight={"$1"}>
@@ -56,9 +57,12 @@ export function Checkbox({
         </Label>
       </XStack>
       {error && (
-        <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+        <SizableText
+          color={error ? "$red10Light" : "$colorTransparent"}
+          fontSize="$2"
+        >
           {error?.message}
-        </Text>
+        </SizableText>
       )}
     </YStack>
   );

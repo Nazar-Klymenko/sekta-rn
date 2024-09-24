@@ -1,23 +1,24 @@
-import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
+import { LinearGradient } from "tamagui/linear-gradient";
 
 import React, { useMemo, useState } from "react";
 
-import { useController, useFormContext } from "react-hook-form";
+import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
+
 import {
   Adapt,
   FontSizeTokens,
   Label,
   Sheet,
+  SizableText,
   Stack,
   Select as TamaguiSelect,
   SelectProps as TamaguiSelectProps,
-  Text,
   XStack,
   YStack,
   getFontSize,
 } from "tamagui";
 
-import { LinearGradient } from "tamagui/linear-gradient";
+import { useController, useFormContext } from "react-hook-form";
 
 import {
   CustomAdapt,
@@ -118,9 +119,12 @@ export function Select({
         </Stack>
       </YStack>
       {!hideErrors && (
-        <Text color={error ? "$red10Light" : "$colorTransparent"} fontSize="$2">
+        <SizableText
+          color={error ? "$red10Light" : "$colorTransparent"}
+          fontSize="$2"
+        >
           {error ? error?.message : "*"}
-        </Text>
+        </SizableText>
       )}
     </YStack>
   );

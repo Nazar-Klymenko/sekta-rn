@@ -1,4 +1,4 @@
-import { Text, View, XStack, YStack } from "tamagui";
+import { SizableText, View, XStack, YStack } from "tamagui";
 
 export const PasswordStrengthIndicator = ({
   password,
@@ -38,10 +38,10 @@ export const PasswordStrengthIndicator = ({
           />
         ))}
       </XStack>
-      <Text fontSize={12} fontWeight="400" color="$accentColor">
+      <SizableText fontSize={12} fontWeight="400" color="$accentColor">
         Use 8 or more characters with a mix of uppercase and lowercase letters,
         numbers & special characters.
-      </Text>
+      </SizableText>
     </YStack>
   );
 };

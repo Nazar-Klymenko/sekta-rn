@@ -18,7 +18,7 @@ import {
 
 import { useToastController } from "@tamagui/toast";
 
-import { Text, YStack, useTheme } from "tamagui";
+import { H1, SizableText, YStack, useTheme } from "tamagui";
 
 import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -81,9 +81,9 @@ export default function SignupScreen() {
     <AuthPageGuard>
       <PageContainer formContainer>
         <Form methods={methods} id="test">
-          <Text fontSize={40} fontWeight="bold" textAlign="center">
+          <H1 fontWeight="bold" textAlign="center">
             Sign Up
-          </Text>
+          </H1>
           <Input
             id="signup-email"
             name="email"
@@ -110,38 +110,43 @@ export default function SignupScreen() {
           />
           <YStack>
             <Checkbox name="agreeEmail" id="agree-email">
-              <Text>
+              <SizableText>
                 I want to subscribe to newsletter to receive email notifications
                 about new events
-              </Text>
+              </SizableText>
             </Checkbox>
             <Checkbox name="agreeTos" id="signup-agree-tos">
-              <Text>
+              <SizableText>
                 I agree to Sekta Selekta's{" "}
                 <Link href="/tos" push>
-                  <Text color="$accentColor">Terms of service </Text>
+                  <SizableText color="$accentColor">
+                    Terms of service{" "}
+                  </SizableText>
                 </Link>
                 and
                 <Link href="/privacy-policy" push>
-                  <Text color="$accentColor"> Privacy Policy*</Text>
+                  <SizableText color="$accentColor">
+                    {" "}
+                    Privacy Policy*
+                  </SizableText>
                 </Link>
-              </Text>
+              </SizableText>
             </Checkbox>
           </YStack>
 
           {signUpMutation.isError && (
-            <Text color="red" textAlign="center" marginTop="$2">
+            <SizableText color="red" textAlign="center" marginTop="$2">
               {signUpMutation.error instanceof Error
                 ? signUpMutation.error.message
                 : "An error occurred during signup"}
-            </Text>
+            </SizableText>
           )}
           <YStack alignItems="center" padding="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <Text textAlign="center">
+              <SizableText textAlign="center">
                 Already have an account?
-                <Text color="$accentColor"> Log in</Text>
-              </Text>
+                <SizableText color="$accentColor"> Log in</SizableText>
+              </SizableText>
             </Link>
           </YStack>
         </Form>
