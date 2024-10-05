@@ -14,7 +14,6 @@ import {
   Stack,
   TamaguiProvider,
   Theme,
-  ThemeableStack,
   XStack,
   YStack,
   styled,
@@ -50,6 +49,9 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         <Image
           source={{ uri: event.image.publicUrl }}
           width={cardWidth}
+          maxWidth={540}
+          maxHeight={540}
+          objectFit="cover"
           height={cardWidth * 0.9}
         />
         <LinearGradient
@@ -80,7 +82,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           </Paragraph>
         </PriceBadge>
       </ImageContainer>
-      <TamaguiProvider defaultTheme={"dark"}>
+      <Theme name={"dark"}>
         <ContentContainer theme="surface1">
           <ContentContainer theme="surface2">
             <ContentContainer theme="surface3">
@@ -153,13 +155,14 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
             )}
           </XStack>
         </ContentContainer>
-      </TamaguiProvider>
+      </Theme>
     </CardContainer>
   );
 };
 
 const CardContainer = styled(YStack, {
   borderRadius: "$6",
+  cursor: "pointer",
   overflow: "hidden",
   borderColor: "$gray2Dark",
   elevation: "$1",
@@ -169,14 +172,17 @@ const CardContainer = styled(YStack, {
     scale: 0.98,
   },
   hoverStyle: {
-    scale: 1.02,
     elevation: 8,
+    borderColor: "$borderColorHover",
   },
   borderWidth: 1,
+  maxWidth: 540,
 });
 
 const ImageContainer = styled(Stack, {
   position: "relative",
+  maxWidth: 540,
+  maxHeight: 540,
 });
 
 const DateBadge = styled(YStack, {

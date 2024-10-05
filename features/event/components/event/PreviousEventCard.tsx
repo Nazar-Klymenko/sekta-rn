@@ -53,6 +53,7 @@ const CardContainer = styled(XStack, {
   borderRadius: "$6",
   overflow: "hidden",
   borderWidth: 1,
+  cursor: "pointer",
   borderColor: "$gray2Dark",
   backgroundColor: "$background",
   padding: "$2",

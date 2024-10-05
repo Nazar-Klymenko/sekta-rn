@@ -30,7 +30,13 @@ export function AppNavigator() {
 
   if (Platform.OS === "web") {
     return (
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+        }}
+      >
         <CustomHeader title="Sekta Selekta" user={user} />
         <Slot />
         <Footer />

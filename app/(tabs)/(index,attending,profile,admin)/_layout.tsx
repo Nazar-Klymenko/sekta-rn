@@ -1,4 +1,6 @@
-import { Stack } from "expo-router";
+import { Platform } from "react-native";
+
+import { Slot, Stack } from "expo-router";
 
 export const unstable_settings = {
   initialRouteName: "index",
@@ -23,6 +25,9 @@ interface DynamicLayoutProps {
 
 export default function DynamicLayout({ segment }: DynamicLayoutProps) {
   const initialRoute = segmentToRoute[segment] || "events";
+  if (Platform.OS === "web") {
+    return <Slot />;
+  }
 
   return (
     <Stack
