@@ -1,15 +1,17 @@
 {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-
   "importOrder": [
     "^react$",
+    "^firebase/",
     "^react-native$",
-    "^@/(?!components/)",
+    "^@/(?!shared/)",
+    "^@tamagui/",
+    "^tamagui$",
+    "^@/shared/models/",
     "^(?!yup$)\\w[\\w-]*\\w$",
-    "^tamagui",
     "^yup$",
     "@hookform/resolvers/yup",
-    "^@/components",
+    "^@/shared/components",
     "^[./]"
   ],
   "importOrderSeparation": true,

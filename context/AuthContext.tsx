@@ -4,11 +4,12 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { User } from "firebase/auth";
 
 import React, { ReactNode, createContext, useEffect } from "react";
 
-import { auth } from "@/services/firebase";
+import { User } from "firebase/auth";
+
+import { auth } from "@/lib/firebase/firebase";
 
 export type AuthContextType = {
   user: User | null;
