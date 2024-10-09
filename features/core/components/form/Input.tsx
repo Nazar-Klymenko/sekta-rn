@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 
-import { TextInputProps } from "react-native";
-
-import { Mail } from "@tamagui/lucide-icons";
-
 import {
   Label,
   Paragraph,
   Stack,
-  Input as TamaguiInput,
   InputProps as TamaguiInputProps,
   XStack,
   YStack,
-  styled,
 } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";

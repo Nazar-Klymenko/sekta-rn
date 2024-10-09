@@ -38,6 +38,11 @@ export default function AdminScreen() {
           onPress={() => router.push("/admin/userlist")}
           icon={Users}
         />
+        <MenuItem
+          title="Experiment Screen"
+          onPress={() => router.push("/admin/experiment")}
+          icon={Users}
+        />
       </YStack>
     </PageContainer>
   );

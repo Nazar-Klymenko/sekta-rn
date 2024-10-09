@@ -11,24 +11,20 @@ export interface Event {
   location: string;
   price: number;
 
-  genres: string[];
-  lineup: string[];
+  genres: string[] | [];
+  lineup: string[] | [];
 
   image: {
     id: string;
-    url: string;
+    publicUrl: string;
     path: string;
     altText?: string; // For accessibility
-    publicUrl?: string; //legacy, use url
   };
 
   attendeeCount: number;
 
-  status: "draft" | "published";
-
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  publishedAt: Timestamp | null;
   deletedAt: Timestamp | null;
 
   metadata: Record<string, any>; // For custom fields

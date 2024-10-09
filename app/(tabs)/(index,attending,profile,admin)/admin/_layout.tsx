@@ -76,6 +76,12 @@ export default function HomeLayout() {
           headerTintColor: theme.color.get(),
         }}
       />
+      <Stack.Screen
+        name="experiment"
+        options={{
+          title: "Experiment Screen",
+        }}
+      />
     </Stack>
   );
 }
