@@ -1,4 +1,6 @@
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 import React, { useState } from "react";
 
@@ -11,7 +13,15 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Event } from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
 
-import { Button, Form, Input, Label, Paragraph, YStack } from "tamagui";
+import {
+  Button,
+  Form,
+  Input,
+  Label,
+  Paragraph,
+  TextArea,
+  YStack,
+} from "tamagui";
 
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
@@ -22,6 +32,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { CustomImagePicker } from "./ImagePicker";
+import PillInput from "./PillInput";
 
 // Define your validation schema
 export const eventSchema = yup.object().shape({
@@ -61,7 +72,16 @@ export type FormData = {
 
 export default function EventCreateScreen() {
   const [image, setImage] = useState<string | null>(null);
-  const [date, setDate] = useState(new Date());
+
+  const onDateChange = (
+    _: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
+    if (selectedDate) {
+      setShow(false);
+      setValue("date", selectedDate, { shouldValidate: true });
+    }
+  };
 
   const [show, setShow] = useState(false);
 
@@ -71,6 +91,7 @@ export default function EventCreateScreen() {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(eventSchema),
@@ -152,7 +173,7 @@ export default function EventCreateScreen() {
       Alert.alert("Error", "Failed to create event. Please try again.");
     }
   };
-  const [value, setValue] = useState("");
+
   return (
     <PageContainer>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -170,7 +191,6 @@ export default function EventCreateScreen() {
                   onChangeText={onChange}
                   onBlur={onBlur}
                 />
-
                 {errors.title && <Paragraph>{errors.title.message}</Paragraph>}
               </>
             )}
@@ -182,11 +202,12 @@ export default function EventCreateScreen() {
             render={({ field: { onChange, onBlur, value } }) => (
               <>
                 <Label htmlFor="caption">Caption</Label>
-                <Input
+                <TextArea
                   id="caption"
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
+                  verticalAlign="top"
                 />
                 {errors.caption && (
                   <Paragraph>{errors.caption.message}</Paragraph>
@@ -197,7 +218,7 @@ export default function EventCreateScreen() {
           <Controller
             control={control}
             name="date"
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { value } }) => (
               <>
                 <Label htmlFor="date">Date</Label>
                 <Input
@@ -207,10 +228,10 @@ export default function EventCreateScreen() {
                 />
                 {show && (
                   <DateTimePicker
-                    value={date}
+                    value={value}
                     mode="date"
                     is24Hour={true}
-                    onChange={onChange}
+                    onChange={onDateChange}
                   />
                 )}
                 {errors.date && <Paragraph>{errors.date.message}</Paragraph>}
@@ -255,20 +276,17 @@ export default function EventCreateScreen() {
           <Controller
             control={control}
             name="genres"
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onChange, value } }) => (
               <>
-                <Label htmlFor="genres">Genres (comma-separated)</Label>
-                <Input
-                  id="genres"
-                  value={value?.join(", ")}
-                  onChangeText={(text) =>
-                    onChange(text.split(",").map((g) => g.trim()))
-                  }
-                  onBlur={onBlur}
+                <Label htmlFor="genres">Genres</Label>
+                <PillInput
+                  value={value || []}
+                  onChange={onChange}
+                  error={errors.genres?.message}
+                  placeholder="Enter genre"
+                  addLabel="Add Genre"
+                  editLabel="Edit Genre"
                 />
-                {errors.genres && (
-                  <Paragraph>{errors.genres.message}</Paragraph>
-                )}
               </>
             )}
           />
@@ -277,18 +295,15 @@ export default function EventCreateScreen() {
             name="lineup"
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <Label htmlFor="lineup">Lineup (comma-separated)</Label>
-                <Input
-                  id="lineup"
-                  value={value?.join(", ")}
-                  onChangeText={(text) =>
-                    onChange(text.split(",").map((l) => l.trim()))
-                  }
-                  onBlur={onBlur}
+                <Label htmlFor="lineup">Lineup</Label>
+                <PillInput
+                  value={value || []}
+                  onChange={onChange}
+                  error={errors.lineup?.message}
+                  placeholder="Enter dj"
+                  addLabel="Add DJ"
+                  editLabel="Edit DJ"
                 />
-                {errors.lineup && (
-                  <Paragraph>{errors.lineup.message}</Paragraph>
-                )}
               </>
             )}
           />
