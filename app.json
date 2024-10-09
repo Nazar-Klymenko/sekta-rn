@@ -40,31 +40,33 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "@react-native-community/datetimepicker",
-      {
-        "android": {
-          "datePicker": {
-            "colorAccent": {
-              "light": "#F56E14",
-              "dark": "#F56E14"
+      [
+        "@react-native-community/datetimepicker",
+        {
+          "android": {
+            "datePicker": {
+              "colorAccent": {
+                "light": "#F56E14",
+                "dark": "#F56E14"
+              },
+              "textColorPrimary": {
+                "light": "#F56E14",
+                "dark": "#F4F9E2"
+              }
             },
-            "textColorPrimary": {
-              "light": "#F56E14",
-              "dark": "#F4F9E2"
-            }
-          },
-          "timePicker": {
-            "background": {
-              "light": "#F4F9E2",
-              "dark": "#F4F9E2"
-            },
-            "numbersBackgroundColor": {
-              "light": "#F4F9E2",
-              "dark": "#F4F9E2"
+            "timePicker": {
+              "background": {
+                "light": "#F4F9E2",
+                "dark": "#F4F9E2"
+              },
+              "numbersBackgroundColor": {
+                "light": "#F4F9E2",
+                "dark": "#F4F9E2"
+              }
             }
           }
         }
-      }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
