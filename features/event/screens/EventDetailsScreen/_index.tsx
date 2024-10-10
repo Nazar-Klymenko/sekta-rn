@@ -10,14 +10,13 @@ import { Paragraph, YStack } from "tamagui";
 import { useLocalSearchParams } from "expo-router";
 
 import { useFetchEvent } from "../../hooks/useFetchEvent";
+import { TagSection } from "./TagSection";
 import {
   CountdownBanner,
   EventDescription,
-  EventGenres,
   EventHeader,
   EventHero,
   EventInfo,
-  EventLineup,
 } from "./index";
 
 export default function EventDetailsScreen() {
@@ -39,9 +38,7 @@ export default function EventDetailsScreen() {
       </ReanimatedPageContainer>
     );
 
-  const stickyBottom = (
-    <PrimaryButton onPress={() => {}}>I will attend 🎟️</PrimaryButton>
-  );
+  const stickyBottom = <PrimaryButton onPress={() => {}}>Going!</PrimaryButton>;
 
   return (
     <>
@@ -57,10 +54,14 @@ export default function EventDetailsScreen() {
           <EventHero event={event} />
           <YStack paddingHorizontal="$4" gap="$4">
             <EventInfo event={event} />
-            <CountdownBanner targetDate={event.date} />
+            {/* <CountdownBanner targetDate={event.date} /> */}
             <EventDescription description={event.caption} />
-            <EventLineup lineup={event.lineup} />
-            <EventGenres genres={event.genres} />
+            {event.lineup.length > 0 && (
+              <TagSection title="Lineup" tags={event.lineup} />
+            )}
+            {event.genres.length > 0 && (
+              <TagSection title="Genres" tags={event.genres} />
+            )}
           </YStack>
         </YStack>
       </ReanimatedPageContainer>
