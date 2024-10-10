@@ -1,42 +1,25 @@
-// src/components/DrawerLayout.tsx
 import React from "react";
 
-import { FlatList, Platform, TouchableOpacity } from "react-native";
+import { FlatList, Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useSignOut } from "@/features/auth/hooks/useSignOut";
 import { useCustomNavigation } from "@/features/core/hooks/useCustomNavigation";
 import { useDrawer } from "@/features/core/hooks/useDrawer";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
-import {
-  Bookmark,
-  BoomBox,
-  ChevronRight,
-  FileText,
-  HelpCircle,
-  Home,
-  LogOut,
-  Play,
-  Save,
-  SeparatorHorizontal,
-  ShieldCheck,
-  User,
-} from "@tamagui/lucide-icons";
+import { BoomBox, Play, User } from "@tamagui/lucide-icons";
 
 import {
   Avatar,
-  Button,
   Paragraph,
   Separator,
-  Stack,
   XStack,
   YStack,
   styled,
   useTheme,
 } from "tamagui";
 
-import { Href, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useSegments as useExpoRouterSegments } from "expo-router";
 import { Drawer } from "react-native-drawer-layout";
 import {
@@ -44,9 +27,7 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
-import { Collapsible } from "../Collapsible";
 import { MenuItem } from "../buttons/MenuItem";
-import { PrimaryButton } from "../buttons/PrimaryButton";
 
 const menuItems = [
   {
@@ -70,16 +51,11 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const { isLoggedIn, user } = useAuth();
+  const { user } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-  const signOutMutation = useSignOut();
   const { navigate } = useCustomNavigation(closeDrawer);
   const segments = useExpoRouterSegments();
   const isInAuthModal = isAuthRoute(segments);
-  const handleSignOut = () => {
-    signOutMutation.mutate();
-    closeDrawer();
-  };
 
   const renderDrawerContent = () => (
     <SafeAreaView style={{ flex: 1 }}>
@@ -94,7 +70,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             <Avatar.Image src={user.photoURL} />
           ) : (
             <Avatar.Fallback
-              backgroundColor="$blue10Light"
+              backgroundColor="$accentBackground"
               justifyContent="center"
               alignItems="center"
             >
@@ -111,6 +87,7 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
           </Paragraph>
         </YStack>
       </UserPreview>
+
       <Separator marginHorizontal="$4" />
 
       <FlatList
@@ -120,74 +97,16 @@ export const DrawerLayout: React.FC<{ children: React.ReactNode }> = ({
             title={item.title}
             icon={item.icon}
             onPress={() => navigate(item.url)}
-            fontSize="$6"
           />
         )}
         keyExtractor={(item) => item.title}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={
-          <Collapsible title="Legal">
-            <MenuItem
-              title="Terms of Service"
-              onPress={() => {
-                navigate("/tos");
-              }}
-              icon={FileText}
-              fontSize="$6"
-            />
-            <MenuItem
-              title="Privacy policy"
-              onPress={() => {
-                navigate("/privacy-policy");
-              }}
-              icon={ShieldCheck}
-              fontSize="$6"
-            />
-            <MenuItem
-              title="Contact us"
-              onPress={() => {
-                navigate("/contact");
-              }}
-              icon={HelpCircle}
-              fontSize="$6"
-            />
-          </Collapsible>
-        }
         contentContainerStyle={{
           paddingTop: 16,
           paddingHorizontal: 16,
           paddingBottom: Platform.OS === "ios" ? insets.bottom + 16 : 36,
         }}
       />
-      <Separator marginHorizontal="$4" />
-
-      <XStack
-        padding="$3"
-        paddingHorizontal="$4"
-        display="flex"
-        justifyContent="center"
-      >
-        {!isLoggedIn ? (
-          <PrimaryButton
-            width="100%"
-            onPress={() => {
-              router.push("/auth/login");
-              closeDrawer();
-            }}
-          >
-            Log in
-          </PrimaryButton>
-        ) : (
-          <MenuItem
-            title="Sign Out"
-            onPress={() => {
-              handleSignOut();
-              closeDrawer();
-            }}
-            icon={LogOut}
-          />
-        )}
-      </XStack>
     </SafeAreaView>
   );
 
