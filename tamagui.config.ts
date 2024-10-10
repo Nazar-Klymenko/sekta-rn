@@ -1,4 +1,4 @@
-import { config } from "@tamagui/config/v3";
+import { config, tokens } from "@tamagui/config/v3";
 
 import { createFont, createTamagui } from "tamagui";
 
@@ -33,7 +33,7 @@ const bodyFont = createFont({
 });
 
 export const tamaguiConfig = createTamagui({
-  ...config,
+  tokens,
   themes,
   fonts: {
     heading: headingFont,
