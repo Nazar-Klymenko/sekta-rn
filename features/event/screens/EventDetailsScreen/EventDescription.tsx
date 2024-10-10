@@ -11,8 +11,8 @@ export default function EventDescription({
 }: EventDescriptionProps) {
   return (
     <YStack gap="$2">
-      <H2 fontWeight="bold">About this event</H2>
-      <Paragraph color="$color10">{description}</Paragraph>
+      <H2 fontWeight="700">About this event</H2>
+      <Paragraph size="$5">{description}</Paragraph>
     </YStack>
   );
 }

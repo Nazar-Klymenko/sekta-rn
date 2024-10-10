@@ -5,7 +5,7 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
 
-import { H1, H2, XStack, YStack } from "tamagui";
+import { H1, XStack, YStack } from "tamagui";
 
 import { InfoItem } from "./InfoItem";
 
@@ -18,7 +18,7 @@ export default function EventInfo({ event }: { event: Event }) {
 
   return (
     <YStack gap="$4">
-      <H1 fontWeight="bold" color="white" flex={1}>
+      <H1 fontWeight="700" color="white" flex={1}>
         {event.title}
       </H1>
       <XStack display="flex" flex={1} gap="$4">
