@@ -81,7 +81,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         <Paragraph
           fontSize={24}
           lineHeight={24}
-          fontWeight="bold"
+          fontWeight="700"
           numberOfLines={2}
           color="$color"
         >
