@@ -33,12 +33,6 @@ export default function HomeLayout() {
         }}
       />
       <Stack.Screen
-        name="residents"
-        options={{
-          title: "All Residents",
-        }}
-      />
-      <Stack.Screen
         name="submissions"
         options={{
           title: "All Play Submissions",

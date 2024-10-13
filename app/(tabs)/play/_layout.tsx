@@ -20,13 +20,6 @@ export default function HomeLayout() {
           title: "Play",
         }}
       />
-      <Stack.Screen
-        name="residents"
-        options={{
-          animation: "fade_from_bottom",
-          title: "Residents",
-        }}
-      />
     </Stack>
   );
 }

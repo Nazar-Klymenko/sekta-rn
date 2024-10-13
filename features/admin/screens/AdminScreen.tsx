@@ -3,7 +3,7 @@ import React from "react";
 import { MenuItem } from "@/features/core/components/buttons/MenuItem";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { BoomBox, Play, Ticket, Users } from "@tamagui/lucide-icons";
+import { Play, Ticket, Users } from "@tamagui/lucide-icons";
 
 import { Paragraph, YStack } from "tamagui";
 
@@ -20,11 +20,6 @@ export default function AdminScreen() {
           title="All Events"
           onPress={() => router.navigate("/admin/events")}
           icon={Ticket}
-        />
-        <MenuItem
-          title="All Residents"
-          onPress={() => router.push("/admin/residents")}
-          icon={BoomBox}
         />
         <MenuItem
           title="All play submissions"
