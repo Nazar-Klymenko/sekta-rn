@@ -97,12 +97,7 @@ export default function ProfileScreen() {
           />
         </YStack>
 
-        <YStack
-          f={1}
-          justifyContent="flex-end"
-          alignItems="stretch"
-          marginTop="$4"
-        >
+        <YStack justifyContent="flex-end" alignItems="stretch" marginTop="$4">
           {isLoggedIn ? (
             <PrimaryButton onPress={handleSignOut} text="Sign Out" />
           ) : (

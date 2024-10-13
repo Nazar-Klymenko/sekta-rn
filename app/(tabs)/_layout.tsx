@@ -2,65 +2,34 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useUserData } from "@/features/users/hooks/useUserData";
+import { Home, Ticket, User } from "@tamagui/lucide-icons";
 
-import { Home, Ticket, User, UserRoundCheck } from "@tamagui/lucide-icons";
-
-import { useTheme } from "tamagui";
-
-import { Stack, useRouter, useSegments } from "expo-router";
-import { Slot, Tabs, usePathname } from "expo-router";
+import { Slot, Tabs } from "expo-router";
 
 export default function TabLayout() {
-  const theme = useTheme();
-  const { isLoggedIn, user } = useAuth();
-  const { data: userData } = useUserData(user?.uid || "");
-  const pathname = usePathname();
-  const router = useRouter();
-  const segment = useSegments();
-  const shouldHideTabBar =
-    pathname.startsWith("/events/") &&
-    !pathname.includes("/events/upcoming") &&
-    !pathname.includes("/events/previous");
-
   if (Platform.OS === "web") {
     return <Slot />;
   }
 
   return (
     <Tabs
-      initialRouteName="(index)"
+      initialRouteName="events"
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "$accentColor",
         tabBarStyle: {
-          backgroundColor: theme.gray2Dark.get(),
-          borderTopWidth: 0,
-          display: shouldHideTabBar ? "none" : "flex",
-          height: 54,
-          paddingBottom: 5,
-          paddingTop: 5,
-        },
-        tabBarActiveTintColor: theme.color.get(),
-        tabBarInactiveTintColor: theme.gray9Light.get(),
-        tabBarIconStyle: { marginBottom: 3 },
-        tabBarLabelStyle: {
-          fontSize: 10,
-          fontWeight: "500",
-        },
-        tabBarItemStyle: {
-          paddingTop: 5,
+          backgroundColor: "black",
         },
       }}
     >
       <Tabs.Screen
-        name="(index)"
-        listeners={{
+        name="events"
+        listeners={({ navigation }) => ({
           tabPress: () => {
-            if (router.canDismiss() && segment[1] === "(index)")
-              router.dismissAll();
+            navigation.navigate("events");
           },
-        }}
+        })}
         options={{
           title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
@@ -68,50 +37,21 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="(attending)"
-        listeners={{
-          tabPress: () => {
-            if (router.canDismiss() && segment[1] === "(attending)")
-              router.dismissAll();
-          },
-        }}
+        name="play"
         options={{
-          title: "Attending",
+          title: "Play",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Ticket color={color} size={size} />,
         }}
       />
 
       <Tabs.Screen
-        name="(profile)"
-        listeners={{
-          tabPress: () => {
-            if (router.canDismiss() && segment[1] === "(profile)")
-              router.dismissAll();
-          },
-        }}
+        name="profile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
       />
-
-      {isLoggedIn && userData?.isAdmin && (
-        <Tabs.Screen
-          name="(admin)"
-          listeners={{
-            tabPress: () => {
-              if (router.canDismiss() && segment[1] === "(admin)")
-                router.dismissAll();
-            },
-          }}
-          options={{
-            title: "Admin",
-            tabBarIcon: ({ color, size }) => (
-              <UserRoundCheck color={color} size={size} />
-            ),
-          }}
-        />
-      )}
     </Tabs>
   );
 }

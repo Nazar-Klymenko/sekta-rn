@@ -2,27 +2,29 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { useTheme } from "tamagui";
-
 import { Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
-  const theme = useTheme();
-
   if (Platform.OS === "web") {
     return <Slot />;
   }
-
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen
-        name="[id]"
+        name="index"
+        options={{
+          title: "Play",
+        }}
+      />
+      <Stack.Screen
+        name="residents"
         options={{
           animation: "fade_from_bottom",
-          title: "",
-          headerShown: true,
-          headerTransparent: true,
-          headerTintColor: theme.color.get(),
+          title: "Residents",
         }}
       />
     </Stack>

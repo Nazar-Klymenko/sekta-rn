@@ -17,17 +17,6 @@ export default function PlayScreen() {
 
   return (
     <PageContainer fullWidth>
-      <Stack.Screen
-        options={{
-          animation: "fade_from_bottom",
-          title: "Play",
-          headerShown: true || Platform.OS !== "web",
-          headerStyle: {
-            backgroundColor: theme.background.get(),
-          },
-          headerTintColor: theme.color.get(),
-        }}
-      />
       <HeroSection />
       <YStack
         backgroundColor="$background"

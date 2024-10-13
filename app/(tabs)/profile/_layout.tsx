@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Platform } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
 import { DrawerButton } from "@/features/core/components/drawer/DrawerButton";
 
@@ -17,17 +18,21 @@ export default function HomeLayout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{
+        options={({ navigation }) => ({
           title: "Profile",
           animation: "fade_from_bottom",
           headerShown: true || Platform.OS !== "web",
-          headerLeft: () => <DrawerButton />,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.push("admin")}>
+              <Text style={{ color: "orange", marginRight: 10 }}>Admin</Text>
+            </TouchableOpacity>
+          ),
 
           headerStyle: {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
-        }}
+        })}
       />
       <Stack.Screen
         name="change-email"

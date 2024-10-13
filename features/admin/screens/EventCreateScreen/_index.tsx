@@ -164,10 +164,13 @@ export default function EventCreateScreen() {
         metadata: {}, // Empty object for now, can be used for custom fields later
       };
 
-      await addDoc(collection(db, "events"), newEvent);
+      const docRef = await addDoc(collection(db, "events"), newEvent);
 
       Alert.alert("Success", "Event created successfully!");
-      router.back();
+      router.navigate({
+        pathname: "/events/[id]",
+        params: { id: docRef.id },
+      });
     } catch (error) {
       console.error("Error adding document: ", error);
       Alert.alert("Error", "Failed to create event. Please try again.");

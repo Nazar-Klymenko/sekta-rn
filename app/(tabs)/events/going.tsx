@@ -61,7 +61,7 @@ export default function UpcomingEventsScreen() {
 
   return (
     <PageContainer scrollable={false} fullWidth>
-      <Stack.Screen
+      {/* <Stack.Screen
         options={{
           animation: "fade_from_bottom",
           title: "Attending Events",
@@ -71,7 +71,7 @@ export default function UpcomingEventsScreen() {
           },
           headerTintColor: theme.color.get(),
         }}
-      />
+      /> */}
       <FlatList
         contentContainerStyle={{ paddingHorizontal: 0 }} // Remove default padding
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
