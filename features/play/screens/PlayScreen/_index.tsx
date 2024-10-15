@@ -1,27 +1,18 @@
 import React from "react";
 
-import { Platform } from "react-native";
-
-import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
-import { Paragraph, YStack, useTheme } from "tamagui";
-
-import { Stack } from "expo-router";
+import { Paragraph, ScrollView, YStack, useTheme } from "tamagui";
 
 import { PlayForm } from "./Form";
 import { HeroSection } from "./Hero";
 import { VenueInfoSection } from "./Venue";
 
 export default function PlayScreen() {
-  const theme = useTheme();
-
   return (
-    <PageContainer fullWidth>
+    <ScrollView>
       <HeroSection />
       <YStack
         backgroundColor="$background"
         padding="$4"
-        flex={1}
         gap="$4"
         marginHorizontal="auto"
         width="100%"
@@ -29,7 +20,7 @@ export default function PlayScreen() {
       >
         <VenueInfoSection />
         <YStack gap="$2">
-          <Paragraph fontSize={24} fontWeight="bold">
+          <Paragraph fontSize={24} fontWeight="700">
             Apply to Play
           </Paragraph>
           <Paragraph fontSize="$4" color="$gray10Light">
@@ -39,6 +30,6 @@ export default function PlayScreen() {
 
         <PlayForm />
       </YStack>
-    </PageContainer>
+    </ScrollView>
   );
 }

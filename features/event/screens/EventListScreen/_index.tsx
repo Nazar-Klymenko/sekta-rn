@@ -2,7 +2,7 @@ import React from "react";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Separator, YStack } from "tamagui";
+import { Separator } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -44,20 +44,18 @@ export default function EventListScreen() {
   }
 
   return (
-    <PageContainer scrollable fullWidth>
-      <YStack gap="$4" paddingTop="$4">
-        <UpcomingEventsSection
-          upcomingEvents={upcomingEvents}
-          isUpcomingLoading={isUpcomingLoading}
-          onViewAllPress={() => router.push("/events/upcoming")}
-        />
-        <Separator marginHorizontal="$4" />
-        <PreviousEventsSection
-          previousEvents={previousEvents}
-          isPreviousEventsLoading={isPreviousEventsLoading}
-          onViewAllPress={() => router.push("/events/previous")}
-        />
-      </YStack>
+    <PageContainer>
+      <UpcomingEventsSection
+        upcomingEvents={upcomingEvents}
+        isUpcomingLoading={isUpcomingLoading}
+        onViewAllPress={() => router.navigate("/events/upcoming")}
+      />
+      <Separator marginVertical="$2" />
+      <PreviousEventsSection
+        previousEvents={previousEvents}
+        isPreviousEventsLoading={isPreviousEventsLoading}
+        onViewAllPress={() => router.navigate("/events/previous")}
+      />
     </PageContainer>
   );
 }

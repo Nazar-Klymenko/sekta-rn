@@ -5,21 +5,20 @@ import Skeleton from "@/features/core/components/Skeleton";
 import { Stack, XStack, YStack } from "tamagui";
 
 interface SkeletonUpcomingEventCardProps {
-  cardWidth: number;
+  // cardWidth: number;
 }
 
 export const SkeletonUpcomingEventCard: React.FC<
   SkeletonUpcomingEventCardProps
-> = ({ cardWidth }) => {
+> = ({}) => {
   return (
     <YStack
-      width={cardWidth}
       borderRadius="$6"
       overflow="hidden"
       borderWidth={1}
       borderColor="$gray2Dark"
     >
-      <Skeleton height={240} width={cardWidth} />
+      <Skeleton height={240} />
       <YStack padding="$4" gap="$2">
         <Skeleton height={24} width="80%" />
         <XStack alignItems="center" gap="$2">

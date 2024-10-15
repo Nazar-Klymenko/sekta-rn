@@ -2,6 +2,7 @@ import React from "react";
 
 import { Pressable, ScrollView, useWindowDimensions } from "react-native";
 
+import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
 import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { Event } from "@/features/event/models/Event";
@@ -29,27 +30,14 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
 
   return (
     <YStack>
-      <XStack
-        justifyContent="space-between"
-        alignItems="center"
-        paddingHorizontal="$4"
-      >
-        <H2>Upcoming Events</H2>
-        <Pressable
-          onPress={onViewAllPress}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <XStack alignItems="center" gap="$2">
-            <Paragraph>View all</Paragraph>
-            <ChevronRight />
-          </XStack>
-        </Pressable>
-      </XStack>
+      <SectionHeaderWithAction
+        title="Upcoming Events"
+        onActionPress={onViewAllPress}
+      />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: 16,
           paddingVertical: 8,
         }}
         snapToInterval={snapToInterval}
@@ -61,7 +49,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
               .fill(null)
               .map((_, index) => (
                 <XStack key={`skeleton-${index}`} paddingRight="$4">
-                  <SkeletonUpcomingEventCard cardWidth={cardWidth} />
+                  <SkeletonUpcomingEventCard />
                 </XStack>
               ))
           : upcomingEvents?.map((event, index) => (
@@ -69,7 +57,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
                 key={event.id}
                 paddingRight={index === totalEvents - 1 ? 0 : "$4"}
               >
-                <UpcomingEventCard event={event} cardWidth={cardWidth} />
+                <UpcomingEventCard event={event} isVerticalView={false} />
               </XStack>
             ))}
       </ScrollView>

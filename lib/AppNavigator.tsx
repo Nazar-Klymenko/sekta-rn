@@ -1,5 +1,3 @@
-import { Drawer } from "expo-router/drawer";
-
 import React from "react";
 
 import { Platform } from "react-native";
@@ -42,36 +40,32 @@ export function AppNavigator() {
 
   return (
     <>
-      <Stack initialRouteName="(tabs)">
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
-          }}
-        />
+      <Stack
+        initialRouteName="(tabs)"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen
           name="auth"
           options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
             presentation: "modal",
+            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="(support)"
           options={{
-            headerShown: false,
-            animation: "fade_from_bottom",
             presentation: "modal",
+            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="admin"
           options={{
-            headerShown: false,
-            animation: "slide_from_right",
             presentation: "modal",
+            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen name="+not-found" options={{ presentation: "modal" }} />

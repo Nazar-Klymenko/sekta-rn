@@ -18,7 +18,6 @@ export const VenueInfoSection = () => (
     size="$4"
     bordered
     maxWidth={740}
-    animation="quickest"
     hoverStyle={{ scale: 1.02 }}
     pressStyle={{ scale: 0.99 }}
   >

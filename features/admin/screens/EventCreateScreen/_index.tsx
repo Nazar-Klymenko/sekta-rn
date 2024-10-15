@@ -2,13 +2,15 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { Alert } from "react-native";
 
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Event } from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
@@ -24,6 +26,7 @@ import {
 } from "tamagui";
 
 import * as ImagePicker from "expo-image-picker";
+import { useLocalSearchParams } from "expo-router";
 import { useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
@@ -34,7 +37,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CustomImagePicker } from "./ImagePicker";
 import PillInput from "./PillInput";
 
-// Define your validation schema
 export const eventSchema = yup.object().shape({
   title: yup
     .string()
@@ -42,7 +44,7 @@ export const eventSchema = yup.object().shape({
     .min(3, "Title must be at least 3 characters"),
   caption: yup
     .string()
-    .max(200, "Caption must not exceed 200 characters")
+    .max(1500, "Caption must not exceed 1500 characters")
     .required("Caption is required"),
 
   date: yup.date().required("Date is required"),
@@ -57,7 +59,7 @@ export const eventSchema = yup.object().shape({
   lineup: yup.array().of(yup.string().required()).defined(),
 });
 
-export type FormData = {
+type FormData = {
   title: string;
   caption: string;
 
@@ -72,7 +74,10 @@ export type FormData = {
 
 export default function EventCreateScreen() {
   const [image, setImage] = useState<string | null>(null);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const params = useLocalSearchParams();
+  const eventId = params.id as string | undefined;
   const onDateChange = (
     _: DateTimePickerEvent,
     selectedDate: Date | undefined,
@@ -83,6 +88,13 @@ export default function EventCreateScreen() {
     }
   };
 
+  useEffect(() => {
+    if (eventId) {
+      setIsEditMode(true);
+      fetchEventData(eventId);
+    }
+  }, [eventId]);
+
   const [show, setShow] = useState(false);
 
   const router = useRouter();
@@ -92,6 +104,7 @@ export default function EventCreateScreen() {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(eventSchema),
@@ -130,6 +143,33 @@ export default function EventCreateScreen() {
     }
   };
 
+  const fetchEventData = async (id: string) => {
+    setIsLoading(true);
+    try {
+      const eventDoc = await getDoc(doc(db, "events", id));
+      if (eventDoc.exists()) {
+        const eventData = eventDoc.data() as Event;
+        reset({
+          title: eventData.title,
+          caption: eventData.caption,
+          date: eventData.date.toDate(),
+          location: eventData.location,
+          price: eventData.price,
+          genres: eventData.genres,
+          lineup: eventData.lineup,
+        });
+        setImage(eventData.image.publicUrl);
+      } else {
+        Alert.alert("Error", "Event not found");
+        router.back();
+      }
+    } catch (error) {
+      console.error("Error fetching event:", error);
+      Alert.alert("Error", "Failed to fetch event data");
+    }
+    setIsLoading(false);
+  };
+
   const onSubmit = async (data: FormData) => {
     if (!image) {
       Alert.alert("Error", "Please select an image");
@@ -144,7 +184,7 @@ export default function EventCreateScreen() {
       await uploadBytes(imageRef, blob);
       const imageUrl = await getDownloadURL(imageRef);
 
-      const newEvent: Omit<Event, "id"> = {
+      const eventData: Omit<Event, "id"> = {
         ...data,
         title_lowercase: data.title?.toLowerCase() ?? "",
         date: Timestamp.fromDate(new Date(data.date as unknown as string)),
@@ -164,18 +204,24 @@ export default function EventCreateScreen() {
         metadata: {}, // Empty object for now, can be used for custom fields later
       };
 
-      const docRef = await addDoc(collection(db, "events"), newEvent);
-
-      Alert.alert("Success", "Event created successfully!");
-      router.navigate({
-        pathname: "/events/[id]",
-        params: { id: docRef.id },
-      });
+      if (isEditMode) {
+        await updateDoc(doc(db, "events", eventId!), eventData);
+        Alert.alert("Success", "Event updated successfully!");
+      } else {
+        const docRef = await addDoc(collection(db, "events"), eventData);
+        Alert.alert("Success", "Event created successfully!");
+        router.navigate({
+          pathname: "/events/[id]",
+          params: { id: docRef.id },
+        });
+      }
     } catch (error) {
       console.error("Error adding document: ", error);
       Alert.alert("Error", "Failed to create event. Please try again.");
     }
   };
+
+  if (isLoading) return <FullPageLoading />;
 
   return (
     <PageContainer>
@@ -204,13 +250,14 @@ export default function EventCreateScreen() {
             name="caption"
             render={({ field: { onChange, onBlur, value } }) => (
               <>
-                <Label htmlFor="caption">Caption</Label>
-                <TextArea
-                  id="caption"
+                <Label>Caption</Label>
+                <Input
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
                   verticalAlign="top"
+                  multiline
+                  rows={6}
                 />
                 {errors.caption && (
                   <Paragraph>{errors.caption.message}</Paragraph>
@@ -311,7 +358,7 @@ export default function EventCreateScreen() {
             )}
           />
           <Form.Trigger asChild>
-            <Button>Create Event</Button>
+            <Button>{isEditMode ? "Update Event" : "Create Event"}</Button>
           </Form.Trigger>
         </YStack>
       </Form>

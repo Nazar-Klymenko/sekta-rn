@@ -1,25 +1,17 @@
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-
-import { Platform } from "react-native";
+import { useTheme } from "tamagui";
 
 import { Stack } from "expo-router";
-import { useTheme } from "tamagui";
 
 export default function SupportLayout() {
   const theme = useTheme();
 
-  const commonScreenOptions: NativeStackNavigationOptions = {
-    headerShown: Platform.OS !== "web",
-    headerStyle: {
-      backgroundColor: theme.background.get(),
-    },
-    headerTintColor: theme.color.get(),
-  };
-
   return (
     <Stack
       screenOptions={{
-        ...commonScreenOptions,
+        headerStyle: {
+          backgroundColor: theme.background.get(),
+        },
+        headerTintColor: theme.color.get(),
       }}
     >
       <Stack.Screen

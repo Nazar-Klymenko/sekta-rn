@@ -13,8 +13,7 @@ export default function AdminScreen() {
   const router = useRouter();
 
   return (
-    <PageContainer formContainer>
-      <Paragraph fontSize={24}>Admin page</Paragraph>
+    <PageContainer>
       <YStack gap="$2">
         <MenuItem
           title="All Events"
@@ -28,7 +27,7 @@ export default function AdminScreen() {
         />
         <MenuItem
           title="All users"
-          onPress={() => router.push("/admin/userlist")}
+          onPress={() => router.push("/admin/user-list")}
           icon={Users}
         />
       </YStack>

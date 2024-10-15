@@ -104,7 +104,7 @@ export function PlayForm() {
 
   return (
     <Form methods={methods} maxWidth={740} flex={1}>
-      <Paragraph fontSize={20} fontWeight="bold">
+      <Paragraph fontSize={20} fontWeight="700">
         Contact Information
       </Paragraph>
       <Input
@@ -121,7 +121,7 @@ export function PlayForm() {
         placeholder="+48 577 925 024"
         icon={Phone}
       />
-      <Paragraph fontSize={20} fontWeight="bold">
+      <Paragraph fontSize={20} fontWeight="700">
         Portfolio Links (Optional)
       </Paragraph>
       {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (

@@ -1,5 +1,3 @@
-import { LinearGradient } from "tamagui/linear-gradient";
-
 import React from "react";
 
 import { Tag } from "@/features/core/components/Tag";
@@ -16,19 +14,18 @@ import {
   YStack,
   styled,
   useTheme,
-  useWindowDimensions,
 } from "tamagui";
 
 import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
   event: Event;
-  cardWidth: number;
+  isVerticalView: boolean;
 }
 
 const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   event,
-  cardWidth,
+  isVerticalView,
 }) => {
   const theme = useTheme();
   const router = useRouter();
@@ -40,27 +37,17 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   return (
     <CardContainer
+      width={isVerticalView ? "100%" : 350}
       onPress={() => router.push(`/events/${event.id}`)}
-      width={cardWidth}
     >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={cardWidth}
-          height={cardWidth * 0.9}
-        />
-        <LinearGradient
-          position="absolute"
-          top="0"
-          left="0"
-          right="0"
-          bottom="0"
-          colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0)"]}
-          start={[0, 0]}
-          end={[0, 1]}
+          width={isVerticalView ? "100%" : 350}
+          aspectRatio={1}
         />
         <DateBadge>
-          <Paragraph color="white" fontSize="$7" fontWeight="bold">
+          <Paragraph color="white" fontSize="$7" fontWeight="600">
             {formattedDay}
           </Paragraph>
           <Paragraph color="white" fontSize="$3" textTransform="uppercase">
@@ -68,7 +55,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           </Paragraph>
         </DateBadge>
         <PriceBadge>
-          <Paragraph color="white" fontSize="$4" fontWeight="bold">
+          <Paragraph color="white" fontSize="$4" fontWeight="600">
             {event.price === 0
               ? "FREE"
               : isNaN(event.price)
@@ -170,15 +157,3 @@ const ContentContainer = styled(YStack, {
 });
 
 export default UpcomingEventCard;
-{
-  /* <LinearGradient
-  position="absolute"
-  top="0"
-  left="0"
-  right="0"
-  bottom="0"
-  colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0)"]}
-  start={[0, 0]}
-  end={[0, 1]}
-/>; */
-}

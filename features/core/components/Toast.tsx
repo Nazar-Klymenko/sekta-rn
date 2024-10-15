@@ -1,7 +1,7 @@
+import React from "react";
+
 import { AlertTriangle, CheckCircle, Info, X } from "@tamagui/lucide-icons";
 import { Toast, useToastState } from "@tamagui/toast";
-
-import React from "react";
 
 import { Button, XStack, YStack, styled } from "tamagui";
 
@@ -70,7 +70,6 @@ export const CurrentToast = () => {
     <StyledToast
       key={toast.id}
       duration={5000}
-      animation="quickest"
       enterStyle={{ opacity: 0, scale: 0.9, y: -10 }}
       exitStyle={{ opacity: 0, scale: 0.95, y: 10 }}
       opacity={1}

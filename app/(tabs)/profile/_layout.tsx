@@ -32,6 +32,12 @@ export default function HomeLayout() {
             backgroundColor: theme.background.get(),
           },
           headerTintColor: theme.color.get(),
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "LeagueSpartan_700Bold",
+            fontSize: 25,
+            color: "orange",
+          },
         })}
       />
       <Stack.Screen

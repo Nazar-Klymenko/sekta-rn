@@ -3,6 +3,8 @@ import React from "react";
 import { Platform } from "react-native";
 import { Text, TouchableOpacity } from "react-native";
 
+import { SizableText } from "tamagui";
+
 import { Slot, Stack } from "expo-router";
 
 export default function EventsLayout() {
@@ -21,7 +23,6 @@ export default function EventsLayout() {
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,
-          // fontWeight: "900",
         },
       }}
     >
@@ -31,7 +32,9 @@ export default function EventsLayout() {
           headerTitle: "Events",
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.navigate("going")}>
-              <Text style={{ color: "orange", marginRight: 10 }}>Going</Text>
+              <SizableText style={{ color: "orange", marginRight: 10 }}>
+                Going
+              </SizableText>
             </TouchableOpacity>
           ),
         })}

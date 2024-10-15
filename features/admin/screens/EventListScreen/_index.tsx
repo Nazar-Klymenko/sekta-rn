@@ -40,7 +40,7 @@ export default function EventListScreen() {
   if (isError) return <Paragraph>Error loading events</Paragraph>;
 
   return (
-    <PageContainer fullWidth padding="$4">
+    <PageContainer>
       <XStack
         justifyContent="space-between"
         alignItems="center"
