@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useWindowDimensions } from "react-native";
+
 import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
@@ -20,13 +22,13 @@ import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
   event: Event;
-  isVerticalView: boolean;
 }
 
-const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
-  event,
-  isVerticalView,
-}) => {
+const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const cardWidth = (windowWidth - 32) * 0.9;
+
   const theme = useTheme();
   const router = useRouter();
 
@@ -37,13 +39,13 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   return (
     <CardContainer
-      width={isVerticalView ? "100%" : 350}
+      width={cardWidth}
       onPress={() => router.push(`/events/${event.id}`)}
     >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={isVerticalView ? "100%" : 350}
+          width={cardWidth}
           aspectRatio={1}
         />
         <DateBadge>
@@ -108,9 +110,10 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 };
 
 const CardContainer = styled(YStack, {
-  borderRadius: "$6",
-  overflow: "hidden",
+  borderRadius: "$2",
   borderColor: "$gray2Dark",
+
+  overflow: "hidden",
   backgroundColor: "$background",
   elevation: "$1",
   marginVertical: 10,
@@ -122,7 +125,6 @@ const CardContainer = styled(YStack, {
     scale: 1.02,
     elevation: 8,
   },
-  borderWidth: 1,
 });
 
 const ImageContainer = styled(Stack, {
@@ -152,7 +154,7 @@ const PriceBadge = styled(YStack, {
 
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
-  paddingHorizontal: 18,
+  paddingHorizontal: 4,
   gap: 8,
 });
 

@@ -25,11 +25,6 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="events"
-        listeners={({ navigation }) => ({
-          tabPress: () => {
-            navigation.navigate("events");
-          },
-        })}
         options={{
           title: "Events",
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,

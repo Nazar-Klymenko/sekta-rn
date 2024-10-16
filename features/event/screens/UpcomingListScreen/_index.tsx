@@ -3,6 +3,7 @@ import React from "react";
 import { ActivityIndicator, FlatList } from "react-native";
 
 import { RetryButton } from "@/features/core/components/buttons/IconButtons";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 
@@ -47,8 +48,9 @@ export default function UpcomingEventsScreen() {
   }
 
   return (
-    <YStack flex={1} backgroundColor="black" paddingHorizontal="$4">
+    <PageContainer>
       <FlatList
+        scrollEnabled={false}
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
@@ -61,7 +63,7 @@ export default function UpcomingEventsScreen() {
               <SkeletonUpcomingEventCard />
             </YStack>
           ) : (
-            <UpcomingEventCard event={event} isVerticalView />
+            <UpcomingEventCard event={event} />
           )
         }
         keyExtractor={(item, index) => item.id || index.toString()}
@@ -81,6 +83,6 @@ export default function UpcomingEventsScreen() {
           ) : null
         }
       />
-    </YStack>
+    </PageContainer>
   );
 }

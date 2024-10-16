@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Platform } from "react-native";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 import { SizableText } from "tamagui";
 
@@ -24,6 +24,7 @@ export default function EventsLayout() {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,
         },
+        animation: "slide_from_right",
       }}
     >
       <Stack.Screen
@@ -48,8 +49,7 @@ export default function EventsLayout() {
       <Stack.Screen
         name="going"
         options={{
-          headerTitle: "Going",
-          animation: "slide_from_right",
+          title: "Going",
         }}
       />
       <Stack.Screen

@@ -50,7 +50,7 @@ export default function EventListScreen() {
         isUpcomingLoading={isUpcomingLoading}
         onViewAllPress={() => router.navigate("/events/upcoming")}
       />
-      <Separator marginVertical="$2" />
+      {/* <Separator marginVertical="$2" /> */}
       <PreviousEventsSection
         previousEvents={previousEvents}
         isPreviousEventsLoading={isPreviousEventsLoading}
