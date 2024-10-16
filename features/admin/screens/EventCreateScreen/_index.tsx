@@ -4,7 +4,7 @@ import DateTimePicker, {
 
 import React, { useEffect, useState } from "react";
 
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection, deleteDoc } from "firebase/firestore";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -14,6 +14,8 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Event } from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
+
+import { useToastController } from "@tamagui/toast";
 
 import {
   Button,
@@ -76,6 +78,7 @@ export default function EventCreateScreen() {
   const [image, setImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const toast = useToastController();
   const params = useLocalSearchParams();
   const eventId = params.id as string | undefined;
   const onDateChange = (
@@ -140,6 +143,70 @@ export default function EventCreateScreen() {
     } catch (error) {
       console.error("Error picking image:", error);
       Alert.alert("Error", "Failed to pick image. Please try again.");
+    }
+  };
+
+  const deleteEvent = async () => {
+    if (!eventId) {
+      Alert.alert("Error", "No event to delete");
+      return;
+    }
+
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this event?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteDoc(doc(db, "events", eventId));
+              Alert.alert("Success", "Event deleted successfully!");
+              router.back();
+            } catch (error) {
+              console.error("Error deleting event:", error);
+              Alert.alert("Error", "Failed to delete event. Please try again.");
+            }
+          },
+        },
+      ],
+    );
+  };
+
+  const duplicateEvent = async () => {
+    if (!eventId) {
+      Alert.alert("Error", "No event to duplicate");
+      return;
+    }
+
+    try {
+      const eventDoc = await getDoc(doc(db, "events", eventId));
+      if (eventDoc.exists()) {
+        const eventData = eventDoc.data() as Event;
+        const newEventData: Omit<Event, "id"> = {
+          ...eventData,
+          title: `Copy of ${eventData.title}`,
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+          attendeeCount: 0,
+        };
+
+        const docRef = await addDoc(collection(db, "events"), newEventData);
+        // Alert.alert("Success", "Event duplicated successfully!");
+        toast.show("Success", {
+          message: "Event duplicated successfully!",
+          variant: "success",
+        });
+        // router.navigate({
+        //   pathname: "/events/[id]",
+        //   params: { id: docRef.id },
+        // });
+      }
+    } catch (error) {
+      console.error("Error duplicating event:", error);
+      Alert.alert("Error", "Failed to duplicate event. Please try again.");
     }
   };
 
@@ -360,6 +427,12 @@ export default function EventCreateScreen() {
           <Form.Trigger asChild>
             <Button>{isEditMode ? "Update Event" : "Create Event"}</Button>
           </Form.Trigger>
+          {isEditMode && (
+            <>
+              <Button onPress={deleteEvent}>Delete Event</Button>
+              <Button onPress={duplicateEvent}>Duplicate Event</Button>
+            </>
+          )}
         </YStack>
       </Form>
     </PageContainer>
