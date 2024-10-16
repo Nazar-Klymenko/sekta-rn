@@ -7,14 +7,12 @@ import { Button, XStack, YStack, styled } from "tamagui";
 
 const StyledToast = styled(Toast, {
   width: "90%",
-  maxWidth: 400,
   backgroundColor: "$backgroundHover",
   padding: "$1",
   borderColor: "$borderColor",
   borderWidth: 1,
   alignItems: "center",
-  borderRadius: "$6",
-  margin: "$4",
+  borderRadius: "$2",
   variants: {
     variant: {
       error: {
@@ -43,11 +41,13 @@ const IconWrapper = styled(YStack, {
   alignItems: "center",
   marginLeft: "$2",
 });
+
 const ContentWrapper = styled(YStack, {
   flex: 1,
   marginHorizontal: "$2",
   marginVertical: "$1",
 });
+
 export const CurrentToast = () => {
   const toast = useToastState();
 
