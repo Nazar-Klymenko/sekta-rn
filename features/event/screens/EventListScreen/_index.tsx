@@ -1,13 +1,17 @@
-import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
+import React, { useCallback, useState } from "react";
+
+import { RefreshControl } from "react-native";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Separator } from "tamagui";
+import { Button } from "tamagui";
 
 import { useRouter } from "expo-router";
 
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
-import { useUpcomingEventsPreview } from "../../hooks/useUpcomingEvents";
+import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
 import {
   ErrorView,
   PreviousEventsSection,
@@ -16,13 +20,15 @@ import {
 
 export default function EventListScreen() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const [refreshing, setRefreshing] = useState(false);
 
   const {
     data: upcomingEvents,
     isLoading: isUpcomingLoading,
     error: upcomingError,
     refetch: refetchUpcoming,
-  } = useUpcomingEventsPreview(3);
+  } = useUpcomingEvents();
 
   const {
     data: previousEvents,
@@ -31,6 +37,15 @@ export default function EventListScreen() {
     refetch: refetchPrevious,
   } = usePreviousEventsPreview(4);
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([refetchUpcoming(), refetchPrevious()]);
+    setRefreshing(false);
+  }, [refetchUpcoming, refetchPrevious]);
+  const clearQueryCache = useCallback(() => {
+    queryClient.clear();
+    onRefresh(); // Refetch data after clearing cache
+  }, [onRefresh]);
   if (upcomingError || previousEventsError) {
     return (
       <ErrorView
@@ -44,13 +59,17 @@ export default function EventListScreen() {
   }
 
   return (
-    <PageContainer>
+    <PageContainer
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button>
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}
         isUpcomingLoading={isUpcomingLoading}
         onViewAllPress={() => router.navigate("/events/upcoming")}
       />
-      {/* <Separator marginVertical="$2" /> */}
       <PreviousEventsSection
         previousEvents={previousEvents}
         isPreviousEventsLoading={isPreviousEventsLoading}

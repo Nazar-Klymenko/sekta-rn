@@ -1,21 +1,10 @@
-// For previews (limited events)
 import {
-  Query,
-  Timestamp,
-  addDoc,
   collection,
-  doc,
-  endBefore,
   limit as firestoreLimit,
-  getDoc,
   getDocs,
-  limit,
-  limitToLast,
   orderBy,
   query,
-  queryEqual,
   startAfter,
-  updateDoc,
   where,
 } from "firebase/firestore";
 

@@ -1,10 +1,21 @@
 import React from "react";
 
-import { ScrollView } from "tamagui";
+import { ScrollView, ScrollViewProps } from "tamagui";
 
-export function PageContainer({ children }: { children: React.ReactNode }) {
+type PageContainerProps = ScrollViewProps & {
+  children: React.ReactNode;
+};
+
+export function PageContainer({
+  children,
+  ...scrollViewProps
+}: PageContainerProps) {
   return (
-    <ScrollView backgroundColor="$background" paddingHorizontal={16}>
+    <ScrollView
+      backgroundColor="$background"
+      paddingHorizontal={16}
+      {...scrollViewProps}
+    >
       {children}
     </ScrollView>
   );

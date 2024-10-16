@@ -1,3 +1,5 @@
+import { InfiniteData } from "@tanstack/react-query";
+
 import React from "react";
 
 import { ScrollView } from "react-native";
@@ -10,7 +12,7 @@ import { Event } from "@/features/event/models/Event";
 import { XStack, YStack } from "tamagui";
 
 interface UpcomingEventsSectionProps {
-  upcomingEvents: Event[] | undefined;
+  upcomingEvents: InfiniteData<Event[]> | undefined;
   isUpcomingLoading: boolean;
   onViewAllPress: () => void;
 }
@@ -20,7 +22,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
   isUpcomingLoading,
   onViewAllPress,
 }) => {
-  const totalEvents = upcomingEvents?.length || 0;
+  const totalEvents = upcomingEvents?.pages[0].length || 0;
 
   return (
     <YStack>
@@ -46,7 +48,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
                   <SkeletonUpcomingEventCard />
                 </XStack>
               ))
-          : upcomingEvents?.map((event, index) => (
+          : upcomingEvents?.pages[0].map((event, index) => (
               <XStack
                 key={event.id}
                 paddingRight={index === totalEvents - 1 ? 0 : 16}
