@@ -5,7 +5,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { Play, Ticket, Users } from "@tamagui/lucide-icons";
 
-import { Paragraph, YStack } from "tamagui";
+import { YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 

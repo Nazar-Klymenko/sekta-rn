@@ -16,7 +16,7 @@ const columns: Column<Event>[] = [
   {
     header: "Date",
     accessor: "date",
-    render: (value) => new Date(value).toLocaleDateString(),
+    render: (value) => value.toDate().toLocaleDateString(),
   },
   { header: "Location", accessor: "location" },
 ];

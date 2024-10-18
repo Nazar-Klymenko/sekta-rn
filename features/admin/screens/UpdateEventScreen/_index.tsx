@@ -23,7 +23,7 @@ export default function EventOperationsScreen() {
   const params = useLocalSearchParams();
   const eventId = params.id as string;
   const [show, setShow] = useState(false);
-  const { event, isLoading, deleteEvent, duplicateEvent, submitEvent } =
+  const { event, isLoading, deleteEvent, duplicateEvent, updateEvent } =
     useEventOperations(eventId);
 
   const { control, handleSubmit, reset, setValue, errors } = useEventForm();
@@ -46,7 +46,7 @@ export default function EventOperationsScreen() {
     }
   };
 
-  const onSubmit = (data: EventFormData) => submitEvent(data, image);
+  const onSubmit = (data: EventFormData) => updateEvent(data, image);
 
   if (isLoading) return <FullPageLoading />;
 

@@ -83,7 +83,7 @@ export function useEventOperations(eventId: string) {
     }
   };
 
-  const submitEvent = async (data: EventFormData, image: string | null) => {
+  const updateEvent = async (data: EventFormData, image: string | null) => {
     if (!image) {
       Alert.alert("Error", "Please select an image");
       return;
@@ -122,7 +122,7 @@ export function useEventOperations(eventId: string) {
       Alert.alert("Success", "Event updated successfully!");
     } catch (error) {
       console.error("Error adding document: ", error);
-      Alert.alert("Error", "Failed to create event. Please try again.");
+      Alert.alert("Error", "Failed to update event. Please try again.");
     }
   };
 
@@ -132,6 +132,6 @@ export function useEventOperations(eventId: string) {
     isError,
     deleteEvent,
     duplicateEvent,
-    submitEvent,
+    updateEvent,
   };
 }
