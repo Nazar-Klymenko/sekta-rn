@@ -38,8 +38,6 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   const formattedDate = formatFirestoreTimestamp(event.date, "EEE, MMM d");
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
-  const formattedDay = formatFirestoreTimestamp(event.date, "dd");
-  const formattedMonth = formatFirestoreTimestamp(event.date, "MMM");
 
   return (
     <CardContainer
@@ -52,23 +50,6 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           width={verticalView ? "100%" : cardWidth}
           aspectRatio={1}
         />
-        <DateBadge>
-          <Paragraph color="white" fontSize="$7" fontWeight="600">
-            {formattedDay}
-          </Paragraph>
-          <Paragraph color="white" fontSize="$3" textTransform="uppercase">
-            {formattedMonth}
-          </Paragraph>
-        </DateBadge>
-        <PriceBadge>
-          <Paragraph color="white" fontSize="$4" fontWeight="600">
-            {event.price === 0
-              ? "FREE"
-              : isNaN(event.price)
-                ? "N/A"
-                : `${event.price} PLN`}
-          </Paragraph>
-        </PriceBadge>
       </ImageContainer>
       <ContentContainer>
         <Paragraph
@@ -133,27 +114,6 @@ const CardContainer = styled(YStack, {
 
 const ImageContainer = styled(Stack, {
   position: "relative",
-});
-
-const DateBadge = styled(YStack, {
-  position: "absolute",
-  top: 16,
-  left: 16,
-  backgroundColor: "rgba(0,0,0,0.7)",
-  borderRadius: 12,
-  paddingHorizontal: 16,
-  paddingVertical: 10,
-  alignItems: "center",
-});
-
-const PriceBadge = styled(YStack, {
-  position: "absolute",
-  top: 16,
-  right: 16,
-  backgroundColor: "rgba(0,0,0,0.7)",
-  borderRadius: 12,
-  paddingHorizontal: 16,
-  paddingVertical: 10,
 });
 
 const ContentContainer = styled(YStack, {
