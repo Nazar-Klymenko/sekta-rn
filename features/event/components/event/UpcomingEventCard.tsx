@@ -22,9 +22,13 @@ import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
   event: Event;
+  verticalView?: boolean;
 }
 
-const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
+const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
+  event,
+  verticalView,
+}) => {
   const { width: windowWidth } = useWindowDimensions();
 
   const cardWidth = (windowWidth - 32) * 0.9;
@@ -39,13 +43,13 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
 
   return (
     <CardContainer
-      width={cardWidth}
+      width={verticalView ? "100%" : cardWidth}
       onPress={() => router.push(`/events/${event.id}`)}
     >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={cardWidth}
+          width={verticalView ? "100%" : cardWidth}
           aspectRatio={1}
         />
         <DateBadge>

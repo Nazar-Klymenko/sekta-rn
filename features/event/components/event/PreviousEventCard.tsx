@@ -26,12 +26,14 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
         borderRadius="$6"
       />
       <ContentContainer>
-        <Paragraph fontSize="$8" fontWeight="700">
-          {event.title}
-        </Paragraph>
-        <Paragraph fontSize="$3" color="$gray10Light" marginVertical="$2">
-          {formattedDate}
-        </Paragraph>
+        <YStack>
+          <Paragraph fontSize="$8" fontWeight="700">
+            {event.title}
+          </Paragraph>
+          <Paragraph fontSize="$3" color="$gray10Light">
+            {formattedDate}
+          </Paragraph>
+        </YStack>
         <XStack flexWrap="wrap" gap="$2">
           {event.genres.slice(0, 2).map((genre, index) => (
             <Tag tag={genre} key={genre + index} />
@@ -47,12 +49,11 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 
 const CardContainer = styled(XStack, {
   borderRadius: "$6",
-  // borderWidth: 1,
 
   borderColor: "$gray2Dark",
 
   padding: "$2",
-  marginBottom: "$4",
+  marginBottom: "$2",
   gap: "$3",
   elevation: "$1",
   pressStyle: {
@@ -65,7 +66,7 @@ const CardContainer = styled(XStack, {
 });
 
 const ContentContainer = styled(YStack, {
-  justifyContent: "center",
+  justifyContent: "space-between",
 });
 
 export default PreviousEventCard;

@@ -54,16 +54,9 @@ export default function UpcomingEventsScreen() {
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
         renderItem={({ item: event }) =>
           isLoading ? (
-            <YStack
-              style={{
-                maxWidth: 720,
-                paddingVertical: 8,
-              }}
-            >
-              <SkeletonUpcomingEventCard />
-            </YStack>
+            <SkeletonUpcomingEventCard />
           ) : (
-            <UpcomingEventCard event={event} />
+            <UpcomingEventCard verticalView event={event} />
           )
         }
         keyExtractor={(item, index) => item.id || index.toString()}

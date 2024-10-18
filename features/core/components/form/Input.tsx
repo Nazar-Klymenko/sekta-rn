@@ -57,7 +57,7 @@ export function Input({
               style={{
                 position: "absolute",
                 left: 16,
-                color: "$placeholderColor",
+                color: "grey",
                 pointerEvents: "none",
                 userSelect: "none",
                 zIndex: 1,
@@ -88,12 +88,12 @@ export function Input({
               borderColor: error ? "$red10Dark" : undefined,
             }}
             ref={ref}
-            disabledStyle={{ color: "$placeholderColor" }}
+            disabledStyle={{ color: "grey" }}
             {...props}
           />
         </Stack>
       </YStack>
-      <XStack ai="center" marginTop="$2">
+      <XStack marginTop="$2">
         <Paragraph
           flex={1}
           color={error ? "$red10Light" : "$colorTransparent"}

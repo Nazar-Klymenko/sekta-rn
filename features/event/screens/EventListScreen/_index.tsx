@@ -64,7 +64,7 @@ export default function EventListScreen() {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button>
+      {/* <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button> */}
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}
         isUpcomingLoading={isUpcomingLoading}

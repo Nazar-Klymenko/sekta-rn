@@ -1,24 +1,31 @@
 import React from "react";
 
+import { useWindowDimensions } from "react-native";
+
 import Skeleton from "@/features/core/components/Skeleton";
 
 import { Stack, XStack, YStack } from "tamagui";
 
 interface SkeletonUpcomingEventCardProps {
-  // cardWidth: number;
+  verticalView?: boolean;
 }
 
 export const SkeletonUpcomingEventCard: React.FC<
   SkeletonUpcomingEventCardProps
-> = ({}) => {
+> = ({ verticalView }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const cardWidth = (windowWidth - 32) * 0.9;
+
   return (
     <YStack
+      width={verticalView ? "100%" : cardWidth}
       borderRadius="$6"
       overflow="hidden"
       borderWidth={1}
       borderColor="$gray2Dark"
     >
-      <Skeleton height={240} />
+      <Skeleton width={verticalView ? "100%" : cardWidth} aspectRatio={1} />
       <YStack padding="$4" gap="$2">
         <Skeleton height={24} width="80%" />
         <XStack alignItems="center" gap="$2">

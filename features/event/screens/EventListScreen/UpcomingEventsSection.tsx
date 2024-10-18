@@ -44,7 +44,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
           ? Array(3)
               .fill(null)
               .map((_, index) => (
-                <XStack key={`skeleton-${index}`} paddingRight="$4">
+                <XStack key={`skeleton-${index}`} paddingRight={16}>
                   <SkeletonUpcomingEventCard />
                 </XStack>
               ))

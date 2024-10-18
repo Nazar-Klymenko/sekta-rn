@@ -25,9 +25,9 @@ export const PreviousEventsSection: React.FC<PreviousEventsSectionProps> = ({
         onActionPress={onViewAllPress}
       />
 
-      <YStack marginVertical="$2">
+      <YStack marginVertical={8}>
         {isPreviousEventsLoading
-          ? Array(4)
+          ? Array(5)
               .fill(null)
               .map((_, index) => <SkeletonPreviousEventCard key={index} />)
           : previousEvents?.map((event) => (
