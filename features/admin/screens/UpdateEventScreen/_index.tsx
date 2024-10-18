@@ -2,27 +2,39 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { EventFormData } from "@/features/event/models/Event";
 
 import { Button, Form, Input, Label, Paragraph, YStack } from "tamagui";
 
+import { useLocalSearchParams } from "expo-router";
 import { Controller } from "react-hook-form";
 
 import { CustomImagePicker } from "../../components/events/ImagePicker";
 import PillInput from "../../components/events/PillInput";
-import { useCreateEvent } from "../../hooks/useCreateEvent";
 import { useEventForm } from "../../hooks/useEventForm";
+import { useEventOperations } from "../../hooks/useEventOperations";
 import { useImagePicker } from "../../hooks/useImagePicker";
 
-export default function EventCreateScreen() {
+export default function EventOperationsScreen() {
+  const params = useLocalSearchParams();
+  const eventId = params.id as string;
   const [show, setShow] = useState(false);
+  const { event, isLoading, deleteEvent, duplicateEvent, submitEvent } =
+    useEventOperations(eventId);
 
-  const { control, handleSubmit, setValue, errors } = useEventForm();
-  const { image, pickImage } = useImagePicker();
-  const { submitEvent } = useCreateEvent();
+  const { control, handleSubmit, reset, setValue, errors } = useEventForm();
+  const { image, setImage, pickImage } = useImagePicker();
+
+  useEffect(() => {
+    if (!isLoading && event) {
+      setImage(event.image.publicUrl);
+      reset({ ...event, date: event.date.toDate() });
+    }
+  }, [isLoading]);
 
   const onDateChange = (
     _: DateTimePickerEvent,
@@ -35,6 +47,8 @@ export default function EventCreateScreen() {
   };
 
   const onSubmit = (data: EventFormData) => submitEvent(data, image);
+
+  if (isLoading) return <FullPageLoading />;
 
   return (
     <PageContainer>
@@ -86,7 +100,9 @@ export default function EventCreateScreen() {
                 <Label htmlFor="date">Date</Label>
                 <Input
                   id="date"
-                  value={value.toLocaleDateString()}
+                  value={
+                    value instanceof Date ? value.toLocaleDateString() : ""
+                  }
                   onPress={() => setShow(true)}
                 />
                 {show && (
@@ -170,9 +186,13 @@ export default function EventCreateScreen() {
               </>
             )}
           />
+
           <Form.Trigger asChild>
-            <Button>Create Event</Button>
+            <Button>Update Event</Button>
           </Form.Trigger>
+
+          <Button onPress={deleteEvent}>Delete Event</Button>
+          <Button onPress={duplicateEvent}>Duplicate Event</Button>
         </YStack>
       </Form>
     </PageContainer>

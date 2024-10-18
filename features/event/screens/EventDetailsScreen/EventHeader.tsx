@@ -1,4 +1,3 @@
-// components/EventHeader.tsx
 import React from "react";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -8,7 +7,7 @@ import { ArrowLeft } from "@tamagui/lucide-icons";
 import { useTheme } from "tamagui";
 import { Stack as TamaguiStack } from "tamagui";
 
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -22,7 +21,6 @@ interface EventHeaderProps {
 
 const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
   const theme = useTheme();
-  const router = useRouter();
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -39,7 +37,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
 
   return (
     <Stack.Screen
-      options={{
+      options={({ navigation }) => ({
         headerBackground: () => (
           <Animated.View
             style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
@@ -57,12 +55,12 @@ const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
               overflow: "hidden",
             }}
           >
-            <TouchableOpacity onPress={() => canGoBack && router.back()}>
+            <TouchableOpacity onPress={() => canGoBack && navigation.back()}>
               <ArrowLeft />
             </TouchableOpacity>
           </TamaguiStack>
         ),
-      }}
+      })}
     />
   );
 };

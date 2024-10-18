@@ -9,11 +9,7 @@ import {
 import { useFetchPaginatedEvents } from "@/features/event/hooks/useFetchPaginatedEvents";
 import { Event } from "@/features/event/models/Event";
 
-import { Plus } from "@tamagui/lucide-icons";
-
 import { Button, Paragraph, XStack, YStack } from "tamagui";
-
-import { Link } from "expo-router";
 
 const columns: Column<Event>[] = [
   { header: "Title", accessor: "title" },
@@ -41,18 +37,6 @@ export default function EventListScreen() {
 
   return (
     <PageContainer>
-      <XStack
-        justifyContent="space-between"
-        alignItems="center"
-        paddingBottom="$4"
-      >
-        <Paragraph fontSize="$6" fontWeight="bold">
-          Events
-        </Paragraph>
-        <Link href="/admin/events/create" asChild>
-          <Button icon={Plus}>Create New Event</Button>
-        </Link>
-      </XStack>
       <YStack gap="$4">
         <GenericTable data={events || []} columns={columns} />
         <XStack justifyContent="space-between">
