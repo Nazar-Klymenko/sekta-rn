@@ -7,7 +7,7 @@ import { ArrowLeft } from "@tamagui/lucide-icons";
 import { useTheme } from "tamagui";
 import { Stack as TamaguiStack } from "tamagui";
 
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -17,10 +17,15 @@ import Animated, {
 
 interface EventHeaderProps {
   scrollY: SharedValue<number>;
+  title?: string;
 }
 
-const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
+const EventHeader: React.FC<EventHeaderProps> = ({
+  scrollY,
+  title = "Event",
+}) => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -31,36 +36,70 @@ const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
     );
     return {
       opacity,
-      backgroundColor: "hsla(240, 7%, 8%, 1)",
+      backgroundColor: "black",
+    };
+  });
+
+  const buttonAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 100],
+      [1, 1],
+      Extrapolation.CLAMP,
+    );
+    return {
+      opacity,
+    };
+  });
+
+  const titleAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 100],
+      [0, 1],
+      Extrapolation.CLAMP,
+    );
+    const translateY = interpolate(
+      scrollY.value,
+      [0, 100],
+      [20, 0],
+      Extrapolation.CLAMP,
+    );
+    return {
+      opacity,
+      transform: [{ translateY }],
     };
   });
 
   return (
     <Stack.Screen
-      options={({ navigation }) => ({
+      options={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
+        headerTransparent: true,
+        headerBlurEffect: "dark",
         headerBackground: () => (
           <Animated.View
             style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
           />
         ),
-        headerLeft: ({ canGoBack }) => (
-          <TamaguiStack
-            style={{
-              backgroundColor: theme.background075.get(),
-              borderWidth: 0,
-              borderColor: theme.gray2Dark.get(),
-              borderRadius: 20,
-              padding: 6,
-              marginHorizontal: 10,
-              overflow: "hidden",
-            }}
+        headerTitle: () => (
+          <Animated.Text
+            style={[
+              {
+                color: "orange",
+                fontFamily: "LeagueSpartan_700Bold",
+                fontSize: 25,
+              },
+              titleAnimatedStyle,
+            ]}
           >
-            <TouchableOpacity onPress={() => canGoBack && navigation.back()}>
-              <ArrowLeft />
-            </TouchableOpacity>
-          </TamaguiStack>
+            {title}
+          </Animated.Text>
         ),
-      })}
+      }}
     />
   );
 };

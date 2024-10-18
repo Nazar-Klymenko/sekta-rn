@@ -5,9 +5,11 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
+import { ArrowLeft } from "@tamagui/lucide-icons";
+
 import { Paragraph, YStack } from "tamagui";
 
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import { TagSection } from "./TagSection";
@@ -42,7 +44,7 @@ export default function EventDetailsScreen() {
 
   return (
     <>
-      <EventHeader scrollY={scrollY} />
+      <EventHeader scrollY={scrollY} title={event.title} />
       <ReanimatedPageContainer
         scrollable
         fullWidth={false}

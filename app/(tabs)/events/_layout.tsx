@@ -31,19 +31,13 @@ export default function EventsLayout() {
         name="index"
         options={({ navigation }) => ({
           headerTitle: "Events",
-          // headerRight: () => (
-          //   <TouchableOpacity onPress={() => navigation.navigate("going")}>
-          //     <SizableText style={{ color: "orange", marginRight: 10 }}>
-          //       Going
-          //     </SizableText>
-          //   </TouchableOpacity>
-          // ),
         })}
       />
       <Stack.Screen
         name="[id]"
         options={{
           title: "Event",
+          headerShown: false,
         }}
       />
       <Stack.Screen
