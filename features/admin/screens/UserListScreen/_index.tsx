@@ -1,65 +1,103 @@
-import React, { useMemo, useState } from "react";
+import { createColumnHelper } from "@tanstack/react-table";
 
+import React, { useMemo } from "react";
+
+import { Alert, Platform } from "react-native";
+
+import { Table } from "@/features/core/components/Table";
+import { Form } from "@/features/core/components/form/Form";
+import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import {
-  Column,
-  GenericTable,
-} from "@/features/core/components/tables/GenericTable";
+import { Pagination } from "@/features/core/components/navigation/Pagination";
 import { useUsers } from "@/features/users/hooks/useUsers";
-import { User as UserData } from "@/features/users/models/User";
+import { User } from "@/features/users/models/User";
 
-import { Check, Minus } from "@tamagui/lucide-icons";
+import { Check, Minus, Search, Trash2 } from "@tamagui/lucide-icons";
 
-import { Paragraph } from "tamagui";
+import { Button, Paragraph, Stack, XStack } from "tamagui";
 
-const ITEMS_PER_PAGE = 10;
+import { useRouter } from "expo-router";
+import { debounce } from "lodash";
+import { useForm, useWatch } from "react-hook-form";
 
-const columns: Column<UserData>[] = [
-  { header: "Username", accessor: "username" },
-  { header: "Email", accessor: "email" },
-  { header: "Full Name", accessor: "fullName" },
-  { header: "Language", accessor: "language" },
-  {
-    header: "Agree ToS",
-    accessor: "agreeTos",
-    render: (value: boolean) => (value ? <Check /> : <Minus />),
-  },
-  {
-    header: "Agree Email",
-    accessor: "agreeEmail",
-    render: (value: boolean) => (value ? <Check /> : <Minus />),
-  },
-  {
-    header: "Is Admin",
-    accessor: "isAdmin",
-    render: (value: boolean) => (value ? <Check /> : <Minus />),
-  },
-];
+import * as yup from "yup";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const columnHelper = createColumnHelper<User>();
+
+const searchSchema = yup.object().shape({
+  searchQuery: yup.string(),
+});
+type FormValues = yup.InferType<typeof searchSchema>;
 
 export default function UserListScreen() {
   const { data: users, isLoading, isError } = useUsers();
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(searchSchema),
+    defaultValues: {
+      searchQuery: "",
+    },
+    mode: "onTouched",
+  });
 
-  const paginatedUsers = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return users?.slice(startIndex, startIndex + ITEMS_PER_PAGE) || [];
-  }, [users, currentPage]);
-
-  const totalPages = Math.ceil((users?.length || 0) / ITEMS_PER_PAGE);
+  const columns = [
+    columnHelper.accessor("username", {
+      header: "Username",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("email", {
+      header: "Email",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("fullName", {
+      header: "Full Name",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("language", {
+      header: "Language",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("agreeTos", {
+      header: "Agree ToS",
+      cell: (info) => (info.getValue() ? "✓" : "-"),
+    }),
+    columnHelper.accessor("agreeEmail", {
+      header: "Agree Email",
+      cell: (info) => (info.getValue() ? "✓" : "-"),
+    }),
+    columnHelper.accessor("isAdmin", {
+      header: "Is Admin",
+      cell: (info) => (info.getValue() ? "✓" : "-"),
+    }),
+  ];
 
   if (isLoading) return <FullPageLoading />;
   if (isError) return <Paragraph>Error loading users</Paragraph>;
 
   return (
-    <PageContainer fullWidth padding="$4">
-      <GenericTable
-        data={paginatedUsers}
-        columns={columns}
-        // currentPage={currentPage}
-        // totalPages={totalPages}
-        // setCurrentPage={setCurrentPage}
-      />
+    <PageContainer padding="$4">
+      <Stack gap="$4">
+        <XStack alignItems="center" gap="$2">
+          <Form methods={methods} flex={1}>
+            <Input
+              placeholder="Search users"
+              name="searchQuery"
+              id="search-users"
+              label=""
+              icon={Search}
+            />
+          </Form>
+        </XStack>
+
+        <Table data={users || []} columns={columns} pageSize={10} />
+      </Stack>
     </PageContainer>
   );
 }

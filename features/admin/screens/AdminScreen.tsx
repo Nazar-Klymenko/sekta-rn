@@ -27,7 +27,7 @@ export default function AdminScreen() {
         />
         <MenuItem
           title="All users"
-          onPress={() => router.push("/admin/user-list")}
+          onPress={() => router.push("/admin/users")}
           icon={Users}
         />
       </YStack>

@@ -5,7 +5,7 @@ import PreviousEventCard from "@/features/event/components/event/PreviousEventCa
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 import { Event } from "@/features/event/models/Event";
 
-import { YStack } from "tamagui";
+import { Separator, YStack } from "tamagui";
 
 interface PreviousEventsSectionProps {
   previousEvents: Event[] | undefined;
@@ -19,7 +19,9 @@ export const PreviousEventsSection: React.FC<PreviousEventsSectionProps> = ({
   onViewAllPress,
 }) => {
   return (
-    <YStack>
+    <YStack gap="$4">
+      <Separator />
+
       <SectionHeaderWithAction
         title="Previous Events"
         onActionPress={onViewAllPress}

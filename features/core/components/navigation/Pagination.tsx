@@ -6,7 +6,7 @@ import { Button, Paragraph, XStack } from "tamagui";
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: (newPage: number) => void;
 }
 
 export const Pagination: React.FC<PaginationProps> = ({

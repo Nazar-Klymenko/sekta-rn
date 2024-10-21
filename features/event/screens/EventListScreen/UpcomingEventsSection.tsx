@@ -9,7 +9,7 @@ import { SkeletonUpcomingEventCard } from "@/features/event/components/event/Ske
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { Event } from "@/features/event/models/Event";
 
-import { XStack, YStack } from "tamagui";
+import { Separator, XStack, YStack } from "tamagui";
 
 interface UpcomingEventsSectionProps {
   upcomingEvents: InfiniteData<Event[]> | undefined;
@@ -57,6 +57,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
               </XStack>
             ))}
       </ScrollView>
+      <Separator />
     </YStack>
   );
 };

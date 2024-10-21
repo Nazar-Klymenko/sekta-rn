@@ -14,10 +14,15 @@ export default function HomeLayout() {
   return (
     <Stack
       screenOptions={{
+        headerTitleAlign: "center",
+        headerTintColor: "orange",
         headerStyle: {
-          backgroundColor: theme.background.get(),
+          backgroundColor: "black",
         },
-        headerTintColor: theme.color.get(),
+        headerTitleStyle: {
+          fontFamily: "LeagueSpartan_700Bold",
+          fontSize: 25,
+        },
         animation: "slide_from_right",
       }}
     >
@@ -58,16 +63,18 @@ export default function HomeLayout() {
         name="events/[id]"
         options={{
           title: "Event Details",
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="submissions"
         options={{
           title: "All Play Submissions",
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name="user-list"
+        name="users"
         options={{
           title: "All users",
         }}

@@ -6,7 +6,7 @@ import { RefreshControl } from "react-native";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Button } from "tamagui";
+import { Button, Separator } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -63,6 +63,7 @@ export default function EventListScreen() {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      gap="$4"
     >
       {/* <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button> */}
       <UpcomingEventsSection

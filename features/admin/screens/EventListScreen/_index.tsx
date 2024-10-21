@@ -1,53 +1,65 @@
+import { createColumnHelper } from "@tanstack/react-table";
+
 import React from "react";
 
+import { Table } from "@/features/core/components/Table";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import {
-  Column,
-  GenericTable,
-} from "@/features/core/components/tables/GenericTable";
+import { Pagination } from "@/features/core/components/navigation/Pagination";
 import { useFetchPaginatedEvents } from "@/features/event/hooks/useFetchPaginatedEvents";
 import { Event } from "@/features/event/models/Event";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Button, Paragraph, XStack, YStack } from "tamagui";
+import { Paragraph, Stack, XStack } from "tamagui";
 
-const columns: Column<Event>[] = [
-  { header: "Title", accessor: "title" },
-  {
-    header: "Date",
-    accessor: "date",
-    render: (value) => value.toDate().toLocaleDateString(),
-  },
-  { header: "Location", accessor: "location" },
-];
+import { useRouter } from "expo-router";
+
+const columnHelper = createColumnHelper<Event>();
 
 export default function EventListScreen() {
-  const {
-    data: events,
-    isLoading,
-    isError,
-    goToNextPage,
-    goToPreviousPage,
-    hasNextPage,
-    hasPreviousPage,
-  } = useFetchPaginatedEvents();
+  const router = useRouter();
+  const { data: events, isLoading, isError } = useFetchPaginatedEvents();
+
+  const columns = [
+    columnHelper.accessor("title", {
+      header: "Title",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("date", {
+      header: "Date",
+      cell: (info) =>
+        info.getValue()
+          ? formatFirestoreTimestamp(info.getValue(), "MMMM do, yyyy")
+          : "-",
+      sortingFn: "datetime",
+      invertSorting: true,
+    }),
+    columnHelper.accessor("location", {
+      header: "Location",
+      cell: (info) => info.getValue() || "-",
+      sortingFn: "alphanumeric",
+    }),
+  ];
 
   if (isLoading) return <FullPageLoading />;
   if (isError) return <Paragraph>Error loading events</Paragraph>;
-
+  const handleRowClick = (event: Event) => {
+    router.push({
+      pathname: "/admin/events/[id]",
+      params: {
+        id: event.id,
+      },
+    });
+  };
   return (
-    <PageContainer>
-      <YStack gap="$4">
-        <GenericTable data={events || []} columns={columns} />
-        <XStack justifyContent="space-between">
-          <Button onPress={goToPreviousPage} disabled={!hasPreviousPage}>
-            Previous Page
-          </Button>
-          <Button onPress={goToNextPage} disabled={!hasNextPage}>
-            Next Page
-          </Button>
-        </XStack>
-      </YStack>
+    <PageContainer padding="$4">
+      <Table
+        data={events || []}
+        columns={columns}
+        pageSize={10}
+        onRowClick={handleRowClick}
+      />
     </PageContainer>
   );
 }

@@ -91,6 +91,7 @@ export default function EventCreateScreen() {
                 />
                 {show && (
                   <DateTimePicker
+                    accentColor="red"
                     value={value}
                     mode="date"
                     is24Hour={true}

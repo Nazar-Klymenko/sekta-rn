@@ -20,12 +20,13 @@ export const Footer = () => {
 
   return (
     <YStack
-      backgroundColor="$backgroundStrong"
+      backgroundColor="$background"
       paddingVertical="$6"
       paddingHorizontal="$4"
       elevation={10}
       shadowColor="$shadowColor"
       shadowOffset={{ width: 0, height: -2 }}
+      borderTopWidth={1}
       shadowOpacity={0.1}
       shadowRadius={10}
     >
