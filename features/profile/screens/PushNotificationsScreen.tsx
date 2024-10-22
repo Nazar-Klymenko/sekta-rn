@@ -61,11 +61,9 @@ export default function PushNotificationScreen() {
           </YStack>
           <Switch checked={isEnabled} onPress={toggleSwitch} />
         </XStack>
-        <PrimaryButton
-          onPress={sendNoti}
-          text="Send Test Notification"
-          disabled={!isEnabled}
-        />
+        <PrimaryButton onPress={sendNoti} disabled={!isEnabled}>
+          Send Test Notification
+        </PrimaryButton>
       </PageContainer>
     </AuthGuard>
   );

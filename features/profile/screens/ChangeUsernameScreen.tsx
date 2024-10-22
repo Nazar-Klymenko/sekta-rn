@@ -14,7 +14,7 @@ import { usernameSchema } from "@/utils/validationSchemas";
 import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Button, H1, Paragraph, XStack, YStack } from "tamagui";
+import { H1, Paragraph, XStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -105,7 +105,7 @@ export default function ChangeUsernameScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <H1 fontWeight="bold">Change your username</H1>
         <Form methods={methods}>
           <Input
@@ -126,7 +126,6 @@ export default function ChangeUsernameScreen() {
           </XStack>
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}
-            text="Update Username"
             isLoading={
               changeUsernameMutation.isPending || isUsernameCheckLoading
             }
@@ -135,7 +134,9 @@ export default function ChangeUsernameScreen() {
               changeUsernameMutation.isPending ||
               isUsernameCheckLoading
             }
-          />
+          >
+            Update Username
+          </PrimaryButton>
         </Form>
       </PageContainer>
     </AuthGuard>

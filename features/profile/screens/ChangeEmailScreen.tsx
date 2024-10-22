@@ -69,7 +69,7 @@ export default function ChangeEmailScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Change your email
@@ -98,10 +98,11 @@ export default function ChangeEmailScreen() {
           />
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
-            text="Update Email"
             isLoading={updateEmailMutation.isPending}
             disabled={updateEmailMutation.isPending || isVerificationSent}
-          />
+          >
+            Update Email
+          </PrimaryButton>
           {isVerificationSent && (
             <YStack marginTop="$4">
               <Paragraph textAlign="center" color="$green10">

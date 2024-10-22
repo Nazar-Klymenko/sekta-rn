@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
@@ -12,9 +11,9 @@ import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, Paragraph, YStack, useTheme } from "tamagui";
+import { H1, Paragraph } from "tamagui";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 
@@ -32,7 +31,6 @@ type FormValues = yup.InferType<typeof changePasswordSchema>;
 
 export default function ChangePasswordScreen() {
   const toast = useToastController();
-  const theme = useTheme();
   const changePasswordMutation = useChangePassword();
   const methods = useForm({
       resolver: yupResolver(changePasswordSchema),
@@ -72,7 +70,7 @@ export default function ChangePasswordScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Change Password
@@ -101,10 +99,11 @@ export default function ChangePasswordScreen() {
           />
           <PrimaryButton
             onPress={handleSubmit(onSubmit)}
-            text="Change Password"
             isLoading={changePasswordMutation.isPending}
             disabled={changePasswordMutation.isPending}
-          />
+          >
+            Change Password
+          </PrimaryButton>
           {changePasswordMutation.isError && (
             <Paragraph>Error: {changePasswordMutation.error.message}</Paragraph>
           )}

@@ -84,7 +84,7 @@ export default function UsernameBridgeScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <XStack justifyContent="center" alignItems="center">
             <H1 fontWeight="bold" textAlign="center">
@@ -112,11 +112,12 @@ export default function UsernameBridgeScreen() {
             </Paragraph>
           </XStack>
           <PrimaryButton
-            text="Continue"
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
             disabled={isLoading}
-          />
+          >
+            Continue
+          </PrimaryButton>
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Paragraph textAlign="center">

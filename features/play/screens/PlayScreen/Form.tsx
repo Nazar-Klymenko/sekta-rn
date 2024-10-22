@@ -146,10 +146,11 @@ export function PlayForm() {
       />
       <PrimaryButton
         onPress={methods.handleSubmit(onSubmit)}
-        text="Send application"
         isLoading={playSubmission.isPending}
         disabled={playSubmission.isPending}
-      />
+      >
+        Send application
+      </PrimaryButton>
     </Form>
   );
 }

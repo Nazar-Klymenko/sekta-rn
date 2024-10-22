@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Spinner } from "tamagui";
+import { Button, ButtonProps, SizableText, Spinner } from "tamagui";
 
 interface SecondaryButtonTypes extends ButtonProps {
   onPress?: () => void;
@@ -18,13 +18,14 @@ export const SecondaryButton = ({
     <Button
       onPress={onPress}
       htmlFor={htmlFor}
-      borderRadius="$6"
-      minHeight={54}
+      borderRadius="$9"
       icon={isLoading ? <Spinner /> : undefined}
       disabledStyle={{ opacity: 0.5, pointerEvents: "none" }}
       {...props}
     >
-      {text}
+      <SizableText fontWeight="600" fontSize="$7">
+        {text}
+      </SizableText>
     </Button>
   );
 };

@@ -35,7 +35,7 @@ export default function ProfileScreen() {
     signOutMutation.mutate();
   };
   return (
-    <PageContainer formContainer>
+    <PageContainer>
       <YStack gap="$4">
         <ProfileHeader user={user} userData={userData} />
         <VerifyEmail />
@@ -97,15 +97,18 @@ export default function ProfileScreen() {
           />
         </YStack>
 
-        <YStack justifyContent="flex-end" alignItems="stretch" marginTop="$4">
+        <YStack
+          justifyContent="flex-end"
+          alignItems="stretch"
+          marginVertical={16}
+        >
           {isLoggedIn ? (
-            <PrimaryButton onPress={handleSignOut} text="Sign Out" />
+            <PrimaryButton onPress={handleSignOut}>Sign Out</PrimaryButton>
           ) : (
             <YStack gap="$4">
-              <PrimaryButton
-                onPress={() => router.push("/auth/login")}
-                text="Log In"
-              />
+              <PrimaryButton onPress={() => router.push("/auth/login")}>
+                Log In
+              </PrimaryButton>
               <SecondaryButton
                 onPress={() => router.push("/auth/username-bridge")}
                 text="Sign Up"
