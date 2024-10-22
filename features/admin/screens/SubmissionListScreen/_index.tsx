@@ -56,6 +56,7 @@ export default function SubmissionListScreen() {
       header: "Phone",
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
+      sortDescFirst: true,
     }),
     columnHelper.accessor("soundcloud", {
       header: "Soundcloud",
@@ -88,7 +89,7 @@ export default function SubmissionListScreen() {
         info.getValue()
           ? formatFirestoreTimestamp(
               info.getValue(),
-              "EEEE, MMMM do yyyy, HH:mm",
+              "EEEE, MMMM do yyyy, HH:mm"
             )
           : "-",
       sortingFn: "datetime",
@@ -114,7 +115,7 @@ export default function SubmissionListScreen() {
         submittedAt: submission.submittedAt
           ? formatFirestoreTimestamp(
               submission.submittedAt,
-              "EEEE, MMMM do yyyy, HH:mm",
+              "EEEE, MMMM do yyyy, HH:mm"
             )
           : "",
       },

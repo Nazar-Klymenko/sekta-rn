@@ -19,6 +19,7 @@ interface InputProps extends TamaguiInputProps {
   id: string;
   placeholder: string;
   icon?: React.ElementType;
+  leftAdornment?: string;
 }
 
 export function Input({
@@ -27,6 +28,7 @@ export function Input({
   placeholder,
   id,
   icon: Icon,
+  leftAdornment,
   maxLength,
   ...props
 }: InputProps) {
@@ -40,7 +42,7 @@ export function Input({
   });
 
   const [isFocused, setIsFocused] = useState(false);
-
+  const isPaddedLeft = !!Icon || !!leftAdornment;
   return (
     <YStack flex={1}>
       <Label htmlFor={id}>{label}</Label>
@@ -65,13 +67,27 @@ export function Input({
               }}
             />
           )}
+          {leftAdornment && (
+            <Paragraph
+              style={{
+                position: "absolute",
+                left: 16,
+                color: "grey",
+                pointerEvents: "none",
+                userSelect: "none",
+                zIndex: 1,
+              }}
+            >
+              {leftAdornment}
+            </Paragraph>
+          )}
 
           <BaseInput
             id={id}
             placeholder={placeholder}
             value={value}
             onChangeText={onChange}
-            paddingHorizontal={Icon ? "$8" : "$3.5"}
+            paddingHorizontal={isPaddedLeft ? "$8" : "$3.5"}
             onBlur={() => {
               onBlur();
               setIsFocused(false);

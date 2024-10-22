@@ -9,6 +9,7 @@ import {
 export const BaseInput = styled(TamaguiInput, {
   flex: 1,
   borderRadius: "$2",
+  borderWidth: 2,
   outlineColor: "$accentBackground",
   borderColor: "$gray2Dark",
   minHeight: 54,

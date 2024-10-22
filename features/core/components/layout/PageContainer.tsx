@@ -13,8 +13,8 @@ export function PageContainer({
   return (
     <ScrollView
       backgroundColor="$background"
-      paddingHorizontal={16}
       {...scrollViewProps}
+      contentContainerStyle={{ padding: "$4" }}
     >
       {children}
     </ScrollView>

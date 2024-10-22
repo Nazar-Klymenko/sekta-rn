@@ -1,4 +1,4 @@
-import { Paragraph, XStack, useTheme } from "tamagui";
+import { Paragraph, XStack, styled, useTheme } from "tamagui";
 
 interface TagProps {
   tag: string;
