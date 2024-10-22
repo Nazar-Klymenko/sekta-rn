@@ -1,6 +1,6 @@
-import { LinearGradient } from "tamagui/linear-gradient";
-
 import React from "react";
+
+import { useWindowDimensions } from "react-native";
 
 import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
@@ -16,20 +16,23 @@ import {
   YStack,
   styled,
   useTheme,
-  useWindowDimensions,
 } from "tamagui";
 
 import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
   event: Event;
-  cardWidth: number;
+  verticalView?: boolean;
 }
 
 const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   event,
-  cardWidth,
+  verticalView,
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const cardWidth = (windowWidth - 32) * 0.9;
+
   const theme = useTheme();
   const router = useRouter();
 
@@ -40,27 +43,17 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   return (
     <CardContainer
+      width={verticalView ? "100%" : cardWidth}
       onPress={() => router.push(`/events/${event.id}`)}
-      width={cardWidth}
     >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={cardWidth}
-          height={cardWidth * 0.9}
-        />
-        <LinearGradient
-          position="absolute"
-          top="0"
-          left="0"
-          right="0"
-          bottom="0"
-          colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0)"]}
-          start={[0, 0]}
-          end={[0, 1]}
+          width={verticalView ? "100%" : cardWidth}
+          aspectRatio={1}
         />
         <DateBadge>
-          <Paragraph color="white" fontSize="$7" fontWeight="bold">
+          <Paragraph color="white" fontSize="$7" fontWeight="600">
             {formattedDay}
           </Paragraph>
           <Paragraph color="white" fontSize="$3" textTransform="uppercase">
@@ -68,7 +61,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           </Paragraph>
         </DateBadge>
         <PriceBadge>
-          <Paragraph color="white" fontSize="$4" fontWeight="bold">
+          <Paragraph color="white" fontSize="$4" fontWeight="600">
             {event.price === 0
               ? "FREE"
               : isNaN(event.price)
@@ -81,7 +74,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         <Paragraph
           fontSize={24}
           lineHeight={24}
-          fontWeight="bold"
+          fontWeight="700"
           numberOfLines={2}
           color="$color"
         >
@@ -121,9 +114,10 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 };
 
 const CardContainer = styled(YStack, {
-  borderRadius: "$6",
-  overflow: "hidden",
+  borderRadius: "$2",
   borderColor: "$gray2Dark",
+
+  overflow: "hidden",
   backgroundColor: "$background",
   elevation: "$1",
   marginVertical: 10,
@@ -135,7 +129,6 @@ const CardContainer = styled(YStack, {
     scale: 1.02,
     elevation: 8,
   },
-  borderWidth: 1,
 });
 
 const ImageContainer = styled(Stack, {
@@ -165,20 +158,8 @@ const PriceBadge = styled(YStack, {
 
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
-  paddingHorizontal: 18,
+  paddingHorizontal: 4,
   gap: 8,
 });
 
 export default UpcomingEventCard;
-{
-  /* <LinearGradient
-  position="absolute"
-  top="0"
-  left="0"
-  right="0"
-  bottom="0"
-  colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0)"]}
-  start={[0, 0]}
-  end={[0, 1]}
-/>; */
-}

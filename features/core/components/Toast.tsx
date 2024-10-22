@@ -1,20 +1,18 @@
+import React from "react";
+
 import { AlertTriangle, CheckCircle, Info, X } from "@tamagui/lucide-icons";
 import { Toast, useToastState } from "@tamagui/toast";
-
-import React from "react";
 
 import { Button, XStack, YStack, styled } from "tamagui";
 
 const StyledToast = styled(Toast, {
   width: "90%",
-  maxWidth: 400,
   backgroundColor: "$backgroundHover",
   padding: "$1",
   borderColor: "$borderColor",
   borderWidth: 1,
   alignItems: "center",
-  borderRadius: "$6",
-  margin: "$4",
+  borderRadius: "$2",
   variants: {
     variant: {
       error: {
@@ -43,11 +41,13 @@ const IconWrapper = styled(YStack, {
   alignItems: "center",
   marginLeft: "$2",
 });
+
 const ContentWrapper = styled(YStack, {
   flex: 1,
   marginHorizontal: "$2",
   marginVertical: "$1",
 });
+
 export const CurrentToast = () => {
   const toast = useToastState();
 
@@ -70,7 +70,6 @@ export const CurrentToast = () => {
     <StyledToast
       key={toast.id}
       duration={5000}
-      animation="quickest"
       enterStyle={{ opacity: 0, scale: 0.9, y: -10 }}
       exitStyle={{ opacity: 0, scale: 0.95, y: 10 }}
       opacity={1}

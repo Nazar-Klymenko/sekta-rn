@@ -1,17 +1,18 @@
+import { InfiniteData } from "@tanstack/react-query";
+
 import React from "react";
 
-import { Pressable, ScrollView, useWindowDimensions } from "react-native";
+import { ScrollView } from "react-native";
 
+import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
 import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { Event } from "@/features/event/models/Event";
 
-import { ChevronRight } from "@tamagui/lucide-icons";
-
-import { H2, Paragraph, XStack, YStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
 
 interface UpcomingEventsSectionProps {
-  upcomingEvents: Event[] | undefined;
+  upcomingEvents: InfiniteData<Event[]> | undefined;
   isUpcomingLoading: boolean;
   onViewAllPress: () => void;
 }
@@ -21,38 +22,21 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
   isUpcomingLoading,
   onViewAllPress,
 }) => {
-  const { width: windowWidth } = useWindowDimensions();
-  const totalEvents = upcomingEvents?.length || 0;
-
-  const cardWidth = (windowWidth - 32) * 0.9;
-  const snapToInterval = cardWidth + 16;
+  const totalEvents = upcomingEvents?.pages[0].length || 0;
 
   return (
     <YStack>
-      <XStack
-        justifyContent="space-between"
-        alignItems="center"
-        paddingHorizontal="$4"
-      >
-        <H2>Upcoming Events</H2>
-        <Pressable
-          onPress={onViewAllPress}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <XStack alignItems="center" gap="$2">
-            <Paragraph>View all</Paragraph>
-            <ChevronRight />
-          </XStack>
-        </Pressable>
-      </XStack>
+      <SectionHeaderWithAction
+        title="Upcoming Events"
+        onActionPress={onViewAllPress}
+      />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingHorizontal: 16,
           paddingVertical: 8,
         }}
-        snapToInterval={snapToInterval}
+        snapToInterval={0}
         decelerationRate="fast"
         snapToAlignment="start"
       >
@@ -60,16 +44,16 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
           ? Array(3)
               .fill(null)
               .map((_, index) => (
-                <XStack key={`skeleton-${index}`} paddingRight="$4">
-                  <SkeletonUpcomingEventCard cardWidth={cardWidth} />
+                <XStack key={`skeleton-${index}`} paddingRight={16}>
+                  <SkeletonUpcomingEventCard />
                 </XStack>
               ))
-          : upcomingEvents?.map((event, index) => (
+          : upcomingEvents?.pages[0].map((event, index) => (
               <XStack
                 key={event.id}
-                paddingRight={index === totalEvents - 1 ? 0 : "$4"}
+                paddingRight={index === totalEvents - 1 ? 0 : 16}
               >
-                <UpcomingEventCard event={event} cardWidth={cardWidth} />
+                <UpcomingEventCard event={event} />
               </XStack>
             ))}
       </ScrollView>

@@ -1,4 +1,3 @@
-// src/components/Tag.tsx
 import { Paragraph, XStack, useTheme } from "tamagui";
 
 interface TagProps {
@@ -13,18 +12,16 @@ export const Tag = ({ tag, onPress, selected, icon }: TagProps) => {
 
   return (
     <XStack
-      borderRadius="$6"
+      borderRadius="$9"
       borderWidth={2}
       borderColor={selected ? "$accentBackground" : theme.orange9Light.get()}
-      paddingVertical="$2"
+      paddingVertical="$3"
       paddingHorizontal="$4"
       backgroundColor={selected ? "$accentBackground" : "transparent"}
       onPress={onPress}
-      alignItems="center"
-      gap="$2"
       cursor={selected ? "pointer" : "unset"}
     >
-      <Paragraph color="$color" fontSize="$3">
+      <Paragraph lineHeight="$1" color="$color" fontWeight="800" fontSize="$5">
         {tag}
       </Paragraph>
       {icon}

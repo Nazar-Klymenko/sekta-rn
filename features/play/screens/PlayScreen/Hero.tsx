@@ -10,6 +10,7 @@ import { Disc } from "@tamagui/lucide-icons";
 import {
   Image,
   Paragraph,
+  SizableText,
   TextStyle,
   YStack,
   styled,
@@ -59,20 +60,15 @@ export const HeroSection = () => {
                 </BlurView>
               )}
               <YStack>
-                <GradientText
-                  text="Play at SEKTA SELEKTA"
-                  colors={[
-                    "#FF1493",
-                    "#FF4500",
-                    "#FFD700",
-                    "#00CED1",
-                    "#8A2BE2",
-                  ]}
-                  style={{
-                    paddingLeft: 4,
-                    paddingRight: 4,
-                  }}
-                />
+                <SizableText
+                  lineHeight={60}
+                  fontSize={72}
+                  fontWeight={800}
+                  textTransform="uppercase"
+                  textAlign="center"
+                >
+                  Play at Our Venue
+                </SizableText>
               </YStack>
               <Paragraph
                 fontSize={24}
@@ -93,52 +89,5 @@ export const HeroSection = () => {
         </LinearGradient>
       </YStack>
     </>
-  );
-};
-const StyledText = styled(Paragraph, {
-  fontSize: 72,
-  fontWeight: "900",
-  textAlign: "center",
-  textTransform: "uppercase",
-  letterSpacing: -2,
-});
-
-interface GradientTextProps {
-  text: string;
-  colors: string[];
-  style?: TextStyle;
-}
-
-export const GradientText: React.FC<GradientTextProps> = ({
-  text,
-  colors,
-  style,
-}) => {
-  if (Platform.OS === "web") {
-    return (
-      <StyledText
-        style={{
-          backgroundClip: "text",
-          WebkitBackgroundClip: "text",
-          color: "transparent",
-          backgroundImage: `linear-gradient(45deg, ${colors.join(", ")})`,
-          ...style,
-        }}
-      >
-        {text}
-      </StyledText>
-    );
-  }
-
-  return (
-    <MaskedView maskElement={<StyledText>{text}</StyledText>}>
-      <LinearGradient
-        colors={colors}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <StyledText style={{ opacity: 0 }}>{text}</StyledText>
-      </LinearGradient>
-    </MaskedView>
   );
 };

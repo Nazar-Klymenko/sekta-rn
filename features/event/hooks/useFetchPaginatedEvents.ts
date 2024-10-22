@@ -1,4 +1,3 @@
-// useEvents.ts
 import { useQuery } from "@tanstack/react-query";
 
 import { useState } from "react";
@@ -7,7 +6,7 @@ import { Event } from "@/features/event/models/Event";
 
 import { fetchPaginatedEvents } from "../repository/fetchPaginatedEvents";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 12;
 
 export const useFetchPaginatedEvents = () => {
   const [currentPage, setCurrentPage] = useState<string | null>(null);

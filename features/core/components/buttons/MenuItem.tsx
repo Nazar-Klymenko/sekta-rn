@@ -1,38 +1,27 @@
-import { Paragraph, Stack, XStack, styled } from "tamagui";
+import { Paragraph, XStack, styled } from "tamagui";
 
-export const MenuItem = ({
-  title,
-  onPress,
-  icon: Icon,
-}: {
+type MenuItemProps = {
   title: string;
-  onPress: () => void;
   icon: React.ElementType;
-}) => (
+  onPress: () => void;
+};
+
+export const MenuItem = ({ title, icon: Icon, onPress }: MenuItemProps) => (
   <ResponsiveStack onPress={onPress}>
-    <XStack flex={1} alignItems="center" justifyContent="flex-start" gap="$3">
-      <Icon size="$1" color="$gray10Light" />
-      <Paragraph size={"$6"} fontWeight={700}>
-        {title}
-      </Paragraph>
-    </XStack>
+    <Icon size="$1" />
+    <Paragraph size="$6" fontWeight={600}>
+      {title}
+    </Paragraph>
   </ResponsiveStack>
 );
-const ResponsiveStack = styled(Stack, {
-  hoverStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  pressStyle: {
-    backgroundColor: "$backgroundHover",
-  },
-  padding: "$4",
-  minHeight: "$6",
-  borderRadius: "$6",
+
+const ResponsiveStack = styled(XStack, {
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  width: "100%",
-  backgroundColor: "transparent",
-  borderWidth: 0,
-  marginBottom: 8,
+  justifyContent: "flex-start",
+  alignItems: "center",
+
+  gap: "$3",
+
+  paddingVertical: "$3",
+  paddingHorizontal: "$2",
 });

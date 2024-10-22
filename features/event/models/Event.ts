@@ -1,35 +1,32 @@
 import { Timestamp } from "firebase/firestore";
 
-export interface Event {
-  id: string;
-
+export interface BaseEvent {
   title: string;
-  title_lowercase: string;
   caption: string;
-
-  date: Timestamp;
+  date: Date | Timestamp;
   location: string;
   price: number;
-
   genres: string[];
   lineup: string[];
+}
 
+export interface Event extends BaseEvent {
+  id: string;
+  title_lowercase: string;
+  date: Timestamp;
   image: {
     id: string;
-    url: string;
+    publicUrl: string;
     path: string;
-    altText?: string; // For accessibility
-    publicUrl?: string; //legacy, use url
+    altText?: string;
   };
-
   attendeeCount: number;
-
-  status: "draft" | "published";
-
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  publishedAt: Timestamp | null;
   deletedAt: Timestamp | null;
+  metadata: Record<string, any>;
+}
 
-  metadata: Record<string, any>; // For custom fields
+export interface EventFormData extends BaseEvent {
+  date: Date;
 }

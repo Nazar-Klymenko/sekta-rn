@@ -1,13 +1,17 @@
-import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
+import React, { useCallback, useState } from "react";
+
+import { RefreshControl } from "react-native";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Separator, YStack } from "tamagui";
+import { Button } from "tamagui";
 
 import { useRouter } from "expo-router";
 
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
-import { useUpcomingEventsPreview } from "../../hooks/useUpcomingEvents";
+import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
 import {
   ErrorView,
   PreviousEventsSection,
@@ -16,13 +20,15 @@ import {
 
 export default function EventListScreen() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const [refreshing, setRefreshing] = useState(false);
 
   const {
     data: upcomingEvents,
     isLoading: isUpcomingLoading,
     error: upcomingError,
     refetch: refetchUpcoming,
-  } = useUpcomingEventsPreview(3);
+  } = useUpcomingEvents();
 
   const {
     data: previousEvents,
@@ -31,6 +37,15 @@ export default function EventListScreen() {
     refetch: refetchPrevious,
   } = usePreviousEventsPreview(4);
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([refetchUpcoming(), refetchPrevious()]);
+    setRefreshing(false);
+  }, [refetchUpcoming, refetchPrevious]);
+  const clearQueryCache = useCallback(() => {
+    queryClient.clear();
+    onRefresh(); // Refetch data after clearing cache
+  }, [onRefresh]);
   if (upcomingError || previousEventsError) {
     return (
       <ErrorView
@@ -44,20 +59,22 @@ export default function EventListScreen() {
   }
 
   return (
-    <PageContainer scrollable fullWidth>
-      <YStack gap="$4" paddingTop="$4">
-        <UpcomingEventsSection
-          upcomingEvents={upcomingEvents}
-          isUpcomingLoading={isUpcomingLoading}
-          onViewAllPress={() => router.push("/events/upcoming")}
-        />
-        <Separator marginHorizontal="$4" />
-        <PreviousEventsSection
-          previousEvents={previousEvents}
-          isPreviousEventsLoading={isPreviousEventsLoading}
-          onViewAllPress={() => router.push("/events/previous")}
-        />
-      </YStack>
+    <PageContainer
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      {/* <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button> */}
+      <UpcomingEventsSection
+        upcomingEvents={upcomingEvents}
+        isUpcomingLoading={isUpcomingLoading}
+        onViewAllPress={() => router.navigate("/events/upcoming")}
+      />
+      <PreviousEventsSection
+        previousEvents={previousEvents}
+        isPreviousEventsLoading={isPreviousEventsLoading}
+        onViewAllPress={() => router.navigate("/events/previous")}
+      />
     </PageContainer>
   );
 }
