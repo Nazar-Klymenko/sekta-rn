@@ -60,7 +60,7 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Forgot Password

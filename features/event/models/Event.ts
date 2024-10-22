@@ -1,5 +1,7 @@
-import { Timestamp } from "firebase/firestore";
+// models/Event.ts
+import { FieldValue, Timestamp } from "firebase/firestore";
 
+// Base interface for common fields
 export interface BaseEvent {
   title: string;
   caption: string;
@@ -10,10 +12,16 @@ export interface BaseEvent {
   lineup: string[];
 }
 
-export interface Event extends BaseEvent {
+// Interface for form data
+export interface EventFormData extends BaseEvent {
+  date: Date; // Override to be specifically Date for forms
+}
+
+// Interface for stored data
+export interface Event extends Omit<BaseEvent, "date"> {
   id: string;
   title_lowercase: string;
-  date: Timestamp;
+  date: Timestamp; // Override to be specifically Timestamp for stored data
   image: {
     id: string;
     publicUrl: string;
@@ -21,12 +29,8 @@ export interface Event extends BaseEvent {
     altText?: string;
   };
   attendeeCount: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | FieldValue;
+  updatedAt: Timestamp | FieldValue;
   deletedAt: Timestamp | null;
   metadata: Record<string, any>;
-}
-
-export interface EventFormData extends BaseEvent {
-  date: Date;
 }

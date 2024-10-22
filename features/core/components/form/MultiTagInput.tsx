@@ -47,25 +47,24 @@ export function MultiTagInput({
 
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState<string[]>(["test", "testtt"]);
+  // Remove the local tags state and use the form value directly
+  const tags: string[] = value || []; // Added type annotation
 
   const handleAddTag = () => {
     if (inputValue.trim()) {
       const newTags = [...tags, inputValue.trim()];
-      setTags(newTags);
       setInputValue("");
       // Update form value with all tags
-      onChange(newTags); // Update the form with the new array of tags
+      onChange(newTags);
     }
   };
 
   const handleRemoveTag = (indexToRemove: number) => {
-    const newTags = tags.filter((_, index) => index !== indexToRemove);
-    setTags(newTags);
-    // Update form value
+    const newTags = tags.filter(
+      (_: string, index: number) => index !== indexToRemove
+    );
     onChange(newTags);
   };
-
   return (
     <Theme name="Input">
       <YStack flex={1}>
@@ -84,8 +83,8 @@ export function MultiTagInput({
               error
                 ? "$red10Light"
                 : isFocused
-                  ? "$accentBackground"
-                  : "$borderColor"
+                ? "$accentBackground"
+                : "$borderColor"
             }
           >
             <BaseInput

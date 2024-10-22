@@ -43,6 +43,9 @@ export function Input({
 
   const [isFocused, setIsFocused] = useState(false);
   const isPaddedLeft = !!Icon || !!leftAdornment;
+
+  const displayValue = value?.toString() || "";
+
   return (
     <YStack flex={1}>
       <Label htmlFor={id}>{label}</Label>
@@ -85,7 +88,7 @@ export function Input({
           <BaseInput
             id={id}
             placeholder={placeholder}
-            value={value}
+            value={displayValue}
             onChangeText={onChange}
             paddingHorizontal={isPaddedLeft ? "$8" : "$3.5"}
             onBlur={() => {
@@ -97,8 +100,8 @@ export function Input({
               error
                 ? "$red10Light"
                 : isFocused
-                  ? "$accentBackground"
-                  : undefined
+                ? "$accentBackground"
+                : undefined
             }
             hoverStyle={{
               borderColor: error ? "$red10Dark" : undefined,

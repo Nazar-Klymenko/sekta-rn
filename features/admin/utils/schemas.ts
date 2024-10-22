@@ -15,9 +15,9 @@ export const eventSchema = yup.object().shape({
 
   price: yup
     .number()
-    .min(0, "Price must be non-negative")
-    .required("Price is required"),
-
+    .required("Price is required")
+    .min(0, "Price must be at least 0")
+    .typeError("Price must be a number"),
   genres: yup.array().of(yup.string().required()).defined(),
   lineup: yup.array().of(yup.string().required()).defined(),
 });

@@ -84,7 +84,7 @@ export default function UsernameBridgeScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <XStack justifyContent="center" alignItems="center">
             <H1 fontWeight="bold" textAlign="center">

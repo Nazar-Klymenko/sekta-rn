@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Paragraph, XStack, styled } from "tamagui";
 
 type MenuItemProps = {
@@ -19,9 +21,10 @@ const ResponsiveStack = styled(XStack, {
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
-
   gap: "$3",
-
   paddingVertical: "$3",
   paddingHorizontal: "$2",
+  pressStyle: {
+    opacity: 0.7,
+  },
 });

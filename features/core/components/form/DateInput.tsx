@@ -52,26 +52,52 @@ export function DateInput({
   });
 
   const [isFocused, setIsFocused] = useState(false);
-  const [showPicker, setShowPicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
   const isPaddedLeft = !!Icon;
 
-  const formatDate = (date: Date) => {
-    if (mode === "time") {
-      return date.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    }
-    return date.toLocaleDateString();
+  const formatDateTime = (date: Date) => {
+    const dateStr = date.toLocaleDateString();
+    const timeStr = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+    return `${dateStr} ${timeStr}`;
   };
 
   const handleDateChange = (
     event: DateTimePickerEvent,
-    selectedDate?: Date,
+    selectedDate?: Date
   ) => {
-    setShowPicker(Platform.OS === "ios");
+    if (Platform.OS === "android") {
+      setShowDatePicker(false);
+    }
+
     if (event.type === "set" && selectedDate) {
-      onChange(selectedDate);
+      const currentValue = value ? new Date(value) : new Date();
+
+      // For date selection, keep the existing time if any
+      if (!showTimePicker) {
+        selectedDate.setHours(currentValue.getHours());
+        selectedDate.setMinutes(currentValue.getMinutes());
+        onChange(selectedDate);
+
+        if (Platform.OS === "android") {
+          // After date selection, show time picker
+          setShowTimePicker(true);
+        }
+      } else {
+        // For time selection, keep the existing date
+        const newDate = value ? new Date(value) : new Date();
+        newDate.setHours(selectedDate.getHours());
+        newDate.setMinutes(selectedDate.getMinutes());
+        onChange(newDate);
+        setShowTimePicker(false);
+      }
+    } else {
+      setShowDatePicker(false);
+      setShowTimePicker(false);
     }
   };
 
@@ -79,7 +105,7 @@ export function DateInput({
     <Theme name="Input">
       <YStack flex={1}>
         <Label htmlFor={id}>{label}</Label>
-        <Pressable onPress={() => setShowPicker(true)}>
+        <Pressable onPress={() => setShowDatePicker(true)}>
           <YStack alignItems="center">
             <Stack
               flexDirection="row"
@@ -105,7 +131,7 @@ export function DateInput({
               <BaseInput
                 id={id}
                 placeholder={placeholder}
-                value={value ? formatDate(new Date(value)) : ""}
+                value={value ? formatDateTime(new Date(value)) : ""}
                 paddingHorizontal={isPaddedLeft ? "$8" : "$3.5"}
                 onBlur={() => {
                   onBlur();
@@ -117,8 +143,8 @@ export function DateInput({
                   error
                     ? "$red10Light"
                     : isFocused
-                      ? "$accentBackground"
-                      : undefined
+                    ? "$accentBackground"
+                    : undefined
                 }
                 hoverStyle={{
                   borderColor: error ? "$red10Dark" : undefined,
@@ -130,22 +156,19 @@ export function DateInput({
             </Stack>
           </YStack>
         </Pressable>
-        {showPicker && (
-          <YStack backgroundColor="$background" padding="$4" borderRadius="$4">
-            <DateTimePicker
-              testID={`${id}-picker`}
-              value={value ? new Date(value) : new Date()}
-              mode={mode}
-              display="inline"
-              onChange={handleDateChange}
-              minimumDate={minimumDate}
-              maximumDate={maximumDate}
-              themeVariant="dark"
-              textColor="white"
-              accentColor="$blue10Light"
-            />
-          </YStack>
+
+        {(showDatePicker || showTimePicker) && (
+          <DateTimePicker
+            testID={`${id}-picker`}
+            value={value ? new Date(value) : new Date()}
+            mode={showTimePicker ? "time" : "date"}
+            is24Hour={true}
+            display={Platform.OS === "ios" ? "inline" : "default"}
+            onChange={handleDateChange}
+            minimumDate={minimumDate}
+          />
         )}
+
         <XStack marginTop="$2">
           <Paragraph
             flex={1}

@@ -7,6 +7,5 @@ export const useFetchEvent = (id: string) => {
   return useQuery<Event, Error>({
     queryKey: ["event", id],
     queryFn: () => fetchEvent(id),
-    enabled: !!id,
   });
 };

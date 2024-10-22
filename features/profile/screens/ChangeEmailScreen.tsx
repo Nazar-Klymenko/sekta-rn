@@ -29,7 +29,7 @@ type FormValues = yup.InferType<typeof updateEmailSchema>;
 
 export default function ChangeEmailScreen() {
   const { user } = useAuth();
-  const updateEmailMutation = useChangeEmail();
+  const { isPending, isError, mutate } = useChangeEmail();
   const toast = useToastController();
   const [isVerificationSent, setIsVerificationSent] = useState(false);
 
@@ -42,7 +42,7 @@ export default function ChangeEmailScreen() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    updateEmailMutation.mutate(
+    mutate(
       {
         profileData: { email: data.newEmail },
         currentPassword: data.currentPassword,
@@ -63,13 +63,13 @@ export default function ChangeEmailScreen() {
             variant: "error",
           });
         },
-      },
+      }
     );
   };
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Change your email
@@ -99,8 +99,8 @@ export default function ChangeEmailScreen() {
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
             text="Update Email"
-            isLoading={updateEmailMutation.isPending}
-            disabled={updateEmailMutation.isPending || isVerificationSent}
+            isLoading={isPending}
+            disabled={isPending || isVerificationSent}
           />
           {isVerificationSent && (
             <YStack marginTop="$4">

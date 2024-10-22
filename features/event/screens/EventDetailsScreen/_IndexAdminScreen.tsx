@@ -108,6 +108,7 @@ export default function AdminEventDetailsScreen() {
             <Theme name={"surface2"}>
               <TStack flex={1} width="100%">
                 <Button
+                  size={"$6"}
                   onPress={() => {
                     setOpen(false);
                     router.push({
@@ -132,6 +133,7 @@ export default function AdminEventDetailsScreen() {
                 </Button>
                 <Separator />
                 <Button
+                  size={"$6"}
                   onPress={() => {
                     setOpen(false);
                     setInnerOpen(true);
