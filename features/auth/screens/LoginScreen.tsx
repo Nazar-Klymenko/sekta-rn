@@ -98,10 +98,11 @@ export default function LoginScreen() {
           </YStack>
           <PrimaryButton
             onPress={methods.handleSubmit(onSubmit)}
-            text="Log in"
             isLoading={signInMutation.isPending}
             disabled={signInMutation.isPending}
-          />
+          >
+            Log In
+          </PrimaryButton>
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link
               href={{

@@ -11,13 +11,7 @@ import { useLocalSearchParams } from "expo-router";
 
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import { TagSection } from "./TagSection";
-import {
-  CountdownBanner,
-  EventDescription,
-  EventHeader,
-  EventHero,
-  EventInfo,
-} from "./index";
+import { EventDescription, EventHeader, EventHero, EventInfo } from "./index";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -54,7 +48,6 @@ export default function EventDetailsScreen() {
           <EventHero event={event} />
           <YStack paddingHorizontal="$4" gap="$4">
             <EventInfo event={event} />
-            {/* <CountdownBanner targetDate={event.date} /> */}
             <EventDescription description={event.caption} />
             {event.lineup.length > 0 && (
               <TagSection title="Lineup" tags={event.lineup} />

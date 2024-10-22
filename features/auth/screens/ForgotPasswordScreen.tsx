@@ -60,7 +60,7 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Forgot Password
@@ -75,11 +75,12 @@ export default function ForgotPasswordScreen() {
             autoCapitalize="none"
           />
           <PrimaryButton
-            text="Reset Password"
             onPress={methods.handleSubmit(onSubmit)}
             isLoading={sendPasswordResetMutation.isPending}
             disabled={sendPasswordResetMutation.isPending}
-          />
+          >
+            Reset Password
+          </PrimaryButton>
 
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>

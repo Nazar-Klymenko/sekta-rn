@@ -1,35 +1,37 @@
 import React from "react";
 
-import { GestureResponderEvent } from "react-native";
-
-import { Button, ButtonProps, Paragraph, SizableText, Spinner } from "tamagui";
+import { Button, ButtonProps, SizableText, Spinner, styled } from "tamagui";
 
 interface PrimaryButtonProps extends ButtonProps {
-  text?: string;
   isLoading?: boolean;
-  onPress?: (event: GestureResponderEvent) => void;
 }
+
+const StyledButton = styled(Button, {
+  backgroundColor: "$accentBackground",
+  borderRadius: "$9",
+  pressStyle: { opacity: 0.8, scale: 0.97 },
+  focusStyle: { outlineColor: "$accentColor", outlineWidth: 2 },
+});
+
+const StyledText = styled(SizableText, {
+  fontWeight: "600",
+  fontSize: "$7",
+});
 
 export const PrimaryButton = React.forwardRef<
   React.ElementRef<typeof Button>,
   PrimaryButtonProps
->(({ onPress, text, isLoading, children, disabled, ...props }, ref) => (
-  <Button
+>(({ onPress, isLoading, children, disabled, ...props }, ref) => (
+  <StyledButton
     ref={ref}
     onPress={onPress}
     disabled={disabled || isLoading}
-    backgroundColor="$accentBackground"
-    borderRadius="$9"
     opacity={disabled || isLoading ? 0.5 : 1}
-    pressStyle={{ opacity: 0.8, scale: 0.97 }}
-    focusStyle={{ outlineColor: "$accentColor", outlineWidth: 2 }}
     {...props}
   >
-    {isLoading && <Spinner color="$colorContrast" />}
-    <SizableText fontWeight="600" fontSize="$7">
-      {text || children}
-    </SizableText>
-  </Button>
+    {isLoading && <Spinner />}
+    <StyledText>{children}</StyledText>
+  </StyledButton>
 ));
 
 PrimaryButton.displayName = "PrimaryButton";
