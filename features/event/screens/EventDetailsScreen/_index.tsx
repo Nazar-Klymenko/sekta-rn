@@ -7,7 +7,7 @@ import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import { ArrowLeft } from "@tamagui/lucide-icons";
 
-import { Paragraph, YStack } from "tamagui";
+import { Paragraph, Separator, YStack } from "tamagui";
 
 import { Stack, useLocalSearchParams } from "expo-router";
 
@@ -57,10 +57,13 @@ export default function EventDetailsScreen() {
           <YStack paddingHorizontal="$4" gap="$4">
             <EventInfo event={event} />
             {/* <CountdownBanner targetDate={event.date} /> */}
+            <Separator />
             <EventDescription description={event.caption} />
+            <Separator />
             {event.lineup.length > 0 && (
               <TagSection title="Lineup" tags={event.lineup} />
             )}
+            <Separator />
             {event.genres.length > 0 && (
               <TagSection title="Genres" tags={event.genres} />
             )}

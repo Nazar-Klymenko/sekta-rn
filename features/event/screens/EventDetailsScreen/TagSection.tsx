@@ -16,7 +16,7 @@ export function TagSection({ title, tags, renderTag }: TagListProps) {
       <H2 fontWeight="700">{title}</H2>
       <XStack flexWrap="wrap" gap="$2">
         {tags.map((tag, index) =>
-          renderTag ? renderTag(tag, index) : <Tag tag={tag} key={index} />,
+          renderTag ? renderTag(tag, index) : <Tag tag={tag} key={index} />
         )}
       </XStack>
     </YStack>

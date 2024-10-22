@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
@@ -105,7 +106,7 @@ export default function ChangeUsernameScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <H1 fontWeight="bold">Change your username</H1>
         <Form methods={methods}>
           <Input

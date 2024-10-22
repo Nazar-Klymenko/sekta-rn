@@ -35,7 +35,7 @@ export default function ProfileScreen() {
     signOutMutation.mutate();
   };
   return (
-    <PageContainer formContainer>
+    <PageContainer>
       <YStack gap="$4">
         <ProfileHeader user={user} userData={userData} />
         <VerifyEmail />

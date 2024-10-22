@@ -19,7 +19,7 @@ export const PreviousEventsSection: React.FC<PreviousEventsSectionProps> = ({
   onViewAllPress,
 }) => {
   return (
-    <YStack gap="$4">
+    <YStack gap="$4" paddingRight="$4">
       <Separator />
 
       <SectionHeaderWithAction
@@ -27,7 +27,7 @@ export const PreviousEventsSection: React.FC<PreviousEventsSectionProps> = ({
         onActionPress={onViewAllPress}
       />
 
-      <YStack marginVertical={8}>
+      <YStack gap="$4">
         {isPreviousEventsLoading
           ? Array(5)
               .fill(null)

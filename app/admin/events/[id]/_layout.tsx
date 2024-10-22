@@ -18,6 +18,7 @@ export default function HomeLayout() {
         headerStyle: {
           backgroundColor: theme.background.get(),
         },
+        headerTintColor: theme.color.get(),
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,

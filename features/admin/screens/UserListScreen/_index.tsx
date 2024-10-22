@@ -44,6 +44,12 @@ export default function UserListScreen() {
   });
 
   const columns = [
+    columnHelper.display({
+      id: "index",
+      header: "#",
+      cell: (props) => props.row.index + 1,
+      size: 60,
+    }),
     columnHelper.accessor("username", {
       header: "Username",
       cell: (info) => info.getValue() || "-",
@@ -82,7 +88,7 @@ export default function UserListScreen() {
   if (isError) return <Paragraph>Error loading users</Paragraph>;
 
   return (
-    <PageContainer padding="$4">
+    <PageContainer>
       <Stack gap="$4">
         <XStack alignItems="center" gap="$2">
           <Form methods={methods} flex={1}>

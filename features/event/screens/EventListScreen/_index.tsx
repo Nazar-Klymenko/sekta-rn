@@ -60,6 +60,7 @@ export default function EventListScreen() {
 
   return (
     <PageContainer
+      overflowRight
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }

@@ -63,13 +63,13 @@ export default function LoginScreen() {
         onError: (error) => {
           handleFirebaseError(error);
         },
-      },
+      }
     );
   };
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Log In

@@ -66,13 +66,13 @@ export default function ChangePasswordScreen() {
             variant: "error",
           });
         },
-      },
+      }
     );
   };
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
             Change Password

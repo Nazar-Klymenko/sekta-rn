@@ -79,7 +79,7 @@ export default function SignupScreen() {
 
   return (
     <AuthPageGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <Form methods={methods} id="test">
           <H1 fontWeight="bold" textAlign="center">
             Sign Up

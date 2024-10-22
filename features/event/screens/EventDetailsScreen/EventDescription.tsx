@@ -1,6 +1,6 @@
 import React from "react";
 
-import { H2, Paragraph, YStack } from "tamagui";
+import { H2, Paragraph, Separator, YStack } from "tamagui";
 
 interface EventDescriptionProps {
   description: string;

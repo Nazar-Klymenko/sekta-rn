@@ -29,6 +29,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
       <SectionHeaderWithAction
         title="Upcoming Events"
         onActionPress={onViewAllPress}
+        paddingRight="$4"
       />
       <ScrollView
         horizontal
@@ -57,7 +58,6 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
               </XStack>
             ))}
       </ScrollView>
-      <Separator />
     </YStack>
   );
 };

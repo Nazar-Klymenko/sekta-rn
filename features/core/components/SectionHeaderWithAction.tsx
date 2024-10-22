@@ -4,11 +4,11 @@ import { Pressable } from "react-native";
 
 import { ChevronRight } from "@tamagui/lucide-icons";
 
-import { H2, Paragraph, XStack } from "tamagui";
+import { H2, Paragraph, StackProps, XStack } from "tamagui";
 
 type LucideIcon = typeof ChevronRight;
 
-type HeaderProps = {
+type HeaderProps = StackProps & {
   title: string;
   actionText?: string;
   onActionPress: () => void;
@@ -20,12 +20,14 @@ const SectionHeaderWithAction = ({
   actionText = "View all",
   onActionPress,
   Icon = ChevronRight,
+  ...props
 }: HeaderProps) => {
   return (
     <XStack
       justifyContent="space-between"
       alignItems="baseline"
       marginBottom="$2"
+      {...props}
     >
       <H2>{title}</H2>
       <Pressable
