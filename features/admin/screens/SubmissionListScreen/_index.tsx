@@ -128,7 +128,7 @@ export default function SubmissionListScreen() {
     });
   };
   return (
-    <PageContainer padding="$4">
+    <PageContainer>
       <Stack gap="$4">
         <XStack alignItems="center" gap="$2">
           <Form methods={methods} flex={1}>

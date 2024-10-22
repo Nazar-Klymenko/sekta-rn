@@ -6,6 +6,7 @@ import { Table } from "@/features/core/components/Table";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Pagination } from "@/features/core/components/navigation/Pagination";
+import { useFetchEvents } from "@/features/event/hooks/useFetchEvents";
 import { useFetchPaginatedEvents } from "@/features/event/hooks/useFetchPaginatedEvents";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
@@ -18,9 +19,15 @@ const columnHelper = createColumnHelper<Event>();
 
 export default function EventListScreen() {
   const router = useRouter();
-  const { data: events, isLoading, isError } = useFetchPaginatedEvents();
+  const { data: events, isLoading, isError } = useFetchEvents();
 
   const columns = [
+    columnHelper.display({
+      id: "index",
+      header: "#",
+      cell: (props) => props.row.index + 1,
+      size: 60,
+    }),
     columnHelper.accessor("title", {
       header: "Title",
       cell: (info) => info.getValue() || "-",
@@ -53,7 +60,7 @@ export default function EventListScreen() {
     });
   };
   return (
-    <PageContainer padding="$4">
+    <PageContainer>
       <Table
         data={events || []}
         columns={columns}

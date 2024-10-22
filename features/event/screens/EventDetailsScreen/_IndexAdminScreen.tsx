@@ -47,15 +47,15 @@ export default function AdminEventDetailsScreen() {
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
-      <ReanimatedPageContainer>
+      <PageContainer>
         <Paragraph>Error: {error.message}</Paragraph>
-      </ReanimatedPageContainer>
+      </PageContainer>
     );
   if (!event)
     return (
-      <ReanimatedPageContainer>
+      <PageContainer>
         <Paragraph>Event not found</Paragraph>
-      </ReanimatedPageContainer>
+      </PageContainer>
     );
 
   return (
@@ -72,7 +72,7 @@ export default function AdminEventDetailsScreen() {
       />
       <PageContainer gap="$4">
         <EventHero event={event} />
-        <YStack padding="$4" gap="$4">
+        <YStack paddingVertical="$4" gap="$4">
           <EventInfo event={event} />
           <EventDescription description={event.caption} />
           {event.lineup.length > 0 && (
