@@ -36,23 +36,13 @@ export function Dialog({
 }: DialogProps) {
   return (
     <TamaguiDialog modal {...props}>
-      <Adapt when="sm" platform="touch">
-        <Sheet
-          animation="quickest"
-          zIndex={200001}
-          modal
-          dismissOnSnapToBottom
-          dismissOnOverlayPress
-        >
-          <Sheet.Frame padding="$4">
-            <Adapt.Contents />
-          </Sheet.Frame>
-          <Sheet.Overlay />
-        </Sheet>
-      </Adapt>
-
       <TamaguiDialog.Portal>
-        <TamaguiDialog.Overlay />
+        <TamaguiDialog.Overlay
+          key={"overlay" + id}
+          animation="quickest"
+          enterStyle={{ opacity: 0 }}
+          exitStyle={{ opacity: 0 }}
+        />
         <StyledDialogContent key={id}>
           <TamaguiDialog.Title>{title}</TamaguiDialog.Title>
           <TamaguiDialog.Description>{description}</TamaguiDialog.Description>

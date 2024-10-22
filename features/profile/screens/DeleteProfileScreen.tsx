@@ -58,7 +58,7 @@ export default function DeleteProfileScreen() {
 
   return (
     <AuthGuard>
-      <PageContainer formContainer>
+      <PageContainer>
         <H1 fontWeight="bold" textAlign="center">
           Delete Account
         </H1>

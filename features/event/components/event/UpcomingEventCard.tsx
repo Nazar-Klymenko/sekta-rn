@@ -49,6 +49,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           source={{ uri: event.image.publicUrl }}
           width={verticalView ? "100%" : cardWidth}
           aspectRatio={1}
+          borderRadius="$2"
         />
       </ImageContainer>
       <ContentContainer>

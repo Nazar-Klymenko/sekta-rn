@@ -1,3 +1,3 @@
-import UpdateEventScreen from "@/features/admin/screens/UpdateEventScreen/_index";
+import UpdateEventScreen from "@/features/admin/screens/EventUpdateScreen/_index";
 
 export default UpdateEventScreen;
