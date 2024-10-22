@@ -26,6 +26,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
 }) => {
   const theme = useTheme();
   const navigation = useNavigation();
+  const bg = theme.background.get();
 
   const headerAnimatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
@@ -36,19 +37,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
     );
     return {
       opacity,
-      backgroundColor: "black",
-    };
-  });
-
-  const buttonAnimatedStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(
-      scrollY.value,
-      [0, 100],
-      [1, 1],
-      Extrapolation.CLAMP
-    );
-    return {
-      opacity,
+      backgroundColor: bg,
     };
   });
 
@@ -85,17 +74,19 @@ const EventHeader: React.FC<EventHeaderProps> = ({
             style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
           />
         ),
-        headerTitle: () => (
+        headerTitle: (props) => (
           <Animated.Text
             style={[
               {
+                color: theme.color.get(),
+
                 fontFamily: "LeagueSpartan_700Bold",
                 fontSize: 25,
               },
               titleAnimatedStyle,
             ]}
           >
-            {title}
+            {props.children}
           </Animated.Text>
         ),
       }}

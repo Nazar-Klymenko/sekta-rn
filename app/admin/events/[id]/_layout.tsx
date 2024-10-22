@@ -16,7 +16,7 @@ export default function HomeLayout() {
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "black",
+          backgroundColor: theme.background.get(),
         },
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
