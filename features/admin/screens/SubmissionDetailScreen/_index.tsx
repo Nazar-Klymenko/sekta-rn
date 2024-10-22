@@ -64,7 +64,7 @@ export function SubmissionDetailScreen() {
             });
           },
         },
-      ],
+      ]
     );
   };
 
@@ -81,7 +81,7 @@ export function SubmissionDetailScreen() {
   }, [navigation]);
 
   return (
-    <PageContainer padding="$4">
+    <PageContainer>
       <Card bordered padding="$4" elevation="$1">
         <YStack gap="$2">
           <InfoRow

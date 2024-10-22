@@ -72,8 +72,6 @@ const TableCell = styled(ThemeableStack, {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "flex-start",
-  minWidth: 150,
-  maxWidth: 300,
   overflow: "hidden",
 });
 
@@ -113,9 +111,11 @@ export function Table<T extends object>({
         pageSize,
       },
     },
+    defaultColumn: {
+      size: 200,
+      maxSize: 300,
+    },
   });
-
-  const { pageIndex, pageSize: currentPageSize } = table.getState().pagination;
 
   return (
     <Stack gap="$4">
@@ -125,11 +125,6 @@ export function Table<T extends object>({
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id} isHeader>
-                  <TableCell style={{ maxWidth: 60, minWidth: 60 }}>
-                    <Paragraph fontWeight={700} color={"$color05"}>
-                      #
-                    </Paragraph>
-                  </TableCell>
                   {headerGroup.headers.map((header) => (
                     <TableCell
                       key={header.id}
@@ -142,7 +137,7 @@ export function Table<T extends object>({
                           <Paragraph fontWeight={700} color={"$color05"}>
                             {flexRender(
                               header.column.columnDef.header,
-                              header.getContext(),
+                              header.getContext()
                             )}
                           </Paragraph>
                           {{
@@ -160,10 +155,10 @@ export function Table<T extends object>({
                           }[String(header.column.getIsSorted())] ?? null}
                         </SortButton>
                       ) : (
-                        <Paragraph fontWeight="bold">
+                        <Paragraph fontWeight={700} color={"$color05"}>
                           {flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                         </Paragraph>
                       )}
@@ -181,12 +176,6 @@ export function Table<T extends object>({
                     onPress={() => onRowClick?.(row.original)}
                     style={{ height: 74 }}
                   >
-                    {/* Calculate the row number based on current page */}
-                    <TableCell style={{ maxWidth: 60, minWidth: 60 }}>
-                      <Paragraph>
-                        {pageIndex * currentPageSize + index + 1}
-                      </Paragraph>
-                    </TableCell>
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
@@ -195,7 +184,7 @@ export function Table<T extends object>({
                         <Paragraph numberOfLines={2} ellipsizeMode="tail">
                           {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext(),
+                            cell.getContext()
                           )}
                         </Paragraph>
                       </TableCell>

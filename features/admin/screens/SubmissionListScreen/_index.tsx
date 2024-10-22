@@ -46,6 +46,12 @@ export default function SubmissionListScreen() {
   });
 
   const columns = [
+    columnHelper.display({
+      id: "index",
+      header: "#",
+      cell: (props) => props.row.index + 1,
+      size: 60,
+    }),
     columnHelper.accessor("email", {
       header: "Email",
       cell: (info) => info.getValue() || "-",
