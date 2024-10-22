@@ -32,7 +32,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
       scrollY.value,
       [0, 100],
       [0, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
     return {
       opacity,
@@ -45,7 +45,7 @@ const EventHeader: React.FC<EventHeaderProps> = ({
       scrollY.value,
       [0, 100],
       [1, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
     return {
       opacity,
@@ -57,13 +57,13 @@ const EventHeader: React.FC<EventHeaderProps> = ({
       scrollY.value,
       [0, 100],
       [0, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
     const translateY = interpolate(
       scrollY.value,
       [0, 100],
       [20, 0],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     );
     return {
       opacity,
@@ -89,7 +89,6 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           <Animated.Text
             style={[
               {
-                color: "orange",
                 fontFamily: "LeagueSpartan_700Bold",
                 fontSize: 25,
               },

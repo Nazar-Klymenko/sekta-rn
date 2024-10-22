@@ -44,6 +44,11 @@ export function AppNavigator() {
         initialRouteName="(tabs)"
         screenOptions={{
           headerShown: false,
+          headerTitleStyle: {
+            fontFamily: "LeagueSpartan_700Bold",
+            fontSize: 25,
+          },
+          animation: "slide_from_right",
         }}
       >
         <Stack.Screen name="(tabs)" />

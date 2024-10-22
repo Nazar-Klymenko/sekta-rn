@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Paragraph, XStack, styled, useTheme } from "tamagui";
 
 interface TagProps {

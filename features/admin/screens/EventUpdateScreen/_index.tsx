@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 import { Tag } from "@/features/core/components/Tag";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
@@ -147,12 +148,11 @@ export default function EventUpdateScreen() {
           placeholder="30.00"
           inputMode="numeric"
           leftAdornment="PLN"
-          keyboardType="numeric" // Add this
+          keyboardType="numeric"
         />
 
-        <Button disabled={isPending} onPress={handleSubmit(onSubmit)}>
-          Update Event
-        </Button>
+        <Button disabled={isPending} onPress={handleSubmit(onSubmit)}></Button>
+        <ButtonCTA> Next: Preview</ButtonCTA>
       </Form>
     </PageContainer>
   );

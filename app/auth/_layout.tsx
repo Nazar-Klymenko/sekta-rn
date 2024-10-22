@@ -1,7 +1,10 @@
+import React from "react";
+
 import { Platform } from "react-native";
 
-import { Slot, Stack } from "expo-router";
 import { useTheme } from "tamagui";
+
+import { Slot, Stack } from "expo-router";
 
 export default function AuthLayout() {
   const theme = useTheme();

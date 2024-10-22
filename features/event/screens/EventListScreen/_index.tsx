@@ -65,12 +65,12 @@ export default function EventListScreen() {
       }
       gap="$4"
     >
-      <Button
+      {/* <Button
         onPress={() => router.push("/admin/events/JW2wfBEzD1owf2HvmnP5/update")}
       >
         Shortcut delete later
-      </Button>
-      <Button onPress={() => router.push("/admin")}>Admin</Button>
+      </Button> */}
+      {/* <Button onPress={() => router.push("/admin")}>Admin</Button> */}
       {/* <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button> */}
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}

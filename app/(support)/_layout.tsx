@@ -1,3 +1,5 @@
+import React from "react";
+
 import { useTheme } from "tamagui";
 
 import { Stack } from "expo-router";

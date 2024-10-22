@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Paragraph, YStack, useTheme } from "tamagui";
 
 import { Link, Stack } from "expo-router";

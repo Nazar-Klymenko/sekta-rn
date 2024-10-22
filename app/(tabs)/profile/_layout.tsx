@@ -24,7 +24,6 @@ export default function HomeLayout() {
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,
-          color: "orange",
         },
       }}
     >
@@ -35,7 +34,9 @@ export default function HomeLayout() {
           animation: "fade_from_bottom",
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.push("admin")}>
-              <Text style={{ color: "orange", marginRight: 10 }}>Admin</Text>
+              <Text style={{ color: theme.accentColor.get(), marginRight: 10 }}>
+                Admin
+              </Text>
             </TouchableOpacity>
           ),
         })}

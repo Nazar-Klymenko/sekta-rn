@@ -15,7 +15,7 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
-        headerTintColor: "orange",
+        headerTintColor: theme.color.get(),
         headerStyle: {
           backgroundColor: "black",
         },
@@ -40,7 +40,9 @@ export default function HomeLayout() {
             <TouchableOpacity
               onPress={() => navigation.navigate("events/create")}
             >
-              <SizableText style={{ color: "orange", marginRight: 10 }}>
+              <SizableText
+                style={{ color: theme.accentColor.get(), marginRight: 10 }}
+              >
                 Create
               </SizableText>
             </TouchableOpacity>

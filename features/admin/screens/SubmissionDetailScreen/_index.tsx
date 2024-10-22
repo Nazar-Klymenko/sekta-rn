@@ -38,6 +38,7 @@ import {
   Theme,
   XStack,
   YStack,
+  useTheme,
 } from "tamagui";
 
 import * as Clipboard from "expo-clipboard";
@@ -47,7 +48,7 @@ export function SubmissionDetailScreen() {
   const params = useLocalSearchParams();
   const deleteSubmissionMutation = useDeletePlaySubmission();
   const navigation = useNavigation();
-
+  const theme = useTheme();
   const handleDelete = () => {
     Alert.alert(
       "Delete Submission",
@@ -72,7 +73,9 @@ export function SubmissionDetailScreen() {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={handleDelete}>
-          <Paragraph style={{ color: "orange", marginRight: 10 }}>
+          <Paragraph
+            style={{ color: theme.accentColor.get(), marginRight: 10 }}
+          >
             Delete
           </Paragraph>
         </TouchableOpacity>

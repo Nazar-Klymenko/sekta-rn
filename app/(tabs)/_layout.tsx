@@ -4,9 +4,12 @@ import { Platform } from "react-native";
 
 import { Home, Ticket, User } from "@tamagui/lucide-icons";
 
+import { useTheme } from "tamagui";
+
 import { Slot, Tabs } from "expo-router";
 
 export default function TabLayout() {
+  const theme = useTheme();
   if (Platform.OS === "web") {
     return <Slot />;
   }
@@ -19,7 +22,8 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarActiveTintColor: "$accentColor",
         tabBarStyle: {
-          backgroundColor: "black",
+          borderColor: theme.borderColor.get(),
+          backgroundColor: theme.background.get(),
         },
       }}
     >
@@ -30,7 +34,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
-
       <Tabs.Screen
         name="play"
         options={{
@@ -39,7 +42,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Ticket color={color} size={size} />,
         }}
       />
-
       <Tabs.Screen
         name="profile"
         options={{

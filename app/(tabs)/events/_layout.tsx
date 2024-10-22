@@ -3,11 +3,14 @@ import React from "react";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 
-import { SizableText } from "tamagui";
+import { SizableText, Theme, useTheme } from "tamagui";
 
 import { Slot, Stack } from "expo-router";
 
 export default function EventsLayout() {
+  const theme = useTheme();
+
+  const { tokens } = theme;
   if (Platform.OS === "web") {
     return <Slot />;
   }
@@ -16,9 +19,14 @@ export default function EventsLayout() {
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
-        headerTintColor: "orange",
+        headerTintColor: theme.color.get(),
+        headerShadowVisible: true,
+        contentStyle: {
+          borderTopColor: theme.borderColor.get(),
+          borderTopWidth: 0.25,
+        },
         headerStyle: {
-          backgroundColor: "black",
+          backgroundColor: theme.background.get(),
         },
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",

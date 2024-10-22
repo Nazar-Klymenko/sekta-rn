@@ -15,7 +15,6 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
-        headerTintColor: "orange",
         headerStyle: {
           backgroundColor: "black",
         },

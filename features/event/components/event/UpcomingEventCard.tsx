@@ -97,19 +97,13 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
 const CardContainer = styled(YStack, {
   borderRadius: "$2",
-  borderColor: "$gray2Dark",
-
   overflow: "hidden",
-  backgroundColor: "$background",
-  elevation: "$1",
   marginVertical: 10,
   pressStyle: {
-    elevation: 8,
     scale: 0.98,
   },
   hoverStyle: {
     scale: 1.02,
-    elevation: 8,
   },
 });
 
@@ -120,6 +114,7 @@ const ImageContainer = styled(Stack, {
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
   paddingHorizontal: 4,
+
   gap: 8,
 });
 

@@ -49,15 +49,11 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 
 const CardContainer = styled(XStack, {
   borderRadius: "$6",
-
-  borderColor: "$gray2Dark",
-
   padding: "$2",
   marginBottom: "$2",
   gap: "$3",
-  elevation: "$1",
   pressStyle: {
-    elevation: "$3",
+    scale: 0.98,
     borderColor: "$borderColorHover",
   },
   hoverStyle: {
