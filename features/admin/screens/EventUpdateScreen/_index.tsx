@@ -151,8 +151,13 @@ export default function EventUpdateScreen() {
           keyboardType="numeric"
         />
 
-        <Button disabled={isPending} onPress={handleSubmit(onSubmit)}></Button>
-        <ButtonCTA> Next: Preview</ButtonCTA>
+        <ButtonCTA
+          theme="accent"
+          disabled={isPending}
+          onPress={handleSubmit(onSubmit)}
+        >
+          Next: Preview
+        </ButtonCTA>
       </Form>
     </PageContainer>
   );

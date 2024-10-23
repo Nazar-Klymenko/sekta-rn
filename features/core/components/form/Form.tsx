@@ -1,7 +1,8 @@
 import React from "react";
 
-import { FormProvider, UseFormReturn } from "react-hook-form";
 import { StackProps, YStack } from "tamagui";
+
+import { FormProvider, UseFormReturn } from "react-hook-form";
 
 interface Props extends StackProps {
   methods: UseFormReturn<any>;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { emailSchema } from "@/utils/validationSchemas";
@@ -69,7 +69,7 @@ const portfolioLinks = [
 
 export function PlayForm() {
   const toast = useToastController();
-  const playSubmission = useSubmitPlay();
+  const { mutate, isPending } = useSubmitPlay();
   const methods = useForm<FormValues>({
     resolver: yupResolver(playSchema),
     defaultValues: {
@@ -85,7 +85,7 @@ export function PlayForm() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    playSubmission.mutate(data, {
+    mutate(data, {
       onSuccess: () => {
         toast.show("Application Submitted", {
           message: "Your play info has been submitted successfully!",
@@ -144,12 +144,15 @@ export function PlayForm() {
         verticalAlign="top"
         maxLength={1000}
       />
-      <PrimaryButton
+
+      <ButtonCTA
+        theme="accent"
         onPress={methods.handleSubmit(onSubmit)}
-        text="Send application"
-        isLoading={playSubmission.isPending}
-        disabled={playSubmission.isPending}
-      />
+        isLoading={isPending}
+        disabled={isPending}
+      >
+        Send application
+      </ButtonCTA>
     </Form>
   );
 }

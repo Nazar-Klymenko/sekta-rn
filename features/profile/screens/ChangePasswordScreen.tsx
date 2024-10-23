@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
@@ -99,12 +99,15 @@ export default function ChangePasswordScreen() {
             placeholder="Confirm your new password"
             secureTextEntry
           />
-          <PrimaryButton
+
+          <ButtonCTA
+            theme="accent"
             onPress={handleSubmit(onSubmit)}
-            text="Change Password"
             isLoading={changePasswordMutation.isPending}
             disabled={changePasswordMutation.isPending}
-          />
+          >
+            Change Password
+          </ButtonCTA>
           {changePasswordMutation.isError && (
             <Paragraph>Error: {changePasswordMutation.error.message}</Paragraph>
           )}

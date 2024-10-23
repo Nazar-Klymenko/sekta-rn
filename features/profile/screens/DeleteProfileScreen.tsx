@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import { Keyboard, Pressable } from "react-native";
 
-import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
@@ -43,9 +43,9 @@ type FormValues = yup.InferType<typeof deleteProfileSchema>;
 export default function DeleteProfileScreen() {
   const theme = useTheme();
   const toast = useToastController();
-  const { mutateAsync, isPending, isError } = useDeleteProfile();
+  const { mutateAsync, isError } = useDeleteProfile();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-
+  let isPending = false;
   const formMethods = useForm({
     resolver: yupResolver(deleteProfileSchema),
     defaultValues: {
@@ -59,6 +59,7 @@ export default function DeleteProfileScreen() {
     Keyboard.dismiss();
     setShowConfirmDialog(false);
     formMethods.reset();
+    formMethods.clearErrors();
   }, [formMethods]);
 
   const onSubmit = useCallback(
@@ -81,7 +82,6 @@ export default function DeleteProfileScreen() {
     [mutateAsync, toast, handleSheetClose, formMethods]
   );
 
-  console.log({ isPending });
   return (
     <AuthGuard>
       <PageContainer>
@@ -93,10 +93,14 @@ export default function DeleteProfileScreen() {
           be undone.
         </Paragraph>
 
-        <SecondaryButton
-          text="Delete Account"
+        <ButtonCTA
+          aria-label="Start deleting profile"
           onPress={() => setShowConfirmDialog(true)}
-        />
+          disabled={showConfirmDialog}
+          flex={1}
+        >
+          Delete Account
+        </ButtonCTA>
 
         <Sheet
           animation="medium"
@@ -113,6 +117,7 @@ export default function DeleteProfileScreen() {
           dismissOnOverlayPress
         >
           <Sheet.Overlay
+            key="deleteProfileOverlay"
             animation="medium"
             enterStyle={{ opacity: 0 }}
             exitStyle={{ opacity: 0 }}
@@ -149,43 +154,28 @@ export default function DeleteProfileScreen() {
                     />
                     <Separator />
 
-                    <Theme name={"surface1"}>
-                      <XStack flex={1} width="100%" gap="$4">
-                        <Button
+                    <XStack flex={1} width="100%" gap="$4">
+                      <ButtonCTA
+                        theme={"surface1"}
+                        aria-label="Close"
+                        disabled={isPending}
+                        onPress={handleSheetClose}
+                        flex={1}
+                      >
+                        Cancel
+                      </ButtonCTA>
+                      <Theme name="danger">
+                        <ButtonCTA
+                          aria-label="Delte Profile"
+                          isLoading={isPending}
                           disabled={isPending}
-                          aria-label="Close"
-                          size={"$6"}
-                          onPress={handleSheetClose}
-                          flex={1}
-                          backgroundColor={"$background"}
-                          pressStyle={{
-                            borderWidth: 0,
-                            backgroundColor: "$background",
-                            opacity: 0.7,
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          disabled={isPending}
-                          aria-label="Delete Account"
-                          size={"$6"}
                           onPress={formMethods.handleSubmit(onSubmit)}
                           flex={1}
-                          borderWidth={0}
-                          backgroundColor={"$red10Light"}
-                          pressStyle={{
-                            backgroundColor: "$red9Light",
-                          }}
-                          disabledStyle={{
-                            backgroundColor: "$red9Light",
-                          }}
                         >
-                          {isPending && <Spinner color="$color" />}
                           Delete
-                        </Button>
-                      </XStack>
-                    </Theme>
+                        </ButtonCTA>
+                      </Theme>
+                    </XStack>
                   </Form>
                 </YStack>
               </YStack>

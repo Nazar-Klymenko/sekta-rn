@@ -27,7 +27,7 @@ interface InputProps extends TextInputProps {
 
 export function PasswordInput(
   { name, label, placeholder, id }: InputProps,
-  props: TextInputProps,
+  props: TextInputProps
 ) {
   const { control } = useFormContext();
   const {

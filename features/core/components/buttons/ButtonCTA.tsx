@@ -2,34 +2,35 @@ import React from "react";
 
 import { GestureResponderEvent } from "react-native";
 
+import { X } from "@tamagui/lucide-icons";
+
 import { Button, ButtonProps, Paragraph, SizableText, Spinner } from "tamagui";
 
 interface ButtonCTAProps extends ButtonProps {
-  text?: string;
   isLoading?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
 }
 
-export const ButtonCTA = React.forwardRef<
-  React.ElementRef<typeof Button>,
-  ButtonCTAProps
->(({ onPress, text, isLoading, children, disabled, ...props }, ref) => (
+export const ButtonCTA = ({
+  onPress,
+  isLoading,
+  children,
+  disabled,
+  ...props
+}: ButtonCTAProps) => (
   <Button
-    ref={ref}
+    elevation={"$4"}
     onPress={onPress}
     disabled={disabled || isLoading}
-    backgroundColor="$purple10Light"
     borderRadius="$2"
-    opacity={disabled || isLoading ? 0.5 : 1}
-    pressStyle={{ opacity: 0.8, scale: 0.97 }}
-    focusStyle={{ outlineColor: "$accentColor", outlineWidth: 2 }}
+    size={"$5"}
+    borderWidth={0}
+    icon={isLoading ? <Spinner color="$color" /> : null}
+    disabledStyle={{ opacity: 0.5 }}
     {...props}
   >
-    {isLoading && <Spinner color="$colorContrast" />}
-    <SizableText fontWeight="600" fontSize="$7">
-      {text || children}
-    </SizableText>
+    {children}
   </Button>
-));
+);
 
 ButtonCTA.displayName = "ButtonCTA";

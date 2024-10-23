@@ -32,10 +32,21 @@ const bodyFont = createFont({
   face: leagueSpartanFace,
 });
 
+const extendedTheme = {
+  ...themes,
+  danger: {
+    background: tokens.color.red10Light.val, // Default red background
+    backgroundHover: tokens.color.red11Light.val, // Hover state red
+    backgroundPress: tokens.color.red11Light.val, // Press state red
+    color: themes.dark.color,
+    borderColor: tokens.color.red10Light.val, // Border color matching background
+  },
+};
+
 export const tamaguiConfig = createTamagui({
   tokens,
   animations,
-  themes,
+  themes: extendedTheme,
   fonts: {
     heading: headingFont,
     body: bodyFont,

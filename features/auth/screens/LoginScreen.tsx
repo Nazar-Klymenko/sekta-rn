@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
@@ -29,7 +29,7 @@ type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
   const theme = useTheme();
-  const signInMutation = useSignIn();
+  const { mutate, isPending } = useSignIn();
   const toast = useToastController();
   const { returnTo } = useLocalSearchParams<{ returnTo: "/" }>();
   const router = useRouter();
@@ -45,8 +45,7 @@ export default function LoginScreen() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
-    signInMutation.mutate(
+    mutate(
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
@@ -96,12 +95,14 @@ export default function LoginScreen() {
               </Paragraph>
             </Link>
           </YStack>
-          <PrimaryButton
+          <ButtonCTA
+            theme="accent"
             onPress={methods.handleSubmit(onSubmit)}
-            text="Log in"
-            isLoading={signInMutation.isPending}
-            disabled={signInMutation.isPending}
-          />
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            Log in
+          </ButtonCTA>
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link
               href={{

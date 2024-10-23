@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
 import { HelloWave } from "@/features/core/components/HelloWave";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
@@ -104,19 +104,22 @@ export default function UsernameBridgeScreen() {
             inputMode="text"
             maxLength={20}
           />
-          <XStack gap="$2">
-            <Info color="$gray10Light" size={16} />
+          <XStack gap="$2" alignItems="flex-start">
+            <Info color="$gray10Light" fontSize="$3" />
             <Paragraph fontSize="$3" color="$gray10Light">
               Username must be 3-20 characters long and can contain letters,
               numbers, and underscores.
             </Paragraph>
           </XStack>
-          <PrimaryButton
-            text="Continue"
+          <ButtonCTA
+            theme="accent"
             onPress={handleSubmit(onSubmit)}
             isLoading={isLoading}
             disabled={isLoading}
-          />
+          >
+            Continue: Email
+          </ButtonCTA>
+
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Paragraph textAlign="center">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
@@ -96,12 +96,15 @@ export default function ChangeEmailScreen() {
             placeholder="Enter your current password"
             secureTextEntry
           />
-          <PrimaryButton
+
+          <ButtonCTA
+            theme="accent"
             onPress={methods.handleSubmit(onSubmit)}
-            text="Update Email"
             isLoading={isPending}
             disabled={isPending || isVerificationSent}
-          />
+          >
+            Update Email
+          </ButtonCTA>
           {isVerificationSent && (
             <YStack marginTop="$4">
               <Paragraph textAlign="center" color="$green10">

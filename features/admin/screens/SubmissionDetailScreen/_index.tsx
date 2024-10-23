@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useDeletePlaySubmission } from "@/features/play/hooks/useDeletePlaySubmission";
 import { PlaySubmission } from "@/features/play/models/PlaySubmission";
@@ -188,7 +187,7 @@ const InfoRow = ({ icon, label, value }: InfoRowProps) => {
           pressStyle={{ opacity: 0.7 }}
           opacity={copied ? 1 : 0.5}
           hoverStyle={{ opacity: 0.8 }}
-          style={{ alignItems: "center", justifyContent: "center" }} // Center icon
+          style={{ alignItems: "center", justifyContent: "center" }}
         />
       )}
     </XStack>

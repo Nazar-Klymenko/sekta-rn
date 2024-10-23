@@ -3,7 +3,7 @@ import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
@@ -125,9 +125,10 @@ export default function ChangeUsernameScreen() {
               letters, numbers, and underscores.
             </Paragraph>
           </XStack>
-          <PrimaryButton
+
+          <ButtonCTA
+            theme="accent"
             onPress={handleSubmit(onSubmit)}
-            text="Update Username"
             isLoading={
               changeUsernameMutation.isPending || isUsernameCheckLoading
             }
@@ -136,7 +137,9 @@ export default function ChangeUsernameScreen() {
               changeUsernameMutation.isPending ||
               isUsernameCheckLoading
             }
-          />
+          >
+            Update Username
+          </ButtonCTA>
         </Form>
       </PageContainer>
     </AuthGuard>

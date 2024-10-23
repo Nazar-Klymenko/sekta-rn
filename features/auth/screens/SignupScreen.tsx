@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSignUp } from "@/features/auth/hooks/useSignUp";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Checkbox } from "@/features/core/components/form/Checkbox";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
@@ -60,10 +60,10 @@ export default function SignupScreen() {
     },
   });
   const { handleSubmit, watch } = methods;
-  const signUpMutation = useSignUp();
+  const { mutate, isPending } = useSignUp();
 
   const onSubmit = (data: FormValues) => {
-    signUpMutation.mutate(data, {
+    mutate(data, {
       onSuccess: () => {
         toast.show("Successfully signed up", {
           message: "Welcome!",
@@ -102,12 +102,15 @@ export default function SignupScreen() {
             />
             <PasswordRequirements password={watch("password")} />
           </YStack>
-          <PrimaryButton
-            text="Sign up"
+
+          <ButtonCTA
+            theme="accent"
             onPress={handleSubmit(onSubmit)}
-            isLoading={signUpMutation.isPending}
-            disabled={signUpMutation.isPending}
-          />
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            Sign up
+          </ButtonCTA>
           <YStack>
             <Checkbox name="agreeEmail" id="agree-email">
               <Paragraph>
@@ -129,13 +132,6 @@ export default function SignupScreen() {
             </Checkbox>
           </YStack>
 
-          {signUpMutation.isError && (
-            <Paragraph color="red" textAlign="center" marginTop="$2">
-              {signUpMutation.error instanceof Error
-                ? signUpMutation.error.message
-                : "An error occurred during signup"}
-            </Paragraph>
-          )}
           <YStack alignItems="center" padding="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>
               <Paragraph textAlign="center">

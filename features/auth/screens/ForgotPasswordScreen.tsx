@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useSendPasswordReset } from "@/features/auth/hooks/useSendPasswordReset";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
@@ -38,10 +38,10 @@ export default function ForgotPasswordScreen() {
     mode: "onTouched",
   });
 
-  const sendPasswordResetMutation = useSendPasswordReset();
+  const { mutate, isPending } = useSendPasswordReset();
 
   const onSubmit = async (data: FormValues) => {
-    sendPasswordResetMutation.mutate(data.email, {
+    mutate(data.email, {
       onSuccess: () => {
         toast.show("Application Submitted", {
           message: "Password reset email sent! Please check your inbox.",
@@ -74,12 +74,14 @@ export default function ForgotPasswordScreen() {
             inputMode="email"
             autoCapitalize="none"
           />
-          <PrimaryButton
-            text="Reset Password"
+          <ButtonCTA
+            theme="accent"
             onPress={methods.handleSubmit(onSubmit)}
-            isLoading={sendPasswordResetMutation.isPending}
-            disabled={sendPasswordResetMutation.isPending}
-          />
+            isLoading={isPending}
+            disabled={isPending}
+          >
+            Reset Password
+          </ButtonCTA>
 
           <YStack alignItems="center" padding="$4" gap="$4">
             <Link href={`/auth/login?returnTo=${returnTo}`}>

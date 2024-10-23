@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
@@ -40,7 +40,11 @@ export default function EventDetailsScreen() {
       </ReanimatedPageContainer>
     );
 
-  const stickyBottom = <PrimaryButton onPress={() => {}}>Going!</PrimaryButton>;
+  const stickyBottom = (
+    <ButtonCTA theme="accent" onPress={() => {}}>
+      Going!
+    </ButtonCTA>
+  );
 
   return (
     <>

@@ -4,9 +4,10 @@ import React, { useCallback, useState } from "react";
 
 import { RefreshControl } from "react-native";
 
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Button, Separator } from "tamagui";
+import { Separator } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -66,13 +67,13 @@ export default function EventListScreen() {
       }
       gap="$4"
     >
-      {/* <Button
+      <ButtonCTA
         onPress={() => router.push("/admin/events/JW2wfBEzD1owf2HvmnP5/update")}
       >
         Shortcut delete later
-      </Button> */}
-      {/* <Button onPress={() => router.push("/admin")}>Admin</Button> */}
-      {/* <Button onPress={clearQueryCache}>Clear Cache and Refresh</Button> */}
+      </ButtonCTA>
+      <ButtonCTA onPress={() => router.push("/admin")}>Admin</ButtonCTA>
+      {/* <ButtonCTA onPress={clearQueryCache}>Clear Cache and Refresh</ButtonCTA> */}
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}
         isUpcomingLoading={isUpcomingLoading}

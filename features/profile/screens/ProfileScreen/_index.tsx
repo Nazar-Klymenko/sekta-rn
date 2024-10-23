@@ -2,9 +2,8 @@ import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useSignOut } from "@/features/auth/hooks/useSignOut";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { MenuItem } from "@/features/core/components/buttons/MenuItem";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
-import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
@@ -66,6 +65,7 @@ export default function ProfileScreen() {
                 onPress={() => router.push("/profile/delete-profile")}
                 icon={Trash2}
               />
+              <Separator />
               <SectionTitle>Notifications</SectionTitle>
               <MenuItem
                 title="Push notifications"
@@ -79,7 +79,7 @@ export default function ProfileScreen() {
               />
             </>
           )}
-
+          <Separator />
           <SectionTitle>Support</SectionTitle>
           <MenuItem
             title="Terms of Service"
@@ -102,15 +102,16 @@ export default function ProfileScreen() {
           {isLoggedIn ? (
             <SignOutButton />
           ) : (
-            <YStack gap="$4">
-              <PrimaryButton
+            <YStack flex={1} width="100%" gap="$4">
+              <ButtonCTA
+                theme={"accent"}
                 onPress={() => router.push("/auth/login")}
-                text="Log In"
-              />
-              <SecondaryButton
-                onPress={() => router.push("/auth/username-bridge")}
-                text="Sign Up"
-              />
+              >
+                Log In
+              </ButtonCTA>
+              <ButtonCTA onPress={() => router.push("/auth/username-bridge")}>
+                Sign Up
+              </ButtonCTA>
             </YStack>
           )}
         </YStack>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import React from "react";
 
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Switch } from "@/features/core/components/buttons/CustomSwitch";
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
@@ -61,11 +62,10 @@ export default function PushNotificationScreen() {
           </YStack>
           <Switch checked={isEnabled} onPress={toggleSwitch} />
         </XStack>
-        <PrimaryButton
-          onPress={sendNoti}
-          text="Send Test Notification"
-          disabled={!isEnabled}
-        />
+
+        <ButtonCTA theme="accent" onPress={sendNoti} disabled={!isEnabled}>
+          Send Test Notification
+        </ButtonCTA>
       </PageContainer>
     </AuthGuard>
   );
