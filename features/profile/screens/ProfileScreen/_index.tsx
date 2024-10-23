@@ -23,7 +23,8 @@ import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 
-import { ProfileHeader, SectionTitle, VerifyEmail } from "../components";
+import { ProfileHeader, SectionTitle, VerifyEmail } from "../../components";
+import SignOutButton from "./SignOutButton";
 
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
@@ -99,7 +100,7 @@ export default function ProfileScreen() {
 
         <YStack justifyContent="flex-end" alignItems="stretch" marginTop="$4">
           {isLoggedIn ? (
-            <PrimaryButton onPress={handleSignOut} text="Sign Out" />
+            <SignOutButton />
           ) : (
             <YStack gap="$4">
               <PrimaryButton
