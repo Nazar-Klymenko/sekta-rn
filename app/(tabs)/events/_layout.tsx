@@ -21,10 +21,7 @@ export default function EventsLayout() {
         headerTitleAlign: "center",
         headerTintColor: theme.color.get(),
         headerShadowVisible: true,
-        contentStyle: {
-          borderTopColor: theme.borderColor.get(),
-          borderTopWidth: 0.25,
-        },
+
         headerStyle: {
           backgroundColor: theme.background.get(),
         },
