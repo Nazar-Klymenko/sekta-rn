@@ -50,10 +50,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
                 </XStack>
               ))
           : upcomingEvents?.pages[0].map((event, index) => (
-              <XStack
-                key={event.id}
-                paddingRight={index === totalEvents - 1 ? 0 : 16}
-              >
+              <XStack key={event.id} paddingRight={"$4"}>
                 <UpcomingEventCard event={event} />
               </XStack>
             ))}

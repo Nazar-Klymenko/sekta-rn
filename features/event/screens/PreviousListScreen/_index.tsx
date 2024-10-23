@@ -6,6 +6,8 @@ import { RetryButton } from "@/features/core/components/buttons/IconButtons";
 import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 
+import { getTokens } from "@tamagui/core";
+
 import { Paragraph, YStack, useTheme } from "tamagui";
 
 import { usePreviousEvents } from "../../hooks/usePreviousEvents";
@@ -42,28 +44,19 @@ export default function PreviousEventsScreen() {
   const flattenedEvents = data?.pages.flatMap((page) => page) || [];
 
   return (
-    <YStack flex={1} backgroundColor="black" padding="$2">
+    <YStack flex={1} backgroundColor="$background">
       <FlatList
+        contentContainerStyle={{ padding: getTokens().space.$4.val }}
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
-        renderItem={({ item: event }) =>
-          isLoading ? (
-            <YStack
-              style={{
-                maxWidth: 720,
-              }}
-            >
+        renderItem={({ item: event }) => (
+          <YStack gap="$4">
+            {isLoading ? (
               <SkeletonPreviousEventCard />
-            </YStack>
-          ) : (
-            <YStack
-              style={{
-                maxWidth: 720,
-              }}
-            >
+            ) : (
               <PreviousEventCard event={event} />
-            </YStack>
-          )
-        }
+            )}
+          </YStack>
+        )}
         keyExtractor={(item, index) => item.id || index.toString()}
         refreshing={isLoading}
         onRefresh={refetch}
