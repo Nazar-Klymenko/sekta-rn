@@ -2,14 +2,13 @@ import React, { useCallback, useState } from "react";
 
 import { Keyboard, Pressable } from "react-native";
 
-import { Dialog } from "@/features/core/components/Dialog";
 import { SecondaryButton } from "@/features/core/components/buttons/SecondaryButton";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 
-import { LoaderCircle, UserRoundX, X } from "@tamagui/lucide-icons";
+import { UserRoundX } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
 import {
@@ -137,7 +136,8 @@ export default function DeleteProfileScreen() {
                     Delete Account
                   </Paragraph>
                   <Paragraph>
-                    By pressing delete, the event will be deleted permanently.
+                    Warning: By pressing Delete all your data will be
+                    permanently deleted. This action cannot be undone.
                   </Paragraph>
                   <Form methods={formMethods}>
                     <PasswordInput
@@ -172,11 +172,13 @@ export default function DeleteProfileScreen() {
                           size={"$6"}
                           onPress={formMethods.handleSubmit(onSubmit)}
                           flex={1}
+                          borderWidth={0}
                           backgroundColor={"$red10Light"}
                           pressStyle={{
-                            borderWidth: 0,
-                            backgroundColor: "$background",
-                            opacity: 0.7,
+                            backgroundColor: "$red9Light",
+                          }}
+                          disabledStyle={{
+                            backgroundColor: "$red9Light",
                           }}
                         >
                           {isPending && <Spinner color="$color" />}
