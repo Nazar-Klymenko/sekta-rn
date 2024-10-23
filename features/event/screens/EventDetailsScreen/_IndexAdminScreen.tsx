@@ -2,34 +2,27 @@ import React, { useState } from "react";
 
 import { TouchableOpacity } from "react-native";
 
-import { PrimaryButton } from "@/features/core/components/buttons/PrimaryButton";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
-import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import {
   ArrowLeft,
-  Cross,
-  Delete,
+  ChevronDown,
   Edit3,
   MoreHorizontal,
-  MoreVertical,
   X,
 } from "@tamagui/lucide-icons";
 
 import {
-  AlertDialog,
   Button,
-  Dialog,
   Paragraph,
   Separator,
+  Sheet,
   Stack as TStack,
   Theme,
   XStack,
   YStack,
 } from "tamagui";
-import { Sheet } from "tamagui";
 
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
@@ -41,7 +34,7 @@ export default function AdminEventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
   const [open, setOpen] = useState(false);
-  const [innerOpen, setInnerOpen] = React.useState(false);
+  const [innerOpen, setInnerOpen] = useState(false);
   const router = useRouter();
 
   if (!id || isLoading) return <FullPageLoading />;
@@ -83,45 +76,139 @@ export default function AdminEventDetailsScreen() {
           )}
         </YStack>
       </PageContainer>
+
       <Sheet
         open={open}
         onOpenChange={setOpen}
         dismissOnSnapToBottom
         animation="medium"
-        zIndex={100_000}
+        zIndex={1000007}
         snapPointsMode="fit"
+        modal
       >
         <Sheet.Overlay
-          key="sasdsdscxv"
+          key="outerOverlay"
           animation="quickest"
           enterStyle={{ opacity: 0 }}
           exitStyle={{ opacity: 0 }}
         />
         <Sheet.Handle />
-        <Theme name={"surface1"}>
-          <Sheet.Frame
-            padding="$4"
-            justifyContent="center"
-            alignItems="center"
-            gap="$5"
-          >
-            <Theme name={"surface2"}>
-              <TStack flex={1} width="100%">
+        <Sheet.Frame
+          padding="$4"
+          justifyContent="center"
+          alignItems="center"
+          gap="$5"
+        >
+          <Theme name={"surface1"}>
+            <TStack flex={1} width="100%">
+              <Button
+                size={"$6"}
+                onPress={() => {
+                  setOpen(false);
+                  router.push({
+                    pathname: "/admin/events/[id]/update",
+                    params: { id: id },
+                  });
+                }}
+                flex={1}
+                width="100%"
+                backgroundColor={"$"}
+                icon={Edit3}
+                borderBottomRightRadius={0}
+                borderBottomLeftRadius={0}
+                animation="quickest"
+                pressStyle={{
+                  borderWidth: 0,
+                  backgroundColor: "$background",
+                  opacity: 0.7,
+                }}
+              >
+                Edit
+              </Button>
+              <Separator />
+              <Button
+                size={"$6"}
+                onPress={() => {
+                  // Keep the outer sheet open
+                  setInnerOpen(true);
+                }}
+                borderTopRightRadius={0}
+                borderTopLeftRadius={0}
+                width="100%"
+                icon={X}
+                color={"$red10Dark"}
+                animation="lazy"
+                pressStyle={{
+                  borderWidth: 0,
+                  backgroundColor: "$background",
+                  opacity: 0.7,
+                }}
+              >
+                Delete
+              </Button>
+            </TStack>
+          </Theme>
+        </Sheet.Frame>
+      </Sheet>
+
+      <InnerSheet
+        open={innerOpen}
+        onOpenChange={setInnerOpen}
+        closeOuterSheet={() => setOpen(false)} // Pass function to close outer sheet
+      />
+    </>
+  );
+}
+
+function InnerSheet({
+  open,
+  onOpenChange,
+  closeOuterSheet, // Add a prop to close the outer sheet
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  closeOuterSheet: () => void; // Function to close the outer sheet
+}) {
+  return (
+    <Sheet
+      animation="medium"
+      modal
+      snapPointsMode="fit"
+      dismissOnSnapToBottom
+      open={open}
+      onOpenChange={onOpenChange}
+      zIndex={1000008}
+    >
+      <Sheet.Overlay
+        animation="medium"
+        enterStyle={{ opacity: 0 }}
+        exitStyle={{ opacity: 0 }}
+      />
+      <Sheet.Handle />
+      <Sheet.Frame
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        gap="$5"
+        padding="$4"
+      >
+        <YStack gap="$4" width="100%">
+          <YStack gap="$4">
+            <Paragraph size="$8" fontWeight={700}>
+              Delete Event
+            </Paragraph>
+            <Paragraph>
+              By pressing delete, the event will be deleted permanently.
+            </Paragraph>
+            <Separator />
+
+            <Theme name={"surface1"}>
+              <XStack flex={1} width="100%" gap="$4">
                 <Button
                   size={"$6"}
-                  onPress={() => {
-                    setOpen(false);
-                    router.push({
-                      pathname: "/admin/events/[id]/update",
-                      params: { id: id },
-                    });
-                  }}
+                  onPress={() => onOpenChange(false)} // Close the inner sheet
                   flex={1}
-                  width="100%"
-                  backgroundColor={"$"}
-                  icon={Edit3}
-                  borderBottomRightRadius={0}
-                  borderBottomLeftRadius={0}
+                  backgroundColor={"$background"}
                   animation="quickest"
                   pressStyle={{
                     borderWidth: 0,
@@ -129,20 +216,16 @@ export default function AdminEventDetailsScreen() {
                     opacity: 0.7,
                   }}
                 >
-                  Edit
+                  Cancel
                 </Button>
-                <Separator />
                 <Button
                   size={"$6"}
                   onPress={() => {
-                    setOpen(false);
-                    setInnerOpen(true);
+                    onOpenChange(false); // Close inner sheet
+                    closeOuterSheet(); // Close outer sheet
                   }}
-                  borderTopRightRadius={0}
-                  borderTopLeftRadius={0}
-                  width="100%"
-                  icon={X}
-                  color={"$red10Dark"}
+                  flex={1}
+                  backgroundColor={"$red10Light"}
                   animation="lazy"
                   pressStyle={{
                     borderWidth: 0,
@@ -152,79 +235,11 @@ export default function AdminEventDetailsScreen() {
                 >
                   Delete
                 </Button>
-              </TStack>
+              </XStack>
             </Theme>
-          </Sheet.Frame>
-        </Theme>
-      </Sheet>
-
-      <AlertDialog open={innerOpen} onOpenChange={setInnerOpen}>
-        <AlertDialog.Portal>
-          <AlertDialog.Overlay
-            key="overlay"
-            animation="quick"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-          <Theme name={"surface1"}>
-            <AlertDialog.Content
-              bordered
-              elevate
-              key="content"
-              animation={[
-                "quick",
-                {
-                  opacity: {
-                    overshootClamping: true,
-                  },
-                },
-              ]}
-              enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-              exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-              x={0}
-              scale={1}
-              opacity={1}
-              y={0}
-            >
-              <YStack gap="$4">
-                <AlertDialog.Title>Delete Event</AlertDialog.Title>
-                <AlertDialog.Description>
-                  By pressing delete, the event will be deleted permanently.
-                </AlertDialog.Description>
-
-                <Separator></Separator>
-                <XStack gap="$3" justifyContent="flex-end">
-                  <AlertDialog.Cancel asChild>
-                    <Button
-                      pressStyle={{
-                        borderWidth: 0,
-                        backgroundColor: "$background",
-                        opacity: 0.7,
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </AlertDialog.Cancel>
-                  <AlertDialog.Action asChild>
-                    <Button
-                      theme="active"
-                      color={"$red10Dark"}
-                      animation="lazy"
-                      pressStyle={{
-                        borderWidth: 0,
-                        backgroundColor: "$background",
-                        opacity: 0.7,
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </AlertDialog.Action>
-                </XStack>
-              </YStack>
-            </AlertDialog.Content>
-          </Theme>
-        </AlertDialog.Portal>
-      </AlertDialog>
-    </>
+          </YStack>
+        </YStack>
+      </Sheet.Frame>
+    </Sheet>
   );
 }

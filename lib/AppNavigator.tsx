@@ -8,6 +8,7 @@ import { CurrentToast } from "@/features/core/components/Toast";
 import { Footer } from "@/features/core/components/navigation/Footer";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
+import { PortalProvider } from "@tamagui/portal";
 import { ToastViewport } from "@tamagui/toast";
 
 import { Slot, Stack } from "expo-router";

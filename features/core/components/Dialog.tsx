@@ -38,6 +38,7 @@ export function Dialog({
     <TamaguiDialog modal {...props}>
       <TamaguiDialog.Portal>
         <TamaguiDialog.Overlay
+          minHeight={"100%"}
           key={"overlay" + id}
           animation="quickest"
           enterStyle={{ opacity: 0 }}
