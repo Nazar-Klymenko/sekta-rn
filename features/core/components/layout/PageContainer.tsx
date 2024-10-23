@@ -17,6 +17,7 @@ export function PageContainer({
     <ScrollView
       backgroundColor="$background"
       contentContainerStyle={{
+        gap: "$4",
         padding: "$4",
         ...(overflowRight && { paddingRight: 0 }),
       }}
@@ -24,17 +25,5 @@ export function PageContainer({
     >
       {children}
     </ScrollView>
-  );
-}
-export function PageContainerInner({ children }: PageContainerProps) {
-  return (
-    <YStack
-      backgroundColor="$background"
-      style={{
-        padding: "$4",
-      }}
-    >
-      {children}
-    </YStack>
   );
 }
