@@ -1,3 +1,3 @@
-import AdminEventDetailsScreen from "@/features/event/screens/EventDetailsScreen/_IndexAdminScreen";
+import EventPreviewScreen from "@/features/admin/screens/EventPreviewScreen/_index";
 
-export default AdminEventDetailsScreen;
+export default EventPreviewScreen;

@@ -4,6 +4,13 @@ import { TouchableOpacity } from "react-native";
 
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
+import {
+  EventDescription,
+  EventHero,
+  EventInfo,
+  TagSection,
+} from "@/features/event/screens/EventDetailsScreen";
 
 import {
   ArrowLeft,
@@ -26,11 +33,7 @@ import {
 
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
-import { useFetchEvent } from "../../hooks/useFetchEvent";
-import { TagSection } from "./TagSection";
-import { EventDescription, EventHero, EventInfo } from "./index";
-
-export default function AdminEventDetailsScreen() {
+export default function EventPreviewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
   const [open, setOpen] = useState(false);
@@ -129,7 +132,6 @@ export default function AdminEventDetailsScreen() {
               <Button
                 size={"$6"}
                 onPress={() => {
-                  // Keep the outer sheet open
                   setInnerOpen(true);
                 }}
                 borderTopRightRadius={0}

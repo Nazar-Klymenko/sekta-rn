@@ -14,13 +14,11 @@ const ImagePickerBox = styled(Stack, {
   justifyContent: "center",
   backgroundColor: "$backgroundHover",
 
-  // Use Tamagui's shadow tokens instead of platform-specific shadow properties
   shadowColor: "$shadowColor",
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
 
-  // Add hover and pressed states
   hoverStyle: {
     backgroundColor: "$backgroundFocus",
   },
