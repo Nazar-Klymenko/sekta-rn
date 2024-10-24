@@ -4,6 +4,7 @@ import {
   Paragraph,
   Input as TamaguiInput,
   InputProps as TamaguiInputProps,
+  TextArea as TamaguiTextArea,
   styled,
   useTheme,
 } from "tamagui";
@@ -13,7 +14,18 @@ export const BaseInput = styled(TamaguiInput, {
   borderRadius: "$2",
   borderWidth: 2,
   outlineColor: "$accentBackground",
-  borderColor: "$gray2Dark",
+  minHeight: 54,
+  fontSize: 16,
+  focusStyle: {
+    outlineColor: "$accentBackground",
+    borderColor: "$accentBackground",
+  },
+});
+export const BaseTextArea = styled(TamaguiTextArea, {
+  flex: 1,
+  borderRadius: "$2",
+  borderWidth: 2,
+  outlineColor: "$accentBackground",
   minHeight: 54,
   fontSize: 16,
   focusStyle: {

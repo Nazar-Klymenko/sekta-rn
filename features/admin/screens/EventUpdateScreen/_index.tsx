@@ -11,8 +11,8 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
-import { MultiSelect } from "@/features/core/components/form/MultiSelect";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
+import { TextArea } from "@/features/core/components/form/TextArea";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
@@ -20,15 +20,12 @@ import { EventFormData } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { Button, Label, Paragraph, YStack } from "tamagui";
-
 import { useLocalSearchParams } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { CustomImagePicker } from "../../components/events/ImagePicker";
-import { useEventOperations } from "../../hooks/useEventOperations";
 import { useImagePicker } from "../../hooks/useImagePicker";
 import { useUpdateEvent } from "../../hooks/useUpdateEvent";
 import {
@@ -62,7 +59,6 @@ export default function EventUpdateScreen() {
 
   useEffect(() => {
     if (!isLoading && event) {
-      // Only set the image URL, not the entire object
       setImage(event.image.publicUrl);
       reset({ ...event, date: event.date.toDate() });
     }
@@ -102,7 +98,7 @@ export default function EventUpdateScreen() {
           label="Event title"
           placeholder="Title"
         />
-        <Input
+        <TextArea
           id="event-caption"
           name="caption"
           label="Event caption"

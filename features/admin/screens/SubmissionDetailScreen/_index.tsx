@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
+import { Timestamp } from "firebase/firestore";
+
 import { TouchableOpacity } from "react-native";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Sheet } from "@/features/core/components/panels/Sheet";
 import { useDeletePlaySubmission } from "@/features/play/hooks/useDeletePlaySubmission";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
   CheckCircle,
@@ -22,12 +25,8 @@ import {
 import { useToastController } from "@tamagui/toast";
 
 import {
-  AnimatePresence,
-  Button,
   Card,
-  H4,
   Paragraph,
-  ScrollView,
   Separator,
   Theme,
   XStack,
@@ -35,11 +34,18 @@ import {
   useTheme,
 } from "tamagui";
 
-import * as Clipboard from "expo-clipboard";
 import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
 
+import { InfoRow } from "./InfoRow";
+
 export function SubmissionDetailScreen() {
-  const params = useLocalSearchParams();
+  const { id, submission } = useLocalSearchParams<{
+    id: string;
+    submission: string;
+  }>();
+  const parsedSubmission = JSON.parse(submission);
+
+  console.log(parsedSubmission);
   const navigation = useNavigation();
   const theme = useTheme();
   const toast = useToastController();
@@ -47,7 +53,7 @@ export function SubmissionDetailScreen() {
   const { mutate, isPending } = useDeletePlaySubmission();
 
   const handleDelete = () => {
-    mutate(params.id.toString(), {
+    mutate(id.toString(), {
       onSuccess: () => {
         setShowConfirmSheet(false);
         navigation.goBack();
@@ -82,33 +88,33 @@ export function SubmissionDetailScreen() {
             <InfoRow
               icon={<Mail size={20} color="$color9" />}
               label="Email"
-              value={params.email as string}
+              value={parsedSubmission.email as string}
             />
             <InfoRow
               icon={<Phone size={20} color="$color9" />}
               label="Phone"
-              value={params.phone as string}
+              value={parsedSubmission.phone as string}
             />
             <Separator marginVertical="$2" />
             <InfoRow
               icon={<Music size={20} color="$color9" />}
               label="SoundCloud"
-              value={params.soundcloud as string}
+              value={parsedSubmission.soundcloud as string}
             />
             <InfoRow
               icon={<Youtube size={20} color="$color9" />}
               label="YouTube"
-              value={params.youtube as string}
+              value={parsedSubmission.youtube as string}
             />
             <InfoRow
               icon={<Instagram size={20} color="$color9" />}
               label="Instagram"
-              value={params.instagram as string}
+              value={parsedSubmission.instagram as string}
             />
             <InfoRow
               icon={<Facebook size={20} color="$color9" />}
               label="Facebook"
-              value={params.facebook as string}
+              value={parsedSubmission.facebook as string}
             />
             <Separator marginVertical="$2" />
 
@@ -124,14 +130,24 @@ export function SubmissionDetailScreen() {
                 color="$color12"
                 style={{ whiteSpace: "pre-wrap" }}
               >
-                {(params.additionalInfo as string) || "-"}
+                {(parsedSubmission.additionalInfo as string) || "-"}
               </Paragraph>
             </YStack>
             <Separator marginVertical="$2" />
             <InfoRow
               icon={<Clock size={20} color="$color9" />}
               label="Submitted At"
-              value={params.submittedAt as string}
+              value={
+                parsedSubmission.submittedAt
+                  ? formatFirestoreTimestamp(
+                      new Timestamp(
+                        parsedSubmission.submittedAt.seconds,
+                        parsedSubmission.submittedAt.nanoseconds
+                      ),
+                      "EEEE, MMMM do yyyy, HH:mm"
+                    )
+                  : undefined
+              }
             />
           </YStack>
         </Card>
@@ -175,51 +191,3 @@ export function SubmissionDetailScreen() {
     </>
   );
 }
-interface InfoRowProps {
-  icon: React.ReactNode;
-  label: string;
-  value?: string;
-}
-
-const InfoRow = ({ icon, label, value }: InfoRowProps) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    if (!value || value === "-") return;
-
-    try {
-      await Clipboard.setStringAsync(value);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error("Failed to copy:", error);
-    }
-  };
-
-  return (
-    <XStack gap="$4" alignItems="center" paddingVertical="$2">
-      {icon}
-      <YStack flex={1}>
-        <Paragraph size="$2" color="$color9">
-          {label}
-        </Paragraph>
-        <Paragraph size="$3" color="$color12">
-          {value || "-"}
-        </Paragraph>
-      </YStack>
-      {value && value !== "-" && (
-        <Button
-          icon={copied ? CheckCircle : Copy}
-          size="$2"
-          chromeless
-          circular
-          onPress={handleCopy}
-          pressStyle={{ opacity: 0.7 }}
-          opacity={copied ? 1 : 0.5}
-          hoverStyle={{ opacity: 0.8 }}
-          style={{ alignItems: "center", justifyContent: "center" }}
-        />
-      )}
-    </XStack>
-  );
-};

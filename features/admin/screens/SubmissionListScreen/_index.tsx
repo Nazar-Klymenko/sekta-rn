@@ -109,24 +109,10 @@ export default function SubmissionListScreen() {
   const handleRowClick = (submission: PlaySubmission) => {
     router.push({
       pathname: "/admin/submissions/[id]",
-      params: {
-        id: submission.id,
-        email: submission.email,
-        phone: submission.phone || "",
-        soundcloud: submission.soundcloud || "",
-        youtube: submission.youtube || "",
-        instagram: submission.instagram || "",
-        facebook: submission.facebook || "",
-        additionalInfo: submission.additionalInfo || "",
-        submittedAt: submission.submittedAt
-          ? formatFirestoreTimestamp(
-              submission.submittedAt,
-              "EEEE, MMMM do yyyy, HH:mm"
-            )
-          : "",
-      },
+      params: { id: submission.id, submission: JSON.stringify(submission) },
     });
   };
+
   return (
     <PageContainer>
       <Stack gap="$4">
