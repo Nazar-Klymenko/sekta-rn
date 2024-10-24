@@ -90,13 +90,12 @@ export interface TableProps<T extends object> {
 }
 
 export function Table<T extends object>({
-  data: initialData,
+  data,
   columns,
   onRowClick,
   pageSize = 10,
 }: TableProps<T>) {
   // Local state to manage data after deletion
-  const [data, setData] = useState(initialData);
   const table = useReactTable({
     data,
     columns,
