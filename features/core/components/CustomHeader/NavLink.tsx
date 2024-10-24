@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Paragraph, XStack, styled } from "tamagui";
 
 import { Link } from "expo-router";

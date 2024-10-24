@@ -69,7 +69,7 @@ export const CurrentToast = () => {
   return (
     <StyledToast
       key={toast.id}
-      duration={5000}
+      duration={500000}
       enterStyle={{ opacity: 0, scale: 0.9, y: -10 }}
       exitStyle={{ opacity: 0, scale: 0.95, y: 10 }}
       opacity={1}

@@ -14,8 +14,5 @@ export const useDeletePlaySubmission = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["playSubmissions"] });
     },
-    onError: (error) => {
-      alert(error.message);
-    },
   });
 };

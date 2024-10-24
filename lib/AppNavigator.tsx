@@ -4,8 +4,8 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CustomHeader } from "@/features/core/components/CustomHeader/CustomHeader";
-import { CurrentToast } from "@/features/core/components/Toast";
 import { Footer } from "@/features/core/components/navigation/Footer";
+import { CurrentToast } from "@/features/core/components/panels/Toast";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
 import { ToastViewport } from "@tamagui/toast";

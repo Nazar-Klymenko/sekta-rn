@@ -7,6 +7,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
+import { Sheet } from "@/features/core/components/panels/Sheet";
 
 import { UserRoundX } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
@@ -16,7 +17,6 @@ import {
   H1,
   Paragraph,
   Separator,
-  Sheet,
   Spinner,
   Theme,
   XStack,
@@ -44,7 +44,7 @@ export default function DeleteProfileScreen() {
   const theme = useTheme();
   const toast = useToastController();
   const { mutateAsync, isError } = useDeleteProfile();
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   let isPending = false;
   const formMethods = useForm({
     resolver: yupResolver(deleteProfileSchema),
@@ -57,7 +57,7 @@ export default function DeleteProfileScreen() {
 
   const handleSheetClose = useCallback(() => {
     Keyboard.dismiss();
-    setShowConfirmDialog(false);
+    setShowConfirmSheet(false);
     formMethods.reset();
     formMethods.clearErrors();
   }, [formMethods]);
@@ -95,92 +95,71 @@ export default function DeleteProfileScreen() {
 
         <ButtonCTA
           aria-label="Start deleting profile"
-          onPress={() => setShowConfirmDialog(true)}
-          disabled={showConfirmDialog}
+          onPress={() => setShowConfirmSheet(true)}
+          disabled={showConfirmSheet}
           flex={1}
         >
           Delete Account
         </ButtonCTA>
 
         <Sheet
-          animation="medium"
-          modal
-          snapPointsMode="fit"
-          dismissOnSnapToBottom
-          open={showConfirmDialog}
+          open={showConfirmSheet}
           onOpenChange={(isOpen: any) => {
             if (!isOpen) {
               handleSheetClose();
             }
           }}
-          zIndex={1000008}
-          dismissOnOverlayPress
         >
-          <Sheet.Overlay
-            key="deleteProfileOverlay"
-            animation="medium"
-            enterStyle={{ opacity: 0 }}
-            exitStyle={{ opacity: 0 }}
-          />
-          <Sheet.Handle />
-          <Sheet.Frame
-            flex={1}
-            justifyContent="center"
-            alignItems="center"
-            gap="$5"
-            padding="$4"
+          <Pressable
+            style={{ flex: 1, width: "100%" }}
+            onPress={Keyboard.dismiss}
           >
-            <Pressable
-              style={{ flex: 1, width: "100%" }}
-              onPress={Keyboard.dismiss}
-            >
-              <YStack gap="$4" width="100%">
-                <YStack gap="$4" alignItems="center">
-                  <UserRoundX size={48} color="$color" />
-                  <Paragraph size="$8" fontWeight={700}>
-                    Delete Account
-                  </Paragraph>
-                  <Paragraph>
-                    Warning: By pressing Delete all your data will be
-                    permanently deleted. This action cannot be undone.
-                  </Paragraph>
-                  <Form methods={formMethods}>
-                    <PasswordInput
-                      id="password-delete-profile"
-                      name="password"
-                      label="Confirm Password"
-                      placeholder="Enter your password"
-                      secureTextEntry
-                    />
-                    <Separator />
+            <YStack gap="$4" width="100%">
+              <YStack gap="$4" alignItems="center">
+                <UserRoundX size={48} color="$color" />
+                <Paragraph size="$8" fontWeight={700}>
+                  Delete Account
+                </Paragraph>
+                <Paragraph>
+                  Warning: By pressing Delete all your data will be permanently
+                  deleted. This action cannot be undone.
+                </Paragraph>
+                <Form methods={formMethods}>
+                  <PasswordInput
+                    id="password-delete-profile"
+                    name="password"
+                    label="Confirm Password"
+                    placeholder="Enter your password"
+                    secureTextEntry
+                  />
+                  <Separator />
 
-                    <XStack flex={1} width="100%" gap="$4">
+                  <XStack flex={1} width="100%" gap="$4">
+                    <ButtonCTA
+                      theme={"surface1"}
+                      aria-label="Close"
+                      disabled={isPending}
+                      onPress={handleSheetClose}
+                      flex={1}
+                    >
+                      Cancel
+                    </ButtonCTA>
+                    <Theme name="danger">
                       <ButtonCTA
-                        theme={"surface1"}
-                        aria-label="Close"
+                        aria-label="Delte Profile"
+                        isLoading={isPending}
                         disabled={isPending}
-                        onPress={handleSheetClose}
+                        onPress={formMethods.handleSubmit(onSubmit)}
                         flex={1}
                       >
-                        Cancel
+                        Delete
                       </ButtonCTA>
-                      <Theme name="danger">
-                        <ButtonCTA
-                          aria-label="Delte Profile"
-                          isLoading={isPending}
-                          disabled={isPending}
-                          onPress={formMethods.handleSubmit(onSubmit)}
-                          flex={1}
-                        >
-                          Delete
-                        </ButtonCTA>
-                      </Theme>
-                    </XStack>
-                  </Form>
-                </YStack>
+                    </Theme>
+                  </XStack>
+                </Form>
               </YStack>
-            </Pressable>
-          </Sheet.Frame>
+            </YStack>
+          </Pressable>
         </Sheet>
       </PageContainer>
     </AuthGuard>

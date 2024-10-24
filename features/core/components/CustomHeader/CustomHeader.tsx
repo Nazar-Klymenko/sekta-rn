@@ -38,7 +38,7 @@ import {
 
 import { Link, useRouter } from "expo-router";
 
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "../panels/Tooltip";
 import { NavLink, NavLinkButton } from "./NavLink";
 
 // Interfaces
