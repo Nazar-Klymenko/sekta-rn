@@ -14,8 +14,9 @@ import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
 import { EventFormData } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
+import { useToastController } from "@tamagui/toast";
 
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,9 +34,9 @@ import { eventSchema } from "../../utils/schemas";
 export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
-
+  const toast = useToastController();
   const { mutateAsync, isPending } = useUpdateEvent(id);
-
+  const router = useRouter();
   const methods = useForm<EventFormData>({
     resolver: yupResolver(eventSchema),
     defaultValues: {
@@ -67,18 +68,29 @@ export default function EventUpdateScreen() {
       return;
     }
 
-    try {
-      await mutateAsync({
+    await mutateAsync(
+      {
         eventId: id,
         data,
         image,
         originalData: event,
-      });
-      Alert.alert("Success", "Event updated successfully!");
-    } catch (error) {
-      console.error("Error updating event:", error);
-      Alert.alert("Error", "Failed to update event. Please try again.");
-    }
+      },
+      {
+        onSuccess: () => {
+          toast.show("Success", {
+            variant: "success",
+            message: "Event updated successfully!",
+          });
+          router.back();
+        },
+        onError: () => {
+          toast.show("Error", {
+            variant: "error",
+            message: "Failed to update event. Please try again.",
+          });
+        },
+      }
+    );
   };
 
   if (isLoading) return <FullPageLoading />;
