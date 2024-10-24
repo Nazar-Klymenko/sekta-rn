@@ -1,12 +1,7 @@
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Alert } from "react-native";
 
-import { Tag } from "@/features/core/components/Tag";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
@@ -21,7 +16,7 @@ import { EventFormData } from "@/features/event/models/Event";
 import { Calendar } from "@tamagui/lucide-icons";
 
 import { useLocalSearchParams } from "expo-router";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -150,9 +145,10 @@ export default function EventUpdateScreen() {
         <ButtonCTA
           theme="accent"
           disabled={isPending}
+          isLoading={isPending}
           onPress={handleSubmit(onSubmit)}
         >
-          Next: Preview
+          Next: Publish update
         </ButtonCTA>
       </Form>
     </PageContainer>

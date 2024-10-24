@@ -12,7 +12,7 @@ export function useImagePicker() {
     if (status !== "granted") {
       Alert.alert(
         "Permission required",
-        "Sorry, we need camera roll permissions to make this work!",
+        "Sorry, we need camera roll permissions to make this work!"
       );
     }
   };

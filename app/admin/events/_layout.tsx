@@ -6,7 +6,7 @@ import { SizableText, useTheme } from "tamagui";
 
 import { Slot, Stack } from "expo-router";
 
-export default function HomeLayout() {
+export default function AdminEventsLayout() {
   const theme = useTheme();
   if (Platform.OS === "web") {
     return <Slot />;
@@ -15,10 +15,10 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
-        headerTintColor: theme.color.get(),
         headerStyle: {
           backgroundColor: theme.background.get(),
         },
+        headerTintColor: theme.color.get(),
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,
@@ -28,27 +28,31 @@ export default function HomeLayout() {
     >
       <Stack.Screen
         name="index"
+        options={({ navigation }) => ({
+          title: "All Events",
+          headerShown: true,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.push("create")}>
+              <SizableText
+                style={{ color: theme.accentColor.get(), marginRight: 10 }}
+              >
+                Create
+              </SizableText>
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="create"
         options={{
-          title: "Admin",
+          title: "Create Event",
         }}
       />
       <Stack.Screen
-        name="events"
+        name="[id]"
         options={{
           headerShown: false,
-        }}
-      />
-
-      <Stack.Screen
-        name="submissions"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="users"
-        options={{
-          title: "All users",
+          title: "Event Details",
         }}
       />
     </Stack>

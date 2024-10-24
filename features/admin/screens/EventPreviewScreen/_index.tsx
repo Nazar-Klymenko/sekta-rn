@@ -4,7 +4,6 @@ import { TouchableOpacity } from "react-native";
 
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { Sheet } from "@/features/core/components/panels/Sheet";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
 import {
   EventDescription,
@@ -13,19 +12,14 @@ import {
   TagSection,
 } from "@/features/event/screens/EventDetailsScreen";
 
-import { Edit3, MoreHorizontal, X } from "@tamagui/lucide-icons";
+import { MoreHorizontal } from "@tamagui/lucide-icons";
 
-import {
-  Button,
-  Paragraph,
-  Separator,
-  Stack as TStack,
-  Theme,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Paragraph, YStack } from "tamagui";
 
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+
+import { InnerMenuSheet } from "./InnerMenuSheet";
+import { OuterMenuSheet } from "./OuterMenuSheet";
 
 export default function EventPreviewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -74,124 +68,17 @@ export default function EventPreviewScreen() {
         </YStack>
       </PageContainer>
 
-      <Sheet open={showConfirmSheet} onOpenChange={setShowConfirmSheet}>
-        <Theme name={"surface1"}>
-          <TStack flex={1} width="100%">
-            <Button
-              size={"$6"}
-              onPress={() => {
-                setShowConfirmSheet(false);
-                router.push({
-                  pathname: "/admin/events/[id]/update",
-                  params: { id: id },
-                });
-              }}
-              flex={1}
-              width="100%"
-              backgroundColor={"$"}
-              icon={Edit3}
-              borderBottomRightRadius={0}
-              borderBottomLeftRadius={0}
-              animation="quickest"
-              pressStyle={{
-                borderWidth: 0,
-                backgroundColor: "$background",
-                opacity: 0.7,
-              }}
-            >
-              Edit
-            </Button>
-            <Separator />
-            <Button
-              size={"$6"}
-              onPress={() => {
-                setInnerShowConfirmSheet(true);
-              }}
-              borderTopRightRadius={0}
-              borderTopLeftRadius={0}
-              width="100%"
-              icon={X}
-              color={"$red10Dark"}
-              animation="lazy"
-              pressStyle={{
-                borderWidth: 0,
-                backgroundColor: "$background",
-                opacity: 0.7,
-              }}
-            >
-              Delete
-            </Button>
-          </TStack>
-        </Theme>
-      </Sheet>
-
-      <InnerSheet
+      <OuterMenuSheet
+        open={showConfirmSheet}
+        onOpenChange={setShowConfirmSheet}
+        setInnerShowConfirmSheet={setInnerShowConfirmSheet}
+        id={id}
+      />
+      <InnerMenuSheet
         open={innershowConfirmSheet}
         onOpenChange={setInnerShowConfirmSheet}
         closeOuterSheet={() => setShowConfirmSheet(false)}
       />
     </>
-  );
-}
-
-function InnerSheet({
-  open,
-  onOpenChange,
-  closeOuterSheet,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  closeOuterSheet: () => void;
-}) {
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <YStack gap="$4" width="100%">
-        <YStack gap="$4">
-          <Paragraph size="$8" fontWeight={700}>
-            Delete Event
-          </Paragraph>
-          <Paragraph>
-            By pressing delete, the event will be deleted permanently.
-          </Paragraph>
-          <Separator />
-
-          <Theme name={"surface1"}>
-            <XStack flex={1} width="100%" gap="$4">
-              <Button
-                size={"$6"}
-                onPress={() => onOpenChange(false)} // Close the inner sheet
-                flex={1}
-                backgroundColor={"$background"}
-                animation="quickest"
-                pressStyle={{
-                  borderWidth: 0,
-                  backgroundColor: "$background",
-                  opacity: 0.7,
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                size={"$6"}
-                onPress={() => {
-                  onOpenChange(false);
-                  closeOuterSheet();
-                }}
-                flex={1}
-                backgroundColor={"$red10Light"}
-                animation="lazy"
-                pressStyle={{
-                  borderWidth: 0,
-                  backgroundColor: "$background",
-                  opacity: 0.7,
-                }}
-              >
-                Delete
-              </Button>
-            </XStack>
-          </Theme>
-        </YStack>
-      </YStack>
-    </Sheet>
   );
 }

@@ -1,27 +1,22 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
-import React, { useMemo, useState } from "react";
-
-import { Alert, Platform } from "react-native";
+import React from "react";
 
 import { Table } from "@/features/core/components/Table";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { Pagination } from "@/features/core/components/navigation/Pagination";
-import { useDeletePlaySubmission } from "@/features/play/hooks/useDeletePlaySubmission";
 import { useFetchPlaySubmissions } from "@/features/play/hooks/useFetchPlaySubmissions";
 import { PlaySubmission } from "@/features/play/models/PlaySubmission";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Search, Trash2 } from "@tamagui/lucide-icons";
+import { Search } from "@tamagui/lucide-icons";
 
-import { Button, Paragraph, ScrollView, Stack, XStack } from "tamagui";
+import { Paragraph, Stack, XStack } from "tamagui";
 
 import { useRouter } from "expo-router";
-import { debounce } from "lodash";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 

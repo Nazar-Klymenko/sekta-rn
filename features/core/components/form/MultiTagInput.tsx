@@ -47,14 +47,12 @@ export function MultiTagInput({
 
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  // Remove the local tags state and use the form value directly
-  const tags: string[] = value || []; // Added type annotation
+  const tags: string[] = value || [];
 
   const handleAddTag = () => {
     if (inputValue.trim()) {
       const newTags = [...tags, inputValue.trim()];
       setInputValue("");
-      // Update form value with all tags
       onChange(newTags);
     }
   };

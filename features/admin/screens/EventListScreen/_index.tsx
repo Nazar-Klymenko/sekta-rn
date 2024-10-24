@@ -5,13 +5,11 @@ import React from "react";
 import { Table } from "@/features/core/components/Table";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { Pagination } from "@/features/core/components/navigation/Pagination";
 import { useFetchEvents } from "@/features/event/hooks/useFetchEvents";
-import { useFetchPaginatedEvents } from "@/features/event/hooks/useFetchPaginatedEvents";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Paragraph, Stack, XStack } from "tamagui";
+import { Paragraph } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -42,6 +40,7 @@ export default function EventListScreen() {
       sortingFn: "datetime",
       invertSorting: true,
     }),
+
     columnHelper.accessor("location", {
       header: "Location",
       cell: (info) => info.getValue() || "-",

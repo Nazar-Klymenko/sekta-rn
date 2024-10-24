@@ -12,8 +12,6 @@ import { db, storage } from "@/lib/firebase/firebase";
 
 import { isEqual, pick } from "lodash";
 
-import { getChangedFields } from "../utils/getChangedFields";
-
 interface UpdateEventParams {
   eventId: string;
   data: EventFormData;
@@ -45,7 +43,6 @@ export const updateEvent = async ({
     };
   }
 
-  // Compare and prepare data updates
   const comparableFields = pick(data, [
     "title",
     "caption",
