@@ -43,6 +43,7 @@ export default function EventsLayout() {
         options={{
           title: "Event",
           headerShown: false,
+          headerBackVisible: false,
         }}
       />
       <Stack.Screen

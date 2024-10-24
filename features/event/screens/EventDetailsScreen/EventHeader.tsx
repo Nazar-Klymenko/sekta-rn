@@ -1,3 +1,5 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 import React from "react";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -41,6 +43,17 @@ const EventHeader: React.FC<EventHeaderProps> = ({
     };
   });
 
+  const backButtonAnimatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 100],
+      [0.5, 1],
+      Extrapolation.CLAMP
+    );
+    return {
+      opacity,
+    };
+  });
   const titleAnimatedStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       scrollY.value,
@@ -73,6 +86,21 @@ const EventHeader: React.FC<EventHeaderProps> = ({
           <Animated.View
             style={[StyleSheet.absoluteFill, headerAnimatedStyle]}
           />
+        ),
+        headerLeft: () => (
+          <Animated.View style={backButtonAnimatedStyle}>
+            <TouchableOpacity
+              style={{
+                padding: 5,
+                borderRadius: 30,
+                backgroundColor: theme.background.get(),
+                marginLeft: -3,
+              }}
+              onPress={() => navigation.goBack()}
+            >
+              <Ionicons name="arrow-back" size={24} color={theme.color.get()} />
+            </TouchableOpacity>
+          </Animated.View>
         ),
         headerTitle: (props) => (
           <Animated.Text
