@@ -11,15 +11,19 @@ export const useDeleteEvent = (id?: string) => {
   return useMutation({
     mutationFn: deleteEvent,
     onSuccess: () => {
-      toast.show("Event deleted successfully!", { variant: "success" });
+      toast.show("Success", {
+        variant: "success",
+        message: "Event deleted successfully!",
+      });
       queryClient.invalidateQueries({ queryKey: ["events"] });
       queryClient.invalidateQueries({ queryKey: ["paginatedEvents"] });
       queryClient.invalidateQueries({ queryKey: ["upcomingEvents"] });
       queryClient.invalidateQueries({ queryKey: ["event", id] });
     },
     onError: (error: Error) => {
-      toast.show(error.message || "Failed to delete event. Please try again.", {
+      toast.show("Error", {
         variant: "error",
+        message: error.message || "Failed to delete event. Please try again.",
       });
     },
   });

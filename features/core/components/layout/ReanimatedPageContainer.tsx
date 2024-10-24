@@ -4,6 +4,8 @@ import { Stack, View, YStack, styled } from "tamagui";
 
 import Animated from "react-native-reanimated";
 
+import { StickyBottom } from "./StickyBottom";
+
 interface ReanimatedPageContainerProps {
   children: React.ReactNode;
   onScroll?: (event: any) => void;
@@ -21,7 +23,6 @@ const Container = styled(YStack, {
 
 const ContentContainer = styled(Stack, {
   flexGrow: 1,
-  paddingBottom: 100, // Adjust to ensure space for sticky bottom if necessary
   variants: {
     fullWidth: {
       true: {
@@ -29,17 +30,6 @@ const ContentContainer = styled(Stack, {
       },
     },
   },
-});
-
-const StickyBottom = styled(View, {
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-  backgroundColor: "$background",
-  padding: "$4",
-  borderTopWidth: 1,
-  borderTopColor: "$borderColor",
 });
 
 export const ReanimatedPageContainer: React.FC<
@@ -62,7 +52,12 @@ export const ReanimatedPageContainer: React.FC<
         scrollEventThrottle={scrollEventThrottle}
         contentContainerStyle={[contentContainerStyle]}
       >
-        <ContentContainer fullWidth={fullWidth}>{children}</ContentContainer>
+        <ContentContainer
+          paddingBottom={stickyBottom ? 100 : 0}
+          fullWidth={fullWidth}
+        >
+          {children}
+        </ContentContainer>
       </Wrapper>
       {stickyBottom && <StickyBottom>{stickyBottom}</StickyBottom>}
     </Container>

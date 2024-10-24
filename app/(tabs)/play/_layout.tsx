@@ -12,6 +12,7 @@ export default function HomeLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
+        headerTitleAlign: "center",
       }}
     >
       <Stack.Screen

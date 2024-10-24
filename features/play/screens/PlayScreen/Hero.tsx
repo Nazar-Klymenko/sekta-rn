@@ -61,7 +61,7 @@ export const HeroSection = () => {
               )}
               <YStack>
                 <SizableText
-                  lineHeight={60}
+                  lineHeight={72}
                   fontSize={72}
                   fontWeight={800}
                   textTransform="uppercase"

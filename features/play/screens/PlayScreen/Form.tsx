@@ -15,7 +15,7 @@ import {
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Paragraph } from "tamagui";
+import { H2, Paragraph, Separator } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -51,19 +51,19 @@ const portfolioLinks = [
     name: "soundcloud",
     label: "Soundcloud",
     icon: AudioLines,
-    placeholder: "https://soundcloud.com/",
+    placeholder: "soundcloud.com/",
   },
   {
     name: "youtube",
     label: "Youtube",
     icon: Youtube,
-    placeholder: "https://www.youtube.com/",
+    placeholder: "youtube.com/",
   },
   {
     name: "facebook",
     label: "Facebook",
     icon: Facebook,
-    placeholder: "https://www.facebook.com/",
+    placeholder: "facebook.com/",
   },
 ];
 
@@ -104,14 +104,14 @@ export function PlayForm() {
 
   return (
     <Form methods={methods} maxWidth={740} flex={1}>
-      <Paragraph fontSize={20} fontWeight="700">
-        Contact Information
-      </Paragraph>
+      <H2>Contact Information</H2>
       <Input
         id="play-email"
         name="email"
         label="Contact Email"
         placeholder="email@gmail.com"
+        inputMode="email"
+        autoCapitalize="none"
         icon={Mail}
       />
       <Input
@@ -119,11 +119,13 @@ export function PlayForm() {
         name="phone"
         label="Phone Number (Optional)"
         placeholder="+48 577 925 024"
+        inputMode="tel"
         icon={Phone}
       />
-      <Paragraph fontSize={20} fontWeight="700">
-        Portfolio Links (Optional)
-      </Paragraph>
+      <Separator />
+
+      <H2>Portfolio Links (Optional)</H2>
+
       {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
         <Input
           key={name + idx}
