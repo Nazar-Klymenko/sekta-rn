@@ -77,10 +77,11 @@ export function AppNavigator() {
       </Stack>
       <CurrentToast />
       <ToastViewport
-        top={top}
+        flexDirection="column"
+        top={top + 10}
         left={left}
         right={right}
-        flexDirection="column-reverse"
+        bottom={undefined}
       />
     </>
   );

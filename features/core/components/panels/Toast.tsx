@@ -3,50 +3,19 @@ import React from "react";
 import { AlertTriangle, CheckCircle, Info, X } from "@tamagui/lucide-icons";
 import { Toast, useToastState } from "@tamagui/toast";
 
-import { Button, XStack, YStack, styled } from "tamagui";
+import { Button, XStack, YStack } from "tamagui";
 
-const StyledToast = styled(Toast, {
-  width: "90%",
-  backgroundColor: "$backgroundHover",
-  padding: "$1",
-  borderColor: "$borderColor",
-  borderWidth: 1,
-  alignItems: "center",
-  borderRadius: "$2",
-  variants: {
-    variant: {
-      error: {
-        borderLeftColor: "$red10Light",
-        borderLeftWidth: 4,
-      },
-      success: {
-        borderLeftColor: "$green10Light",
-        borderLeftWidth: 4,
-      },
-      info: {
-        borderLeftColor: "$blue10Light",
-        borderLeftWidth: 4,
-      },
-    },
-  } as const,
-});
+const ICONS = {
+  error: <AlertTriangle color="$red10Dark" size="$1" />,
+  success: <CheckCircle color="$green10Dark" size="$1" />,
+  info: <Info color="$blue10Dark" size="$1" />,
+};
 
-const CloseButton = styled(Button, {
-  backgroundColor: "transparent",
-  marginLeft: "auto",
-});
-
-const IconWrapper = styled(YStack, {
-  justifyContent: "center",
-  alignItems: "center",
-  marginLeft: "$2",
-});
-
-const ContentWrapper = styled(YStack, {
-  flex: 1,
-  marginHorizontal: "$2",
-  marginVertical: "$1",
-});
+const COLORS = {
+  error: "$red10Dark",
+  success: "$green10Dark",
+  info: "$blue10Dark",
+};
 
 export const CurrentToast = () => {
   const toast = useToastState();
@@ -55,43 +24,45 @@ export const CurrentToast = () => {
     return null;
   }
 
-  const getIcon = () => {
-    switch (toast.variant) {
-      case "error":
-        return <AlertTriangle color="$red10Light" size="$1.5" />;
-      case "success":
-        return <CheckCircle color="$green10Light" size="$1.5" />;
-      default:
-        return <Info color="$blue10Light" size="$1.5" />;
-    }
-  };
+  const variant = toast.variant as keyof typeof ICONS;
 
   return (
-    <StyledToast
+    <Toast
       key={toast.id}
-      duration={500000}
-      enterStyle={{ opacity: 0, scale: 0.9, y: -10 }}
-      exitStyle={{ opacity: 0, scale: 0.95, y: 10 }}
+      duration={40000}
+      enterStyle={{ opacity: 0, scale: 0.5, y: -25 }}
+      exitStyle={{ opacity: 0, scale: 1, y: -20 }}
       opacity={1}
       scale={1}
-      y={0}
-      variant={toast.variant as "error" | "success" | "info"}
-      unstyled
+      animation="quickest"
+      backgroundColor={"$background"}
+      padding="$3"
+      borderRadius="$4"
+      elevate
+      style={{ maxWidth: 400, width: "90%" }}
     >
-      <XStack flex={1} alignItems="center">
-        <IconWrapper>{getIcon()}</IconWrapper>
-        <ContentWrapper>
-          <Toast.Title fontWeight="bold" numberOfLines={1}>
-            {toast.title}
+      <XStack alignItems="center" gap="$4" flexWrap="nowrap">
+        {ICONS[variant]}
+
+        <YStack flexGrow={1}>
+          <Toast.Title color={COLORS[variant]} fontWeight="600" fontSize={"$6"}>
+            {variant.charAt(0).toUpperCase() + variant.slice(1)}
           </Toast.Title>
-          <Toast.Description numberOfLines={2}>
-            {toast.message}
+          <Toast.Description color="$color" opacity={0.8} fontSize={"$4"}>
+            {toast.title}
           </Toast.Description>
-        </ContentWrapper>
+        </YStack>
+
         <Toast.Close asChild>
-          <CloseButton circular icon={<X size="$1" />} />
+          <Button
+            chromeless
+            borderWidth={0}
+            borderRadius="$12"
+            icon={<X size="$1" color="$color" />}
+            hoverStyle={{ backgroundColor: "$background" }}
+          />
         </Toast.Close>
       </XStack>
-    </StyledToast>
+    </Toast>
   );
 };

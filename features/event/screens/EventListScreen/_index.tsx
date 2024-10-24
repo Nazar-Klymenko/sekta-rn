@@ -7,6 +7,8 @@ import { RefreshControl } from "react-native";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
+import { useToastController } from "@tamagui/toast";
+
 import { Separator } from "tamagui";
 
 import { useRouter } from "expo-router";
@@ -23,7 +25,7 @@ export default function EventListScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [refreshing, setRefreshing] = useState(false);
-
+  const toast = useToastController();
   const {
     data: upcomingEvents,
     isLoading: isUpcomingLoading,
@@ -67,12 +69,13 @@ export default function EventListScreen() {
       }
       gap="$4"
     >
-      <ButtonCTA
+      {/* <ButtonCTA
         onPress={() => router.push("/admin/events/JW2wfBEzD1owf2HvmnP5/update")}
       >
         Shortcut delete later
-      </ButtonCTA>
-      <ButtonCTA onPress={() => router.push("/admin")}>Admin</ButtonCTA>
+      </ButtonCTA> */}
+
+      {/* <ButtonCTA onPress={() => router.push("/admin")}>Admin</ButtonCTA> */}
       {/* <ButtonCTA onPress={clearQueryCache}>Clear Cache and Refresh</ButtonCTA> */}
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}
