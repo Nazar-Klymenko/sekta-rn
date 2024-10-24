@@ -20,12 +20,14 @@ export const SkeletonUpcomingEventCard: React.FC<
   return (
     <YStack
       width={verticalView ? "100%" : cardWidth}
-      borderRadius="$6"
+      borderRadius="$2"
       overflow="hidden"
-      borderWidth={1}
-      borderColor="$gray2Dark"
     >
-      <Skeleton width={verticalView ? "100%" : cardWidth} aspectRatio={1} />
+      <Skeleton
+        width={verticalView ? "100%" : cardWidth}
+        aspectRatio={1}
+        borderRadius={"$2"}
+      />
       <YStack padding="$4" gap="$2">
         <Skeleton height={24} width="80%" />
         <XStack alignItems="center" gap="$2">

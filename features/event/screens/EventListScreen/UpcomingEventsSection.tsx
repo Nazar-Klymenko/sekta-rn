@@ -9,7 +9,9 @@ import { SkeletonUpcomingEventCard } from "@/features/event/components/event/Ske
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 import { Event } from "@/features/event/models/Event";
 
-import { Separator, XStack, YStack } from "tamagui";
+import { getTokens } from "@tamagui/core";
+
+import { YStack } from "tamagui";
 
 interface UpcomingEventsSectionProps {
   upcomingEvents: InfiniteData<Event[]> | undefined;
@@ -22,37 +24,32 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
   isUpcomingLoading,
   onViewAllPress,
 }) => {
-  const totalEvents = upcomingEvents?.pages[0].length || 0;
-
+  const padding = getTokens().space.$4.val;
   return (
     <YStack>
       <SectionHeaderWithAction
         title="Upcoming Events"
         onActionPress={onViewAllPress}
-        paddingRight="$4"
+        paddingHorizontal={16}
       />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
-          paddingVertical: 8,
+          paddingVertical: padding,
+          paddingHorizontal: padding,
+          gap: padding,
         }}
         snapToInterval={0}
         decelerationRate="fast"
-        snapToAlignment="start"
+        snapToAlignment="center"
       >
         {isUpcomingLoading
           ? Array(3)
               .fill(null)
-              .map((_, index) => (
-                <XStack key={`skeleton-${index}`} paddingRight={16}>
-                  <SkeletonUpcomingEventCard />
-                </XStack>
-              ))
+              .map((_, index) => <SkeletonUpcomingEventCard />)
           : upcomingEvents?.pages[0].map((event, index) => (
-              <XStack key={event.id} paddingRight={"$4"}>
-                <UpcomingEventCard event={event} />
-              </XStack>
+              <UpcomingEventCard event={event} />
             ))}
       </ScrollView>
     </YStack>

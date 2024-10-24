@@ -1,3 +1,5 @@
+import React from "react";
+
 import { GestureResponderEvent, Platform } from "react-native";
 
 import {
@@ -8,12 +10,19 @@ import {
   SlidersHorizontal,
 } from "@tamagui/lucide-icons";
 
-import { Button, Paragraph, YStack, useTheme } from "tamagui";
+import {
+  Button,
+  ButtonProps,
+  Paragraph,
+  Spinner,
+  YStack,
+  useTheme,
+} from "tamagui";
 
 interface ShareButtonProps {
   size: "sm" | "lg";
   handleShare?: (
-    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent,
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
   ) => void;
 }
 export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
@@ -30,22 +39,29 @@ export const ShareButton = ({ size, handleShare }: ShareButtonProps) => {
     />
   );
 };
-interface RetryButtonProps {
+interface RetryButtonProps extends ButtonProps {
   size?: "sm" | "lg";
   onPress?: () => void;
+  isLoading: boolean;
 }
 
-export const RetryButton = ({ size = "sm", onPress }: RetryButtonProps) => {
+export const RetryButton = ({
+  size = "sm",
+  onPress,
+  isLoading,
+  ...props
+}: RetryButtonProps) => {
   const theme = useTheme();
 
   return (
     <Button
-      size={size === "sm" ? "$3" : "$5"}
+      size={"$5"}
       circular
-      icon={<RefreshCcw size={size === "sm" ? 20 : 24} />}
+      icon={isLoading ? <Spinner size="small" /> : <RefreshCcw size={24} />}
       onPress={onPress}
       backgroundColor={"$colorTransparent"}
       borderWidth={0}
+      {...props}
     />
   );
 };
@@ -53,7 +69,7 @@ interface LikeButtonProps {
   isLiked: boolean;
   size: "sm" | "lg";
   handleLike: (
-    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent,
+    e: React.TouchEvent | React.MouseEvent | GestureResponderEvent
   ) => void;
 }
 export const LikeButton = ({ isLiked, size, handleLike }: LikeButtonProps) => {

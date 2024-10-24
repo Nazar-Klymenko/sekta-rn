@@ -15,6 +15,7 @@ import { Calendar, Info } from "@tamagui/lucide-icons";
 
 import {
   Paragraph,
+  Spinner,
   XStack,
   YStack,
   useTheme,
@@ -46,7 +47,7 @@ export default function GoingScreen() {
     return (
       <YStack flex={1} justifyContent="center" alignItems="center">
         <Paragraph>Error: {(error as Error).message}</Paragraph>
-        <RetryButton onPress={() => refetch()} size="lg" />
+        <RetryButton onPress={() => refetch()} size="lg" isLoading={false} />
       </YStack>
     );
   }
@@ -97,9 +98,9 @@ export default function GoingScreen() {
           </Paragraph>
         )}
         ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" color={theme.accentColor.get()} />
-          ) : null
+          isFetchingNextPage && (
+            <Spinner size="large" theme={"accent"} color={"$background"} />
+          )
         }
       />
     </PageContainer>

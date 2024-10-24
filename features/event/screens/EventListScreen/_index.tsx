@@ -1,59 +1,44 @@
-import { useQueryClient } from "@tanstack/react-query";
-
-import React, { useCallback, useState } from "react";
+import React from "react";
 
 import { RefreshControl } from "react-native";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
-import { useToastController } from "@tamagui/toast";
-
-import { Separator } from "tamagui";
 
 import { useRouter } from "expo-router";
 
+import ErrorEventList from "../../components/ErrorEventList";
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
 import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
-import {
-  ErrorView,
-  PreviousEventsSection,
-  UpcomingEventsSection,
-} from "./index";
+import { PreviousEventsSection, UpcomingEventsSection } from "./index";
 
 export default function EventListScreen() {
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const [refreshing, setRefreshing] = useState(false);
-  const toast = useToastController();
   const {
     data: upcomingEvents,
     isLoading: isUpcomingLoading,
-    error: upcomingError,
+    isError: isUpcomingEventsError,
+    isRefetching: isUpcomingEventsRefetching,
     refetch: refetchUpcoming,
   } = useUpcomingEvents();
 
   const {
     data: previousEvents,
     isLoading: isPreviousEventsLoading,
-    error: previousEventsError,
+    isError: isPreviousEventsError,
+    isRefetching: isPreviousEventsRefetching,
     refetch: refetchPrevious,
   } = usePreviousEventsPreview(4);
 
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await Promise.all([refetchUpcoming(), refetchPrevious()]);
-    setRefreshing(false);
-  }, [refetchUpcoming, refetchPrevious]);
-  const clearQueryCache = useCallback(() => {
-    queryClient.clear();
-    onRefresh(); // Refetch data after clearing cache
-  }, [onRefresh]);
-  if (upcomingError || previousEventsError) {
+  if (isUpcomingEventsError || isPreviousEventsError) {
     return (
-      <ErrorView
-        error={(previousEventsError || upcomingError) as Error}
+      <ErrorEventList
         onRetry={() => {
+          refetchUpcoming();
+          refetchPrevious();
+        }}
+        errorMessage={"Error loading Home"}
+        isRefetching={isUpcomingEventsRefetching || isPreviousEventsRefetching}
+        onRefresh={() => {
           refetchUpcoming();
           refetchPrevious();
         }}
@@ -63,20 +48,18 @@ export default function EventListScreen() {
 
   return (
     <PageContainer
-      overflowRight
+      overflowHorizontal
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          refreshing={isUpcomingEventsError || isPreviousEventsError}
+          onRefresh={() => {
+            refetchUpcoming();
+            refetchPrevious();
+          }}
+        />
       }
       gap="$4"
     >
-      {/* <ButtonCTA
-        onPress={() => router.push("/admin/events/JW2wfBEzD1owf2HvmnP5/update")}
-      >
-        Shortcut delete later
-      </ButtonCTA> */}
-
-      {/* <ButtonCTA onPress={() => router.push("/admin")}>Admin</ButtonCTA> */}
-      {/* <ButtonCTA onPress={clearQueryCache}>Clear Cache and Refresh</ButtonCTA> */}
       <UpcomingEventsSection
         upcomingEvents={upcomingEvents}
         isUpcomingLoading={isUpcomingLoading}

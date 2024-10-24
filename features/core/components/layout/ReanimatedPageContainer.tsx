@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Stack, View, YStack, styled } from "tamagui";
+import { ScrollViewProps, Stack, View, YStack, styled } from "tamagui";
 
-import Animated from "react-native-reanimated";
+import Animated, { AnimatedScrollViewProps } from "react-native-reanimated";
 
 import { StickyBottom } from "./StickyBottom";
 
-interface ReanimatedPageContainerProps {
+interface ReanimatedPageContainerProps extends AnimatedScrollViewProps {
   children: React.ReactNode;
   onScroll?: (event: any) => void;
   scrollEventThrottle?: number;
@@ -42,15 +42,15 @@ export const ReanimatedPageContainer: React.FC<
   stickyBottom,
   scrollable = true,
   fullWidth = false,
+  ...props
 }) => {
-  const Wrapper = scrollable ? Animated.ScrollView : View;
-
   return (
     <Container>
-      <Wrapper
+      <Animated.ScrollView
         onScroll={onScroll}
         scrollEventThrottle={scrollEventThrottle}
         contentContainerStyle={[contentContainerStyle]}
+        {...props}
       >
         <ContentContainer
           paddingBottom={stickyBottom ? 100 : 0}
@@ -58,7 +58,7 @@ export const ReanimatedPageContainer: React.FC<
         >
           {children}
         </ContentContainer>
-      </Wrapper>
+      </Animated.ScrollView>
       {stickyBottom && <StickyBottom>{stickyBottom}</StickyBottom>}
     </Container>
   );

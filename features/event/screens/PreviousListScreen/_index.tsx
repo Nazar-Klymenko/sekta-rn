@@ -1,27 +1,27 @@
 import React from "react";
 
-import { ActivityIndicator, FlatList } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 
-import { RetryButton } from "@/features/core/components/buttons/IconButtons";
 import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
 
 import { getTokens } from "@tamagui/core";
+import { Calendar } from "@tamagui/lucide-icons";
 
-import { Paragraph, YStack, useTheme } from "tamagui";
+import { Paragraph, Spinner, YStack } from "tamagui";
 
+import EmptyEventList from "../../components/EmptyEventList";
+import ErrorEventList from "../../components/ErrorEventList";
 import { usePreviousEvents } from "../../hooks/usePreviousEvents";
 
 export default function PreviousEventsScreen() {
-  const theme = useTheme();
-
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    status,
-    error,
+    isRefetching,
+    isError,
     isLoading,
     refetch,
   } = usePreviousEvents();
@@ -31,13 +31,14 @@ export default function PreviousEventsScreen() {
       fetchNextPage();
     }
   };
-
-  if (status === "error") {
+  if (isError) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center">
-        <Paragraph>Error: {(error as Error).message}</Paragraph>
-        <RetryButton onPress={() => refetch()} size="lg" />
-      </YStack>
+      <ErrorEventList
+        errorMessage="Error loading previous events"
+        isRefetching={isRefetching}
+        onRetry={refetch}
+        onRefresh={refetch}
+      />
     );
   }
 
@@ -59,18 +60,22 @@ export default function PreviousEventsScreen() {
         )}
         keyExtractor={(item, index) => item.id || index.toString()}
         refreshing={isLoading}
-        onRefresh={refetch}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
         ListEmptyComponent={() => (
-          <Paragraph padding="$4">
-            No events found. Pull to refresh or check back later.
-          </Paragraph>
+          <EmptyEventList
+            icon={Calendar}
+            title="Sorry, no previous events found"
+            description="Come back later, and enable push notifications to not miss any new events"
+          />
         )}
         ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" color={theme.accentColor.get()} />
-          ) : null
+          isFetchingNextPage && (
+            <Spinner size="large" theme={"accent"} color={"$background"} />
+          )
         }
       />
     </YStack>

@@ -4,13 +4,13 @@ import { ScrollView, ScrollViewProps, YStack } from "tamagui";
 
 type PageContainerProps = ScrollViewProps & {
   children: React.ReactNode;
-  overflowRight?: boolean;
+  overflowHorizontal?: boolean;
 };
 
 export function PageContainer({
   children,
   padding,
-  overflowRight = false,
+  overflowHorizontal = false,
   ...scrollViewProps
 }: PageContainerProps) {
   return (
@@ -19,7 +19,7 @@ export function PageContainer({
       contentContainerStyle={{
         gap: "$4",
         padding: "$4",
-        ...(overflowRight && { paddingRight: 0 }),
+        ...(overflowHorizontal && { paddingHorizontal: 0 }),
       }}
       {...scrollViewProps}
     >

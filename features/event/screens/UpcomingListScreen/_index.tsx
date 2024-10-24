@@ -1,28 +1,28 @@
 import React from "react";
 
-import { ActivityIndicator, FlatList } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 
-import { RetryButton } from "@/features/core/components/buttons/IconButtons";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
 
-import { Paragraph, YStack, useTheme } from "tamagui";
+import { Calendar } from "@tamagui/lucide-icons";
 
+import { Separator, Spinner } from "tamagui";
+
+import EmptyEventList from "../../components/EmptyEventList";
+import ErrorEventList from "../../components/ErrorEventList";
 import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
-import EmptyUpcomingEvents from "./EmptyUpcomingEvents";
 import InfoBanner from "./InfoBanner";
 
 export default function UpcomingEventsScreen() {
-  const theme = useTheme();
-
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    status,
-    error,
+    isRefetching,
+    isError,
     isLoading,
     refetch,
   } = useUpcomingEvents();
@@ -32,29 +32,28 @@ export default function UpcomingEventsScreen() {
       fetchNextPage();
     }
   };
-
-  if (status === "error") {
+  if (isError) {
     return (
-      <YStack flex={1} justifyContent="center" alignItems="center">
-        <Paragraph>Error: {(error as Error).message}</Paragraph>
-        <RetryButton onPress={() => refetch()} size="lg" />
-      </YStack>
+      <ErrorEventList
+        errorMessage="Error loading upcoming events"
+        isRefetching={isRefetching}
+        onRetry={refetch}
+        onRefresh={refetch}
+      />
     );
   }
 
   const flattenedEvents = data?.pages.flatMap((page) => page) || [];
-  if (!isLoading && flattenedEvents.length === 0) {
-    return <EmptyUpcomingEvents />;
-  }
 
   return (
     <PageContainer>
       <FlatList
         scrollEnabled={false}
         data={isLoading ? Array(5).fill({}) : flattenedEvents}
+        ItemSeparatorComponent={() => <Separator marginVertical="$2" />}
         renderItem={({ item: event }) =>
           isLoading ? (
-            <SkeletonUpcomingEventCard />
+            <SkeletonUpcomingEventCard verticalView />
           ) : (
             <UpcomingEventCard verticalView event={event} />
           )
@@ -65,15 +64,20 @@ export default function UpcomingEventsScreen() {
         onEndReached={loadMore}
         onEndReachedThreshold={0.1}
         ListHeaderComponent={<InfoBanner />}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
         ListEmptyComponent={() => (
-          <Paragraph padding="$4">
-            No upcoming events found. Pull to refresh or check back later.
-          </Paragraph>
+          <EmptyEventList
+            icon={Calendar}
+            title="Sorry, We don't have any upcoming events"
+            description="Pull to refresh or check back later"
+          />
         )}
         ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <ActivityIndicator size="large" color={theme.accentColor.get()} />
-          ) : null
+          isFetchingNextPage && (
+            <Spinner size="large" theme={"accent"} color={"$background"} />
+          )
         }
       />
     </PageContainer>

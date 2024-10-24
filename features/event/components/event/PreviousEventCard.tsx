@@ -23,7 +23,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
         source={{ uri: event.image.publicUrl }}
         width={120}
         aspectRatio={1}
-        borderRadius="$6"
+        borderRadius="$2"
       />
       <ContentContainer>
         <YStack>
