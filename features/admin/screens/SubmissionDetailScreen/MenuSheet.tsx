@@ -3,6 +3,8 @@ import React from "react";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Sheet } from "@/features/core/components/panels/Sheet";
 
+import { Play } from "@tamagui/lucide-icons";
+
 import { Paragraph, Separator, Theme, XStack, YStack } from "tamagui";
 
 interface MenuSheetProps {
@@ -21,6 +23,7 @@ export function MenuSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <YStack gap="$4" width="100%">
         <YStack gap="$4" alignItems="center">
+          <Play size={48} color="$color" />
           <Paragraph size="$8" fontWeight={700} textAlign="center">
             Delete Submission
           </Paragraph>

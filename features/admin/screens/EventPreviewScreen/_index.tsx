@@ -52,7 +52,7 @@ export default function EventPreviewScreen() {
         onSuccess: () => {
           setShowConfirmSheet(false);
           setInnerShowConfirmSheet(false);
-          router.replace("/admin/events");
+          router.back();
         },
       }
     );

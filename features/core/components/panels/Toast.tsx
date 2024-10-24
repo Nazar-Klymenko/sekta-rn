@@ -49,7 +49,7 @@ export const CurrentToast = () => {
             {variant.charAt(0).toUpperCase() + variant.slice(1)}
           </Toast.Title>
           <Toast.Description color="$color" opacity={0.8} fontSize={"$4"}>
-            {toast.title}
+            {toast.message}
           </Toast.Description>
         </YStack>
 

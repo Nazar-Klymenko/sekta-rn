@@ -4,16 +4,12 @@ import { Timestamp } from "firebase/firestore";
 
 import { TouchableOpacity } from "react-native";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { Sheet } from "@/features/core/components/panels/Sheet";
 import { useDeletePlaySubmission } from "@/features/play/hooks/useDeletePlaySubmission";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
-  CheckCircle,
   Clock,
-  Copy,
   Facebook,
   Info,
   Instagram,
@@ -24,17 +20,14 @@ import {
 } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import {
-  Card,
-  Paragraph,
-  Separator,
-  Theme,
-  XStack,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { Card, Paragraph, Separator, XStack, YStack, useTheme } from "tamagui";
 
-import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
+import {
+  Stack,
+  useLocalSearchParams,
+  useNavigation,
+  useRouter,
+} from "expo-router";
 
 import { InfoRow } from "./InfoRow";
 import { MenuSheet } from "./MenuSheet";
@@ -46,8 +39,7 @@ export function SubmissionDetailScreen() {
   }>();
   const parsedSubmission = JSON.parse(submission);
 
-  console.log(parsedSubmission);
-  const navigation = useNavigation();
+  const router = useRouter();
   const theme = useTheme();
   const toast = useToastController();
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
@@ -57,11 +49,16 @@ export function SubmissionDetailScreen() {
     mutate(id.toString(), {
       onSuccess: () => {
         setShowConfirmSheet(false);
-        navigation.goBack();
+        toast.show("Success", {
+          message: "Deleted submission succesfully",
+          variant: "success",
+        });
+        router.back();
       },
       onError: () => {
         setShowConfirmSheet(false);
-        toast.show("Failed to delete submission. Please try again.", {
+        toast.show("Error", {
+          message: "Failed to delete submission. Please try again.",
           variant: "error",
         });
       },
