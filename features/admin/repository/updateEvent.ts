@@ -1,16 +1,8 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import {
-  StorageReference,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
+import { Timestamp, doc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { Event, EventFormData } from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
-
-import { isEqual, pick } from "lodash";
 
 interface UpdateEventParams {
   eventId: string;
@@ -25,51 +17,45 @@ export const updateEvent = async ({
   image,
   originalData,
 }: UpdateEventParams) => {
-  // Handle image first if changed
-  let imageUpdate = {};
-  if (image && image !== originalData.image.publicUrl) {
-    const imageRef = ref(storage, `events/${Date.now()}`);
-    const blob = await fetch(image).then((r) => r.blob());
-    await uploadBytes(imageRef, blob);
-    const imageUrl = await getDownloadURL(imageRef);
+  try {
+    let imageUrl = originalData.image.publicUrl;
+    let imageRefPath = originalData.image.path;
+    let imageId = originalData.image.id;
 
-    imageUpdate = {
+    // Check if the image has changed
+    if (image && image !== originalData.image.publicUrl) {
+      const imageRef = ref(storage, `events/${Date.now()}`);
+      const response = await fetch(image);
+      const blob = await response.blob();
+      await uploadBytes(imageRef, blob);
+      imageUrl = await getDownloadURL(imageRef);
+      imageRefPath = imageRef.fullPath;
+      imageId = imageRef.name;
+    }
+
+    const eventData: Partial<Event> = {
+      title: data.title,
+      title_lowercase: data.title?.toLowerCase() ?? "",
+      caption: data.caption,
+      price: data.price,
+      date: Timestamp.fromDate(new Date(data.date as unknown as string)),
+      location: data.location,
+      genres: data.genres ?? [],
+      lineup: data.lineup ?? [],
       image: {
-        id: imageRef.name,
+        id: imageId,
         publicUrl: imageUrl,
-        path: imageRef.fullPath,
+        path: imageRefPath,
         altText: data.title,
       },
+      updatedAt: Timestamp.now(),
     };
+
+    await updateDoc(doc(db, "events", eventId), eventData);
+
+    return { success: true, id: eventId };
+  } catch (error) {
+    console.error("Error updating event: ", error);
+    return { success: false };
   }
-
-  const comparableFields = pick(data, [
-    "title",
-    "caption",
-    "location",
-    "price",
-    "genres",
-    "lineup",
-  ]);
-  const originalFields = pick(originalData, Object.keys(comparableFields));
-
-  if (
-    isEqual(comparableFields, originalFields) &&
-    Object.keys(imageUpdate).length === 0
-  ) {
-    return eventId;
-  }
-
-  const updates = {
-    ...(!isEqual(comparableFields, originalFields) && {
-      ...comparableFields,
-      date: Timestamp.fromDate(data.date),
-      title_lowercase: data.title.toLowerCase(),
-    }),
-    ...imageUpdate,
-    updatedAt: serverTimestamp(),
-  };
-
-  await updateDoc(doc(db, "events", eventId), updates);
-  return eventId;
 };
