@@ -2,8 +2,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-import { Alert } from "react-native";
-
 import { Event, EventFormData } from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
 
@@ -12,8 +10,7 @@ export const createEvent = async (
   image: string | null
 ) => {
   if (!image) {
-    Alert.alert("Error", "Please select an image");
-    return { success: false };
+    throw new Error("Please select an image");
   }
 
   try {

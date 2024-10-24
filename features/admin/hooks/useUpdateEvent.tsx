@@ -9,6 +9,8 @@ export const useUpdateEvent = (id?: string) => {
     mutationFn: updateEvent,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["paginatedEvents"] });
+      queryClient.invalidateQueries({ queryKey: ["upcomingEvents"] });
       queryClient.invalidateQueries({ queryKey: ["event", id] });
     },
   });

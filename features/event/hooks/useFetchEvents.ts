@@ -6,7 +6,7 @@ import { fetchEvents } from "../repository/fetchEvents";
 
 export const useFetchEvents = (sortDirection: "asc" | "desc" = "desc") => {
   return useQuery<Event[], Error>({
-    queryKey: ["events", sortDirection],
+    queryKey: ["events"],
     queryFn: () => fetchEvents(sortDirection),
   });
 };

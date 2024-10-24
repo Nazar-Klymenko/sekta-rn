@@ -57,8 +57,8 @@ export function DateInput({
   const isPaddedLeft = !!Icon;
 
   const formatDateTime = (date: Date) => {
-    const dateStr = date.toLocaleDateString();
-    const timeStr = date.toLocaleTimeString([], {
+    const dateStr = date.toLocaleDateString("pl");
+    const timeStr = date.toLocaleTimeString(["pl"], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,

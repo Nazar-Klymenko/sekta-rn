@@ -18,12 +18,15 @@ import { Paragraph, YStack } from "tamagui";
 
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
+import { useDeleteEvent } from "../../hooks/useDeleteEvent";
 import { InnerMenuSheet } from "./InnerMenuSheet";
 import { OuterMenuSheet } from "./OuterMenuSheet";
 
 export default function EventPreviewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
+  const { mutate, isPending } = useDeleteEvent(id);
+
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   const [innershowConfirmSheet, setInnerShowConfirmSheet] = useState(false);
   const router = useRouter();
@@ -41,6 +44,19 @@ export default function EventPreviewScreen() {
         <Paragraph>Event not found</Paragraph>
       </PageContainer>
     );
+
+  const handleDelete = () => {
+    mutate(
+      { eventId: event.id, imageId: event.image.id },
+      {
+        onSuccess: () => {
+          setShowConfirmSheet(false);
+          setInnerShowConfirmSheet(false);
+          router.replace("/admin/events");
+        },
+      }
+    );
+  };
 
   return (
     <>
@@ -69,15 +85,19 @@ export default function EventPreviewScreen() {
       </PageContainer>
 
       <OuterMenuSheet
+        key={id + "outer"}
         open={showConfirmSheet}
         onOpenChange={setShowConfirmSheet}
         setInnerShowConfirmSheet={setInnerShowConfirmSheet}
         id={id}
       />
+
       <InnerMenuSheet
+        key={id + "inner"}
         open={innershowConfirmSheet}
         onOpenChange={setInnerShowConfirmSheet}
-        closeOuterSheet={() => setShowConfirmSheet(false)}
+        confirmFunction={handleDelete}
+        isPending={isPending}
       />
     </>
   );

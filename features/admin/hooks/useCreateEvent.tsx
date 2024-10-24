@@ -27,6 +27,8 @@ export const useCreateEvent = () => {
     onSuccess: (data) => {
       toast.show("Event created successfully!", { variant: "success" });
       queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({ queryKey: ["paginatedEvents"] });
+      queryClient.invalidateQueries({ queryKey: ["upcomingEvents"] });
       router.replace(`/admin/events`);
     },
     onError: (error: Error) => {
