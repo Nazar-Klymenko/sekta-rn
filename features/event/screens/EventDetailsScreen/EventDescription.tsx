@@ -1,6 +1,6 @@
 import React from "react";
 
-import { H2, Paragraph, Separator, YStack } from "tamagui";
+import { H2, H3, Paragraph, Separator, YStack } from "tamagui";
 
 interface EventDescriptionProps {
   description: string;
@@ -11,7 +11,7 @@ export default function EventDescription({
 }: EventDescriptionProps) {
   return (
     <YStack gap="$2">
-      <H2 fontWeight="700">About this event</H2>
+      <H3>About this event</H3>
       <Paragraph size="$5">{description}</Paragraph>
     </YStack>
   );

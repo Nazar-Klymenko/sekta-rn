@@ -11,10 +11,22 @@ import {
   EventInfo,
   TagSection,
 } from "@/features/event/screens/EventDetailsScreen";
+import { InfoItem } from "@/features/event/screens/EventDetailsScreen/InfoItem";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { MoreHorizontal } from "@tamagui/lucide-icons";
+import {
+  Calendar,
+  CalendarCog,
+  CalendarPlus,
+  Captions,
+  Hash,
+  Link,
+  Link2,
+  MoreHorizontal,
+} from "@tamagui/lucide-icons";
 
-import { Paragraph, YStack } from "tamagui";
+import { H6, Paragraph, YStack } from "tamagui";
+import { Separator } from "tamagui";
 
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
@@ -57,6 +69,17 @@ export default function EventPreviewScreen() {
       }
     );
   };
+  const createdAtDate = formatFirestoreTimestamp(
+    event.createdAt,
+    "EEEE, MMMM do yyyy"
+  );
+  const createdAtTime = formatFirestoreTimestamp(event.createdAt, "HH:mm");
+
+  const updatedAtDate = formatFirestoreTimestamp(
+    event.updatedAt,
+    "EEEE, MMMM do yyyy"
+  );
+  const createdTime = formatFirestoreTimestamp(event.updatedAt, "HH:mm");
 
   return (
     <>
@@ -74,14 +97,58 @@ export default function EventPreviewScreen() {
         <EventHero event={event} />
         <YStack paddingVertical="$4" gap="$4">
           <EventInfo event={event} />
+          <Separator />
+
           <EventDescription description={event.caption} />
+          <Separator />
+
           {event.lineup.length > 0 && (
             <TagSection title="Lineup" tags={event.lineup} />
           )}
+          <Separator />
+
           {event.genres.length > 0 && (
             <TagSection title="Genres" tags={event.genres} />
           )}
         </YStack>
+        <Separator />
+        <H6>Debugging</H6>
+        <InfoItem
+          icon={<Hash color="$accentColor" size={24} />}
+          title="Event id:"
+          value={event.id}
+        />
+        <InfoItem
+          icon={<CalendarPlus color="$accentColor" size={24} />}
+          title="Created at:"
+          value={`${createdAtDate} • ${createdAtTime}`}
+        />
+        <InfoItem
+          icon={<CalendarCog color="$accentColor" size={24} />}
+          title="Last updated at:"
+          value={`${updatedAtDate} • ${createdTime}`}
+        />
+        <H6>Image debugging</H6>
+        <InfoItem
+          icon={<Hash color="$accentColor" size={24} />}
+          title="Image id:"
+          value={event.image.id}
+        />
+        <InfoItem
+          icon={<Link2 color="$accentColor" size={24} />}
+          title="Image Path:"
+          value={event.image.path}
+        />
+        <InfoItem
+          icon={<Link color="$accentColor" size={24} />}
+          title="Public Image URL:"
+          value={event.image.publicUrl}
+        />
+        <InfoItem
+          icon={<Captions color="$accentColor" size={24} />}
+          title="Alt Text Image:"
+          value={event.image.altText || "No alt text provided"}
+        />
       </PageContainer>
 
       <OuterMenuSheet

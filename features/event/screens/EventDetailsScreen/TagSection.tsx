@@ -2,7 +2,7 @@ import React from "react";
 
 import { Tag } from "@/features/core/components/Tag";
 
-import { H2, XStack, YStack } from "tamagui";
+import { H2, H3, XStack, YStack } from "tamagui";
 
 interface TagListProps {
   title: string;
@@ -13,7 +13,7 @@ interface TagListProps {
 export function TagSection({ title, tags, renderTag }: TagListProps) {
   return (
     <YStack gap="$2">
-      <H2 fontWeight="700">{title}</H2>
+      <H3>{title}</H3>
       <XStack flexWrap="wrap" gap="$2">
         {tags.map((tag, index) =>
           renderTag ? renderTag(tag, index) : <Tag tag={tag} key={index} />
