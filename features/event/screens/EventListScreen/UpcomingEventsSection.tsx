@@ -10,8 +10,11 @@ import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCa
 import { Event } from "@/features/event/models/Event";
 
 import { getTokens } from "@tamagui/core";
+import { Calendar } from "@tamagui/lucide-icons";
 
 import { YStack } from "tamagui";
+
+import EmptyEventList from "../../components/EmptyEventList";
 
 interface UpcomingEventsSectionProps {
   upcomingEvents: InfiniteData<Event[]> | undefined;
@@ -25,6 +28,29 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
   onViewAllPress,
 }) => {
   const padding = getTokens().space.$4.val;
+
+  if (
+    !upcomingEvents?.pages ||
+    upcomingEvents.pages.every((page) => page.length === 0)
+  ) {
+    return (
+      <>
+        <SectionHeaderWithAction
+          title="Upcoming Events"
+          onActionPress={onViewAllPress}
+          paddingHorizontal={16}
+        />
+        <EmptyEventList
+          icon={Calendar}
+          title={"Sorry, We don't have any upcoming events!"}
+          description={
+            "Come back later, and enable push notifications to not miss any new events"
+          }
+        />
+      </>
+    );
+  }
+
   return (
     <YStack>
       <SectionHeaderWithAction
