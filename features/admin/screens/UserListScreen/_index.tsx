@@ -4,12 +4,12 @@ import React, { useMemo } from "react";
 
 import { Alert, Platform } from "react-native";
 
-import { Table } from "@/features/core/components/Table";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Pagination } from "@/features/core/components/navigation/Pagination";
+import { Table } from "@/features/core/components/tables/Table";
 import { useUsers } from "@/features/users/hooks/useUsers";
 import { User } from "@/features/users/models/User";
 
@@ -48,6 +48,7 @@ export default function UserListScreen() {
       id: "index",
       header: "#",
       cell: (props) => props.row.index + 1,
+      footer: ({ table }) => `Total: ${users?.length}`,
       size: 60,
     }),
     columnHelper.accessor("username", {

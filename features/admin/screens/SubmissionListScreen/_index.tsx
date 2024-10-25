@@ -2,11 +2,11 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import React from "react";
 
-import { Table } from "@/features/core/components/Table";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { Table } from "@/features/core/components/tables/Table";
 import { useFetchPlaySubmissions } from "@/features/play/hooks/useFetchPlaySubmissions";
 import { PlaySubmission } from "@/features/play/models/PlaySubmission";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
@@ -45,13 +45,13 @@ export default function SubmissionListScreen() {
       id: "index",
       header: "#",
       cell: (props) => props.row.index + 1,
+      footer: ({ table }) => `Total: ${submissions?.length}`,
       size: 60,
     }),
     columnHelper.accessor("email", {
       header: "Email",
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
-      footer: (props) => props.column.id,
     }),
     columnHelper.accessor("phone", {
       header: "Phone",
