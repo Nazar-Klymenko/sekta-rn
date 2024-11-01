@@ -10,9 +10,10 @@ import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useChangeEmail } from "@/features/profile/hooks/useChangeEmail";
 import { emailSchema } from "@/utils/validationSchemas";
 
+import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { H1, Paragraph, YStack } from "tamagui";
+import { H1, Paragraph, XStack, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -71,13 +72,6 @@ export default function ChangeEmailScreen() {
     <AuthGuard>
       <PageContainer>
         <Form methods={methods}>
-          <H1 fontWeight="bold" textAlign="center">
-            Change your email
-          </H1>
-          <Paragraph color="$gray10Light">
-            You will have to confirm you new email in your inbox before it will
-            change. You will be logged out and will have to login again.
-          </Paragraph>
           <Paragraph fontSize="$4" color="$gray10Light">
             Current email: <Paragraph color={"$color"}>{user?.email}</Paragraph>
           </Paragraph>
@@ -97,6 +91,14 @@ export default function ChangeEmailScreen() {
             secureTextEntry
           />
 
+          <XStack gap="$2" marginBottom="$4">
+            <Info color="$gray10Light" size={16} alignSelf="center" />
+            <Paragraph fontSize="$3" color="$gray10Light">
+              You will have to confirm you new email in your inbox before it
+              will change. You will be logged out and will have to login again.
+            </Paragraph>
+          </XStack>
+
           <ButtonCTA
             theme="accent"
             onPress={methods.handleSubmit(onSubmit)}
@@ -105,6 +107,7 @@ export default function ChangeEmailScreen() {
           >
             Update Email
           </ButtonCTA>
+
           {isVerificationSent && (
             <YStack marginTop="$4">
               <Paragraph textAlign="center" color="$green10">
