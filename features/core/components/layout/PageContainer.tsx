@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ScrollView, ScrollViewProps, YStack } from "tamagui";
+import { ScrollView, ScrollViewProps } from "tamagui";
 
 type PageContainerProps = ScrollViewProps & {
   children: React.ReactNode;
@@ -17,7 +17,6 @@ export function PageContainer({
     <ScrollView
       backgroundColor="$background"
       contentContainerStyle={{
-        gap: "$4",
         padding: "$4",
         ...(overflowHorizontal && { paddingHorizontal: 0 }),
       }}

@@ -16,6 +16,7 @@ import {
   Button,
   Paragraph,
   ScrollView,
+  SizableText,
   Stack,
   Theme,
   ThemeableStack,
@@ -202,7 +203,7 @@ export function Table<T extends object>({
                               cell.column.columnDef.cell,
                               cell.getContext()
                             )}
-                            ==={row.id}+{cell.id}===
+                            {/* ==={row.id}+{cell.id}=== */}
                           </Paragraph>
                         </TableCell>
                       ))}
@@ -218,12 +219,12 @@ export function Table<T extends object>({
                         key={footer.id}
                         style={{ width: footer.getSize() }}
                       >
-                        <Paragraph fontWeight={700} color="$color05">
+                        <SizableText fontWeight={700} color="$color05">
                           {flexRender(
                             footer.column.columnDef.footer,
                             footer.getContext()
                           )}
-                        </Paragraph>
+                        </SizableText>
                       </TableCell>
                     ))}
                   </TableRow>
@@ -233,7 +234,7 @@ export function Table<T extends object>({
           </ScrollView>
         </TableWrapper>
 
-        <XStack justifyContent="space-between" alignItems="center">
+        <XStack>
           <TablePagination table={table} />
         </XStack>
       </Stack>

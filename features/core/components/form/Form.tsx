@@ -12,9 +12,7 @@ interface Props extends StackProps {
 export const Form = ({ children, methods, ...stackProps }: Props) => {
   return (
     <FormProvider {...methods}>
-      <YStack gap="$4" {...stackProps}>
-        {children}
-      </YStack>
+      <YStack {...stackProps}>{children}</YStack>
     </FormProvider>
   );
 };

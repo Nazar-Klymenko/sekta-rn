@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {
   Label,
   Paragraph,
+  SizableText,
   Stack,
   InputProps as TamaguiInputProps,
   XStack,
@@ -32,6 +33,8 @@ export function Input({
   maxLength,
   ...props
 }: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
   const { control } = useFormContext();
   const {
     field: { value, onChange, onBlur, ref },
@@ -41,22 +44,20 @@ export function Input({
     control,
   });
 
-  const [isFocused, setIsFocused] = useState(false);
   const isPaddedLeft = !!Icon || !!leftAdornment;
 
   const displayValue = value?.toString() || "";
 
   return (
-    <YStack flex={1}>
-      <Label htmlFor={id}>{label}</Label>
+    <YStack>
+      <XStack justifyContent="space-between">
+        <Label htmlFor={id}>{label}</Label>
+        {maxLength && (
+          <MaxLength length={value?.length || 0} maxLength={maxLength} />
+        )}
+      </XStack>
       <YStack alignItems="center">
-        <Stack
-          flexDirection="row"
-          width="100%"
-          alignItems="center"
-          flex={1}
-          position="relative"
-        >
+        <XStack width="100%" alignItems="center" flex={1} position="relative">
           {Icon && (
             <Icon
               style={{
@@ -71,7 +72,7 @@ export function Input({
             />
           )}
           {leftAdornment && (
-            <Paragraph
+            <SizableText
               style={{
                 position: "absolute",
                 left: 16,
@@ -82,7 +83,7 @@ export function Input({
               }}
             >
               {leftAdornment}
-            </Paragraph>
+            </SizableText>
           )}
 
           <BaseInput
@@ -110,19 +111,16 @@ export function Input({
             disabledStyle={{ color: "grey" }}
             {...props}
           />
-        </Stack>
+        </XStack>
       </YStack>
       <XStack marginTop="$2">
-        <Paragraph
+        <SizableText
           flex={1}
           color={error ? "$red10Light" : "$colorTransparent"}
           fontSize="$2"
         >
           {error ? error?.message : ""}
-        </Paragraph>
-        {maxLength && (
-          <MaxLength length={value?.length || 0} maxLength={maxLength} />
-        )}
+        </SizableText>
       </XStack>
     </YStack>
   );
