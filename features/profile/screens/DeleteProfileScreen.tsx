@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import { Keyboard, Pressable } from "react-native";
 
+import { Hint } from "@/features/core/components/Hint";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
@@ -12,17 +13,7 @@ import { Sheet } from "@/features/core/components/panels/Sheet";
 import { UserRoundX } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import {
-  Button,
-  H1,
-  Paragraph,
-  Separator,
-  Spinner,
-  Theme,
-  XStack,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { Separator, SizableText, Theme, XStack, YStack } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -41,9 +32,8 @@ const deleteProfileSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof deleteProfileSchema>;
 
 export default function DeleteProfileScreen() {
-  const theme = useTheme();
   const toast = useToastController();
-  const { mutateAsync, isError } = useDeleteProfile();
+  const { mutateAsync } = useDeleteProfile();
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   let isPending = false;
   const formMethods = useForm({
@@ -85,13 +75,10 @@ export default function DeleteProfileScreen() {
   return (
     <AuthGuard>
       <PageContainer>
-        <H1 fontWeight="bold" textAlign="center">
-          Delete Account
-        </H1>
-        <Paragraph color="$gray10Light">
+        <Hint>
           Warning: All your data will be permanently deleted. This action cannot
           be undone.
-        </Paragraph>
+        </Hint>
 
         <ButtonCTA
           aria-label="Start deleting profile"
@@ -117,13 +104,15 @@ export default function DeleteProfileScreen() {
             <YStack gap="$4" width="100%">
               <YStack gap="$4" alignItems="center">
                 <UserRoundX size={48} color="$color" />
-                <Paragraph size="$8" fontWeight={700}>
+                <SizableText size="$8" fontWeight={700}>
                   Delete Account
-                </Paragraph>
-                <Paragraph>
+                </SizableText>
+
+                <Hint>
                   Warning: By pressing Delete all your data will be permanently
                   deleted. This action cannot be undone.
-                </Paragraph>
+                </Hint>
+
                 <Form methods={formMethods}>
                   <PasswordInput
                     id="password-delete-profile"
@@ -146,7 +135,7 @@ export default function DeleteProfileScreen() {
                     </ButtonCTA>
                     <Theme name="danger">
                       <ButtonCTA
-                        aria-label="Delte Profile"
+                        aria-label="Delete Profile"
                         isLoading={isPending}
                         disabled={isPending}
                         onPress={formMethods.handleSubmit(onSubmit)}

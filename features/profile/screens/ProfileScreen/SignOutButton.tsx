@@ -4,9 +4,9 @@ import { useSignOut } from "@/features/auth/hooks/useSignOut";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Sheet } from "@/features/core/components/panels/Sheet";
 
-import { DoorOpen, LogOut } from "@tamagui/lucide-icons";
+import { DoorOpen } from "@tamagui/lucide-icons";
 
-import { Button, Paragraph, Separator, Theme, XStack, YStack } from "tamagui";
+import { Paragraph, Separator, Theme, XStack, YStack } from "tamagui";
 
 export default function SignOutButton() {
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
@@ -42,7 +42,6 @@ export default function SignOutButton() {
 
             <XStack flex={1} width="100%" gap="$4">
               <ButtonCTA
-                theme={"surface1"}
                 aria-label="Close"
                 disabled={isPending}
                 onPress={() => setShowConfirmSheet(false)}

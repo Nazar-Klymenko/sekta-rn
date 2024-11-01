@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
@@ -12,9 +11,9 @@ import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, Paragraph, YStack, useTheme } from "tamagui";
+import { SizableText } from "tamagui";
 
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 
@@ -32,7 +31,6 @@ type FormValues = yup.InferType<typeof changePasswordSchema>;
 
 export default function ChangePasswordScreen() {
   const toast = useToastController();
-  const theme = useTheme();
   const changePasswordMutation = useChangePassword();
   const methods = useForm({
       resolver: yupResolver(changePasswordSchema),
@@ -74,9 +72,6 @@ export default function ChangePasswordScreen() {
     <AuthGuard>
       <PageContainer>
         <Form methods={methods}>
-          <H1 fontWeight="bold" textAlign="center">
-            Change Password
-          </H1>
           <PasswordInput
             id="current-password"
             name="currentPassword"
@@ -109,10 +104,12 @@ export default function ChangePasswordScreen() {
             Change Password
           </ButtonCTA>
           {changePasswordMutation.isError && (
-            <Paragraph>Error: {changePasswordMutation.error.message}</Paragraph>
+            <SizableText>
+              Error: {changePasswordMutation.error.message}
+            </SizableText>
           )}
           {changePasswordMutation.isSuccess && (
-            <Paragraph>Password changed successfully</Paragraph>
+            <SizableText>Password changed successfully</SizableText>
           )}
         </Form>
       </PageContainer>

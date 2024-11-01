@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { CheckCircle2, ChevronRight, User } from "@tamagui/lucide-icons";
+import { CheckCircle2 } from "@tamagui/lucide-icons";
 
 import { Paragraph, XStack, YStack } from "tamagui";
 

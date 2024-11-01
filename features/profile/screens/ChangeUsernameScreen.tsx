@@ -3,6 +3,7 @@ import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
+import { Hint } from "@/features/core/components/Hint";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
@@ -12,10 +13,9 @@ import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useUserData } from "@/features/users/hooks/useUserData";
 import { usernameSchema } from "@/utils/validationSchemas";
 
-import { Info } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Paragraph, XStack } from "tamagui";
+import { SizableText } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -102,7 +102,7 @@ export default function ChangeUsernameScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-  if (isError) return <Paragraph>Error loading user data</Paragraph>;
+  if (isError) return <SizableText>Error loading user data</SizableText>;
 
   return (
     <AuthGuard>
@@ -118,13 +118,10 @@ export default function ChangeUsernameScreen() {
             maxLength={20}
           />
 
-          <XStack gap="$2" marginBottom="$4">
-            <Info color="$gray10Light" size={16} alignSelf="center" />
-            <Paragraph fontSize="$3" color="$gray10Light">
-              Your new username must be 3-20 characters long and can contain
-              letters, numbers, and underscores.
-            </Paragraph>
-          </XStack>
+          <Hint>
+            Your new username must be 3-20 characters long and can contain
+            letters, numbers, and underscores.
+          </Hint>
 
           <ButtonCTA
             theme="accent"

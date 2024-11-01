@@ -152,7 +152,6 @@ export function Table<T extends object>({
                                 header.column.columnDef.header,
                                 header.getContext()
                               )}
-                              {headerGroup.id}+{header.id}
                             </Paragraph>
                             {{
                               asc: <ChevronUp size={16} />,
@@ -203,7 +202,6 @@ export function Table<T extends object>({
                               cell.column.columnDef.cell,
                               cell.getContext()
                             )}
-                            {/* ==={row.id}+{cell.id}=== */}
                           </Paragraph>
                         </TableCell>
                       ))}

@@ -44,7 +44,7 @@ export default function HomeLayout() {
       <Stack.Screen
         name="change-email"
         options={{
-          title: "Profile information",
+          title: "Change email",
         }}
       />
       <Stack.Screen
