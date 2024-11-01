@@ -22,8 +22,10 @@ import { Separator, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 
-import { ProfileHeader, SectionTitle, VerifyEmail } from "../../components";
+import { ProfileHeader } from "./ProfileHeader";
+import { SectionTitle } from "./SectionTitle";
 import SignOutButton from "./SignOutButton";
+import { VerifyEmail } from "./VerifyEmail";
 
 export default function ProfileScreen() {
   const { user, isLoggedIn } = useAuth();
