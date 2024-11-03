@@ -75,7 +75,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
               .fill(null)
               .map((_, index) => <SkeletonUpcomingEventCard />)
           : upcomingEvents?.pages[0].map((event, index) => (
-              <UpcomingEventCard event={event} />
+              <UpcomingEventCard event={event} key={index} />
             ))}
       </ScrollView>
     </YStack>

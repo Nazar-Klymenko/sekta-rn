@@ -1,3 +1,5 @@
+import React from "react";
+
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
 
@@ -13,7 +15,7 @@ export default function ForgotPasswordSuccessScreen() {
       <PageContainer>
         <H1 fontWeight="bold" textAlign="center">
           Email sent! Check you inbox and follow the instuctions to reset your
-          password{" "}
+          password
         </H1>
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login?returnTo=${returnTo}`}>

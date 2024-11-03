@@ -12,7 +12,7 @@ import { emailSchema } from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, Paragraph, YStack, useTheme } from "tamagui";
+import { Paragraph, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -28,7 +28,6 @@ const loginSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
-  const theme = useTheme();
   const { mutate, isPending } = useSignIn();
   const toast = useToastController();
   const { returnTo } = useLocalSearchParams<{ returnTo: "/" }>();
@@ -70,9 +69,6 @@ export default function LoginScreen() {
     <AuthPageGuard>
       <PageContainer>
         <Form methods={methods}>
-          <H1 fontWeight="bold" textAlign="center">
-            Log In
-          </H1>
           <Input
             id="login-email"
             name="email"
