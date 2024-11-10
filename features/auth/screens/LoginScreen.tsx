@@ -6,7 +6,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
 
@@ -66,7 +66,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <AuthPageGuard>
+    <PublicGuard>
       <PageContainer>
         <Form methods={methods}>
           <Input
@@ -117,6 +117,6 @@ export default function LoginScreen() {
           </YStack>
         </Form>
       </PageContainer>
-    </AuthPageGuard>
+    </PublicGuard>
   );
 }

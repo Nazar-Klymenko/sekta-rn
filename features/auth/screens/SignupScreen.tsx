@@ -8,7 +8,7 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
@@ -78,7 +78,7 @@ export default function SignupScreen() {
   };
 
   return (
-    <AuthPageGuard>
+    <PublicGuard>
       <PageContainer>
         <Form methods={methods} id="test">
           <H1 fontWeight="bold" textAlign="center">
@@ -142,6 +142,6 @@ export default function SignupScreen() {
           </YStack>
         </Form>
       </PageContainer>
-    </AuthPageGuard>
+    </PublicGuard>
   );
 }

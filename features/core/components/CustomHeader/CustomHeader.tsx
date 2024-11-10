@@ -54,7 +54,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
   const media = useMedia();
   const signOutMutation = useSignOut();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn, user: _user } = useAuth();
+  const { user: _user } = useAuth();
   const { data: userData } = useUserData(_user?.uid || "");
   const isSmallScreen = !media.gtMd;
 

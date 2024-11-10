@@ -1,7 +1,7 @@
 import React from "react";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 
 import { H1, Paragraph, YStack } from "tamagui";
 
@@ -11,7 +11,7 @@ export default function ForgotPasswordSuccessScreen() {
   const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
 
   return (
-    <AuthPageGuard>
+    <PublicGuard>
       <PageContainer>
         <H1 fontWeight="bold" textAlign="center">
           Email sent! Check you inbox and follow the instuctions to reset your
@@ -25,6 +25,6 @@ export default function ForgotPasswordSuccessScreen() {
           </Link>
         </YStack>
       </PageContainer>
-    </AuthPageGuard>
+    </PublicGuard>
   );
 }

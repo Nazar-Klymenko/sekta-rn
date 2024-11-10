@@ -8,7 +8,7 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { usernameSchema } from "@/utils/validationSchemas";
 
 import { Info } from "@tamagui/lucide-icons";
@@ -83,7 +83,7 @@ export default function UsernameBridgeScreen() {
   };
 
   return (
-    <AuthPageGuard>
+    <PublicGuard>
       <PageContainer>
         <Form methods={methods}>
           <XStack justifyContent="center" alignItems="center">
@@ -130,6 +130,6 @@ export default function UsernameBridgeScreen() {
           </YStack>
         </Form>
       </PageContainer>
-    </AuthPageGuard>
+    </PublicGuard>
   );
 }
