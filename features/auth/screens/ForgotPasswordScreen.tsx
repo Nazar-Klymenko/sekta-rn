@@ -5,7 +5,7 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthPageGuard } from "@/features/core/components/navigation/AuthPageGuard";
+import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 
 import { useToastController } from "@tamagui/toast";
@@ -59,7 +59,7 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
-    <AuthPageGuard>
+    <PublicGuard>
       <PageContainer>
         <Form methods={methods}>
           <H1 fontWeight="bold" textAlign="center">
@@ -92,6 +92,6 @@ export default function ForgotPasswordScreen() {
           </YStack>
         </Form>
       </PageContainer>
-    </AuthPageGuard>
+    </PublicGuard>
   );
 }

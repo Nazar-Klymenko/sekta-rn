@@ -27,7 +27,7 @@ import SignOutButton from "./SignOutButton";
 import { VerifyEmail } from "./VerifyEmail";
 
 export default function ProfileScreen() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
   const router = useRouter();
 
@@ -36,7 +36,7 @@ export default function ProfileScreen() {
       <ProfileHeader userData={userData} />
       <VerifyEmail />
       <YStack gap="$2">
-        {isLoggedIn && (
+        {isAuthenticated && (
           <>
             <Separator />
 
@@ -98,7 +98,7 @@ export default function ProfileScreen() {
       </YStack>
 
       <YStack justifyContent="flex-end" alignItems="stretch" marginTop="$4">
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <SignOutButton />
         ) : (
           <YStack flex={1} width="100%" gap="$4">

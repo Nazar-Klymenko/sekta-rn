@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
@@ -6,28 +6,23 @@ import { usePathname, useRouter } from "expo-router";
 
 import { FullPageLoading } from "../layout/FullPageLoading";
 
-interface AuthGuardProps {
-  children: React.ReactNode;
-}
-
-export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-  const { isLoggedIn, isInitialized } = useAuth();
+export const AuthGuard = ({ children }: { children: ReactNode }) => {
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    if (isInitialized && !isLoggedIn) {
+    if (!isAuthenticated) {
       router.replace({
         pathname: "/auth/login",
         params: {
           next: pathname,
         },
       });
-    } else if (isInitialized && isLoggedIn) {
-      setIsChecking(false);
     }
-  }, [isInitialized, isLoggedIn, pathname, router]);
+    setIsChecking(false);
+  }, [isAuthenticated, pathname, router]);
 
   if (isChecking) return <FullPageLoading />;
 
