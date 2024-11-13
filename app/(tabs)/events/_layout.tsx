@@ -1,9 +1,8 @@
 import React from "react";
 
 import { Platform } from "react-native";
-import { TouchableOpacity } from "react-native";
 
-import { SizableText, Theme, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
 
 import { Slot, Stack } from "expo-router";
 
@@ -34,22 +33,16 @@ export default function EventsLayout() {
     >
       <Stack.Screen
         name="index"
-        options={({ navigation }) => ({
+        options={{
           headerTitle: "Events",
-        })}
+        }}
       />
       <Stack.Screen
         name="[id]"
         options={{
           title: "Event",
-          headerShown: false,
-          headerBackVisible: false,
-        }}
-      />
-      <Stack.Screen
-        name="going"
-        options={{
-          title: "Going",
+          headerShown: true,
+          headerBackVisible: true,
         }}
       />
       <Stack.Screen
