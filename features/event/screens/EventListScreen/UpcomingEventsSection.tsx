@@ -29,28 +29,30 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
 }) => {
   const padding = getTokens().space.$4.val;
 
-  if (
-    isUpcomingLoading &&
-    upcomingEvents?.pages.every((page) => page.length === 0)
-  ) {
-    return (
-      <>
-        <SectionHeaderWithAction
-          title="Upcoming Events"
-          onActionPress={onViewAllPress}
-          paddingHorizontal={16}
-        />
-        <EmptyEventList
-          icon={Calendar}
-          title={"Sorry, We don't have any upcoming events!"}
-          description={
-            "Come back later, and enable push notifications to not miss any new events"
-          }
-        />
-      </>
-    );
+  if (!isUpcomingLoading) {
+    if (
+      !upcomingEvents?.pages ||
+      upcomingEvents.pages.every((page) => page.length === 0)
+    ) {
+      return (
+        <>
+          <SectionHeaderWithAction
+            title="Upcoming Events"
+            onActionPress={onViewAllPress}
+            paddingHorizontal={16}
+          />
+          <EmptyEventList
+            icon={Calendar}
+            title={"Sorry, We don't have any upcoming events!"}
+            description={
+              "Come back later, and enable push notifications to not miss any new events"
+            }
+          />
+        </>
+      );
+    }
   }
-
+  const fullWidthCard = upcomingEvents?.pages[0].length === 1;
   return (
     <YStack>
       <SectionHeaderWithAction
@@ -65,6 +67,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
           paddingVertical: padding,
           paddingHorizontal: padding,
           gap: padding,
+          flex: 1,
         }}
         snapToInterval={0}
         decelerationRate="fast"
@@ -73,9 +76,13 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
         {isUpcomingLoading
           ? Array(3)
               .fill(null)
-              .map((_, index) => <SkeletonUpcomingEventCard />)
+              .map((_, index) => <SkeletonUpcomingEventCard key={index} />)
           : upcomingEvents?.pages[0].map((event, index) => (
-              <UpcomingEventCard event={event} key={index} />
+              <UpcomingEventCard
+                event={event}
+                verticalView={fullWidthCard}
+                key={index}
+              />
             ))}
       </ScrollView>
     </YStack>

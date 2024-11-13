@@ -44,7 +44,7 @@ const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
       );
     } else {
       return (
-        <XStack justifyContent="space-between" width="100%" marginTop="$4">
+        <XStack justifyContent="center" gap="$4" width="100%" marginTop="$4">
           <TimeUnit value={timeLeft.days} label="Days" />
           <Paragraph size={"$6"}>|</Paragraph>
           <TimeUnit value={timeLeft.hours} label="Hours" />
@@ -103,7 +103,7 @@ const TimeUnit = ({ value, label }: { value: number; label: string }) => (
 
 const TimeUnitContainer = styled(YStack, {
   alignItems: "center",
-  minWidth: 80,
+  minWidth: 50,
 });
 
 export default CountdownBanner;

@@ -12,8 +12,8 @@ import { Separator, Spinner } from "tamagui";
 
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
+import InfoBanner from "../../components/InfoBanner";
 import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
-import InfoBanner from "./InfoBanner";
 
 export default function UpcomingEventsScreen() {
   const {
