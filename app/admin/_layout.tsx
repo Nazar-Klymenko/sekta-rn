@@ -1,13 +1,28 @@
 import React from "react";
 
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
 
-import { SizableText, useTheme } from "tamagui";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { useUserData } from "@/features/users/hooks/useUserData";
 
-import { Slot, Stack } from "expo-router";
+import { useTheme } from "tamagui";
+
+import { Redirect, Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
+  const { user } = useAuth();
+  const { data: userData, isLoading } = useUserData(user?.uid || "");
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (!userData?.isAdmin) {
+    return <Redirect href={"/"} />;
+  }
+
   if (Platform.OS === "web") {
     return <Slot />;
   }

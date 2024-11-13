@@ -5,7 +5,6 @@ import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
 import { passwordSchema } from "@/utils/validationSchemas";
 
@@ -69,50 +68,48 @@ export default function ChangePasswordScreen() {
   };
 
   return (
-    <AuthGuard>
-      <PageContainer>
-        <Form methods={methods}>
-          <PasswordInput
-            id="current-password"
-            name="currentPassword"
-            label="Current Password"
-            placeholder="Enter your current password"
-            secureTextEntry
-          />
-          <PasswordInput
-            id="new-password"
-            name="newPassword"
-            label="New Password"
-            placeholder="Enter your new password"
-            secureTextEntry
-          />
-          <PasswordRequirements password={watch("newPassword")} />
-          <PasswordInput
-            id="confirm-password"
-            name="confirmPassword"
-            label="Confirm Password"
-            placeholder="Confirm your new password"
-            secureTextEntry
-          />
+    <PageContainer>
+      <Form methods={methods}>
+        <PasswordInput
+          id="current-password"
+          name="currentPassword"
+          label="Current Password"
+          placeholder="Enter your current password"
+          secureTextEntry
+        />
+        <PasswordInput
+          id="new-password"
+          name="newPassword"
+          label="New Password"
+          placeholder="Enter your new password"
+          secureTextEntry
+        />
+        <PasswordRequirements password={watch("newPassword")} />
+        <PasswordInput
+          id="confirm-password"
+          name="confirmPassword"
+          label="Confirm Password"
+          placeholder="Confirm your new password"
+          secureTextEntry
+        />
 
-          <ButtonCTA
-            theme="accent"
-            onPress={handleSubmit(onSubmit)}
-            isLoading={changePasswordMutation.isPending}
-            disabled={changePasswordMutation.isPending}
-          >
-            Change Password
-          </ButtonCTA>
-          {changePasswordMutation.isError && (
-            <SizableText>
-              Error: {changePasswordMutation.error.message}
-            </SizableText>
-          )}
-          {changePasswordMutation.isSuccess && (
-            <SizableText>Password changed successfully</SizableText>
-          )}
-        </Form>
-      </PageContainer>
-    </AuthGuard>
+        <ButtonCTA
+          theme="accent"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={changePasswordMutation.isPending}
+          disabled={changePasswordMutation.isPending}
+        >
+          Change Password
+        </ButtonCTA>
+        {changePasswordMutation.isError && (
+          <SizableText>
+            Error: {changePasswordMutation.error.message}
+          </SizableText>
+        )}
+        {changePasswordMutation.isSuccess && (
+          <SizableText>Password changed successfully</SizableText>
+        )}
+      </Form>
+    </PageContainer>
   );
 }

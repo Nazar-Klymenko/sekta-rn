@@ -3,15 +3,27 @@ import React from "react";
 import { Platform } from "react-native";
 import { Text, TouchableOpacity } from "react-native";
 
-import { useTheme } from "tamagui";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useUserData } from "@/features/users/hooks/useUserData";
 
-import { Slot, Stack } from "expo-router";
+import { SizableText, useTheme } from "tamagui";
+
+import { Redirect, Slot, Stack, usePathname } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
+  const { user, isAuthenticated } = useAuth();
+  const { data: userData } = useUserData(user?.uid || "");
+  const pathname = usePathname();
+
+  if (!isAuthenticated && pathname !== "/profile") {
+    return <Redirect href="/auth/login?next=/profile" />;
+  }
+
   if (Platform.OS === "web") {
     return <Slot />;
   }
+
   return (
     <Stack
       screenOptions={{
@@ -32,15 +44,15 @@ export default function HomeLayout() {
         options={({ navigation }) => ({
           title: "Profile",
           animation: "fade_from_bottom",
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.push("admin")}>
-              <Text style={{ color: theme.accentColor.get(), marginRight: 10 }}>
-                Admin
-              </Text>
-            </TouchableOpacity>
-          ),
+          headerRight: () =>
+            userData?.isAdmin && (
+              <TouchableOpacity onPress={() => navigation.push("admin")}>
+                <SizableText>Admin</SizableText>
+              </TouchableOpacity>
+            ),
         })}
       />
+
       <Stack.Screen
         name="change-email"
         options={{

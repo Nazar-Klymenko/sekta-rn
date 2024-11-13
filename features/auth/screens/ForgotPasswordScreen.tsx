@@ -5,7 +5,6 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 
 import { useToastController } from "@tamagui/toast";
@@ -25,7 +24,7 @@ const forgotPasswordSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
-  const { returnTo } = useLocalSearchParams<{ returnTo?: string }>();
+  const { next } = useLocalSearchParams<{ next?: string }>();
   const toast = useToastController();
   const handleFirebaseError = useFirebaseErrorHandler();
 
@@ -49,7 +48,7 @@ export default function ForgotPasswordScreen() {
         });
         router.push({
           pathname: "/auth/forgot-password-success",
-          params: { returnTo },
+          params: { next },
         });
       },
       onError: (error) => {
@@ -59,39 +58,37 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
-    <PublicGuard>
-      <PageContainer>
-        <Form methods={methods}>
-          <H1 fontWeight="bold" textAlign="center">
-            Forgot Password
-          </H1>
+    <PageContainer>
+      <Form methods={methods}>
+        <H1 fontWeight="bold" textAlign="center">
+          Forgot Password
+        </H1>
 
-          <Input
-            id="forgot-password-email"
-            name="email"
-            label="Email"
-            placeholder="Enter your email"
-            inputMode="email"
-            autoCapitalize="none"
-          />
-          <ButtonCTA
-            theme="accent"
-            onPress={methods.handleSubmit(onSubmit)}
-            isLoading={isPending}
-            disabled={isPending}
-          >
-            Reset Password
-          </ButtonCTA>
+        <Input
+          id="forgot-password-email"
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          inputMode="email"
+          autoCapitalize="none"
+        />
+        <ButtonCTA
+          theme="accent"
+          onPress={methods.handleSubmit(onSubmit)}
+          isLoading={isPending}
+          disabled={isPending}
+        >
+          Reset Password
+        </ButtonCTA>
 
-          <YStack alignItems="center" padding="$4" gap="$4">
-            <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <Paragraph color="$accentColor" textAlign="center">
-                Go back to login
-              </Paragraph>
-            </Link>
-          </YStack>
-        </Form>
-      </PageContainer>
-    </PublicGuard>
+        <YStack alignItems="center" padding="$4" gap="$4">
+          <Link href={`/auth/login?next=${next}`}>
+            <Paragraph color="$accentColor" textAlign="center">
+              Go back to login
+            </Paragraph>
+          </Link>
+        </YStack>
+      </Form>
+    </PageContainer>
   );
 }

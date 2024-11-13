@@ -2,15 +2,31 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+
 import { useTheme } from "tamagui";
 
-import { Slot, Stack } from "expo-router";
+import { Href, Redirect, Slot, Stack, useLocalSearchParams } from "expo-router";
 
 export default function AuthLayout() {
   const theme = useTheme();
+  const { isAuthenticated, isLoading } = useAuth();
+  const { next } = useLocalSearchParams<{ next?: string }>();
+
+  if (isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (isAuthenticated) {
+    const validNext: Href = next ? (decodeURIComponent(next) as Href) : "/";
+    return <Redirect href={validNext} />;
+  }
+
   if (Platform.OS === "web") {
     return <Slot />;
   }
+
   return (
     <Stack
       screenOptions={{

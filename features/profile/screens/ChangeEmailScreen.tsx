@@ -7,7 +7,6 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useChangeEmail } from "@/features/profile/hooks/useChangeEmail";
 import { emailSchema } from "@/utils/validationSchemas";
 
@@ -69,54 +68,52 @@ export default function ChangeEmailScreen() {
   };
 
   return (
-    <AuthGuard>
-      <PageContainer>
-        <Form methods={methods}>
-          <SizableText fontSize="$4" color="$gray10Light">
-            Current email:
-          </SizableText>
-          <SizableText color={"$color"}>{user?.email}</SizableText>
+    <PageContainer>
+      <Form methods={methods}>
+        <SizableText fontSize="$4" color="$gray10Light">
+          Current email:
+        </SizableText>
+        <SizableText color={"$color"}>{user?.email}</SizableText>
 
-          <Input
-            id="new-email"
-            name="newEmail"
-            label="New Email"
-            placeholder="Enter your new email"
-            inputMode="email"
-            autoCapitalize="none"
-          />
-          <PasswordInput
-            id="current-password"
-            name="currentPassword"
-            label="Current Password"
-            placeholder="Enter your current password"
-            secureTextEntry
-          />
+        <Input
+          id="new-email"
+          name="newEmail"
+          label="New Email"
+          placeholder="Enter your new email"
+          inputMode="email"
+          autoCapitalize="none"
+        />
+        <PasswordInput
+          id="current-password"
+          name="currentPassword"
+          label="Current Password"
+          placeholder="Enter your current password"
+          secureTextEntry
+        />
 
-          <Hint>
-            You will have to confirm you new email in your inbox before it will
-            change. You will be logged out and will have to login again.
-          </Hint>
+        <Hint>
+          You will have to confirm you new email in your inbox before it will
+          change. You will be logged out and will have to login again.
+        </Hint>
 
-          <ButtonCTA
-            theme="accent"
-            onPress={methods.handleSubmit(onSubmit)}
-            isLoading={isPending}
-            disabled={isPending || isVerificationSent}
-          >
-            Update Email
-          </ButtonCTA>
+        <ButtonCTA
+          theme="accent"
+          onPress={methods.handleSubmit(onSubmit)}
+          isLoading={isPending}
+          disabled={isPending || isVerificationSent}
+        >
+          Update Email
+        </ButtonCTA>
 
-          {isVerificationSent && (
-            <YStack marginTop="$4">
-              <SizableText textAlign="center" color="$green10">
-                Verification email sent. Please check your new email inbox and
-                verify before logging in again.
-              </SizableText>
-            </YStack>
-          )}
-        </Form>
-      </PageContainer>
-    </AuthGuard>
+        {isVerificationSent && (
+          <YStack marginTop="$4">
+            <SizableText textAlign="center" color="$green10">
+              Verification email sent. Please check your new email inbox and
+              verify before logging in again.
+            </SizableText>
+          </YStack>
+        )}
+      </Form>
+    </PageContainer>
   );
 }
