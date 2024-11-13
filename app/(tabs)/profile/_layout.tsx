@@ -1,24 +1,19 @@
 import React from "react";
 
 import { Platform } from "react-native";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useUserData } from "@/features/users/hooks/useUserData";
 
 import { SizableText, useTheme } from "tamagui";
 
-import { Redirect, Slot, Stack, usePathname } from "expo-router";
+import { Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
   const { user, isAuthenticated } = useAuth();
   const { data: userData } = useUserData(user?.uid || "");
-  const pathname = usePathname();
-
-  if (!isAuthenticated && pathname !== "/profile") {
-    return <Redirect href="/auth/login?next=/profile" />;
-  }
 
   if (Platform.OS === "web") {
     return <Slot />;
@@ -55,36 +50,42 @@ export default function HomeLayout() {
 
       <Stack.Screen
         name="change-email"
+        redirect={!isAuthenticated}
         options={{
           title: "Change email",
         }}
       />
       <Stack.Screen
         name="change-username"
+        redirect={!isAuthenticated}
         options={{
           title: "Change username",
         }}
       />
       <Stack.Screen
         name="change-password"
+        redirect={!isAuthenticated}
         options={{
           title: "Change password",
         }}
       />
       <Stack.Screen
         name="delete-profile"
+        redirect={!isAuthenticated}
         options={{
           title: "Delete account",
         }}
       />
       <Stack.Screen
         name="push-notifications"
+        redirect={!isAuthenticated}
         options={{
           title: "Push notifications",
         }}
       />
       <Stack.Screen
         name="email-notifications"
+        redirect={!isAuthenticated}
         options={{
           title: "Email notifications",
         }}
