@@ -30,8 +30,8 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
   const padding = getTokens().space.$4.val;
 
   if (
-    !upcomingEvents?.pages ||
-    upcomingEvents.pages.every((page) => page.length === 0)
+    isUpcomingLoading &&
+    upcomingEvents?.pages.every((page) => page.length === 0)
   ) {
     return (
       <>
