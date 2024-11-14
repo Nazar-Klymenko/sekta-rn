@@ -67,7 +67,6 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
           paddingVertical: padding,
           paddingHorizontal: padding,
           gap: padding,
-          flex: 1,
         }}
         snapToInterval={0}
         decelerationRate="fast"
