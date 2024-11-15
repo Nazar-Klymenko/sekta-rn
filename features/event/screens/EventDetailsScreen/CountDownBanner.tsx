@@ -9,7 +9,6 @@ import { useCountdown } from "@/features/core/hooks/useCountdown";
 import { CheckCircle, Heart } from "@tamagui/lucide-icons";
 
 import {
-  H2,
   H3,
   H4,
   Paragraph,

@@ -17,12 +17,7 @@ import ErrorEventList from "../../components/ErrorEventList";
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import { StickyBottomButton } from "./StickyBottomButton";
 import { TagSection } from "./TagSection";
-import {
-  CountdownBanner,
-  EventDescription,
-  EventHero,
-  EventInfo,
-} from "./index";
+import { EventDescription, EventHero, EventInfo } from "./index";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -30,11 +25,10 @@ export default function EventDetailsScreen() {
     data: event,
     isLoading,
     isError,
-    error,
     refetch,
     isRefetching,
   } = useFetchEvent(id || "");
-  const { scrollHandler, scrollEventThrottle, scrollY } = useAnimatedScroll();
+  const { scrollHandler, scrollEventThrottle } = useAnimatedScroll();
 
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
@@ -85,8 +79,6 @@ export default function EventDetailsScreen() {
             {event.genres.length > 0 && (
               <TagSection title="Genres" tags={event.genres} />
             )}
-            <Separator />
-            <CountdownBanner targetDate={event.date} />
           </YStack>
         </YStack>
       </ReanimatedPageContainer>

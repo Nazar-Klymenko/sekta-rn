@@ -7,7 +7,6 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
 import {
-  CountdownBanner,
   EventDescription,
   EventHero,
   EventInfo,
@@ -17,7 +16,6 @@ import { InfoItem } from "@/features/event/screens/EventDetailsScreen/InfoItem";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
-  Calendar,
   CalendarCog,
   CalendarPlus,
   Captions,
@@ -131,8 +129,7 @@ export default function EventPreviewScreen() {
             {event.genres.length > 0 && (
               <TagSection title="Genres" tags={event.genres} />
             )}
-            <Separator />
-            <CountdownBanner targetDate={event.date} />
+
             <Separator />
             <H6>Debugging</H6>
             <InfoItem
