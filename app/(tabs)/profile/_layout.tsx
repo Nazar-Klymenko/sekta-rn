@@ -1,17 +1,24 @@
 import React from "react";
 
 import { Platform } from "react-native";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
-import { useTheme } from "tamagui";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useUserData } from "@/features/users/hooks/useUserData";
+
+import { SizableText, useTheme } from "tamagui";
 
 import { Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
+  const { user, isAuthenticated } = useAuth();
+  const { data: userData } = useUserData(user?.uid || "");
+
   if (Platform.OS === "web") {
     return <Slot />;
   }
+
   return (
     <Stack
       screenOptions={{
@@ -32,47 +39,53 @@ export default function HomeLayout() {
         options={({ navigation }) => ({
           title: "Profile",
           animation: "fade_from_bottom",
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.push("admin")}>
-              <Text style={{ color: theme.accentColor.get(), marginRight: 10 }}>
-                Admin
-              </Text>
-            </TouchableOpacity>
-          ),
+          headerRight: () =>
+            userData?.isAdmin && (
+              <TouchableOpacity onPress={() => navigation.push("admin")}>
+                <SizableText>Admin</SizableText>
+              </TouchableOpacity>
+            ),
         })}
       />
+
       <Stack.Screen
         name="change-email"
+        redirect={!isAuthenticated}
         options={{
           title: "Change email",
         }}
       />
       <Stack.Screen
         name="change-username"
+        redirect={!isAuthenticated}
         options={{
           title: "Change username",
         }}
       />
       <Stack.Screen
         name="change-password"
+        redirect={!isAuthenticated}
         options={{
           title: "Change password",
         }}
       />
       <Stack.Screen
         name="delete-profile"
+        redirect={!isAuthenticated}
         options={{
           title: "Delete account",
         }}
       />
       <Stack.Screen
         name="push-notifications"
+        redirect={!isAuthenticated}
         options={{
           title: "Push notifications",
         }}
       />
       <Stack.Screen
         name="email-notifications"
+        redirect={!isAuthenticated}
         options={{
           title: "Email notifications",
         }}

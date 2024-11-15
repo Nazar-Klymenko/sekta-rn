@@ -7,7 +7,6 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { Sheet } from "@/features/core/components/panels/Sheet";
 
 import { UserRoundX } from "@tamagui/lucide-icons";
@@ -73,84 +72,82 @@ export default function DeleteProfileScreen() {
   );
 
   return (
-    <AuthGuard>
-      <PageContainer>
-        <Hint>
-          Warning: All your data will be permanently deleted. This action cannot
-          be undone.
-        </Hint>
+    <PageContainer>
+      <Hint>
+        Warning: All your data will be permanently deleted. This action cannot
+        be undone.
+      </Hint>
 
-        <ButtonCTA
-          aria-label="Start deleting profile"
-          onPress={() => setShowConfirmSheet(true)}
-          disabled={showConfirmSheet}
-          flex={1}
+      <ButtonCTA
+        aria-label="Start deleting profile"
+        onPress={() => setShowConfirmSheet(true)}
+        disabled={showConfirmSheet}
+        flex={1}
+      >
+        Delete Account
+      </ButtonCTA>
+
+      <Sheet
+        open={showConfirmSheet}
+        onOpenChange={(isOpen: any) => {
+          if (!isOpen) {
+            handleSheetClose();
+          }
+        }}
+      >
+        <Pressable
+          style={{ flex: 1, width: "100%" }}
+          onPress={Keyboard.dismiss}
         >
-          Delete Account
-        </ButtonCTA>
+          <YStack gap="$4" width="100%">
+            <YStack gap="$4" alignItems="center">
+              <UserRoundX size={48} color="$color" />
+              <SizableText size="$8" fontWeight={700}>
+                Delete Account
+              </SizableText>
 
-        <Sheet
-          open={showConfirmSheet}
-          onOpenChange={(isOpen: any) => {
-            if (!isOpen) {
-              handleSheetClose();
-            }
-          }}
-        >
-          <Pressable
-            style={{ flex: 1, width: "100%" }}
-            onPress={Keyboard.dismiss}
-          >
-            <YStack gap="$4" width="100%">
-              <YStack gap="$4" alignItems="center">
-                <UserRoundX size={48} color="$color" />
-                <SizableText size="$8" fontWeight={700}>
-                  Delete Account
-                </SizableText>
+              <Hint>
+                Warning: By pressing Delete all your data will be permanently
+                deleted. This action cannot be undone.
+              </Hint>
 
-                <Hint>
-                  Warning: By pressing Delete all your data will be permanently
-                  deleted. This action cannot be undone.
-                </Hint>
+              <Form methods={formMethods}>
+                <PasswordInput
+                  id="password-delete-profile"
+                  name="password"
+                  label="Confirm Password"
+                  placeholder="Enter your password"
+                  secureTextEntry
+                />
+                <Separator />
 
-                <Form methods={formMethods}>
-                  <PasswordInput
-                    id="password-delete-profile"
-                    name="password"
-                    label="Confirm Password"
-                    placeholder="Enter your password"
-                    secureTextEntry
-                  />
-                  <Separator />
-
-                  <XStack flex={1} width="100%" gap="$4">
+                <XStack flex={1} width="100%" gap="$4">
+                  <ButtonCTA
+                    theme={"surface1"}
+                    aria-label="Close"
+                    disabled={isPending}
+                    onPress={handleSheetClose}
+                    flex={1}
+                  >
+                    Cancel
+                  </ButtonCTA>
+                  <Theme name="danger">
                     <ButtonCTA
-                      theme={"surface1"}
-                      aria-label="Close"
+                      aria-label="Delete Profile"
+                      isLoading={isPending}
                       disabled={isPending}
-                      onPress={handleSheetClose}
+                      onPress={formMethods.handleSubmit(onSubmit)}
                       flex={1}
                     >
-                      Cancel
+                      Delete
                     </ButtonCTA>
-                    <Theme name="danger">
-                      <ButtonCTA
-                        aria-label="Delete Profile"
-                        isLoading={isPending}
-                        disabled={isPending}
-                        onPress={formMethods.handleSubmit(onSubmit)}
-                        flex={1}
-                      >
-                        Delete
-                      </ButtonCTA>
-                    </Theme>
-                  </XStack>
-                </Form>
-              </YStack>
+                  </Theme>
+                </XStack>
+              </Form>
             </YStack>
-          </Pressable>
-        </Sheet>
-      </PageContainer>
-    </AuthGuard>
+          </YStack>
+        </Pressable>
+      </Sheet>
+    </PageContainer>
   );
 }

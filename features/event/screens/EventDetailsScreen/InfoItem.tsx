@@ -9,7 +9,7 @@ interface InfoItemProps {
 }
 
 export const InfoItem: React.FC<InfoItemProps> = ({ icon, title, value }) => (
-  <XStack alignItems="center" gap="$3">
+  <XStack alignItems="center" gap="$3" flex={1}>
     <YStack
       width={50}
       height={50}
@@ -21,11 +21,11 @@ export const InfoItem: React.FC<InfoItemProps> = ({ icon, title, value }) => (
     >
       {icon}
     </YStack>
-    <YStack>
+    <YStack flex={1}>
       <Paragraph fontSize="$3" color="$gray10Light">
         {title}
       </Paragraph>
-      <Paragraph fontSize="$4" fontWeight="bold">
+      <Paragraph fontSize="$4" fontWeight="bold" flexWrap="wrap" flexShrink={1}>
         {value}
       </Paragraph>
     </YStack>

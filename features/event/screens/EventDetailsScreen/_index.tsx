@@ -2,22 +2,27 @@ import React from "react";
 
 import { RefreshControl } from "react-native";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { Separator, YStack } from "tamagui";
+import { Separator, View, YStack, styled } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
 
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
 import { useFetchEvent } from "../../hooks/useFetchEvent";
+import { StickyBottomButton } from "./StickyBottomButton";
 import { TagSection } from "./TagSection";
-import { EventDescription, EventHeader, EventHero, EventInfo } from "./index";
+import {
+  CountdownBanner,
+  EventDescription,
+  EventHero,
+  EventInfo,
+} from "./index";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -51,20 +56,11 @@ export default function EventDetailsScreen() {
         />
       </ReanimatedPageContainer>
     );
-
-  const stickyBottom = (
-    <ButtonCTA theme="accent" onPress={() => {}}>
-      Going!
-    </ButtonCTA>
-  );
-
+  const showBottomButtom = true;
   return (
     <>
-      <EventHeader scrollY={scrollY} title={event.title} />
       <ReanimatedPageContainer
-        scrollable
         fullWidth={false}
-        stickyBottom={stickyBottom}
         onScroll={scrollHandler}
         scrollEventThrottle={scrollEventThrottle}
         refreshControl={
@@ -73,7 +69,11 @@ export default function EventDetailsScreen() {
       >
         <YStack gap="$4">
           <EventHero event={event} />
-          <YStack paddingHorizontal="$4" gap="$4">
+          <YStack
+            paddingHorizontal="$4"
+            paddingBottom={showBottomButtom ? "$13" : "$4"}
+            gap="$4"
+          >
             <EventInfo event={event} />
             <Separator />
             <EventDescription description={event.caption} />
@@ -85,9 +85,26 @@ export default function EventDetailsScreen() {
             {event.genres.length > 0 && (
               <TagSection title="Genres" tags={event.genres} />
             )}
+            <Separator />
+            <CountdownBanner targetDate={event.date} />
           </YStack>
         </YStack>
       </ReanimatedPageContainer>
+      {showBottomButtom && (
+        <StickyButtonWrap>
+          <StickyBottomButton targetDate={event.date} />
+        </StickyButtonWrap>
+      )}
     </>
   );
 }
+export const StickyButtonWrap = styled(View, {
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "$background",
+  padding: "$4",
+  borderTopWidth: 1,
+  borderTopColor: "$borderColor",
+});

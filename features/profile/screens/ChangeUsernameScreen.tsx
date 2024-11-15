@@ -9,7 +9,6 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { useUserData } from "@/features/users/hooks/useUserData";
 import { usernameSchema } from "@/utils/validationSchemas";
 
@@ -105,40 +104,36 @@ export default function ChangeUsernameScreen() {
   if (isError) return <SizableText>Error loading user data</SizableText>;
 
   return (
-    <AuthGuard>
-      <PageContainer>
-        <Form methods={methods}>
-          <Input
-            id="username"
-            name="username"
-            label="Username"
-            placeholder="Username"
-            autoCapitalize="none"
-            inputMode="text"
-            maxLength={20}
-          />
+    <PageContainer>
+      <Form methods={methods}>
+        <Input
+          id="username"
+          name="username"
+          label="Username"
+          placeholder="Username"
+          autoCapitalize="none"
+          inputMode="text"
+          maxLength={20}
+        />
 
-          <Hint>
-            Your new username must be 3-20 characters long and can contain
-            letters, numbers, and underscores.
-          </Hint>
+        <Hint>
+          Your new username must be 3-20 characters long and can contain
+          letters, numbers, and underscores.
+        </Hint>
 
-          <ButtonCTA
-            theme="accent"
-            onPress={handleSubmit(onSubmit)}
-            isLoading={
-              changeUsernameMutation.isPending || isUsernameCheckLoading
-            }
-            disabled={
-              !isDirty ||
-              changeUsernameMutation.isPending ||
-              isUsernameCheckLoading
-            }
-          >
-            Update Username
-          </ButtonCTA>
-        </Form>
-      </PageContainer>
-    </AuthGuard>
+        <ButtonCTA
+          theme="accent"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={changeUsernameMutation.isPending || isUsernameCheckLoading}
+          disabled={
+            !isDirty ||
+            changeUsernameMutation.isPending ||
+            isUsernameCheckLoading
+          }
+        >
+          Update Username
+        </ButtonCTA>
+      </Form>
+    </PageContainer>
   );
 }

@@ -8,7 +8,6 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { PublicGuard } from "@/features/core/components/navigation/PublicGuard";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
@@ -45,9 +44,9 @@ export default function SignupScreen() {
   const router = useRouter();
   const toast = useToastController();
   const handleFirebaseError = useFirebaseErrorHandler();
-  const { username = "", returnTo = "/" } = useLocalSearchParams<{
+  const { username = "", next = "/" } = useLocalSearchParams<{
     username: string;
-    returnTo?: string;
+    next: "/";
   }>();
 
   const methods = useForm<FormValues>({
@@ -69,7 +68,11 @@ export default function SignupScreen() {
           message: "Welcome!",
           variant: "success",
         });
-        router.replace(returnTo);
+        if (next) {
+          router.replace({ pathname: next });
+        } else {
+          router.replace("/");
+        }
       },
       onError: (error) => {
         handleFirebaseError(error);
@@ -78,70 +81,68 @@ export default function SignupScreen() {
   };
 
   return (
-    <PublicGuard>
-      <PageContainer>
-        <Form methods={methods} id="test">
-          <H1 fontWeight="bold" textAlign="center">
-            Sign Up
-          </H1>
-          <Input
-            id="signup-email"
-            name="email"
-            label="Email"
-            placeholder="Your email"
-            inputMode="email"
-            autoCapitalize="none"
+    <PageContainer>
+      <Form methods={methods} id="test">
+        <H1 fontWeight="bold" textAlign="center">
+          Sign Up
+        </H1>
+        <Input
+          id="signup-email"
+          name="email"
+          label="Email"
+          placeholder="Your email"
+          inputMode="email"
+          autoCapitalize="none"
+        />
+        <YStack gap="$0">
+          <PasswordInput
+            id="signup-password"
+            name="password"
+            label="Password"
+            placeholder="New password"
+            secureTextEntry
           />
-          <YStack gap="$0">
-            <PasswordInput
-              id="signup-password"
-              name="password"
-              label="Password"
-              placeholder="New password"
-              secureTextEntry
-            />
-            <PasswordRequirements password={watch("password")} />
-          </YStack>
+          <PasswordRequirements password={watch("password")} />
+        </YStack>
 
-          <ButtonCTA
-            theme="accent"
-            onPress={handleSubmit(onSubmit)}
-            isLoading={isPending}
-            disabled={isPending}
-          >
-            Sign up
-          </ButtonCTA>
-          <YStack>
-            <Checkbox name="agreeEmail" id="agree-email">
-              <Paragraph>
-                I want to subscribe to newsletter to receive email notifications
-                about new events
-              </Paragraph>
-            </Checkbox>
-            <Checkbox name="agreeTos" id="signup-agree-tos">
-              <Paragraph>
-                I agree to Sekta Selekta's{" "}
-                <Link href="/tos" push>
-                  <Paragraph color="$accentColor">Terms of service </Paragraph>
-                </Link>
-                and
-                <Link href="/privacy-policy" push>
-                  <Paragraph color="$accentColor"> Privacy Policy*</Paragraph>
-                </Link>
-              </Paragraph>
-            </Checkbox>
-          </YStack>
+        <ButtonCTA
+          theme="accent"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={isPending}
+          disabled={isPending}
+        >
+          Sign up
+        </ButtonCTA>
+        <YStack>
+          <Checkbox name="agreeEmail" id="agree-email">
+            <Paragraph>
+              I want to subscribe to newsletter to receive email notifications
+              about new events
+            </Paragraph>
+          </Checkbox>
+          <Checkbox name="agreeTos" id="signup-agree-tos">
+            <Paragraph>
+              I agree to Sekta Selekta's{" "}
+              <Link href="/tos" push>
+                <Paragraph color="$accentColor">Terms of service </Paragraph>
+              </Link>
+              and
+              <Link href="/privacy-policy" push>
+                <Paragraph color="$accentColor"> Privacy Policy*</Paragraph>
+              </Link>
+            </Paragraph>
+          </Checkbox>
+        </YStack>
 
-          <YStack alignItems="center" padding="$4">
-            <Link href={`/auth/login?returnTo=${returnTo}`}>
-              <Paragraph textAlign="center">
-                Already have an account?
-                <Paragraph color="$accentColor"> Log in</Paragraph>
-              </Paragraph>
-            </Link>
-          </YStack>
-        </Form>
-      </PageContainer>
-    </PublicGuard>
+        <YStack alignItems="center" padding="$4">
+          <Link href={`/auth/login?next=${next}`}>
+            <Paragraph textAlign="center">
+              Already have an account?
+              <Paragraph color="$accentColor"> Log in</Paragraph>
+            </Paragraph>
+          </Link>
+        </YStack>
+      </Form>
+    </PageContainer>
   );
 }

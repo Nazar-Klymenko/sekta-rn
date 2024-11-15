@@ -21,6 +21,7 @@ import {
   Theme,
   ThemeableStack,
   XStack,
+  YStack,
   styled,
 } from "tamagui";
 
@@ -197,7 +198,12 @@ export function Table<T extends object>({
                           key={cell.id}
                           style={{ width: cell.column.getSize() }}
                         >
-                          <Paragraph numberOfLines={2} ellipsizeMode="tail">
+                          <Paragraph
+                            numberOfLines={2}
+                            ellipsizeMode="tail"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext()

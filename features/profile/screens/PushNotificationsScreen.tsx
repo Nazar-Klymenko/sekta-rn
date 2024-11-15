@@ -7,7 +7,6 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Switch } from "@/features/core/components/buttons/CustomSwitch";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { AuthGuard } from "@/features/core/components/navigation/AuthGuard";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
 import { Paragraph, XStack, YStack } from "tamagui";
@@ -49,24 +48,22 @@ export default function PushNotificationScreen() {
   };
 
   return (
-    <AuthGuard>
-      <PageContainer>
-        <XStack display="flex" justifyContent="space-between">
-          <YStack>
-            <Paragraph fontSize="$5" fontWeight="bold">
-              Enable push notifications
-            </Paragraph>
-            <Paragraph fontSize="$3" color="$gray10Light">
-              Enable notifications for events that you plan to attend
-            </Paragraph>
-          </YStack>
-          <Switch checked={isEnabled} onPress={toggleSwitch} />
-        </XStack>
+    <PageContainer>
+      <XStack display="flex" justifyContent="space-between">
+        <YStack>
+          <Paragraph fontSize="$5" fontWeight="bold">
+            Enable push notifications
+          </Paragraph>
+          <Paragraph fontSize="$3" color="$gray10Light">
+            Enable notifications for events that you plan to attend
+          </Paragraph>
+        </YStack>
+        <Switch checked={isEnabled} onPress={toggleSwitch} />
+      </XStack>
 
-        <ButtonCTA theme="accent" onPress={sendNoti} disabled={!isEnabled}>
-          Send Test Notification
-        </ButtonCTA>
-      </PageContainer>
-    </AuthGuard>
+      <ButtonCTA theme="accent" onPress={sendNoti} disabled={!isEnabled}>
+        Send Test Notification
+      </ButtonCTA>
+    </PageContainer>
   );
 }

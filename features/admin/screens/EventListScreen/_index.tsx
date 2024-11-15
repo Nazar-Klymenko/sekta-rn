@@ -2,6 +2,8 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import React from "react";
 
+import { View } from "react-native";
+
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Table } from "@/features/core/components/tables/Table";
@@ -9,7 +11,7 @@ import { useFetchEvents } from "@/features/event/hooks/useFetchEvents";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Paragraph, View, YStack } from "tamagui";
+import { Paragraph, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
 import { size } from "lodash";
@@ -37,17 +39,14 @@ export default function EventListScreen() {
       header: "Date",
       cell: (info) => {
         const eventTimestamp = info.getValue();
-
         const formattedDate = eventTimestamp
           ? formatFirestoreTimestamp(eventTimestamp, "dd.MM.yyyy")
           : "-";
-
         const timeAndDay = eventTimestamp
           ? formatFirestoreTimestamp(eventTimestamp, "EEEE, HH:mm")
           : "-";
-
         return (
-          <YStack>
+          <YStack flex={1}>
             <Paragraph>{formattedDate}</Paragraph>
             <Paragraph fontSize={12} color="$color10">
               {timeAndDay}
@@ -55,7 +54,6 @@ export default function EventListScreen() {
           </YStack>
         );
       },
-
       sortingFn: "datetime",
       invertSorting: true,
     }),

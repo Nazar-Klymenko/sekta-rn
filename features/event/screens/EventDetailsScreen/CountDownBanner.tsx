@@ -1,188 +1,109 @@
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
-import { useEffect, useState } from "react";
 
 import { Timestamp } from "firebase/firestore";
 
+import { useCountdown } from "@/features/core/hooks/useCountdown";
+
 import { CheckCircle, Heart } from "@tamagui/lucide-icons";
 
-import { H2, Paragraph, View, XStack, YStack, styled, useTheme } from "tamagui";
+import {
+  H2,
+  H3,
+  H4,
+  Paragraph,
+  Theme,
+  View,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
 
+interface CountdownBannerProps {
+  targetDate: Timestamp;
+}
 const CountdownBanner: React.FC<CountdownBannerProps> = ({ targetDate }) => {
-  const timeLeft = useCountdown(targetDate);
-  const theme = useTheme();
-
-  const TimeUnit = ({ value, label }: { value: number; label: string }) => (
-    <TimeUnitContainer>
-      <GlassContainer>
-        <Paragraph fontSize={36} lineHeight={36} fontWeight="900" color="white">
-          {value.toString().padStart(2, "0")}
-        </Paragraph>
-      </GlassContainer>
-      <Paragraph
-        fontSize={16}
-        fontWeight="600"
-        color="white"
-        marginTop="$2"
-        textTransform="uppercase"
-      >
-        {label}
-      </Paragraph>
-    </TimeUnitContainer>
-  );
+  const { timeLeft, timeSinceEvent, hasEventPassed, hasEventStarted } =
+    useCountdown(targetDate);
 
   const renderContent = () => {
-    const currentTime = new Date().getTime();
-    const eventTime = targetDate.toDate().getTime();
-    const timeSinceEvent = currentTime - eventTime;
-    const eightHoursInMs = 8 * 60 * 60 * 1000;
-
-    if (timeSinceEvent > eightHoursInMs) {
-      // More than 8 hours after start
+    if (hasEventPassed()) {
       return (
-        <StatusContainer>
+        <XStack justifyContent="center" gap="$2">
           <Heart size={32} color="white" />
-          <StatusText>Event Has Passed</StatusText>
-        </StatusContainer>
+          <H4>Event Has Passed</H4>
+        </XStack>
       );
-    } else if (timeSinceEvent > 0) {
-      // Event has started but within 8 hours
+    } else if (hasEventStarted()) {
       return (
-        <StatusContainer>
+        <XStack justifyContent="center" gap="$2">
           <CheckCircle size={32} color="white" />
-          <StatusText>Event Has Started</StatusText>
-        </StatusContainer>
+          <H4>Event Has Started</H4>
+        </XStack>
       );
     } else {
-      // Event hasn't started yet
       return (
-        <>
-          <XStack justifyContent="space-between" width="100%" marginTop="$4">
-            <TimeUnit value={timeLeft.days} label="Days" />
-            <TimeUnit value={timeLeft.hours} label="Hours" />
-            <TimeUnit value={timeLeft.minutes} label="Mins" />
-            <TimeUnit value={timeLeft.seconds} label="Secs" />
-          </XStack>
-        </>
+        <XStack justifyContent="center" gap="$4" width="100%" marginTop="$4">
+          <TimeUnit value={timeLeft.days} label="Days" />
+          <Paragraph size={"$6"}>|</Paragraph>
+          <TimeUnit value={timeLeft.hours} label="Hours" />
+          <Paragraph size={"$6"}>|</Paragraph>
+          <TimeUnit value={timeLeft.minutes} label="Mins" />
+          <Paragraph size={"$6"}>|</Paragraph>
+          <TimeUnit value={timeLeft.seconds} label="Secs" />
+        </XStack>
       );
     }
   };
 
   return (
-    <CountdownContainer>
-      <H2 fontWeight="bold">Event starts in:</H2>
-      <View
-        style={{
-          borderRadius: 20,
-          overflow: "hidden",
-          backgroundColor: theme.accentBackground.get(),
-        }}
-      >
-        {/* <LinearGradient
-          colors={[theme.accentColor.get(), "$pink9Light"]}
+    <Theme name="surface1">
+      <H3 fontWeight="bold">Event starts in:</H3>
+      <YStack marginVertical="$2">
+        <LinearGradient
+          colors={["$pink9Light", "$accentBackground"]}
           start={[0, 0]}
           end={[1, 1]}
-        > */}
-        <ContentWrapper>{renderContent()}</ContentWrapper>
-        {/* </LinearGradient> */}
-      </View>
-    </CountdownContainer>
+          borderRadius="$4"
+          padding={2}
+        >
+          <XStack
+            backgroundColor="$background"
+            padding="$3"
+            borderRadius="$3"
+            alignItems="center"
+            blockSize="border-box"
+          >
+            <YStack flex={1} minWidth={0}>
+              {renderContent()}
+            </YStack>
+          </XStack>
+        </LinearGradient>
+      </YStack>
+    </Theme>
   );
 };
-
-interface CountdownBannerProps {
-  targetDate: Timestamp;
-}
-
-interface TimeLeft {
-  total: number;
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-const useCountdown = (targetDate: Timestamp): TimeLeft => {
-  const calculateTimeLeft = (): TimeLeft => {
-    const difference = targetDate.toDate().getTime() - new Date().getTime();
-
-    if (difference > 0) {
-      return {
-        total: difference,
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    } else {
-      return {
-        total: difference, // This will be negative for passed events
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      };
-    }
-  };
-
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const newTimeLeft = calculateTimeLeft();
-      setTimeLeft(newTimeLeft);
-      if (newTimeLeft.total <= 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [targetDate]);
-
-  return timeLeft;
-};
-
-const CountdownContainer = styled(YStack, {
-  width: "100%",
-  elevation: 10,
-  gap: "$2",
-});
-
-const ContentWrapper = styled(YStack, {
-  padding: "$4",
-});
+const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+  <TimeUnitContainer>
+    <Paragraph fontSize={36} lineHeight={36} fontWeight="900" color="white">
+      {value.toString().padStart(2, "0")}
+    </Paragraph>
+    <Paragraph
+      fontSize={"$3"}
+      fontWeight="600"
+      color="white"
+      marginTop="$2"
+      textTransform="uppercase"
+    >
+      {label}
+    </Paragraph>
+  </TimeUnitContainer>
+);
 
 const TimeUnitContainer = styled(YStack, {
   alignItems: "center",
-  minWidth: 80,
-});
-
-const GlassContainer = styled(YStack, {
-  backgroundColor: "rgba(255, 255, 255, 0.2)",
-  borderRadius: 15,
-  padding: "$3",
-  alignItems: "center",
-  justifyContent: "center",
-  width: 80,
-  height: 80,
-  borderWidth: 2,
-  borderColor: "rgba(255, 255, 255, 0.3)",
-});
-
-const StatusContainer = styled(XStack, {
-  alignItems: "center",
-  justifyContent: "center",
-});
-
-const StatusText = styled(Paragraph, {
-  fontSize: 24,
-  lineHeight: 24,
-  fontWeight: "900",
-  color: "white",
-  marginLeft: "$2",
-  textTransform: "uppercase",
-  letterSpacing: 1,
+  minWidth: 50,
 });
 
 export default CountdownBanner;

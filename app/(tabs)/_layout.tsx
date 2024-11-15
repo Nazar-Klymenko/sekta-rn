@@ -2,7 +2,7 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Home, Ticket, User } from "@tamagui/lucide-icons";
+import { Home, Play, Ticket, User } from "@tamagui/lucide-icons";
 
 import { useTheme } from "tamagui";
 
@@ -39,7 +39,7 @@ export default function TabLayout() {
         options={{
           title: "Play",
           headerShown: false,
-          tabBarIcon: ({ color, size }) => <Ticket color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => <Play color={color} size={size} />,
         }}
       />
       <Tabs.Screen
