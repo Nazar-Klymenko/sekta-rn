@@ -1,5 +1,5 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 
 // Initialize the app only if it hasn't been initialized yet
 if (!admin.apps.length) {
@@ -16,6 +16,21 @@ export const createUser = functions.https.onCall(async (data) => {
   let userRecord: admin.auth.UserRecord | undefined;
 
   try {
+    // Check if the username is already taken
+    const usersSnapshot = await admin
+      .firestore()
+      .collection("users")
+      .where("username", "==", username.toLowerCase())
+      .limit(1)
+      .get();
+
+    if (!usersSnapshot.empty) {
+      throw new functions.https.HttpsError(
+        "already-exists",
+        "Username is already taken"
+      );
+    }
+
     // Step 1: Create Authentication user
     userRecord = await admin.auth().createUser({
       email: email,
@@ -44,7 +59,7 @@ export const createUser = functions.https.onCall(async (data) => {
           deleteError instanceof Error ? deleteError.message : "Unknown error";
         console.error(
           "Error deleting Authentication user after Firestore failure:",
-          errorMessage,
+          errorMessage
         );
 
         // Log the user ID for manual cleanup
