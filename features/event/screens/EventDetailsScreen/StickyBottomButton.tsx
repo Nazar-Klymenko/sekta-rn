@@ -11,12 +11,8 @@ type StickyButtonBottomProps = {
   onPress?: () => void;
   targetDate: Timestamp;
 };
-export const StickyBottomButton = ({
-  onPress,
-  targetDate,
-}: StickyButtonBottomProps) => {
-  const { timeLeft, timeSinceEvent, hasEventPassed, hasEventStarted } =
-    useCountdown(targetDate);
+export const StickyBottomButton = ({ targetDate }: StickyButtonBottomProps) => {
+  const { hasEventPassed, hasEventStarted } = useCountdown(targetDate);
 
   if (hasEventPassed()) {
     return null;
