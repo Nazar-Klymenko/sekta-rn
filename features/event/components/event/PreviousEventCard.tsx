@@ -4,7 +4,7 @@ import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Image, Paragraph, XStack, YStack, styled } from "tamagui";
+import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -24,22 +24,25 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
         width={120}
         aspectRatio={1}
         borderRadius="$2"
+        marginEnd="$3"
       />
       <ContentContainer>
         <YStack>
-          <Paragraph fontSize="$8" fontWeight="700">
+          <SizableText fontSize="$8" fontWeight="700" numberOfLines={1}>
             {event.title}
-          </Paragraph>
+          </SizableText>
           <Paragraph fontSize="$3" color="$gray10Light">
             {formattedDate}
           </Paragraph>
         </YStack>
-        <XStack flexWrap="wrap" gap="$2">
+        <XStack flexWrap="wrap" gap="$2" alignItems="center">
           {event.genres.slice(0, 2).map((genre, index) => (
             <Tag tag={genre} key={genre + index} />
           ))}
           {event.genres.length > 2 && (
-            <Tag tag={`+${event.genres.length - 2}`} />
+            <SizableText fontWeight={600} marginStart="$2">
+              {`+${event.genres.length - 2}`}
+            </SizableText>
           )}
         </XStack>
       </ContentContainer>
@@ -48,21 +51,16 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 };
 
 const CardContainer = styled(XStack, {
-  borderRadius: "$6",
-  padding: "$2",
+  padding: "$1",
   marginBottom: "$2",
-  gap: "$3",
   pressStyle: {
     scale: 0.98,
-    borderColor: "$borderColorHover",
-  },
-  hoverStyle: {
-    borderColor: "$borderColorHover",
   },
 });
 
 const ContentContainer = styled(YStack, {
   justifyContent: "space-between",
+  flex: 1,
 });
 
 export default PreviousEventCard;
