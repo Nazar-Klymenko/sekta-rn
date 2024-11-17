@@ -1,5 +1,3 @@
-import { LinearGradient } from "tamagui/linear-gradient";
-
 import React from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -8,7 +6,7 @@ import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
 
 import { Mail } from "@tamagui/lucide-icons";
 
-import { Paragraph, SizableText, Theme, XStack, YStack, styled } from "tamagui";
+import { SizableText, XStack, YStack } from "tamagui";
 
 export const VerifyEmail = () => {
   const { user } = useAuth();
@@ -18,37 +16,27 @@ export const VerifyEmail = () => {
     return null;
   }
   return (
-    <Theme name="surface1">
-      <YStack
-        backgroundColor="$background"
-        padding="$4"
-        borderRadius="$4"
-        alignItems="flex-start"
-        blockSize="border-box"
-        gap="$4"
-      >
-        <YStack alignItems="flex-start" gap="$3">
-          <XStack alignItems="center" gap="$3">
-            <Mail size="$1" color="$color" />
-            <SizableText size="$6" fontWeight={500}>
-              Verify Your Email
-            </SizableText>
-          </XStack>
-          <SizableText size="$5">
-            Please verify your email address to access all features.
+    <YStack paddingVertical="$4">
+      <YStack>
+        <XStack alignItems="center">
+          <Mail size="$1" marginEnd="$2.5" />
+          <SizableText size="$6" fontWeight={600}>
+            Verify Your Email
           </SizableText>
-        </YStack>
-
-        <ButtonCTA
-          theme={"accent"}
-          color="white"
-          onPress={() => sendVerification()}
-          isLoading={isPending}
-          disabled={isPending}
-        >
-          Send Verification Email
-        </ButtonCTA>
+        </XStack>
+        <SizableText size="$5" color="grey" marginBottom="$3">
+          Please verify your email address to access all features.
+        </SizableText>
       </YStack>
-    </Theme>
+
+      <ButtonCTA
+        theme={"accent"}
+        onPress={() => sendVerification()}
+        isLoading={isPending}
+        disabled={isPending}
+      >
+        Send Verification Email
+      </ButtonCTA>
+    </YStack>
   );
 };
