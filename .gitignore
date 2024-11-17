@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.idea/
 dist/
 npm-debug.*
 *.jks
@@ -69,3 +70,4 @@ expo-env.d.ts
 # @end expo-cli
 *.log
 /firebase-data
+firebase-export-*
