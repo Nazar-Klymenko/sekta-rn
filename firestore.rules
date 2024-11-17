@@ -6,8 +6,14 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-		function isOwner(userId) {
+    function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      let userId = request.auth.uid;
+      let userDoc = get(/databases/$(database)/documents/users/$(userId));
+      return isAuthenticated() && userDoc != null && userDoc.data.isAdmin == true;
     }
     
     function isValidData(data) {
@@ -16,24 +22,46 @@ service cloud.firestore {
              && data.updatedAt is timestamp;
     }
 
-		match /users/{userId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated() && request.auth.uid == userId;
-      allow update, delete: if isOwner(userId);
-
-      // Validate user data on write
-      allow write: if isValidData(request.resource.data) 
-                   && request.resource.data.username is string
-                   && request.resource.data.email == request.auth.token.email;
+    function isValidString(field) {
+      return field is string && field.size() <= 1000;
     }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      
+      allow create: if isAuthenticated() 
+        && request.auth.uid == userId
+        && request.resource.data.keys().hasAll(['email', 'username', 'createdAt', 'updatedAt'])
+        && request.resource.data.email == request.auth.token.email
+        && isValidString(request.resource.data.username)
+        && !request.resource.data.keys().hasAny(['isAdmin']); // Prevent setting admin status
+
+      allow update: if isOwner(userId)
+        && isValidData(request.resource.data)
+        && request.resource.data.email == request.auth.token.email
+        && isValidString(request.resource.data.username)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin']) 
+            || isAdmin()); // Only admins can change admin status
+
+      allow delete: if isAdmin();
+    }
+     
+    match /events/{eventId} {
+      allow read: if true;
+      
+      allow create, update: if isAdmin()
+        && isValidData(request.resource.data)
+        && isValidString(request.resource.data.title)
+        && isValidString(request.resource.data.caption)
+        && request.resource.data.price is number
+        && request.resource.data.date is timestamp;
+
+      allow delete: if isAdmin();
+    }
+
     match /play/{playId} {
-      allow read, write : if true;
-		}
-    match /{document=**} {
-      allow read : if true;
+      allow read: if isAdmin(); 
+      allow write: if true;
     }
   }
 }
-
-
-   
