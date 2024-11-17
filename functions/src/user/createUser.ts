@@ -39,6 +39,7 @@ export const createUser = functions.https.onCall(async (data) => {
       username,
       agreeTos,
       agreeEmail,
+      createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });
 
