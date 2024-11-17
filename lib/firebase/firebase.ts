@@ -1,6 +1,6 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
+import { FirebaseApp, getApps, initializeApp } from "firebase/app";
 import {
   Auth,
   connectAuthEmulator,
@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 import {
   connectFirestoreEmulator,
-  getFirestore,
   initializeFirestore,
 } from "firebase/firestore";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
@@ -18,7 +17,6 @@ import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 import { Platform } from "react-native";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
@@ -33,27 +31,32 @@ let auth: Auth;
 
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
-  auth = initializeAuth(app, {
-    persistence: getReactNativePersistence
-      ? getReactNativePersistence(ReactNativeAsyncStorage)
-      : undefined,
-  });
 } else {
-  app = getApp();
-  auth = getAuth(app);
+  app = getApps()[0];
 }
 
-const db = initializeFirestore(app, { experimentalForceLongPolling: true });
-// const db = getFirestore(app);
+if (Platform.OS === "web") {
+  auth = getAuth(app);
+} else {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+  });
+}
+
+const db = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+});
 const storage = getStorage(app);
 const functions = getFunctions(app);
 
+const HOST = "localhost"; // Your machine's IP
+
 if (__DEV__) {
   console.debug("Connecting to firebase emulators.");
-  connectAuthEmulator(auth, "http://localhost:9099");
-  connectFirestoreEmulator(db, "localhost", 9299); // Connect to Firestore emulator immediately
-  connectStorageEmulator(storage, "localhost", 9199); // Connect to Storage emulator
-  connectFunctionsEmulator(functions, "localhost", 5001);
+  connectAuthEmulator(auth, `http://${HOST}:9099`);
+  connectFirestoreEmulator(db, HOST, 8080); // Keep your custom port
+  connectStorageEmulator(storage, HOST, 9199);
+  connectFunctionsEmulator(functions, HOST, 5001);
 }
 
 export default app;

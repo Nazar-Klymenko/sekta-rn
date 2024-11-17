@@ -68,3 +68,4 @@ yarn-error.*
 expo-env.d.ts
 # @end expo-cli
 *.log
+/firebase-data

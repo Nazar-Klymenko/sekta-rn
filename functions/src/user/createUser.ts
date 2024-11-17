@@ -1,10 +1,6 @@
 import * as admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
-
-// Initialize the app only if it hasn't been initialized yet
-if (!admin.apps.length) {
-  admin.initializeApp();
-}
 
 export const createUser = functions.https.onCall(async (data) => {
   const { email, password, username, agreeTos, agreeEmail } = data;
@@ -43,7 +39,7 @@ export const createUser = functions.https.onCall(async (data) => {
       username,
       agreeTos,
       agreeEmail,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
     });
 
     return { success: true, uid: userRecord.uid };
