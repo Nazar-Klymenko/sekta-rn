@@ -1,6 +1,7 @@
 import React from "react";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { User } from "firebase/auth";
+
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
 
@@ -8,13 +9,16 @@ import { Mail } from "@tamagui/lucide-icons";
 
 import { SizableText, XStack, YStack } from "tamagui";
 
-export const VerifyEmail = () => {
-  const { user } = useAuth();
+interface VerifyEmailProps {
+  user: User | null;
+}
+export const VerifyEmail = ({ user }: VerifyEmailProps) => {
   const { mutate: sendVerification, isPending } = useVerifyEmail();
 
   if (!user || user.emailVerified) {
     return null;
   }
+
   return (
     <YStack paddingVertical="$4">
       <YStack>
