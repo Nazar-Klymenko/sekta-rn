@@ -1,17 +1,24 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseApp, getApps, initializeApp } from "firebase/app";
+import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
 import {
   Auth,
+  connectAuthEmulator,
   getAuth,
   getReactNativePersistence,
   initializeAuth,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import {
+  connectFirestoreEmulator,
+  getFirestore,
+  initializeFirestore,
+} from "firebase/firestore";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 import { Platform } from "react-native";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
@@ -21,26 +28,33 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_APP_ID,
   measurementId: process.env.EXPO_PUBLIC_MEASUREMENT_ID,
 };
-
 let app: FirebaseApp;
 let auth: Auth;
 
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
-}
-
-if (Platform.OS === "web") {
-  auth = getAuth(app);
-} else {
   auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+    persistence: getReactNativePersistence
+      ? getReactNativePersistence(ReactNativeAsyncStorage)
+      : undefined,
   });
+} else {
+  app = getApp();
+  auth = getAuth(app);
 }
 
-const db = getFirestore(app);
+const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+// const db = getFirestore(app);
 const storage = getStorage(app);
+const functions = getFunctions(app);
+
+if (__DEV__) {
+  console.debug("Connecting to firebase emulators.");
+  connectAuthEmulator(auth, "http://localhost:9099");
+  connectFirestoreEmulator(db, "localhost", 9299); // Connect to Firestore emulator immediately
+  connectStorageEmulator(storage, "localhost", 9199); // Connect to Storage emulator
+  connectFunctionsEmulator(functions, "localhost", 5001);
+}
 
 export default app;
-export { auth, db, storage };
+export { db, auth, storage, functions };

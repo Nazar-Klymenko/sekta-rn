@@ -2,11 +2,7 @@
   "hosting": {
     "site": "sekta-selekta-rn",
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -39,7 +35,7 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 9299
     },
     "hosting": {
       "port": 5000
@@ -51,5 +47,11 @@
       "enabled": true
     },
     "singleProjectMode": true
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
