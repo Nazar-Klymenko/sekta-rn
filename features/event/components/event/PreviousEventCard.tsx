@@ -24,6 +24,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
         width={120}
         aspectRatio={1}
         borderRadius="$2"
+        marginEnd="$3"
       />
       <ContentContainer>
         <YStack>
@@ -34,12 +35,14 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
             {formattedDate}
           </Paragraph>
         </YStack>
-        <XStack flexWrap="wrap" gap="$2">
+        <XStack flexWrap="wrap" gap="$2" alignItems="center">
           {event.genres.slice(0, 2).map((genre, index) => (
             <Tag tag={genre} key={genre + index} />
           ))}
           {event.genres.length > 2 && (
-            <Tag tag={`+${event.genres.length - 2}`} />
+            <SizableText fontWeight={600} marginStart="$2">
+              {`+${event.genres.length - 2}`}
+            </SizableText>
           )}
         </XStack>
       </ContentContainer>
@@ -48,17 +51,10 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 };
 
 const CardContainer = styled(XStack, {
-  borderRadius: "$6",
-  padding: "$2",
-  maxWidth: "100%",
+  padding: "$1",
   marginBottom: "$2",
-  gap: "$3",
   pressStyle: {
     scale: 0.98,
-    borderColor: "$borderColorHover",
-  },
-  hoverStyle: {
-    borderColor: "$borderColorHover",
   },
 });
 
