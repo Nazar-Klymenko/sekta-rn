@@ -9,7 +9,7 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "unauthenticated",
-      "User must be authenticated.",
+      "User must be authenticated."
     );
   }
 
@@ -19,7 +19,7 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
   if (!username || typeof username !== "string") {
     throw new functions.https.HttpsError(
       "invalid-argument",
-      "Username is required and must be a string",
+      "Username is required and must be a string"
     );
   }
 
@@ -36,14 +36,13 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
     if (!usersSnapshot.empty && usersSnapshot.docs[0].id !== uid) {
       throw new functions.https.HttpsError(
         "already-exists",
-        "Username is already taken",
+        "Username is already taken"
       );
     }
 
     // Update the user's username
     await db.doc(`users/${uid}`).update({
       username: username.toLowerCase(),
-      usernameDisplay: username, // Store the display version if needed
     });
 
     return { success: true, message: "Username updated successfully" };
@@ -55,7 +54,7 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError(
       "internal",
       "Failed to update username",
-      error,
+      error
     );
   }
 });
