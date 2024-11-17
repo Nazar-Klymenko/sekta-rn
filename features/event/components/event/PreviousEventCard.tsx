@@ -4,7 +4,7 @@ import { Tag } from "@/features/core/components/Tag";
 import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
-import { Image, Paragraph, XStack, YStack, styled } from "tamagui";
+import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -27,9 +27,9 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
       />
       <ContentContainer>
         <YStack>
-          <Paragraph fontSize="$8" fontWeight="700">
+          <SizableText fontSize="$8" fontWeight="700" numberOfLines={1}>
             {event.title}
-          </Paragraph>
+          </SizableText>
           <Paragraph fontSize="$3" color="$gray10Light">
             {formattedDate}
           </Paragraph>
@@ -50,6 +50,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 const CardContainer = styled(XStack, {
   borderRadius: "$6",
   padding: "$2",
+  maxWidth: "100%",
   marginBottom: "$2",
   gap: "$3",
   pressStyle: {
@@ -63,6 +64,7 @@ const CardContainer = styled(XStack, {
 
 const ContentContainer = styled(YStack, {
   justifyContent: "space-between",
+  flex: 1,
 });
 
 export default PreviousEventCard;
