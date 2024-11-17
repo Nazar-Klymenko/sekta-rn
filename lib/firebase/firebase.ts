@@ -17,6 +17,8 @@ import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 import { Platform } from "react-native";
 
+import Constants from "expo-constants";
+
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
@@ -49,7 +51,17 @@ const db = initializeFirestore(app, {
 const storage = getStorage(app);
 const functions = getFunctions(app);
 
-const HOST = "localhost"; // Your machine's IP
+const getHost = () => {
+  if (Platform.OS === "web") return "localhost";
+  const hostUri = Constants.expoConfig?.hostUri;
+  if (hostUri) {
+    const hostIP = hostUri.split(":")[0];
+    if (hostIP) return hostIP;
+  }
+
+  return "localhost"; // fallback
+};
+const HOST = getHost();
 
 if (__DEV__) {
   console.debug("Connecting to firebase emulators.");

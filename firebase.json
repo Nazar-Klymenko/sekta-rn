@@ -49,6 +49,7 @@
     },
     "storage": {
       "port": 9199,
+      "allowExternalAccess": true,
       "rules": "storage.rules"
     },
     "ui": {
