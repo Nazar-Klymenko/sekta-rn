@@ -24,7 +24,8 @@ export const updateEvent = async ({
 
     // Check if the image has changed
     if (image && image !== originalData.image.publicUrl) {
-      const imageRef = ref(storage, `events/${Date.now()}`);
+      const imageRef = ref(storage, `events/${eventId}/${imageId}`);
+
       const response = await fetch(image);
       const blob = await response.blob();
       await uploadBytes(imageRef, blob);

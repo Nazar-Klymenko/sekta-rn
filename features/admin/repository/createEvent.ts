@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -14,11 +14,19 @@ export const createEvent = async (
   }
 
   try {
-    const imageRef = ref(storage, `events/${Date.now()}`);
+    const eventId = doc(collection(db, "events")).id;
+
+    const fileName = `${Date.now()}-${data.title
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+    const imagePath = `events/${eventId}/${fileName}`;
+    const imageRef = ref(storage, imagePath);
     const response = await fetch(image);
     const blob = await response.blob();
-    await uploadBytes(imageRef, blob);
-    const imageUrl = await getDownloadURL(imageRef);
+
+    const uploadResult = await uploadBytes(imageRef, blob);
+
+    const imageUrl = await getDownloadURL(uploadResult.ref);
 
     const eventData: Omit<Event, "id"> = {
       title: data.title,
@@ -42,7 +50,8 @@ export const createEvent = async (
       metadata: {},
     };
 
-    const docRef = await addDoc(collection(db, "events"), eventData);
+    const docRef = doc(db, "events", eventId);
+    await setDoc(docRef, eventData);
     return { success: true, id: docRef.id };
   } catch (error) {
     console.error("Error adding document: ", error);
