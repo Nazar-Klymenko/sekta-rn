@@ -45,16 +45,11 @@ export default function UsernameBridgeScreen() {
       },
       mode: "onTouched",
     }),
-    { handleSubmit, setValue, setError, watch } = methods;
+    { handleSubmit, setError, watch } = methods;
 
   const username = watch("username");
-  const {
-    refetch: checkAvailability,
-    data: isAvailable,
-    isLoading,
-    isError,
-    error,
-  } = useUsernameAvailability(username);
+  const { refetch: checkAvailability, isLoading } =
+    useUsernameAvailability(username);
 
   useEffect(() => {
     return () => {
@@ -86,7 +81,7 @@ export default function UsernameBridgeScreen() {
       <Form methods={methods}>
         <XStack justifyContent="center" alignItems="center">
           <H1 fontWeight="bold" textAlign="center">
-            Welcome!{"  "}
+            Welcome!
           </H1>
           <HelloWave />
         </XStack>

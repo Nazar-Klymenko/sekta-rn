@@ -1,50 +1,93 @@
-# Welcome to your Expo app 👋
+# Sekta Selekta
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform event app built with Expo and React Native.
 
 ## Get started
 
 1. Install dependencies
 
    ```bash
-   npm install
+   yarn install
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+    npx expo start -c
    ```
 
-In the output, you'll find options to open the app in a
+3. Start the firebase emulator (in new terminal window)
+   
+   *needs firebase CLI, install with:*
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+    npm install -g firebase-tools
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   **firebase services will not work on dev without emulators running**
 
-## Get a fresh project
+   ```bash
+    yarn emulators
+   ```
 
-When you're ready, run:
+   the emulator mock data will save locally on exit and be imported automatically the next time.
 
-```bash
-npm run reset-project
-```
+5. if working on functions, build and watch on change (in new terminal window)
+   ```bash
+    cd functions
+    npm run build:watch
+   ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚢 Deployment
 
-## Learn more
+### Web Deployment
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Deploy to Firebase Hosting:
+   ```bash
+   npm run deploy-hosting
+   ```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Functions Deployment
 
-## Join the community
+1. Build the functions:
 
-Join our community of developers creating universal apps.
+   ```bash
+   cd functions
+   npm run predeploy
+   ```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+2. Deploy to Firebase Functions:
+   ```bash
+   npm run deploy
+   ```
+
+### Mobile Deployment
+
+Use EAS Build to create production builds.
+
+## 🛠 Technology Stack
+
+- **Frontend**
+
+  - Expo/React Native
+  - Tamagui UI Framework
+  - Firebase
+  - React Query for data fetching
+  - React Table for building tables
+  - React Hook Form for form management with yup
+  - Expo Router for navigation
+
+- **Backend**
+  - Firebase
+    - Authentication
+    - Firestore
+    - Cloud Functions
+    - Storage
+    - Hosting
+
+## 📱 Supported Platforms
+
+- iOS
+- Android
+- Web (work in progress)
+

@@ -10,7 +10,7 @@ interface DeleteEventParams {
 }
 
 export const deleteEvent = async ({ eventId, imageId }: DeleteEventParams) => {
-  const imageRef = ref(storage, `events/${imageId}`);
+  const imageRef = ref(storage, `events/${eventId}/${imageId}`);
 
   try {
     await deleteObject(imageRef);

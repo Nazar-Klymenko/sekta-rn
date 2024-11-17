@@ -1,10 +1,6 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
-if (!admin.apps.length) {
-  admin.initializeApp();
-}
-
 export const updateUsername = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(

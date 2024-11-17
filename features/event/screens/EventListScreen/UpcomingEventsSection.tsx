@@ -61,7 +61,7 @@ export const UpcomingEventsSection: React.FC<UpcomingEventsSectionProps> = ({
         paddingHorizontal={16}
       />
       <ScrollView
-        horizontal
+        horizontal={!fullWidthCard}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingVertical: padding,

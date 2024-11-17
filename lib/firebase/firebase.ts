@@ -3,14 +3,21 @@ import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { FirebaseApp, getApps, initializeApp } from "firebase/app";
 import {
   Auth,
+  connectAuthEmulator,
   getAuth,
   getReactNativePersistence,
   initializeAuth,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import {
+  connectFirestoreEmulator,
+  initializeFirestore,
+} from "firebase/firestore";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 import { Platform } from "react-native";
+
+import Constants from "expo-constants";
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
@@ -21,7 +28,6 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_APP_ID,
   measurementId: process.env.EXPO_PUBLIC_MEASUREMENT_ID,
 };
-
 let app: FirebaseApp;
 let auth: Auth;
 
@@ -39,8 +45,31 @@ if (Platform.OS === "web") {
   });
 }
 
-const db = getFirestore(app);
+const db = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+});
 const storage = getStorage(app);
+const functions = getFunctions(app);
+
+const getHost = () => {
+  if (Platform.OS === "web") return "localhost";
+  const hostUri = Constants.expoConfig?.hostUri;
+  if (hostUri) {
+    const hostIP = hostUri.split(":")[0];
+    if (hostIP) return hostIP;
+  }
+
+  return "localhost"; // fallback
+};
+const HOST = getHost();
+
+if (__DEV__) {
+  console.debug("Connecting to firebase emulators.");
+  connectAuthEmulator(auth, `http://${HOST}:9099`);
+  connectFirestoreEmulator(db, HOST, 8080);
+  connectStorageEmulator(storage, HOST, 9199);
+  connectFunctionsEmulator(functions, HOST, 5001);
+}
 
 export default app;
-export { auth, db, storage };
+export { db, auth, storage, functions };

@@ -13,7 +13,8 @@
     "generate-themes": "tamagui generate-themes ./lib/theme/theme-builder.ts ./lib/theme/theme-output.ts",
     "predeploy": "expo export -p web",
     "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
-    "generate-router-types": "npx expo-router typegen"
+    "generate-router-types": "npx expo-router typegen",
+    "emulators": "firebase emulators:start --import=firebase-data --export-on-exit=firebase-data"
   },
   "jest": {
     "preset": "jest-expo"

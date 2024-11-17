@@ -1,0 +1,11 @@
+rules_version = '2';
+
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /events/{eventId}/{imageName} {
+      allow read: if true;
+      allow write, delete: if firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+    }
+  }
+}       

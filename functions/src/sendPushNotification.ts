@@ -1,11 +1,8 @@
 // functions/src/sendPushNotification.ts
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import { Expo, ExpoPushMessage } from "expo-server-sdk";
+import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 
-if (!admin.apps.length) {
-  admin.initializeApp();
-}
 const expo = new Expo();
 
 interface NotificationData {
@@ -23,7 +20,7 @@ export const sendPushNotification = functions.https.onCall(
     if (!context.auth) {
       throw new functions.https.HttpsError(
         "unauthenticated",
-        "User must be authenticated to send notifications.",
+        "User must be authenticated to send notifications."
       );
     }
 
@@ -72,7 +69,7 @@ export const sendPushNotification = functions.https.onCall(
           console.error("Error sending chunk:", error);
           throw new functions.https.HttpsError(
             "internal",
-            "Error sending notification chunk",
+            "Error sending notification chunk"
           );
         }
       }
@@ -82,8 +79,8 @@ export const sendPushNotification = functions.https.onCall(
       console.error("Error sending notification:", error);
       throw new functions.https.HttpsError(
         "internal",
-        "Error sending notification",
+        "Error sending notification"
       );
     }
-  },
+  }
 );

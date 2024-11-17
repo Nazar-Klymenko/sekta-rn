@@ -2,11 +2,7 @@
   "hosting": {
     "site": "sekta-selekta-rn",
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -30,5 +26,42 @@
         "npm --prefix \"$RESOURCE_DIR\" run build"
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "auth": {
+      "port": 9099,
+      "host": "0.0.0.0",
+      "allowExternalAccess": true
+    },
+    "functions": {
+      "port": 5001,
+      "allowExternalAccess": true,
+      "host": "0.0.0.0"
+    },
+    "firestore": {
+      "rules": "firestore.rules",
+      "port": 8080,
+      "host": "0.0.0.0",
+      "allowExternalAccess": true
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "storage": {
+      "port": 9199,
+      "allowExternalAccess": true,
+      "host": "0.0.0.0",
+      "rules": "storage.rules"
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
 }
