@@ -1,16 +1,11 @@
 rules_version = '2';
 
+
 service firebase.storage {
   match /b/{bucket}/o {
-    function isAdmin() {
-      let userId = request.auth.uid;
-      let userDoc = get(/databases/$(database)/documents/users/$(userId));
-      return userDoc != null && userDoc.data.isAdmin == true;
-    }
-
     match /events/{eventId}/{imageName} {
       allow read: if true;
-      allow write: if true;
+      allow write, delete: if firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
     }
   }
-}
+}       

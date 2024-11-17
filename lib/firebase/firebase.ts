@@ -66,7 +66,7 @@ const HOST = getHost();
 if (__DEV__) {
   console.debug("Connecting to firebase emulators.");
   connectAuthEmulator(auth, `http://${HOST}:9099`);
-  connectFirestoreEmulator(db, HOST, 8080); // Keep your custom port
+  connectFirestoreEmulator(db, HOST, 8080);
   connectStorageEmulator(storage, HOST, 9199);
   connectFunctionsEmulator(functions, HOST, 5001);
 }

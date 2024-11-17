@@ -50,6 +50,7 @@
     "storage": {
       "port": 9199,
       "allowExternalAccess": true,
+      "host": "0.0.0.0",
       "rules": "storage.rules"
     },
     "ui": {
