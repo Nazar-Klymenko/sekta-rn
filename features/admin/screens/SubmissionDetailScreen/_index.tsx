@@ -49,18 +49,10 @@ export function SubmissionDetailScreen() {
     mutate(id.toString(), {
       onSuccess: () => {
         setShowConfirmSheet(false);
-        toast.show("Success", {
-          message: "Deleted submission succesfully",
-          variant: "success",
-        });
         router.back();
       },
       onError: () => {
         setShowConfirmSheet(false);
-        toast.show("Error", {
-          message: "Failed to delete submission. Please try again.",
-          variant: "error",
-        });
       },
     });
   };
@@ -72,7 +64,9 @@ export function SubmissionDetailScreen() {
           headerRight: () => (
             <TouchableOpacity onPress={() => setShowConfirmSheet(true)}>
               <Paragraph
-                style={{ color: theme.accentColor.get(), marginRight: 10 }}
+                theme={"accent"}
+                color="$background"
+                style={{ marginRight: 10 }}
               >
                 Delete
               </Paragraph>

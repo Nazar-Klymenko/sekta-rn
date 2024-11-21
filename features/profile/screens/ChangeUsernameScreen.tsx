@@ -34,7 +34,6 @@ export default function ChangeUsernameScreen() {
   const { user } = useAuth();
   const { data: userData, isLoading, isError } = useUserData(user?.uid || "");
   const changeUsernameMutation = useChangeUsername();
-  const toast = useToastController();
 
   const methods = useForm({
     resolver: yupResolver(profileUpdateSchema),
@@ -69,34 +68,12 @@ export default function ChangeUsernameScreen() {
     try {
       const result = await checkUsernameAvailability();
       if (result.data) {
-        changeUsernameMutation.mutate(data.username, {
-          onSuccess: () => {
-            toast.show("Profile updated successfully", {
-              message: "Your profile information has been updated.",
-              variant: "success",
-            });
-          },
-          onError: (error) => {
-            toast.show("Profile update failed", {
-              message:
-                error instanceof Error ? error.message : "An error occurred",
-              variant: "error",
-            });
-          },
-        });
+        changeUsernameMutation.mutate(data.username);
       } else {
         setError("username", { message: "Username is taken" });
-        toast.show("Username is taken", {
-          message: "Please choose a different username.",
-          variant: "error",
-        });
       }
     } catch (err) {
       setError("username", { message: "Error checking username availability" });
-      toast.show("Error", {
-        message: "Error checking username availability.",
-        variant: "error",
-      });
     }
   };
 

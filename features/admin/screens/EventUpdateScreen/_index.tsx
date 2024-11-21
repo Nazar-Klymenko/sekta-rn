@@ -14,7 +14,6 @@ import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
 import { EventFormData } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
-import { useToastController } from "@tamagui/toast";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -33,9 +32,8 @@ import { eventSchema } from "../../utils/schemas";
 
 export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
-  const toast = useToastController();
-  const { mutateAsync, isPending } = useUpdateEvent(id);
+  const { data: event, isLoading } = useFetchEvent(id || "");
+  const { mutate, isPending } = useUpdateEvent(id);
   const router = useRouter();
   const methods = useForm<EventFormData>({
     resolver: yupResolver(eventSchema),
@@ -68,7 +66,7 @@ export default function EventUpdateScreen() {
       return;
     }
 
-    await mutateAsync(
+    mutate(
       {
         eventId: id,
         data,
@@ -77,17 +75,7 @@ export default function EventUpdateScreen() {
       },
       {
         onSuccess: () => {
-          toast.show("Success", {
-            variant: "success",
-            message: "Event updated successfully!",
-          });
           router.back();
-        },
-        onError: () => {
-          toast.show("Error", {
-            variant: "error",
-            message: "Failed to update event. Please try again.",
-          });
         },
       }
     );

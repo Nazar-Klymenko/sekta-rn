@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
 
+import { FirebaseError } from "firebase/app";
+
 import { Keyboard, Pressable } from "react-native";
 
 import { Hint } from "@/features/core/components/Hint";
@@ -32,7 +34,7 @@ type FormValues = yup.InferType<typeof deleteProfileSchema>;
 
 export default function DeleteProfileScreen() {
   const toast = useToastController();
-  const { mutateAsync } = useDeleteProfile();
+  const { mutate } = useDeleteProfile();
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   let isPending = false;
   const formMethods = useForm({
@@ -53,22 +55,23 @@ export default function DeleteProfileScreen() {
 
   const onSubmit = useCallback(
     async (data: FormValues) => {
-      mutateAsync(data.password, {
+      mutate(data.password, {
         onSuccess: () => {
-          toast.show("Account deleted", {
-            message: "Your account has been successfully deleted.",
-            variant: "success",
-          });
           handleSheetClose();
         },
-        onError: () => {
-          formMethods.setError("password", {
-            message: "Wrong password",
-          });
+        onError: (error) => {
+          if (
+            error instanceof FirebaseError &&
+            error.code === "auth/wrong-password"
+          ) {
+            formMethods.setError("password", {
+              message: "Wrong password",
+            });
+          }
         },
       });
     },
-    [mutateAsync, toast, handleSheetClose, formMethods]
+    [mutate, toast, handleSheetClose, formMethods]
   );
 
   return (
