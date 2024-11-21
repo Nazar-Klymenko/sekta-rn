@@ -1,4 +1,8 @@
-import { User, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  User,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
 import { auth } from "@/lib/firebase/firebase";
@@ -8,7 +12,7 @@ export const signUp = async (
   password: string,
   username: string,
   agreeTos: boolean,
-  agreeEmail?: boolean,
+  agreeEmail?: boolean
 ): Promise<User> => {
   const functions = getFunctions();
   const createUserFunction = httpsCallable(functions, "createUser");
@@ -22,8 +26,15 @@ export const signUp = async (
   });
 
   // Sign in the user
-  await signInWithEmailAndPassword(auth, email, password);
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
 
+  if (userCredential.user) {
+    await sendEmailVerification(userCredential.user);
+  }
   // Store the user token
   const token = await auth.currentUser!.getIdToken();
   return auth.currentUser!;
