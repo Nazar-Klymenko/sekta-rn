@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import { X } from "@tamagui/lucide-icons";
 
@@ -24,7 +24,6 @@ import { BaseInput, MaxLength } from "./shared/BaseInput";
 interface InputProps extends TamaguiInputProps {
   name: string;
   label: string;
-  id: string;
   placeholder: string;
 }
 
@@ -32,10 +31,10 @@ export function MultiTagInput({
   name,
   label,
   placeholder,
-  id,
   maxLength,
   ...props
 }: InputProps) {
+  const id = useId();
   const { control } = useFormContext();
   const {
     field: { value, onChange, onBlur, ref },
@@ -86,7 +85,7 @@ export function MultiTagInput({
             }
           >
             <BaseInput
-              id={id}
+              id={`${id}-${name}`}
               placeholder={placeholder}
               value={inputValue}
               onChangeText={setInputValue}

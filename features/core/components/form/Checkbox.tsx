@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 import {
   CheckboxProps,
@@ -9,7 +9,6 @@ import {
   YStack,
 } from "tamagui";
 
-import { Link } from "expo-router";
 import { useController, useFormContext } from "react-hook-form";
 
 interface CustomCheckboxProps
@@ -17,13 +16,11 @@ interface CustomCheckboxProps
   children: React.ReactNode;
   name: string;
   label?: string;
-  id: string;
 }
 
 export function Checkbox({
   name,
   label,
-  id,
   children,
   ...props
 }: CustomCheckboxProps) {
@@ -35,12 +32,13 @@ export function Checkbox({
     name,
     control,
   });
+  const id = useId();
 
   return (
     <YStack gap="$2" marginBottom="$4">
       <XStack alignItems="flex-start" gap="$2">
         <TamaguiCheckbox
-          id={id}
+          id={`${id}-${name}`}
           checked={field.value}
           onCheckedChange={(checked) => {
             field.onChange(checked);
@@ -52,7 +50,7 @@ export function Checkbox({
             <Paragraph>✓</Paragraph>
           </TamaguiCheckbox.Indicator>
         </TamaguiCheckbox>
-        <Label fontSize={12} htmlFor={id} lineHeight={"$1"}>
+        <Label fontSize={12} htmlFor={`${id}-${name}`} lineHeight={"$1"}>
           {children}
         </Label>
       </XStack>

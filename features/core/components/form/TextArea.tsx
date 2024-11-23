@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import {
   Label,
@@ -11,12 +11,11 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput, BaseTextArea, MaxLength } from "./shared/BaseInput";
+import { BaseTextArea, MaxLength } from "./shared/BaseInput";
 
 interface TextAreaProps extends TamaguiTextAreaProps {
   name: string;
   label: string;
-  id: string;
   placeholder: string;
   icon?: React.ElementType;
   leftAdornment?: string;
@@ -26,7 +25,6 @@ export function TextArea({
   name,
   label,
   placeholder,
-  id,
   icon: Icon,
   leftAdornment,
   maxLength,
@@ -45,10 +43,11 @@ export function TextArea({
   const isPaddedLeft = !!Icon || !!leftAdornment;
 
   const displayValue = value?.toString() || "";
+  const id = useId();
 
   return (
     <YStack flex={1}>
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={`${id}-${name}`}>{label}</Label>
       <YStack alignItems="center">
         <Stack
           flexDirection="row"
@@ -86,7 +85,7 @@ export function TextArea({
           )}
 
           <BaseTextArea
-            id={id}
+            id={`${id}-${name}`}
             placeholder={placeholder}
             value={displayValue}
             onChangeText={onChange}
