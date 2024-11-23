@@ -57,11 +57,6 @@ export default function ProfileScreen() {
               icon={User2}
             />
             <MenuItem
-              title="Change email"
-              onPress={() => router.navigate("/profile/change-email")}
-              icon={Mail}
-            />
-            <MenuItem
               title="Change Password"
               onPress={() => router.navigate("/profile/change-password")}
               icon={Lock}
