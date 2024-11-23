@@ -2,20 +2,10 @@ import React, { useCallback } from "react";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
-import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
-import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
-import {
-  H1,
-  Paragraph,
-  ScrollView,
-  Separator,
-  Spinner,
-  YStack,
-  useTheme,
-} from "tamagui";
+import { H1, Paragraph, Separator, YStack } from "tamagui";
 
 import { usePathname, useRouter } from "expo-router";
 
