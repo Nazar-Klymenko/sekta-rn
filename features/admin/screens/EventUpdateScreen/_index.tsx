@@ -99,14 +99,8 @@ export default function EventUpdateScreen() {
     <PageContainer>
       <Form methods={methods}>
         <CustomImagePicker onPress={pickImage} image={image} />
-        <Input
-          id="event-title"
-          name="title"
-          label="Event title"
-          placeholder="Title"
-        />
+        <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
-          id="event-caption"
           name="caption"
           label="Event caption"
           placeholder="Caption"
@@ -119,14 +113,12 @@ export default function EventUpdateScreen() {
         <DateInput
           name="date"
           label="Event date"
-          id="event-date"
           placeholder="Select date"
           icon={Calendar}
           mode="datetime"
           minimumDate={new Date(1900, 0, 1)}
         />
         <Input
-          id="event-location"
           name="location"
           label="Event location"
           placeholder="Nowa 3/3, Kraków"
@@ -135,17 +127,14 @@ export default function EventUpdateScreen() {
         <MultiTagInput
           name={"genres"}
           label={"Select genres"}
-          id={"event-genres"}
           placeholder={"type a genre and press enter"}
         />
         <MultiTagInput
           name={"lineup"}
           label={"Select Artists"}
-          id={"event-lineup"}
           placeholder={"type an artist name and press enter"}
         />
         <Input
-          id="event-price"
           name="price"
           label="Entrance price"
           placeholder="30.00"

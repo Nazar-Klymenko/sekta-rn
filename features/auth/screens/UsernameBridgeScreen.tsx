@@ -89,7 +89,6 @@ export default function UsernameBridgeScreen() {
           Choose a username. Don't worry, you can always change it later.
         </Paragraph>
         <Input
-          id="username"
           name="username"
           label="Username"
           placeholder="Username"

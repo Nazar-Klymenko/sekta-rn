@@ -113,7 +113,6 @@ export default function DeleteProfileScreen() {
 
               <Form methods={formMethods}>
                 <PasswordInput
-                  id="password-delete-profile"
                   name="password"
                   label="Confirm Password"
                   placeholder="Enter your password"

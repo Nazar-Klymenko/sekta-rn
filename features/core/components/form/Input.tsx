@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import {
   Label,
@@ -17,7 +17,6 @@ import { BaseInput, MaxLength } from "./shared/BaseInput";
 interface InputProps extends TamaguiInputProps {
   name: string;
   label: string;
-  id: string;
   placeholder: string;
   icon?: React.ElementType;
   leftAdornment?: string;
@@ -27,13 +26,13 @@ export function Input({
   name,
   label,
   placeholder,
-  id,
   icon: Icon,
   leftAdornment,
   maxLength,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
+  const id = useId();
 
   const { control } = useFormContext();
   const {
@@ -51,7 +50,7 @@ export function Input({
   return (
     <YStack>
       <XStack justifyContent="space-between">
-        <Label htmlFor={id}>{label}</Label>
+        <Label htmlFor={`${id}-${name}`}>{label}</Label>
         {maxLength && (
           <MaxLength length={value?.length || 0} maxLength={maxLength} />
         )}
@@ -87,7 +86,7 @@ export function Input({
           )}
 
           <BaseInput
-            id={id}
+            id={`${id}-${name}`}
             placeholder={placeholder}
             value={displayValue}
             onChangeText={onChange}
