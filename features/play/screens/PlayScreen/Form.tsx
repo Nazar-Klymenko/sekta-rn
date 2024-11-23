@@ -67,7 +67,7 @@ const portfolioLinks = [
   },
 ];
 
-export function PlayForm() {
+const PlayForm = React.memo(() => {
   const toast = useToastController();
   const { mutate, isPending } = useSubmitPlay();
   const methods = useForm<FormValues>({
@@ -106,7 +106,6 @@ export function PlayForm() {
     <Form methods={methods} maxWidth={740} flex={1}>
       <H2>Contact Information</H2>
       <Input
-        id="play-email"
         name="email"
         label="Contact Email"
         placeholder="email@gmail.com"
@@ -115,7 +114,6 @@ export function PlayForm() {
         icon={Mail}
       />
       <Input
-        id="play-phone"
         name="phone"
         label="Phone Number (Optional)"
         placeholder="+48 577 925 024"
@@ -129,7 +127,6 @@ export function PlayForm() {
       {portfolioLinks.map(({ name, icon, placeholder, label }, idx) => (
         <Input
           key={name + idx}
-          id={"play-" + name}
           label={label}
           name={name}
           icon={icon}
@@ -137,7 +134,6 @@ export function PlayForm() {
         />
       ))}
       <Input
-        id="play-additional-info"
         name="additionalInfo"
         label="Additional Info"
         multiline
@@ -157,4 +153,8 @@ export function PlayForm() {
       </ButtonCTA>
     </Form>
   );
-}
+});
+
+PlayForm.displayName = "PlayForm";
+
+export { PlayForm };
