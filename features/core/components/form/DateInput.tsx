@@ -2,7 +2,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import { Platform, Pressable } from "react-native";
 
@@ -23,7 +23,6 @@ import { BaseInput } from "./shared/BaseInput";
 interface DateInputProps extends TamaguiInputProps {
   name: string;
   label: string;
-  id: string;
   placeholder: string;
   icon?: React.ElementType;
   mode?: "date" | "time" | "datetime";
@@ -35,7 +34,6 @@ export function DateInput({
   name,
   label,
   placeholder,
-  id,
   icon: Icon,
   mode = "date",
   minimumDate,
@@ -55,6 +53,7 @@ export function DateInput({
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const isPaddedLeft = !!Icon;
+  const id = useId();
 
   const formatDateTime = (date: Date) => {
     const dateStr = date.toLocaleDateString("pl");
@@ -104,7 +103,7 @@ export function DateInput({
   return (
     <Theme name="Input">
       <YStack flex={1}>
-        <Label htmlFor={id}>{label}</Label>
+        <Label htmlFor={`${id}-${name}`}>{label}</Label>
         <Pressable onPress={() => setShowDatePicker(true)}>
           <YStack alignItems="center">
             <Stack
@@ -129,7 +128,7 @@ export function DateInput({
               )}
 
               <BaseInput
-                id={id}
+                id={`${id}-${name}`}
                 placeholder={placeholder}
                 value={value ? formatDateTime(new Date(value)) : ""}
                 paddingHorizontal={isPaddedLeft ? "$8" : "$3.5"}
@@ -162,8 +161,8 @@ export function DateInput({
             testID={`${id}-picker`}
             value={value ? new Date(value) : new Date()}
             mode={showTimePicker ? "time" : "date"}
-            is24Hour={true}
             display={Platform.OS === "ios" ? "inline" : "default"}
+            is24Hour={true}
             onChange={handleDateChange}
             minimumDate={minimumDate}
           />

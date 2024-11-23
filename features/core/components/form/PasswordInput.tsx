@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import { TextInputProps } from "react-native";
 
@@ -22,11 +22,10 @@ interface InputProps extends TextInputProps {
   name: string;
   label: string;
   placeholder: string;
-  id: string;
 }
 
 export function PasswordInput(
-  { name, label, placeholder, id }: InputProps,
+  { name, label, placeholder }: InputProps,
   props: TextInputProps
 ) {
   const { control } = useFormContext();
@@ -37,6 +36,7 @@ export function PasswordInput(
     name,
     control,
   });
+  const id = useId();
 
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -48,10 +48,10 @@ export function PasswordInput(
 
   return (
     <YStack>
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={`${id}-${name}`}>{label}</Label>
       <XStack alignItems="center">
         <BaseInput
-          id={id}
+          id={`${id}-${name}`}
           placeholder={placeholder}
           value={field.value}
           onChangeText={field.onChange}

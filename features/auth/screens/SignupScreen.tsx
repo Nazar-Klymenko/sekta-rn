@@ -82,12 +82,11 @@ export default function SignupScreen() {
 
   return (
     <PageContainer>
-      <Form methods={methods} id="test">
+      <Form methods={methods}>
         <H1 fontWeight="bold" textAlign="center">
           Sign Up
         </H1>
         <Input
-          id="signup-email"
           name="email"
           label="Email"
           placeholder="Your email"
@@ -96,7 +95,6 @@ export default function SignupScreen() {
         />
         <YStack gap="$0">
           <PasswordInput
-            id="signup-password"
             name="password"
             label="Password"
             placeholder="New password"
@@ -114,13 +112,13 @@ export default function SignupScreen() {
           Sign up
         </ButtonCTA>
         <YStack>
-          <Checkbox name="agreeEmail" id="agree-email">
+          <Checkbox name="agreeEmail">
             <Paragraph>
               I want to subscribe to newsletter to receive email notifications
               about new events
             </Paragraph>
           </Checkbox>
-          <Checkbox name="agreeTos" id="signup-agree-tos">
+          <Checkbox name="agreeTos">
             <Paragraph>
               I agree to Sekta Selekta's{" "}
               <Link href="/tos" push>

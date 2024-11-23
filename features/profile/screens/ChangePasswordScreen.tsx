@@ -71,14 +71,12 @@ export default function ChangePasswordScreen() {
     <PageContainer>
       <Form methods={methods}>
         <PasswordInput
-          id="current-password"
           name="currentPassword"
           label="Current Password"
           placeholder="Enter your current password"
           secureTextEntry
         />
         <PasswordInput
-          id="new-password"
           name="newPassword"
           label="New Password"
           placeholder="Enter your new password"
@@ -86,7 +84,6 @@ export default function ChangePasswordScreen() {
         />
         <PasswordRequirements password={watch("newPassword")} />
         <PasswordInput
-          id="confirm-password"
           name="confirmPassword"
           label="Confirm Password"
           placeholder="Confirm your new password"

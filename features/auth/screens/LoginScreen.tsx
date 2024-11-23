@@ -68,7 +68,6 @@ export default function LoginScreen() {
     <PageContainer>
       <Form methods={methods}>
         <Input
-          id="login-email"
           name="email"
           label="Email"
           placeholder="Your email"
@@ -76,7 +75,6 @@ export default function LoginScreen() {
           autoCapitalize="none"
         />
         <PasswordInput
-          id="login-password"
           name="password"
           label="Password"
           placeholder="Your password"
