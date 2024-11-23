@@ -96,7 +96,6 @@ export default function UserListScreen() {
             <Input
               placeholder="Search users"
               name="searchQuery"
-              id="search-users"
               label=""
               icon={Search}
             />

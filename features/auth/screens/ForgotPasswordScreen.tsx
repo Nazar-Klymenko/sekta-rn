@@ -65,7 +65,6 @@ export default function ForgotPasswordScreen() {
         </H1>
 
         <Input
-          id="forgot-password-email"
           name="email"
           label="Email"
           placeholder="Enter your email"

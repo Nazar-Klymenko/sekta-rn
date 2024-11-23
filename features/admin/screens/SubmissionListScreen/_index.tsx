@@ -116,7 +116,6 @@ export default function SubmissionListScreen() {
             <Input
               placeholder="Search submissions"
               name="searchQuery"
-              id="search-submissions"
               label=""
               icon={Search}
             />

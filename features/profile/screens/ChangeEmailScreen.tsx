@@ -76,7 +76,6 @@ export default function ChangeEmailScreen() {
         <SizableText color={"$color"}>{user?.email}</SizableText>
 
         <Input
-          id="new-email"
           name="newEmail"
           label="New Email"
           placeholder="Enter your new email"
@@ -84,7 +83,6 @@ export default function ChangeEmailScreen() {
           autoCapitalize="none"
         />
         <PasswordInput
-          id="current-password"
           name="currentPassword"
           label="Current Password"
           placeholder="Enter your current password"

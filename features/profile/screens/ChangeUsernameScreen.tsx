@@ -107,7 +107,6 @@ export default function ChangeUsernameScreen() {
     <PageContainer>
       <Form methods={methods}>
         <Input
-          id="username"
           name="username"
           label="Username"
           placeholder="Username"
