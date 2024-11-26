@@ -34,7 +34,10 @@ export const updateEvent = async ({
       imageId = imageRef.name;
     }
 
-    const eventData: Partial<Event> = {
+    const eventData: Omit<
+      Event,
+      "id" | "createdAt" | "metadata" | "deletedAt"
+    > = {
       title: data.title,
       title_lowercase: data.title?.toLowerCase() ?? "",
       caption: data.caption,

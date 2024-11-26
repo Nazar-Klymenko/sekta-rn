@@ -29,7 +29,7 @@ import {
   DEFAULT_LOCATION,
   DEFAULT_PRICE,
 } from "../../utils/constants";
-import { eventSchema } from "../../utils/schemas";
+import { FormValuesUpdate, eventSchema } from "../../utils/schemas";
 
 export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -37,7 +37,7 @@ export default function EventUpdateScreen() {
   const toast = useToastController();
   const { mutateAsync, isPending } = useUpdateEvent(id);
   const router = useRouter();
-  const methods = useForm<EventFormData>({
+  const methods = useForm<FormValuesUpdate>({
     resolver: yupResolver(eventSchema),
     defaultValues: {
       title: event?.title || "",

@@ -43,7 +43,6 @@ export const createEvent = async (
         path: imageRef.fullPath,
         altText: data.title,
       },
-      attendeeCount: 0,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
       deletedAt: null,

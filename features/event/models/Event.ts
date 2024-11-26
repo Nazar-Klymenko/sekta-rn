@@ -1,35 +1,38 @@
 import { Timestamp } from "firebase/firestore";
 
-// Base interface for common fields
-export interface BaseEvent {
-  title: string;
-  caption: string;
-  date: Date | Timestamp;
-  location: string;
-  price: number;
-  genres: string[];
-  lineup: string[];
-}
-
-// Interface for form data
-export interface EventFormData extends BaseEvent {
-  date: Date; // Override to be specifically Date for forms
-}
 export interface EventImage {
   id: string;
   publicUrl: string;
   path: string;
   altText: string;
 }
-// Interface for stored data
-export interface Event extends Omit<BaseEvent, "date"> {
+
+export interface Event {
   id: string;
+  title: string;
   title_lowercase: string;
-  date: Timestamp; // Override to be specifically Timestamp for stored data
+  caption: string;
+  date: Timestamp;
+  location: string;
+  price: number;
+  genres: string[];
+  lineup: string[];
   image: EventImage;
-  attendeeCount: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   deletedAt: Timestamp | null;
   metadata: Record<string, any>;
 }
+export type EventFormData = Omit<
+  Event,
+  | "id"
+  | "date"
+  | "createdAt"
+  | "updatedAt"
+  | "deletedAt"
+  | "title_lowercase"
+  | "metadata"
+  | "image"
+> & {
+  date: Date | null;
+};
