@@ -3,23 +3,19 @@ import React, { useId, useState } from "react";
 import { X } from "@tamagui/lucide-icons";
 
 import {
-  Button,
-  Circle,
   Label,
-  Paragraph,
   Separator,
-  Stack,
   InputProps as TamaguiInputProps,
-  Text,
   Theme,
   XStack,
   YStack,
-  useTheme,
 } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";
 
 import { BaseInput, MaxLength } from "./ui";
+import { FormError } from "./ui/FormError";
+import { Pill } from "./ui/Pill";
 
 interface InputProps extends TamaguiInputProps {
   name: string;
@@ -94,8 +90,8 @@ export function MultiTagInput({
                 setIsFocused(false);
               }}
               onFocus={() => setIsFocused(true)}
-              onSubmitEditing={handleAddTag} // Use this instead of onKeyPress
-              returnKeyType="done" // Add this line
+              onSubmitEditing={handleAddTag}
+              returnKeyType="done"
               blurOnSubmit={false}
               paddingVertical={10}
               verticalAlign="top"
@@ -124,13 +120,7 @@ export function MultiTagInput({
         </YStack>
 
         <XStack marginTop="$2">
-          <Paragraph
-            flex={1}
-            color={error ? "$red10Light" : "$colorTransparent"}
-            fontSize="$2"
-          >
-            {error ? error?.message : ""}
-          </Paragraph>
+          <FormError error={error} />
           {maxLength && (
             <MaxLength length={value?.length || 0} maxLength={maxLength} />
           )}
@@ -139,37 +129,3 @@ export function MultiTagInput({
     </Theme>
   );
 }
-
-interface PillProps {
-  tag: string;
-  onPress?: () => void;
-  selected?: boolean;
-  icon?: React.ReactNode;
-}
-
-export const Pill = ({ tag, onPress, selected, icon }: PillProps) => {
-  return (
-    <XStack
-      theme={"surface3"}
-      gap="$2"
-      borderRadius="$9"
-      paddingVertical="$1"
-      paddingHorizontal="$2"
-      backgroundColor={"$background"}
-      onPress={onPress}
-      cursor={selected ? "pointer" : "unset"}
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Paragraph
-        lineHeight="$1"
-        color="$accentColor"
-        fontWeight="400"
-        fontSize={"$5"}
-      >
-        {tag}
-      </Paragraph>
-      <Circle size={"$1"}>{icon}</Circle>
-    </XStack>
-  );
-};

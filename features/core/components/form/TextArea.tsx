@@ -42,7 +42,7 @@ export function TextArea({
   });
 
   const id = useId();
-
+  const displayValue = value?.toString() || "";
   return (
     <YStack flex={1}>
       <Label htmlFor={`${id}-${name}`}>{label}</Label>
@@ -60,7 +60,7 @@ export function TextArea({
           <BaseTextArea
             id={`${id}-${name}`}
             placeholder={placeholder}
-            value={value}
+            value={displayValue}
             onChangeText={onChange}
             hasError={Boolean(error)}
             isPaddedLeft={Boolean(icon || leftAdornment)}
