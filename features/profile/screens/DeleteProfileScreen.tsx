@@ -116,7 +116,6 @@ export default function DeleteProfileScreen() {
                   name="password"
                   label="Confirm Password"
                   placeholder="Enter your password"
-                  secureTextEntry
                 />
                 <Separator />
 

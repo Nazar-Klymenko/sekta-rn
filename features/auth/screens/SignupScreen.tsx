@@ -98,7 +98,6 @@ export default function SignupScreen() {
             name="password"
             label="Password"
             placeholder="New password"
-            secureTextEntry
           />
           <PasswordRequirements password={watch("password")} />
         </YStack>

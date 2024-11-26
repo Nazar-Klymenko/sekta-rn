@@ -78,7 +78,6 @@ export default function LoginScreen() {
           name="password"
           label="Password"
           placeholder="Your password"
-          secureTextEntry
         />
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/forgot-password?next=${next}`}>
