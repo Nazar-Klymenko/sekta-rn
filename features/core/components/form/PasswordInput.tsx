@@ -16,7 +16,7 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput } from "./shared/BaseInput";
+import { BaseInput, MaxLength } from "./ui";
 
 interface InputProps extends TextInputProps {
   name: string;
