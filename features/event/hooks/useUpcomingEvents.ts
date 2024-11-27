@@ -1,6 +1,6 @@
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { upcomingEvents } from "../repository/upcomingEvents";
 
@@ -8,9 +8,9 @@ const ITEMS_PER_PAGE = 5;
 
 export const useUpcomingEvents = () => {
   return useInfiniteQuery<
-    Event[],
+    DisplayEvent[],
     Error,
-    InfiniteData<Event[]>,
+    InfiniteData<DisplayEvent[]>,
     ["upcomingEvents"],
     number
   >({

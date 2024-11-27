@@ -1,7 +1,5 @@
 import React from "react";
 
-import { MoreVertical } from "@tamagui/lucide-icons";
-
 import { Paragraph, YStack } from "tamagui";
 
 interface EmptyEventListProps {

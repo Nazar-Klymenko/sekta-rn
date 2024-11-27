@@ -3,7 +3,7 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 
 import { Tag } from "@/features/core/components/Tag";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Clock, MapPin } from "@tamagui/lucide-icons";
@@ -21,7 +21,7 @@ import {
 import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
-  event: Event;
+  event: DisplayEvent;
   verticalView?: boolean;
 }
 

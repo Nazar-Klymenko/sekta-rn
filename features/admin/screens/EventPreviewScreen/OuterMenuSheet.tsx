@@ -1,19 +1,11 @@
 import React from "react";
 
 import { Sheet } from "@/features/core/components/panels/Sheet";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { Edit3, X } from "@tamagui/lucide-icons";
 
-import {
-  Button,
-  Paragraph,
-  Separator,
-  Stack as TStack,
-  Theme,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Button, Separator, Stack as TStack, Theme } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -26,7 +18,7 @@ export function OuterMenuSheet({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   setInnerShowConfirmSheet: (open: boolean) => void;
-  id: Event["id"];
+  id: DisplayEvent["id"];
 }) {
   const router = useRouter();
   return (
