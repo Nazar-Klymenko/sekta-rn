@@ -9,66 +9,75 @@ export const createUser = functions.https.onCall(async (data) => {
     throw new functions.https.HttpsError("invalid-argument", "Missing fields");
   }
 
+  const lowercaseUsername = username.toLowerCase();
   let userRecord: admin.auth.UserRecord | undefined;
+  const db = admin.firestore();
 
   try {
-    // Check if the username is already taken
-    const usersSnapshot = await admin
-      .firestore()
-      .collection("users")
-      .where("username", "==", username.toLowerCase())
-      .limit(1)
+    // Check if the username is already taken using the usernames collection
+    const usernameDoc = await db
+      .collection("usernames")
+      .doc(lowercaseUsername)
       .get();
 
-    if (!usersSnapshot.empty) {
+    if (usernameDoc.exists) {
       throw new functions.https.HttpsError(
         "already-exists",
         "Username is already taken"
       );
     }
 
-    // Step 1: Create Authentication user
     userRecord = await admin.auth().createUser({
       email: email,
       password: password,
     });
 
-    // Step 2: Attempt to create Firestore document
-    await admin.firestore().collection("users").doc(userRecord.uid).set({
+    const batch = db.batch();
+
+    const userRef = db.collection("users").doc(userRecord.uid);
+    batch.set(userRef, {
       email,
-      username,
+      username: lowercaseUsername,
       agreeTos,
       agreeEmail,
       createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
     });
 
+    // Create the username document
+    const usernameRef = db.collection("usernames").doc(lowercaseUsername);
+    batch.set(usernameRef, {
+      uid: userRecord.uid,
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+
+    await batch.commit();
+
     return { success: true, uid: userRecord.uid };
   } catch (error) {
     console.error("Error in user creation process:", error);
 
-    // If we've created an Auth user but Firestore failed, delete the Auth user
+    // If we've created an Auth user but the batch failed, delete everything
     if (userRecord) {
       try {
         await admin.auth().deleteUser(userRecord.uid);
       } catch (deleteError) {
-        const errorMessage =
-          deleteError instanceof Error ? deleteError.message : "Unknown error";
         console.error(
-          "Error deleting Authentication user after Firestore failure:",
-          errorMessage
+          "Error deleting Authentication user after failure:",
+          deleteError
         );
-
-        // Log the user ID for manual cleanup
         functions.logger.error("User requiring manual cleanup", {
           userId: userRecord.uid,
           email: email,
-          error: errorMessage,
+          error:
+            deleteError instanceof Error
+              ? deleteError.message
+              : "Unknown error",
           timestamp: new Date().toISOString(),
         });
       }
     }
-
     throw new functions.https.HttpsError("internal", "Error creating user");
   }
 });

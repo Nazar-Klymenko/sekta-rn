@@ -3,7 +3,7 @@ import {
   deleteUser,
   reauthenticateWithCredential,
 } from "firebase/auth";
-import { deleteDoc, doc } from "firebase/firestore";
+import { doc, getDoc, writeBatch } from "firebase/firestore";
 
 import { auth, db } from "@/lib/firebase/firebase";
 
@@ -13,7 +13,15 @@ export const deleteProfile = async (password: string): Promise<void> => {
     const credential = EmailAuthProvider.credential(user.email, password);
     await reauthenticateWithCredential(user, credential);
 
-    await deleteDoc(doc(db, "users", user.uid));
+    // Get the user's username before deletion
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const username = userDoc.data()?.username;
+    const batch = writeBatch(db);
+    batch.delete(doc(db, "users", user.uid));
+    if (username) {
+      batch.delete(doc(db, "usernames", username));
+    }
+    await batch.commit();
 
     await deleteUser(user);
   } else {

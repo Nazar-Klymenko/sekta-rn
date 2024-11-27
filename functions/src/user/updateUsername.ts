@@ -1,4 +1,5 @@
 import * as admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 
 export const updateUsername = functions.https.onCall(async (data, context) => {
@@ -11,6 +12,7 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
 
   const { username } = data;
   const uid = context.auth.uid;
+  const lowercaseUsername = username.toLowerCase();
 
   if (!username || typeof username !== "string") {
     throw new functions.https.HttpsError(
@@ -22,24 +24,46 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
   const db = admin.firestore();
 
   try {
-    // Check if the username is already taken
-    const usersSnapshot = await db
-      .collection("users")
-      .where("username", "==", username.toLowerCase())
-      .limit(1)
-      .get();
+    // Get the user's current username
+    const userDoc = await db.collection("users").doc(uid).get();
+    const currentUsername = userDoc.data()?.username;
 
-    if (!usersSnapshot.empty && usersSnapshot.docs[0].id !== uid) {
+    // Check if the new username is already taken
+    const newUsernameDoc = await db
+      .collection("usernames")
+      .doc(lowercaseUsername)
+      .get();
+    if (newUsernameDoc.exists && newUsernameDoc.data()?.uid !== uid) {
       throw new functions.https.HttpsError(
         "already-exists",
         "Username is already taken"
       );
     }
 
-    // Update the user's username
-    await db.doc(`users/${uid}`).update({
-      username: username.toLowerCase(),
+    // Update both collections in a batch
+    const batch = db.batch();
+
+    // Update user document
+    batch.update(db.collection("users").doc(uid), {
+      username: lowercaseUsername,
+      updatedAt: FieldValue.serverTimestamp(),
     });
+
+    // Delete old username document
+    if (currentUsername) {
+      batch.delete(db.collection("usernames").doc(currentUsername));
+    }
+
+    // Create new username document
+    batch.set(db.collection("usernames").doc(lowercaseUsername), {
+      uid,
+      updatedAt: FieldValue.serverTimestamp(),
+      createdAt: currentUsername
+        ? FieldValue.serverTimestamp()
+        : userDoc.data()?.createdAt,
+    });
+
+    await batch.commit();
 
     return { success: true, message: "Username updated successfully" };
   } catch (error) {
@@ -49,8 +73,7 @@ export const updateUsername = functions.https.onCall(async (data, context) => {
     }
     throw new functions.https.HttpsError(
       "internal",
-      "Failed to update username",
-      error
+      "Failed to update username"
     );
   }
 });
