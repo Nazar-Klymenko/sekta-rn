@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
+import { ImagePicker } from "@/features/core/components/form/ImagePicker";
 import { Input } from "@/features/core/components/form/Input";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { EventFormData } from "@/features/event/models/Event";
+import { EventForm } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
@@ -15,29 +16,30 @@ import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { CustomImagePicker } from "../../components/events/ImagePicker";
 import { useCreateEvent } from "../../hooks/useCreateEvent";
-import { useImagePicker } from "../../hooks/useImagePicker";
 import { eventSchema } from "../../utils/schemas";
 
 export default function EventCreateScreen() {
-  const methods = useForm<EventFormData>({
+  const methods = useForm<EventForm>({
     resolver: yupResolver(eventSchema),
     defaultValues: eventSchema.getDefault(),
   });
-  const { handleSubmit, setValue, reset } = methods;
+  const { handleSubmit } = methods;
 
-  const { image, pickImage } = useImagePicker();
   const { mutate, isPending } = useCreateEvent();
 
-  const onSubmit = (data: EventFormData) => {
-    mutate({ data: data, image: image });
+  const onSubmit = (data: EventForm) => {
+    mutate({ data: data });
   };
 
   return (
     <PageContainer>
       <Form methods={methods}>
-        <CustomImagePicker onPress={pickImage} image={image} />
+        <ImagePicker
+          name="image"
+          label="Event Image"
+          placeholder="Tap to select event image"
+        />
         <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
           name="caption"

@@ -9,59 +9,92 @@ service cloud.firestore {
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
-    
+
     function isAdmin() {
       let userId = request.auth.uid;
       let userDoc = get(/databases/$(database)/documents/users/$(userId));
       return isAuthenticated() && userDoc != null && userDoc.data.isAdmin == true;
     }
-    
-    function isValidData(data) {
-      return data.keys().hasAll(['createdAt', 'updatedAt']) 
-             && data.createdAt is timestamp 
-             && data.updatedAt is timestamp;
+
+    function isValidString(field, maxLength) {
+      return field is string && field.size() <= maxLength;
     }
 
-    function isValidString(field) {
-      return field is string && field.size() <= 1000;
+    function isValidCreatedAtTimestamp(field) {
+      return field is timestamp && field == request.time; // Must match the current request time
+    }
+
+    function isValidUpdatedAtTimestamp(field) {
+      return field is timestamp && field <= request.time; // Must not be in the future
+    }
+
+    function isValidImageData(image) {
+      return image is map
+        && image.keys().hasOnly(['id', 'publicUrl', 'path', 'altText'])
+        && isValidString(image.id, 1000)
+        && isValidString(image.publicUrl, 1000)
+        && isValidString(image.path, 1000)
+        && isValidString(image.altText, 1000);
+    }
+
+ function isValidEventData(data) {
+      return data.keys().hasOnly([
+        'title', 'caption', 'price', 'date', 
+        'location', 'genres', 'lineup', 'image', 'title_lowercase', 'createdAt', 'updatedAt'
+      ])
+      && isValidString(data.title, 255)
+      && isValidString(data.caption, 1000)
+      && data.price is number
+      && data.date is timestamp
+      && isValidString(data.location, 500)
+      && data.genres is list
+      && data.lineup is list
+      && isValidImageData(data.image)
+
     }
 
     match /users/{userId} {
       allow read: if true;
-      
+
       allow create: if isAuthenticated() 
         && request.auth.uid == userId
-        && request.resource.data.keys().hasAll(['email', 'username', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['email', 'username', 'createdAt', 'updatedAt'])
         && request.resource.data.email == request.auth.token.email
-        && isValidString(request.resource.data.username)
-        && !request.resource.data.keys().hasAny(['isAdmin']); // Prevent setting admin status
+        && isValidCreatedAtTimestamp(request.resource.data.createdAt) 
+        && isValidUpdatedAtTimestamp(request.resource.data.updatedAt)  
+        && isValidString(request.resource.data.username, 20)
+        && !request.resource.data.keys().hasAny(['isAdmin']); 
 
       allow update: if isOwner(userId)
-        && isValidData(request.resource.data)
+        && request.resource.data.keys().hasOnly(['email', 'username', 'createdAt', 'updatedAt', 'isAdmin'])
         && request.resource.data.email == request.auth.token.email
-        && isValidString(request.resource.data.username)
+        && isValidString(request.resource.data.username, 20)
+        && isValidUpdatedAtTimestamp(request.resource.data.updatedAt)
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin']) 
             || isAdmin()); // Only admins can change admin status
 
       allow delete: if isAdmin();
     }
-     
+
     match /events/{eventId} {
       allow read: if true;
-      
-      allow create, update: if isAdmin()
-        && isValidData(request.resource.data)
-        && isValidString(request.resource.data.title)
-        && isValidString(request.resource.data.caption)
-        && request.resource.data.price is number
-        && request.resource.data.date is timestamp;
+
+      allow create: if isAdmin()
+        && isValidEventData(request.resource.data)    
+        && isValidCreatedAtTimestamp(request.resource.data.createdAt) // Validate 'createdAt'
+        && isValidUpdatedAtTimestamp(request.resource.data.updatedAt); 
+      allow update: if isAdmin()
+        && isValidEventData(request.resource.data)
+        && isValidUpdatedAtTimestamp(request.resource.data.updatedAt)
+        && request.resource.data.createdAt == resource.data.createdAt;
 
       allow delete: if isAdmin();
     }
 
+    // Play document rules
     match /play/{playId} {
       allow read: if isAdmin(); 
-      allow write: if true;
+      allow write: if true; 
     }
   }
 }
