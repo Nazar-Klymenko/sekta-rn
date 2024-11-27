@@ -1,79 +1,55 @@
-import React, { useEffect } from "react";
-
-import { Alert } from "react-native";
+import React from "react";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
+import { ImagePicker } from "@/features/core/components/form/ImagePicker";
 import { Input } from "@/features/core/components/form/Input";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
-import { EventFormData } from "@/features/event/models/Event";
+import { EventForm } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
+
+import { Text } from "tamagui";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { CustomImagePicker } from "../../components/events/ImagePicker";
-import { useImagePicker } from "../../hooks/useImagePicker";
 import { useUpdateEvent } from "../../hooks/useUpdateEvent";
-import {
-  DEFAULT_DATE,
-  DEFAULT_LOCATION,
-  DEFAULT_PRICE,
-} from "../../utils/constants";
-import { FormValuesUpdate, eventSchema } from "../../utils/schemas";
+import { eventSchema } from "../../utils/schemas";
 
 export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading, isError, error } = useFetchEvent(id || "");
   const toast = useToastController();
-  const { mutateAsync, isPending } = useUpdateEvent(id);
+  const { mutate, isPending } = useUpdateEvent(id);
   const router = useRouter();
-  const methods = useForm<FormValuesUpdate>({
+  const defaultValues = { ...(event || eventSchema.getDefault()) };
+  const methods = useForm<EventForm>({
     resolver: yupResolver(eventSchema),
     defaultValues: {
-      title: event?.title || "",
-      caption: event?.caption || "",
-      location: event?.location || DEFAULT_LOCATION,
-      date: event?.date.toDate() || DEFAULT_DATE,
-      genres: event?.genres || [],
-      lineup: event?.lineup || [],
-      price: event?.price || DEFAULT_PRICE,
+      ...defaultValues,
+      image: {
+        uri: event?.image.publicUrl,
+      },
+      date: event?.date.toDate(),
     },
   });
-  const { handleSubmit, setValue, reset } = methods;
+  const { watch, handleSubmit } = methods;
 
-  const { image, setImage, pickImage } = useImagePicker();
-
-  useEffect(() => {
-    if (!isLoading && event) {
-      setImage(event.image.publicUrl);
-      reset({ ...event, date: event.date.toDate() });
-    }
-  }, [isLoading]);
-
-  const onSubmit = async (data: EventFormData) => {
-    if (!event) return;
-
-    if (!image) {
-      Alert.alert("Error", "Please select an image");
-      return;
-    }
-
-    await mutateAsync(
+  const onSubmit = async (data: EventForm) => {
+    mutate(
       {
         eventId: id,
         data,
-        image,
-        originalData: event,
+        originalData: event || null,
       },
       {
         onSuccess: () => {
@@ -83,7 +59,8 @@ export default function EventUpdateScreen() {
           });
           router.back();
         },
-        onError: () => {
+        onError: (error) => {
+          console.warn(error);
           toast.show("Error", {
             variant: "error",
             message: "Failed to update event. Please try again.",
@@ -94,11 +71,16 @@ export default function EventUpdateScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-
+  let img = watch("image");
   return (
     <PageContainer>
       <Form methods={methods}>
-        <CustomImagePicker onPress={pickImage} image={image} />
+        <ImagePicker
+          name="image"
+          label="Event Image"
+          placeholder="Tap to select event image"
+        />
+        <Text>{img.uri.toString()}</Text>
         <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
           name="caption"

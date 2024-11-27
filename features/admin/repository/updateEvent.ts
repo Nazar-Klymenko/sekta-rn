@@ -1,65 +1,85 @@
-import { Timestamp, doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Timestamp, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  StorageReference,
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
-import { Event, EventFormData } from "@/features/event/models/Event";
+import {
+  DisplayEvent,
+  EventForm,
+  EventImage,
+  EventUpdateDocument,
+} from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
 
 interface UpdateEventParams {
   eventId: string;
-  data: EventFormData;
-  image: string | null;
-  originalData: Event;
+  data: EventForm;
+  originalData: DisplayEvent | null;
 }
 
 export const updateEvent = async ({
   eventId,
   data,
-  image,
   originalData,
 }: UpdateEventParams) => {
-  try {
-    let imageUrl = originalData.image.publicUrl;
-    let imageRefPath = originalData.image.path;
-    let imageId = originalData.image.id;
+  let imageObject: EventImage;
+  let isNewImage = data.image.uri !== originalData?.image.publicUrl;
+  if (isNewImage) {
+    const fileName = `${Date.now()}-${data.title
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+    const imagePath = `events/${eventId}/${fileName}`;
+    const imageRef = ref(storage, imagePath);
+    const response = await fetch(data.image.uri);
+    const imageBlob = await response.blob();
+    const uploadResult = await uploadBytes(imageRef, imageBlob);
+    const imageUrl = await getDownloadURL(uploadResult.ref);
 
-    // Check if the image has changed
-    if (image && image !== originalData.image.publicUrl) {
-      const imageRef = ref(storage, `events/${eventId}/${imageId}`);
-
-      const response = await fetch(image);
-      const blob = await response.blob();
-      await uploadBytes(imageRef, blob);
-      imageUrl = await getDownloadURL(imageRef);
-      imageRefPath = imageRef.fullPath;
-      imageId = imageRef.name;
-    }
-
-    const eventData: Omit<
-      Event,
-      "id" | "createdAt" | "metadata" | "deletedAt"
-    > = {
-      title: data.title,
-      title_lowercase: data.title?.toLowerCase() ?? "",
-      caption: data.caption,
-      price: data.price,
-      date: Timestamp.fromDate(new Date(data.date as unknown as string)),
-      location: data.location,
-      genres: data.genres ?? [],
-      lineup: data.lineup ?? [],
-      image: {
-        id: imageId,
-        publicUrl: imageUrl,
-        path: imageRefPath,
-        altText: data.title,
-      },
-      updatedAt: Timestamp.now(),
+    imageObject = {
+      id: imageRef.name,
+      publicUrl: imageUrl,
+      path: imageRef.fullPath,
+      altText: data.title,
     };
+  } else {
+    imageObject = {
+      id: originalData?.image.id || "",
+      publicUrl: originalData?.image.publicUrl || "",
+      path: originalData?.image.path || "",
+      altText: data.title,
+    };
+  }
 
+  const eventData: EventUpdateDocument = {
+    title: data.title,
+    title_lowercase: data.title.toLowerCase(),
+    caption: data.caption,
+    price: data.price,
+    date: Timestamp.fromDate(data.date),
+    location: data.location,
+    genres: data.genres,
+    lineup: data.lineup,
+    image: imageObject,
+    updatedAt: serverTimestamp(),
+  };
+
+  try {
     await updateDoc(doc(db, "events", eventId), eventData);
-
     return { success: true, id: eventId };
   } catch (error) {
-    console.error("Error updating event: ", error);
-    return { success: false };
+    // console.error("Error updating event:", error);
+    // try {
+    //   await deleteObject(ref(storage, imageRef));
+    // } catch (deleteError) {
+    //   console.warn(
+    //     "Failed to delete uploaded image during error handling:",
+    //     deleteError
+    //   );
+    // }
+    throw error;
   }
 };
