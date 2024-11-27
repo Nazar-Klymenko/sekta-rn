@@ -1,10 +1,10 @@
 import { Timestamp } from "firebase/firestore";
 
-import { EventFormData } from "@/features/event/models/Event";
+import { EventForm } from "@/features/event/models/Event";
 
 import * as yup from "yup";
 
-export const eventSchema: yup.ObjectSchema<EventFormData> = yup.object().shape({
+export const eventSchema: yup.ObjectSchema<EventForm> = yup.object().shape({
   title: yup
     .string()
     .required("Title is required")
@@ -16,7 +16,6 @@ export const eventSchema: yup.ObjectSchema<EventFormData> = yup.object().shape({
   date: yup
     .date()
     .required("Date is required")
-    .nullable()
     .default(Timestamp.now().toDate()),
   location: yup
     .string()
@@ -38,5 +37,9 @@ export const eventSchema: yup.ObjectSchema<EventFormData> = yup.object().shape({
     .of(yup.string().required("Artist is required"))
     .min(1, "At least one lineup member is required")
     .defined(),
+  image: yup
+    .object({
+      uri: yup.string().required("Image is required"),
+    })
+    .required("Image is required"),
 });
-export type FormValuesUpdate = yup.InferType<typeof eventSchema>;
