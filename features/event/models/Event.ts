@@ -6,6 +6,9 @@ export interface EventImage {
   path: string;
   altText: string;
 }
+export interface EventImageFile {
+  uri: string;
+}
 
 export interface Event {
   id: string;
@@ -23,7 +26,7 @@ export interface Event {
   deletedAt: Timestamp | null;
   metadata: Record<string, any>;
 }
-export type EventFormData = Omit<
+export type EventFormData<T> = Omit<
   Event,
   | "id"
   | "date"
@@ -35,4 +38,5 @@ export type EventFormData = Omit<
   | "image"
 > & {
   date: Date | null;
+  image: T;
 };
