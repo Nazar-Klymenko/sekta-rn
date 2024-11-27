@@ -15,8 +15,6 @@ import { EventForm } from "@/features/event/models/Event";
 import { Calendar } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
 
-import { Text } from "tamagui";
-
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
@@ -42,7 +40,7 @@ export default function EventUpdateScreen() {
       date: event?.date.toDate(),
     },
   });
-  const { watch, handleSubmit } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: EventForm) => {
     mutate(
@@ -71,7 +69,7 @@ export default function EventUpdateScreen() {
   };
 
   if (isLoading) return <FullPageLoading />;
-  let img = watch("image");
+
   return (
     <PageContainer>
       <Form methods={methods}>
@@ -80,7 +78,6 @@ export default function EventUpdateScreen() {
           label="Event Image"
           placeholder="Tap to select event image"
         />
-        <Text>{img.uri.toString()}</Text>
         <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
           name="caption"
