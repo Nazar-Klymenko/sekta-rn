@@ -46,41 +46,31 @@ export default function AuthLayout() {
         <Stack.Screen
           name="username-bridge"
           options={{
-            headerShown: true || Platform.OS !== "web",
             title: "Create username",
-            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="login"
           options={{
-            headerShown: true || Platform.OS !== "web",
             title: "Log in",
-            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="signup"
           options={{
-            headerShown: true || Platform.OS !== "web",
             title: "Sign Up",
-            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="forgot-password"
           options={{
-            headerShown: true || Platform.OS !== "web",
             title: "Forgot Password",
-            animation: "fade_from_bottom",
           }}
         />
         <Stack.Screen
           name="forgot-password-success"
           options={{
-            headerShown: true || Platform.OS !== "web",
             title: "Password recovery email sent!",
-            animation: "fade_from_bottom",
           }}
         />
       </Stack>
