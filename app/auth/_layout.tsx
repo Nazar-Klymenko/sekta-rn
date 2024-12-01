@@ -46,7 +46,7 @@ export default function AuthLayout() {
         <Stack.Screen
           name="username-bridge"
           options={{
-            title: "Create username",
+            title: "Create Username",
           }}
         />
         <Stack.Screen
