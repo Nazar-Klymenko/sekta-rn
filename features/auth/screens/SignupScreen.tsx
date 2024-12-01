@@ -8,18 +8,15 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import {
   emailSchema,
   passwordSchema,
   usernameSchema,
 } from "@/utils/validationSchemas";
 
-import { useToastController } from "@tamagui/toast";
+import { H1, Paragraph, YStack } from "tamagui";
 
-import { H1, Paragraph, YStack, useTheme } from "tamagui";
-
-import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -40,10 +37,7 @@ export const signUpSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof signUpSchema>;
 
 export default function SignupScreen() {
-  const theme = useTheme();
   const router = useRouter();
-  const toast = useToastController();
-  const handleFirebaseError = useFirebaseErrorHandler();
   const { username = "", next = "/" } = useLocalSearchParams<{
     username: string;
     next: "/";
@@ -64,18 +58,11 @@ export default function SignupScreen() {
   const onSubmit = (data: FormValues) => {
     mutate(data, {
       onSuccess: () => {
-        toast.show("Successfully signed up", {
-          message: "Welcome!",
-          variant: "success",
-        });
         if (next) {
           router.replace({ pathname: next });
         } else {
           router.replace("/");
         }
-      },
-      onError: (error) => {
-        handleFirebaseError(error);
       },
     });
   };
