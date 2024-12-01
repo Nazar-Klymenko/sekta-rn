@@ -2,24 +2,29 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Helper Functions
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    function isOwner(userId) {
+    function isCurrentUser(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
-    
+
     function isAdmin() {
       let userId = request.auth.uid;
+      // Add exists() check to prevent errors if user document doesn't exist
       let userDoc = get(/databases/$(database)/documents/users/$(userId));
-      return isAuthenticated() && userDoc != null && userDoc.data.isAdmin == true;
+      return isAuthenticated() 
+        && exists(/databases/$(database)/documents/users/$(userId))
+        && userDoc.data.isAdmin == true;
     }
-    
-    function isValidData(data) {
+
+
+    function isValidMetadata(data) {
       return data.keys().hasAll(['createdAt', 'updatedAt']) 
-             && data.createdAt is timestamp 
-             && data.updatedAt is timestamp;
+        && data.createdAt is timestamp 
+        && data.updatedAt is timestamp;
     }
 
     function isValidString(field) {
@@ -27,39 +32,25 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow read: if isOwner(userId) || isAdmin();
-      
-      allow create: if isAuthenticated() 
-        && request.auth.uid == userId
-        && request.resource.data.keys().hasAll(['email', 'createdAt', 'updatedAt'])
-        && request.resource.data.email == request.auth.token.email
-        && !request.resource.data.keys().hasAny(['isAdmin']); // Prevent setting admin status
-
-      allow update: if isOwner(userId)
-        && isValidData(request.resource.data)
-        && request.resource.data.email == request.auth.token.email
-        && isValidString(request.resource.data.username)
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin']) 
-            || isAdmin());
-
-      allow delete: if isOwner(userId) || isAdmin();
+      allow read: if isCurrentUser(userId) || isAdmin();
+      allow create, update: if isCurrentUser(userId);
+      allow delete: if isCurrentUser(userId) || isAdmin();
     }
+
     match /usernames/{username} {
-      allow read: if true; 
-      allow create: if isAuthenticated() 
-        && request.resource.data.uid == request.auth.uid
-        && isValidData(request.resource.data);
-       allow update, delete: if isOwner(resource.data.uid) || isAdmin();
+      allow read: if true;
+      allow create: if request.auth != null && !exists(/databases/$(database)/documents/usernames/$(username));
+      allow delete: if false;
+      allow update: if false;
     }
-     
+
     match /events/{eventId} {
       allow read: if true;
-      
+
       allow create, update: if isAdmin()
-        && isValidData(request.resource.data)
+        && isValidMetadata(request.resource.data)
         && isValidString(request.resource.data.title)
         && isValidString(request.resource.data.caption)
-        && request.resource.data.price is number
         && request.resource.data.date is timestamp;
 
       allow delete: if isAdmin();
