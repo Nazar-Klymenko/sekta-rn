@@ -5,11 +5,9 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
+import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
 
-import { useToastController } from "@tamagui/toast";
-
-import { H1, Paragraph, YStack } from "tamagui";
+import { H1, SizableText, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -25,8 +23,7 @@ type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
   const { next } = useLocalSearchParams<{ next?: string }>();
-  const toast = useToastController();
-  const handleFirebaseError = useFirebaseErrorHandler();
+  const handleToastMessage = useOperationStatusHelper();
 
   const router = useRouter();
   const methods = useForm<FormValues>({
@@ -42,17 +39,14 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     mutate(data.email, {
       onSuccess: () => {
-        toast.show("Application Submitted", {
-          message: "Password reset email sent! Please check your inbox.",
-          variant: "success",
-        });
+        handleToastMessage(null, "resetPassword", "success");
         router.push({
           pathname: "/auth/forgot-password-success",
           params: { next },
         });
       },
       onError: (error) => {
-        handleFirebaseError(error);
+        handleToastMessage(error, "resetPassword", "error");
       },
     });
   };
@@ -82,9 +76,9 @@ export default function ForgotPasswordScreen() {
 
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login?next=${next}`}>
-            <Paragraph color="$accentColor" textAlign="center">
+            <SizableText color="$accentColor" textAlign="center">
               Go back to login
-            </Paragraph>
+            </SizableText>
           </Link>
         </YStack>
       </Form>

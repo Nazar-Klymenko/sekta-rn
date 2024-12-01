@@ -6,10 +6,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 import { emailSchema } from "@/utils/validationSchemas";
-
-import { useToastController } from "@tamagui/toast";
 
 import { Paragraph, YStack } from "tamagui";
 
@@ -28,10 +25,8 @@ type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
-  const toast = useToastController();
   const { next } = useLocalSearchParams<{ next: "/" }>();
   const router = useRouter();
-  const handleFirebaseError = useFirebaseErrorHandler();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -47,18 +42,11 @@ export default function LoginScreen() {
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          toast.show("Successfully logged in", {
-            message: "Welcome back!",
-            variant: "success",
-          });
           if (next) {
             router.replace({ pathname: next });
           } else {
             router.replace("/");
           }
-        },
-        onError: (error) => {
-          handleFirebaseError(error);
         },
       }
     );
