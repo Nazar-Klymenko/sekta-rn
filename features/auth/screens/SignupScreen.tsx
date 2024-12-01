@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useUsername } from "@/features/auth/context/UsernameContext";
 import { useSignUp } from "@/features/auth/hooks/useSignUp";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Checkbox } from "@/features/core/components/form/Checkbox";
@@ -17,9 +18,9 @@ import {
 
 import { useToastController } from "@tamagui/toast";
 
-import { H1, Paragraph, YStack, useTheme } from "tamagui";
+import { SizableText, YStack } from "tamagui";
 
-import { Href, Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -40,11 +41,11 @@ export const signUpSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof signUpSchema>;
 
 export default function SignupScreen() {
-  const theme = useTheme();
   const router = useRouter();
   const toast = useToastController();
+  const { tempUsername } = useUsername();
   const handleFirebaseError = useFirebaseErrorHandler();
-  const { username = "", next = "/" } = useLocalSearchParams<{
+  const { next = "/" } = useLocalSearchParams<{
     username: string;
     next: "/";
   }>();
@@ -53,7 +54,7 @@ export default function SignupScreen() {
     resolver: yupResolver(signUpSchema),
     shouldFocusError: true,
     defaultValues: {
-      username: username,
+      username: tempUsername,
       email: "",
       password: "",
     },
@@ -83,9 +84,6 @@ export default function SignupScreen() {
   return (
     <PageContainer>
       <Form methods={methods}>
-        <H1 fontWeight="bold" textAlign="center">
-          Sign Up
-        </H1>
         <Input
           name="email"
           label="Email"
@@ -103,6 +101,30 @@ export default function SignupScreen() {
           <PasswordRequirements password={watch("password")} />
         </YStack>
 
+        <YStack>
+          <Checkbox name="agreeTos">
+            <SizableText>
+              I agree to Sekta Selekta's
+              <Link href="/tos" push>
+                <SizableText color="$accentColor">
+                  {" "}
+                  Terms of service{" "}
+                </SizableText>
+              </Link>
+              and
+              <Link href="/privacy-policy" push>
+                <SizableText color="$accentColor"> Privacy Policy</SizableText>
+              </Link>
+            </SizableText>
+          </Checkbox>
+          <Checkbox name="agreeEmail">
+            <SizableText>
+              I want to subscribe to newsletter to receive email notifications
+              about new events
+            </SizableText>
+          </Checkbox>
+        </YStack>
+
         <ButtonCTA
           theme="accent"
           onPress={handleSubmit(onSubmit)}
@@ -111,33 +133,13 @@ export default function SignupScreen() {
         >
           Sign up
         </ButtonCTA>
-        <YStack>
-          <Checkbox name="agreeEmail">
-            <Paragraph>
-              I want to subscribe to newsletter to receive email notifications
-              about new events
-            </Paragraph>
-          </Checkbox>
-          <Checkbox name="agreeTos">
-            <Paragraph>
-              I agree to Sekta Selekta's{" "}
-              <Link href="/tos" push>
-                <Paragraph color="$accentColor">Terms of service </Paragraph>
-              </Link>
-              and
-              <Link href="/privacy-policy" push>
-                <Paragraph color="$accentColor"> Privacy Policy*</Paragraph>
-              </Link>
-            </Paragraph>
-          </Checkbox>
-        </YStack>
 
         <YStack alignItems="center" padding="$4">
           <Link href={`/auth/login?next=${next}`}>
-            <Paragraph textAlign="center">
+            <SizableText textAlign="center">
               Already have an account?
-              <Paragraph color="$accentColor"> Log in</Paragraph>
-            </Paragraph>
+              <SizableText color="$accentColor"> Log in</SizableText>
+            </SizableText>
           </Link>
         </YStack>
       </Form>

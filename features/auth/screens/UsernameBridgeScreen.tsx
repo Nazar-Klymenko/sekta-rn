@@ -1,18 +1,15 @@
-import { useQueryClient } from "@tanstack/react-query";
-
 import React, { useEffect, useState } from "react";
 
-import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
-import { HelloWave } from "@/features/core/components/HelloWave";
+import { useUsername } from "@/features/auth/context/UsernameContext";
+import { isUsernameAvailable } from "@/features/auth/utils/isUsernameAvailable";
+import { Hint } from "@/features/core/components/Hint";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { usernameSchema } from "@/utils/validationSchemas";
 
-import { Info } from "@tamagui/lucide-icons";
-
-import { H1, Paragraph, XStack, YStack } from "tamagui";
+import { SizableText, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
@@ -27,67 +24,48 @@ const usernameBridgeSchema = yup.object().shape({
 
 type FormValues = yup.InferType<typeof usernameBridgeSchema>;
 
-const TEMP_USERNAME_KEY = "temporaryUsername";
-
 export default function UsernameBridgeScreen() {
-  const queryClient = useQueryClient();
   const router = useRouter();
-  const { next } = useLocalSearchParams<{
-    next?: string;
-  }>();
+  const { next } = useLocalSearchParams<{ next?: string }>();
+  const { tempUsername, setTempUsername } = useUsername();
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm<FormValues>({
-      resolver: yupResolver(usernameBridgeSchema),
-      shouldFocusError: true,
-      defaultValues: {
-        username:
-          (queryClient.getQueryData([TEMP_USERNAME_KEY]) as string) || "",
-      },
-      mode: "onTouched",
-    }),
-    { handleSubmit, setError, watch } = methods;
+    resolver: yupResolver(usernameBridgeSchema),
+    shouldFocusError: true,
+    defaultValues: {
+      username: tempUsername || "",
+    },
+    mode: "onTouched",
+  });
 
+  const { handleSubmit, setError, watch } = methods;
   const username = watch("username");
-  const { refetch: checkAvailability, isLoading } =
-    useUsernameAvailability(username);
 
   useEffect(() => {
-    return () => {
-      queryClient.setQueryData([TEMP_USERNAME_KEY], username);
-    };
-  }, [username, queryClient]);
+    setTempUsername(username);
+  }, [username]);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const result = await checkAvailability();
-      if (result.data) {
-        router.push({
-          pathname: "/auth/signup",
-          params: {
-            username: data.username,
-            next: next,
-          },
-        });
+      setIsLoading(true);
+      const usernameAvailable = await isUsernameAvailable(data.username);
+
+      if (usernameAvailable) {
+        router.push("/auth/signup");
       } else {
         setError("username", { message: "Username is taken" });
       }
     } catch (err) {
       setError("username", { message: "Error checking username availability" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <PageContainer>
       <Form methods={methods}>
-        <XStack justifyContent="center" alignItems="center">
-          <H1 fontWeight="bold" textAlign="center">
-            Welcome!
-          </H1>
-          <HelloWave />
-        </XStack>
-        <Paragraph textAlign="center" color="$gray10Light">
-          Choose a username. Don't worry, you can always change it later.
-        </Paragraph>
         <Input
           name="username"
           label="Username"
@@ -96,13 +74,12 @@ export default function UsernameBridgeScreen() {
           inputMode="text"
           maxLength={20}
         />
-        <XStack gap="$2" alignItems="flex-start">
-          <Info color="$gray10Light" fontSize="$3" />
-          <Paragraph fontSize="$3" color="$gray10Light">
-            Username must be 3-20 characters long and can contain letters,
-            numbers, and underscores.
-          </Paragraph>
-        </XStack>
+
+        <Hint>
+          Username must be 3-20 characters long and can contain letters,
+          numbers, and underscores.
+        </Hint>
+
         <ButtonCTA
           theme="accent"
           onPress={handleSubmit(onSubmit)}
@@ -114,10 +91,10 @@ export default function UsernameBridgeScreen() {
 
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login?next=${next}`}>
-            <Paragraph textAlign="center">
+            <SizableText textAlign="center">
               Already have an account?
-              <Paragraph color="$accentColor"> Log in</Paragraph>
-            </Paragraph>
+              <SizableText color="$accentColor"> Log in</SizableText>
+            </SizableText>
           </Link>
         </YStack>
       </Form>
