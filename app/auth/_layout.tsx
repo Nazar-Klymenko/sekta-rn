@@ -34,6 +34,11 @@ export default function AuthLayout() {
           backgroundColor: theme.background.get(),
         },
         headerTintColor: theme.color.get(),
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "LeagueSpartan_700Bold",
+            fontSize: 25,
+          },
       }}
     >
       <Stack.Screen
