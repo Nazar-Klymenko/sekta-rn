@@ -3,12 +3,12 @@ import React from "react";
 import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
 import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { Separator, YStack } from "tamagui";
 
 interface PreviousEventsSectionProps {
-  previousEvents: Event[] | undefined;
+  previousEvents: DisplayEvent[] | undefined;
   isPreviousEventsLoading: boolean;
   onViewAllPress: () => void;
 }

@@ -7,7 +7,7 @@ import { ScrollView } from "react-native";
 import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
 import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { getTokens } from "@tamagui/core";
 import { Calendar } from "@tamagui/lucide-icons";
@@ -17,7 +17,7 @@ import { YStack } from "tamagui";
 import EmptyEventList from "../../components/EmptyEventList";
 
 interface UpcomingEventsSectionProps {
-  upcomingEvents: InfiniteData<Event[]> | undefined;
+  upcomingEvents: InfiniteData<DisplayEvent[]> | undefined;
   isUpcomingLoading: boolean;
   onViewAllPress: () => void;
 }

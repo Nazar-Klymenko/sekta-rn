@@ -4,7 +4,7 @@ import { useWindowDimensions } from "react-native";
 
 import Skeleton from "@/features/core/components/Skeleton";
 
-import { Stack, XStack, YStack } from "tamagui";
+import { XStack, YStack } from "tamagui";
 
 interface SkeletonUpcomingEventCardProps {
   verticalView?: boolean;

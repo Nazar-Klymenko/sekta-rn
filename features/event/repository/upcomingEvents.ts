@@ -8,35 +8,35 @@ import {
   where,
 } from "firebase/firestore";
 
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { db } from "@/lib/firebase/firebase";
 
-const eventsCollection = collection(db, "events");
-
 export const upcomingEventsPreview = async (
-  count: number = 3,
-): Promise<Event[]> => {
+  count: number = 3
+): Promise<DisplayEvent[]> => {
   const now = new Date();
   const q = query(
     collection(db, "events"),
     where("date", ">=", now),
     orderBy("date", "asc"),
-    firestoreLimit(count),
+    firestoreLimit(count)
   );
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as DisplayEvent)
+  );
 };
 
 export const upcomingEvents = async (
   pageParam: number,
-  pageSize: number,
-): Promise<Event[]> => {
+  pageSize: number
+): Promise<DisplayEvent[]> => {
   const now = new Date();
   let q = query(
     collection(db, "events"),
     where("date", ">=", now),
-    orderBy("date", "asc"),
+    orderBy("date", "asc")
   );
 
   if (pageParam > 0) {
@@ -50,5 +50,7 @@ export const upcomingEvents = async (
   q = query(q, firestoreLimit(pageSize));
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Event);
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as DisplayEvent)
+  );
 };

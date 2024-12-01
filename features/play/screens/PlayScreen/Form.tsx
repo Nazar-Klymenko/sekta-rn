@@ -3,6 +3,7 @@ import React from "react";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
+import { TextArea } from "@/features/core/components/form/TextArea";
 import { emailSchema } from "@/utils/validationSchemas";
 
 import {
@@ -133,7 +134,8 @@ const PlayForm = React.memo(() => {
           placeholder={placeholder}
         />
       ))}
-      <Input
+
+      <TextArea
         name="additionalInfo"
         label="Additional Info"
         multiline

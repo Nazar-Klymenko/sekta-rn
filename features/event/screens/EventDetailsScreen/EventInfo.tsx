@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Calendar, CreditCard, MapPin } from "@tamagui/lucide-icons";
@@ -9,10 +9,10 @@ import { H1, XStack, YStack } from "tamagui";
 
 import { InfoItem } from "./InfoItem";
 
-export default function EventInfo({ event }: { event: Event }) {
+export default function EventInfo({ event }: { event: DisplayEvent }) {
   const formattedDate = formatFirestoreTimestamp(
     event.date,
-    "EEEE, MMMM do yyyy",
+    "EEEE, MMMM do yyyy"
   );
   const formattedTime = formatFirestoreTimestamp(event.date, "HH:mm");
 

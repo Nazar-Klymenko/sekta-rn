@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Paragraph, View, XStack, YStack } from "tamagui";
 
 export const PasswordStrengthIndicator = ({

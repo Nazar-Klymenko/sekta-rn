@@ -2,15 +2,15 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { db } from "@/lib/firebase/firebase";
 
-import { Event } from "../models/Event";
+import { DisplayEvent } from "../models/Event";
 
-export const fetchEvent = async (id: string): Promise<Event> => {
+export const fetchEvent = async (id: string): Promise<DisplayEvent> => {
   const eventDoc = await getDoc(doc(db, "events", id));
   if (eventDoc.exists()) {
     return {
       id: eventDoc.id,
       ...eventDoc.data(),
-    } as Event;
+    } as DisplayEvent;
   } else {
     throw new Error("Event not found");
   }

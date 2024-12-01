@@ -1,62 +1,105 @@
-import { Timestamp, doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Timestamp, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
-import { Event, EventFormData } from "@/features/event/models/Event";
+import {
+  DisplayEvent,
+  EventForm,
+  EventImage,
+  EventUpdateDocument,
+} from "@/features/event/models/Event";
 import { db, storage } from "@/lib/firebase/firebase";
 
 interface UpdateEventParams {
   eventId: string;
-  data: EventFormData;
-  image: string | null;
-  originalData: Event;
+  data: EventForm;
+  originalData: DisplayEvent | null;
 }
 
 export const updateEvent = async ({
   eventId,
   data,
-  image,
   originalData,
 }: UpdateEventParams) => {
+  const isNewImage = data.image.uri !== originalData?.image.publicUrl;
+  const oldImagePath = originalData?.image.path;
+
+  let imageObject: EventImage = {
+    id: originalData?.image.id || "",
+    publicUrl: originalData?.image.publicUrl || "",
+    path: originalData?.image.path || "",
+    altText: data.title,
+  };
+
   try {
-    let imageUrl = originalData.image.publicUrl;
-    let imageRefPath = originalData.image.path;
-    let imageId = originalData.image.id;
-
-    // Check if the image has changed
-    if (image && image !== originalData.image.publicUrl) {
-      const imageRef = ref(storage, `events/${eventId}/${imageId}`);
-
-      const response = await fetch(image);
-      const blob = await response.blob();
-      await uploadBytes(imageRef, blob);
-      imageUrl = await getDownloadURL(imageRef);
-      imageRefPath = imageRef.fullPath;
-      imageId = imageRef.name;
+    if (isNewImage) {
+      imageObject = await uploadImage(data.image.uri, eventId, data.title);
     }
 
-    const eventData: Partial<Event> = {
+    const eventData: EventUpdateDocument = {
       title: data.title,
-      title_lowercase: data.title?.toLowerCase() ?? "",
+      title_lowercase: data.title.toLowerCase(),
       caption: data.caption,
       price: data.price,
-      date: Timestamp.fromDate(new Date(data.date as unknown as string)),
+      date: Timestamp.fromDate(data.date),
       location: data.location,
-      genres: data.genres ?? [],
-      lineup: data.lineup ?? [],
-      image: {
-        id: imageId,
-        publicUrl: imageUrl,
-        path: imageRefPath,
-        altText: data.title,
-      },
-      updatedAt: Timestamp.now(),
+      genres: data.genres,
+      lineup: data.lineup,
+      image: imageObject,
+      updatedAt: serverTimestamp(),
     };
 
     await updateDoc(doc(db, "events", eventId), eventData);
 
-    return { success: true, id: eventId };
+    if (isNewImage && oldImagePath) {
+      try {
+        await deleteObject(ref(storage, oldImagePath));
+      } catch (deleteError) {
+        console.warn("Failed to delete old image:", deleteError);
+      }
+    }
   } catch (error) {
-    console.error("Error updating event: ", error);
-    return { success: false };
+    if (isNewImage && imageObject?.path) {
+      try {
+        await deleteObject(ref(storage, imageObject.path));
+      } catch (cleanupError) {
+        console.warn(
+          "Failed to delete new image during error handling:",
+          cleanupError
+        );
+      }
+    }
+    throw error;
+  }
+};
+
+const uploadImage = async (uri: string, eventId: string, title: string) => {
+  try {
+    const fileName = `${Date.now()}-${title
+      .toLowerCase()
+      .replace(/\s+/g, "-")}`;
+    const imagePath = `events/${eventId}/${fileName}`;
+    const imageRef = ref(storage, imagePath);
+
+    const response = await fetch(uri);
+    if (!response.ok) throw new Error("Failed to fetch the image.");
+
+    const imageBlob = await response.blob();
+    const uploadResult = await uploadBytes(imageRef, imageBlob);
+    const imageUrl = await getDownloadURL(uploadResult.ref);
+
+    return {
+      id: imageRef.name,
+      publicUrl: imageUrl,
+      path: imageRef.fullPath,
+      altText: title,
+    };
+  } catch (error) {
+    console.error("Image upload failed:", error);
+    throw error;
   }
 };

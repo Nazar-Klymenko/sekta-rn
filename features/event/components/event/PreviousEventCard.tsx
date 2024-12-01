@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Tag } from "@/features/core/components/Tag";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
@@ -9,7 +9,7 @@ import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
 import { useRouter } from "expo-router";
 
 interface PreviousEventCardProps {
-  event: Event;
+  event: DisplayEvent;
 }
 
 const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {

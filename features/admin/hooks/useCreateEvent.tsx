@@ -2,7 +2,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createEvent } from "@/features/admin/repository/createEvent";
-import { EventFormData } from "@/features/event/models/Event";
+import { EventForm } from "@/features/event/models/Event";
 
 // Adjust the import path
 import { useToastController } from "@tamagui/toast";
@@ -15,14 +15,8 @@ export const useCreateEvent = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async ({
-      data,
-      image,
-    }: {
-      data: EventFormData;
-      image: string | null;
-    }) => {
-      return await createEvent(data, image);
+    mutationFn: async ({ data }: { data: EventForm }) => {
+      return await createEvent(data);
     },
     onSuccess: (data) => {
       toast.show("Event created successfully!", { variant: "success" });

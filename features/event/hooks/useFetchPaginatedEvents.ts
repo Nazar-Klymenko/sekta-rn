@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useState } from "react";
 
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { fetchPaginatedEvents } from "../repository/fetchPaginatedEvents";
 
@@ -12,10 +12,13 @@ export const useFetchPaginatedEvents = () => {
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const [direction, setDirection] = useState<"forward" | "backward">("forward");
 
-  const { data, isLoading, isError, refetch } = useQuery<Event[], Error>({
-    queryKey: ["paginatedEvents", currentPage, direction],
-    queryFn: () => fetchPaginatedEvents(currentPage, ITEMS_PER_PAGE, direction),
-  });
+  const { data, isLoading, isError, refetch } = useQuery<DisplayEvent[], Error>(
+    {
+      queryKey: ["paginatedEvents", currentPage, direction],
+      queryFn: () =>
+        fetchPaginatedEvents(currentPage, ITEMS_PER_PAGE, direction),
+    }
+  );
 
   const goToNextPage = () => {
     if (data && data.length > 0) {

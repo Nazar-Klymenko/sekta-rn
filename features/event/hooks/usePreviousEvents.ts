@@ -4,7 +4,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import {
   previousEvents,
@@ -15,7 +15,7 @@ const ITEMS_PER_PAGE = 5;
 
 // For previews (limited events)
 export const usePreviousEventsPreview = (count: number = 4) => {
-  return useQuery<Event[], Error>({
+  return useQuery<DisplayEvent[], Error>({
     queryKey: ["previousEventsPreview", count],
     queryFn: () => previousEventsPreview(count),
   });
@@ -24,9 +24,9 @@ export const usePreviousEventsPreview = (count: number = 4) => {
 // For paginated events (no limit)
 export const usePreviousEvents = () => {
   return useInfiniteQuery<
-    Event[],
+    DisplayEvent[],
     Error,
-    InfiniteData<Event[]>,
+    InfiniteData<DisplayEvent[]>,
     ["previousEvents"],
     number
   >({

@@ -1,35 +1,44 @@
-import { Timestamp } from "firebase/firestore";
+import { FieldValue, Timestamp } from "firebase/firestore";
 
-// Base interface for common fields
-export interface BaseEvent {
-  title: string;
-  caption: string;
-  date: Date | Timestamp;
-  location: string;
-  price: number;
-  genres: string[];
-  lineup: string[];
-}
-
-// Interface for form data
-export interface EventFormData extends BaseEvent {
-  date: Date; // Override to be specifically Date for forms
-}
 export interface EventImage {
   id: string;
   publicUrl: string;
   path: string;
   altText: string;
 }
-// Interface for stored data
-export interface Event extends Omit<BaseEvent, "date"> {
-  id: string;
-  title_lowercase: string;
-  date: Timestamp; // Override to be specifically Timestamp for stored data
-  image: EventImage;
-  attendeeCount: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  deletedAt: Timestamp | null;
-  metadata: Record<string, any>;
+
+export interface EventImageFile {
+  uri: string;
 }
+
+interface EventTimestamps<T> {
+  createdAt: T;
+  updatedAt: T;
+  deletedAt: T | null;
+}
+
+interface EventBase<TImage, TDate> {
+  title: string;
+  title_lowercase: string;
+  caption: string;
+  date: TDate;
+  location: string;
+  price: number;
+  genres: string[];
+  lineup: string[];
+  image: TImage;
+}
+
+export type DisplayEvent = EventBase<EventImage, Timestamp> &
+  EventTimestamps<Timestamp> & { id: string };
+
+export type DocumentEvent = EventBase<EventImage, FieldValue> &
+  EventTimestamps<FieldValue>;
+
+export interface EventForm
+  extends Omit<EventBase<EventImageFile, Date>, "title_lowercase"> {}
+
+export interface EventCreateDocument extends Omit<DocumentEvent, "deletedAt"> {}
+
+export interface EventUpdateDocument
+  extends Omit<DocumentEvent, "createdAt" | "deletedAt"> {}
