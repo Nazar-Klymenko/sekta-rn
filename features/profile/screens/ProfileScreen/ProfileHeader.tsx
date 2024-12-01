@@ -1,12 +1,12 @@
 import React from "react";
 
 import fallbackImage from "@/assets/images/logo-big.png";
-import { User as UserData } from "@/features/users/models/User";
+import { FirestoreUser } from "@/features/users/models/User";
 
 import { Avatar, SizableText, XStack, YStack } from "tamagui";
 
 interface ProfileHeaderProps {
-  userData: UserData | null | undefined;
+  userData: FirestoreUser | null | undefined;
 }
 
 export const ProfileHeader = ({ userData }: ProfileHeaderProps) => (
@@ -23,7 +23,7 @@ export const ProfileHeader = ({ userData }: ProfileHeaderProps) => (
         {userData?.username || "Guest"}
       </SizableText>
       <SizableText fontSize="$4" color="$gray10Light">
-        {userData?.email || "Not logged in"}
+        {userData?.auth.email || "Not logged in"}
       </SizableText>
     </YStack>
   </XStack>

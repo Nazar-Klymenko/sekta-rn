@@ -20,6 +20,9 @@ service cloud.firestore {
         && userDoc.data.isAdmin == true;
     }
 
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
 
     function isValidMetadata(data) {
       return data.keys().hasAll(['createdAt', 'updatedAt']) 
@@ -40,7 +43,7 @@ service cloud.firestore {
     match /usernames/{username} {
       allow read: if true;
       allow create: if request.auth != null && !exists(/databases/$(database)/documents/usernames/$(username));
-      allow delete: if false;
+      allow delete: if userDoc().data.username == username;
       allow update: if false;
     }
 
