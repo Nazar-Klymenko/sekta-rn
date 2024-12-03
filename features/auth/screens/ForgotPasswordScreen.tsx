@@ -14,14 +14,12 @@ import { H1, Paragraph, YStack } from "tamagui";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const forgotPasswordSchema = yup.object().shape({
-  email: yup.string().required("Email is required").email("Invalid email"),
-});
-type FormValues = yup.InferType<typeof forgotPasswordSchema>;
+import {
+  ForgotPasswordSchemaType,
+  forgotPasswordSchema,
+} from "../utils/schemas";
 
 export default function ForgotPasswordScreen() {
   const { next } = useLocalSearchParams<{ next?: string }>();
@@ -29,17 +27,17 @@ export default function ForgotPasswordScreen() {
   const handleFirebaseError = useFirebaseErrorHandler();
 
   const router = useRouter();
-  const methods = useForm<FormValues>({
+  const methods = useForm<ForgotPasswordSchemaType>({
     resolver: yupResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "",
+      ...forgotPasswordSchema.getDefault(),
     },
     mode: "onTouched",
   });
 
   const { mutate, isPending } = useSendPasswordReset();
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: ForgotPasswordSchemaType) => {
     mutate(data.email, {
       onSuccess: () => {
         toast.show("Application Submitted", {

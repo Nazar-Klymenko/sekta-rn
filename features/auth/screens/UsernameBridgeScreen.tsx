@@ -7,22 +7,18 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { usernameSchema } from "@/utils/validationSchemas";
 
 import { SizableText, YStack } from "tamagui";
 
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const usernameBridgeSchema = yup.object().shape({
-  username: usernameSchema,
-});
-
-type FormValues = yup.InferType<typeof usernameBridgeSchema>;
+import {
+  UsernameBridgeSchemaType,
+  usernameBridgeSchema,
+} from "../utils/schemas";
 
 export default function UsernameBridgeScreen() {
   const router = useRouter();
@@ -30,11 +26,12 @@ export default function UsernameBridgeScreen() {
   const { tempUsername, setTempUsername } = useUsername();
   const [isLoading, setIsLoading] = useState(false);
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<UsernameBridgeSchemaType>({
     resolver: yupResolver(usernameBridgeSchema),
     shouldFocusError: true,
     defaultValues: {
-      username: tempUsername || "",
+      ...usernameBridgeSchema.getDefault(),
+      username: tempUsername,
     },
     mode: "onTouched",
   });
@@ -46,7 +43,7 @@ export default function UsernameBridgeScreen() {
     setTempUsername(username);
   }, [username]);
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: UsernameBridgeSchemaType) => {
     try {
       setIsLoading(true);
       const usernameAvailable = await isUsernameAvailable(data.username);

@@ -10,11 +10,6 @@ import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
-import {
-  emailSchema,
-  passwordSchema,
-  usernameSchema,
-} from "@/utils/validationSchemas";
 
 import { useToastController } from "@tamagui/toast";
 
@@ -23,22 +18,9 @@ import { SizableText, YStack } from "tamagui";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export const signUpSchema = yup.object().shape({
-  email: emailSchema,
-  username: usernameSchema,
-  password: passwordSchema,
-  agreeTos: yup
-    .boolean()
-    .oneOf([true], "You must agree to the terms and conditions")
-    .required("You must agree to the terms and conditions"),
-  agreeEmail: yup.boolean().optional(),
-});
-
-type FormValues = yup.InferType<typeof signUpSchema>;
+import { SignUpSchemaType, signUpSchema } from "../utils/schemas";
 
 export default function SignupScreen() {
   const router = useRouter();
@@ -50,19 +32,18 @@ export default function SignupScreen() {
     next: "/";
   }>();
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<SignUpSchemaType>({
     resolver: yupResolver(signUpSchema),
     shouldFocusError: true,
     defaultValues: {
+      ...signUpSchema.getDefault(),
       username: tempUsername,
-      email: "",
-      password: "",
     },
   });
   const { handleSubmit, watch } = methods;
   const { mutate, isPending } = useSignUp();
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: SignUpSchemaType) => {
     mutate(data, {
       onSuccess: () => {
         toast.show("Successfully signed up", {
