@@ -5,7 +5,6 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
 
 import { H1, SizableText, YStack } from "tamagui";
 
@@ -23,7 +22,6 @@ type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
   const { next } = useLocalSearchParams<{ next?: string }>();
-  const handleToastMessage = useOperationStatusHelper();
 
   const router = useRouter();
   const methods = useForm<FormValues>({
@@ -39,14 +37,10 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     mutate(data.email, {
       onSuccess: () => {
-        handleToastMessage(null, "resetPassword", "success");
         router.push({
           pathname: "/auth/forgot-password-success",
           params: { next },
         });
-      },
-      onError: (error) => {
-        handleToastMessage(error, "resetPassword", "error");
       },
     });
   };

@@ -34,7 +34,9 @@ export default function AdminEventsLayout() {
           headerRight: () => (
             <TouchableOpacity onPress={() => navigation.push("create")}>
               <SizableText
-                style={{ color: theme.accentColor.get(), marginRight: 10 }}
+                theme={"accent"}
+                color="$background"
+                style={{ marginRight: 10 }}
               >
                 Create
               </SizableText>

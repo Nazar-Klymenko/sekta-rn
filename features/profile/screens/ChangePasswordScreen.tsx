@@ -8,10 +8,6 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
 import { passwordSchema } from "@/utils/validationSchemas";
 
-import { useToastController } from "@tamagui/toast";
-
-import { SizableText } from "tamagui";
-
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -29,8 +25,7 @@ const changePasswordSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof changePasswordSchema>;
 
 export default function ChangePasswordScreen() {
-  const toast = useToastController();
-  const changePasswordMutation = useChangePassword();
+  const { mutate, isPending } = useChangePassword();
   const methods = useForm({
       resolver: yupResolver(changePasswordSchema),
       defaultValues: {
@@ -43,7 +38,7 @@ export default function ChangePasswordScreen() {
     { watch, reset, handleSubmit } = methods;
 
   const onSubmit = async (data: FormValues) => {
-    changePasswordMutation.mutate(
+    mutate(
       {
         currentPassword: data.currentPassword,
         newPassword: data.newPassword,
@@ -51,17 +46,6 @@ export default function ChangePasswordScreen() {
       {
         onSuccess: () => {
           reset();
-          toast.show("Password changed successfully", {
-            message: "Your password has been updated.",
-            variant: "success",
-          });
-        },
-        onError: (error) => {
-          toast.show("Change password failed", {
-            message:
-              error instanceof Error ? error.message : "An error occurred",
-            variant: "error",
-          });
         },
       }
     );
@@ -93,19 +77,11 @@ export default function ChangePasswordScreen() {
         <ButtonCTA
           theme="accent"
           onPress={handleSubmit(onSubmit)}
-          isLoading={changePasswordMutation.isPending}
-          disabled={changePasswordMutation.isPending}
+          isLoading={isPending}
+          disabled={isPending}
         >
           Change Password
         </ButtonCTA>
-        {changePasswordMutation.isError && (
-          <SizableText>
-            Error: {changePasswordMutation.error.message}
-          </SizableText>
-        )}
-        {changePasswordMutation.isSuccess && (
-          <SizableText>Password changed successfully</SizableText>
-        )}
       </Form>
     </PageContainer>
   );

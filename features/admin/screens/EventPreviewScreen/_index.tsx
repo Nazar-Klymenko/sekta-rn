@@ -74,13 +74,9 @@ export default function EventPreviewScreen() {
           setInnerShowConfirmSheet(false);
           router.back();
         },
-        onError: (error) => {
+        onError: () => {
           setShowConfirmSheet(false);
           setInnerShowConfirmSheet(false);
-          toast.show("error", {
-            message: error.message,
-            variant: "error",
-          });
         },
       }
     );
