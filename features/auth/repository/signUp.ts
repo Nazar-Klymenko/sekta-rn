@@ -8,13 +8,7 @@ import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 import { FirestoreUser } from "@/features/users/models/User";
 import { auth, db } from "@/lib/firebase/firebase";
 
-export interface SignUpData {
-  email: string;
-  password: string;
-  username: string;
-  agreeTos: boolean;
-  agreeEmail?: boolean;
-}
+import { SignUpSchemaType } from "../utils/schemas";
 
 export const signUp = async ({
   email,
@@ -22,7 +16,7 @@ export const signUp = async ({
   username,
   agreeTos,
   agreeEmail = false,
-}: SignUpData): Promise<User> => {
+}: SignUpSchemaType): Promise<User> => {
   // Validate username format before even trying
   const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
   if (!usernameRegex.test(username)) {
