@@ -2,12 +2,14 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { db } from "@/lib/firebase/firebase";
 
-import { User as UserData } from "../models/User";
+import { DisplayUser } from "../models/User";
 
-export const getUserData = async (userId: string): Promise<UserData | null> => {
+export const getUserData = async (
+  userId: string
+): Promise<DisplayUser | null> => {
   const userDoc = await getDoc(doc(db, "users", userId));
   if (userDoc.exists()) {
-    return userDoc.data() as UserData;
+    return userDoc.data() as DisplayUser;
   } else {
     throw new Error("User not found");
   }

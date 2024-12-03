@@ -1,12 +1,13 @@
 import React from "react";
 
 import fallbackImage from "@/assets/images/logo-big.png";
-import { FirestoreUser } from "@/features/users/models/User";
+import { DisplayUser } from "@/features/users/models/User";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Avatar, SizableText, XStack, YStack } from "tamagui";
 
 interface ProfileHeaderProps {
-  userData: FirestoreUser | null | undefined;
+  userData: DisplayUser | null;
 }
 
 export const ProfileHeader = ({ userData }: ProfileHeaderProps) => (
