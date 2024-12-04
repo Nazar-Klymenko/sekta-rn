@@ -10,7 +10,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { SizableText, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,6 +37,7 @@ export default function UsernameBridgeScreen() {
   });
 
   const { handleSubmit, setError, watch } = methods;
+
   const username = watch("username");
 
   useEffect(() => {
@@ -45,11 +46,13 @@ export default function UsernameBridgeScreen() {
 
   const onSubmit = async (data: UsernameBridgeSchemaType) => {
     try {
+
       setIsLoading(true);
       const usernameAvailable = await isUsernameAvailable(data.username);
 
       if (usernameAvailable) {
         router.push("/auth/signup");
+
       } else {
         setError("username", { message: "Username is taken" });
       }
@@ -87,8 +90,9 @@ export default function UsernameBridgeScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/login?next=${next}`}>
-            <SizableText textAlign="center">
+
+          <Link href={`/auth/login`}>
+            <Paragraph textAlign="center">
               Already have an account?
               <SizableText color="$accentColor"> Log in</SizableText>
             </SizableText>

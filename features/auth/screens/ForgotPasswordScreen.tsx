@@ -5,13 +5,10 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 
-import { useToastController } from "@tamagui/toast";
+import { H1, SizableText, YStack } from "tamagui";
 
-import { H1, Paragraph, YStack } from "tamagui";
-
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,10 +19,6 @@ import {
 } from "../utils/schemas";
 
 export default function ForgotPasswordScreen() {
-  const { next } = useLocalSearchParams<{ next?: string }>();
-  const toast = useToastController();
-  const handleFirebaseError = useFirebaseErrorHandler();
-
   const router = useRouter();
   const methods = useForm<ForgotPasswordSchemaType>({
     resolver: yupResolver(forgotPasswordSchema),
@@ -40,17 +33,7 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: ForgotPasswordSchemaType) => {
     mutate(data.email, {
       onSuccess: () => {
-        toast.show("Application Submitted", {
-          message: "Password reset email sent! Please check your inbox.",
-          variant: "success",
-        });
-        router.push({
-          pathname: "/auth/forgot-password-success",
-          params: { next },
-        });
-      },
-      onError: (error) => {
-        handleFirebaseError(error);
+        router.push("/auth/forgot-password-success");
       },
     });
   };
@@ -79,10 +62,10 @@ export default function ForgotPasswordScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/login?next=${next}`}>
-            <Paragraph color="$accentColor" textAlign="center">
+          <Link href={`/auth/login`}>
+            <SizableText color="$accentColor" textAlign="center">
               Go back to login
-            </Paragraph>
+            </SizableText>
           </Link>
         </YStack>
       </Form>

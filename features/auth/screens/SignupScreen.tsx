@@ -9,9 +9,14 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
+import {
+  emailSchema,
+  passwordSchema,
+  usernameSchema,
+} from "@/utils/validationSchemas";
 
-import { useToastController } from "@tamagui/toast";
+import { H1, Paragraph, YStack } from "tamagui";
+
 
 import { SizableText, YStack } from "tamagui";
 
@@ -24,12 +29,12 @@ import { SignUpSchemaType, signUpSchema } from "../utils/schemas";
 
 export default function SignupScreen() {
   const router = useRouter();
+
   const toast = useToastController();
   const { tempUsername } = useUsername();
   const handleFirebaseError = useFirebaseErrorHandler();
   const { next = "/" } = useLocalSearchParams<{
     username: string;
-    next: "/";
   }>();
 
   const methods = useForm<SignUpSchemaType>({
@@ -46,18 +51,7 @@ export default function SignupScreen() {
   const onSubmit = (data: SignUpSchemaType) => {
     mutate(data, {
       onSuccess: () => {
-        toast.show("Successfully signed up", {
-          message: "Welcome!",
-          variant: "success",
-        });
-        if (next) {
-          router.replace({ pathname: next });
-        } else {
-          router.replace("/");
-        }
-      },
-      onError: (error) => {
-        handleFirebaseError(error);
+        router.replace("../");
       },
     });
   };
@@ -116,8 +110,7 @@ export default function SignupScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4">
-          <Link href={`/auth/login?next=${next}`}>
-            <SizableText textAlign="center">
+          <Link href={`/auth/login`}>
               Already have an account?
               <SizableText color="$accentColor"> Log in</SizableText>
             </SizableText>

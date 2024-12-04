@@ -6,13 +6,12 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useFirebaseErrorHandler } from "@/features/core/hooks/useFirebaseErrorHelper";
 
-import { useToastController } from "@tamagui/toast";
+import { emailSchema } from "@/utils/validationSchemas";
 
 import { Paragraph, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,10 +20,7 @@ import { LoginSchemaType, loginSchema } from "../utils/schemas";
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
-  const toast = useToastController();
-  const { next } = useLocalSearchParams<{ next: "/" }>();
   const router = useRouter();
-  const handleFirebaseError = useFirebaseErrorHandler();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -39,18 +35,7 @@ export default function LoginScreen() {
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          toast.show("Successfully logged in", {
-            message: "Welcome back!",
-            variant: "success",
-          });
-          if (next) {
-            router.replace({ pathname: next });
-          } else {
-            router.replace("/");
-          }
-        },
-        onError: (error) => {
-          handleFirebaseError(error);
+          router.replace("../");
         },
       }
     );
@@ -73,7 +58,7 @@ export default function LoginScreen() {
           secureTextEntry
         />
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/forgot-password?next=${next}`}>
+          <Link href={`/auth/forgot-password`}>
             <Paragraph color="$accentColor" textAlign="center" fontSize="$3">
               Forgot password?
             </Paragraph>
@@ -88,12 +73,7 @@ export default function LoginScreen() {
           Log in
         </ButtonCTA>
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link
-            href={{
-              pathname: "/auth/username-bridge",
-              params: { next },
-            }}
-          >
+          <Link href={"/auth/username-bridge"}>
             <Paragraph textAlign="center" fontSize="$3">
               Don't have an account?
               <Paragraph color="$accentColor" fontSize="$3">

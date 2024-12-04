@@ -68,7 +68,6 @@ const portfolioLinks = [
 ];
 
 const PlayForm = React.memo(() => {
-  const toast = useToastController();
   const { mutate, isPending } = useSubmitPlay();
   const methods = useForm<FormValues>({
     resolver: yupResolver(playSchema),
@@ -87,17 +86,7 @@ const PlayForm = React.memo(() => {
   const onSubmit = async (data: FormValues) => {
     mutate(data, {
       onSuccess: () => {
-        toast.show("Application Submitted", {
-          message: "Your play info has been submitted successfully!",
-          variant: "success",
-        });
         methods.reset();
-      },
-      onError: (error) => {
-        toast.show("Submission Failed", {
-          message: error instanceof Error ? error.message : "An error occurred",
-          variant: "error",
-        });
       },
     });
   };
