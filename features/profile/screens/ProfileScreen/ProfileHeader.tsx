@@ -24,7 +24,7 @@ export const ProfileHeader = ({ userData }: ProfileHeaderProps) => (
         {userData?.username || "Guest"}
       </SizableText>
       <SizableText fontSize="$4" color="$gray10Light">
-        {userData?.auth.email || "Not logged in"}
+        {userData?.auth?.email || "Not logged in"}
       </SizableText>
     </YStack>
   </XStack>
