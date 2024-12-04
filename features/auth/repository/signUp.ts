@@ -18,9 +18,9 @@ export const signUp = async ({
 }: SignUpSchemaType) => {
   let userCredential;
 
-  // if (!agreeTos) {
-  //   throw new Error("You must agree to the Terms of Service");
-  // }
+  if (!agreeTos) {
+    throw new Error("You must agree to the Terms of Service");
+  }
 
   try {
     userCredential = await createUserWithEmailAndPassword(
@@ -81,9 +81,9 @@ export const signUp = async ({
     }
 
     // Rethrow with more specific error messages
-    // if (error instanceof Error) {
-    //   throw new Error(`Signup failed: ${error.message}`);
-    // }
+    if (error instanceof Error) {
+      throw new Error(`Signup failed: ${error.message}`);
+    }
     throw error;
   }
 };

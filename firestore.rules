@@ -36,7 +36,7 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isCurrentUser(userId) || isAdmin();
-      allow create, update: if isCurrentUser(userId) && request.resource.data.settings.agreeTos==true;
+      allow create, update: if isCurrentUser(userId);
       allow delete: if isCurrentUser(userId) || isAdmin();
     }
 

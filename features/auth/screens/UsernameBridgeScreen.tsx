@@ -46,7 +46,7 @@ export default function UsernameBridgeScreen() {
   const onSubmit = async (data: UsernameBridgeSchemaType) => {
     try {
       setIsLoading(true);
-      const usernameAvailable = true;
+      const usernameAvailable = await isUsernameAvailable(data.username);
 
       if (usernameAvailable) {
         router.push("/auth/signup");

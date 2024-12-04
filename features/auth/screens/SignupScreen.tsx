@@ -33,7 +33,7 @@ export default function SignupScreen() {
   }>();
 
   const methods = useForm<SignUpSchemaType>({
-    // resolver: yupResolver(signUpSchema),
+    resolver: yupResolver(signUpSchema),
     shouldFocusError: true,
     defaultValues: {
       ...signUpSchema.getDefault(),
