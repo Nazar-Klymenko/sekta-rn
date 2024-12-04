@@ -7,8 +7,6 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { emailSchema } from "@/utils/validationSchemas";
-
 import { Paragraph, YStack } from "tamagui";
 
 import { Link, useRouter } from "expo-router";
