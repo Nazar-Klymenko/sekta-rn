@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 
 import { db } from "@/lib/firebase/firebase";
 
 const checkUsernameAvailability = async (
-  username: string,
+  username: string
 ): Promise<boolean> => {
-  const q = query(
-    collection(db, "users"),
-    where("username", "==", username),
-    limit(1),
-  );
-
-  const querySnapshot = await getDocs(q);
-  return querySnapshot.empty;
+  const q = doc(collection(db, "usernames"), username.toLowerCase());
+  const docSnapshot = await getDoc(q);
+  return !docSnapshot.exists();
 };
 
 export const useUsernameAvailability = (username: string) => {

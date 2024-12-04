@@ -1,13 +1,33 @@
-export interface User {
-  id: string;
+import { FieldValue, Timestamp } from "firebase/firestore";
+
+interface AuthData {
   email: string;
-  username: string;
-  fullName?: string;
-  theme?: "dark" | "light";
-  language?: "pl" | "en" | "ru" | "ua";
+  emailVerified: boolean;
+}
+
+interface UserSettings {
   agreeTos: boolean;
-  agreeEmail?: boolean;
-  status?: "active" | "pending_deletion" | "deleted";
-  deletionRequestedAt?: Date;
-  isAdmin?: boolean;
+  agreeEmail: boolean;
+}
+
+interface BaseUser {
+  uid: string;
+  username: string;
+  auth: AuthData;
+  settings: UserSettings;
+  isAdmin: boolean;
+}
+
+export interface FirestoreUser extends BaseUser {
+  metadata: {
+    createdAt: FieldValue;
+    updatedAt: FieldValue;
+  };
+}
+
+export interface DisplayUser extends BaseUser {
+  metadata: {
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
+  };
 }

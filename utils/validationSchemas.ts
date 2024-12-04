@@ -5,7 +5,8 @@ export const emailSchema = yup
   .string()
   .required("Email is required")
   .email("Invalid email")
-  .trim();
+  .trim()
+  .default("");
 
 export const usernameSchema = yup
   .string()
@@ -14,16 +15,17 @@ export const usernameSchema = yup
   .max(20, "Username must be 20 characters at most")
   .matches(
     /^[a-z0-9_]+$/,
-    "Username can only contain letters, numbers, and underscores",
+    "Username can only contain letters, numbers, and underscores"
   )
   .lowercase()
-  .trim();
-
+  .trim()
+  .default("");
 export const passwordSchema = yup
   .string()
   .required("Password is required")
   .min(8, "Password must be at least 8 characters")
   .matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]{8,}$/,
-    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-  );
+    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+  )
+  .default("");

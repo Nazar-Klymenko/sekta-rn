@@ -6,6 +6,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
+
 import { emailSchema } from "@/utils/validationSchemas";
 
 import { Paragraph, YStack } from "tamagui";
@@ -13,15 +14,9 @@ import { Paragraph, YStack } from "tamagui";
 import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const loginSchema = yup.object().shape({
-  email: emailSchema,
-  password: yup.string().required("Password is required"),
-});
-type FormValues = yup.InferType<typeof loginSchema>;
+import { LoginSchemaType, loginSchema } from "../utils/schemas";
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
@@ -30,13 +25,12 @@ export default function LoginScreen() {
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      ...loginSchema.getDefault(),
     },
     mode: "onTouched",
   });
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: LoginSchemaType) => {
     mutate(
       { email: data.email, password: data.password },
       {

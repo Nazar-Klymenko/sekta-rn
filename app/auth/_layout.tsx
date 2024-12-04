@@ -2,6 +2,7 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { UsernameProvider } from "@/features/auth/context/UsernameContext";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 
@@ -18,7 +19,7 @@ export default function AuthLayout() {
   }
 
   if (isAuthenticated) {
-    return <Redirect href={"/"} />;
+    return <Redirect href={"../"} />;
   }
 
   if (Platform.OS === "web") {
@@ -26,54 +27,51 @@ export default function AuthLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: theme.background.get(),
-        },
-        headerTintColor: theme.color.get(),
-      }}
-    >
-      <Stack.Screen
-        name="username-bridge"
-        options={{
-          headerShown: true || Platform.OS !== "web",
-          title: "Create username",
-          animation: "fade_from_bottom",
+    <UsernameProvider>
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: theme.background.get(),
+          },
+          headerTintColor: theme.color.get(),
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "LeagueSpartan_700Bold",
+            fontSize: 25,
+          },
         }}
-      />
-      <Stack.Screen
-        name="login"
-        options={{
-          headerShown: true || Platform.OS !== "web",
-          title: "Log in",
-          animation: "fade_from_bottom",
-        }}
-      />
-      <Stack.Screen
-        name="signup"
-        options={{
-          headerShown: true || Platform.OS !== "web",
-          title: "Sign Up",
-          animation: "fade_from_bottom",
-        }}
-      />
-      <Stack.Screen
-        name="forgot-password"
-        options={{
-          headerShown: true || Platform.OS !== "web",
-          title: "Forgot Password",
-          animation: "fade_from_bottom",
-        }}
-      />
-      <Stack.Screen
-        name="forgot-password-success"
-        options={{
-          headerShown: true || Platform.OS !== "web",
-          title: "Password recovery email sent!",
-          animation: "fade_from_bottom",
-        }}
-      />
-    </Stack>
+      >
+        <Stack.Screen
+          name="username-bridge"
+          options={{
+            title: "Create Username",
+          }}
+        />
+        <Stack.Screen
+          name="login"
+          options={{
+            title: "Log in",
+          }}
+        />
+        <Stack.Screen
+          name="signup"
+          options={{
+            title: "Sign Up",
+          }}
+        />
+        <Stack.Screen
+          name="forgot-password"
+          options={{
+            title: "Forgot Password",
+          }}
+        />
+        <Stack.Screen
+          name="forgot-password-success"
+          options={{
+            title: "Password recovery email sent!",
+          }}
+        />
+      </Stack>
+    </UsernameProvider>
   );
 }

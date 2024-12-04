@@ -2,24 +2,32 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Helper Functions
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    function isOwner(userId) {
+    function isCurrentUser(userId) {
       return isAuthenticated() && request.auth.uid == userId;
     }
-    
+
     function isAdmin() {
       let userId = request.auth.uid;
+      // Add exists() check to prevent errors if user document doesn't exist
       let userDoc = get(/databases/$(database)/documents/users/$(userId));
-      return isAuthenticated() && userDoc != null && userDoc.data.isAdmin == true;
+      return isAuthenticated() 
+        && exists(/databases/$(database)/documents/users/$(userId))
+        && userDoc.data.isAdmin == true;
     }
-    
-    function isValidData(data) {
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function isValidMetadata(data) {
       return data.keys().hasAll(['createdAt', 'updatedAt']) 
-             && data.createdAt is timestamp 
-             && data.updatedAt is timestamp;
+        && data.createdAt is timestamp 
+        && data.updatedAt is timestamp;
     }
 
     function isValidString(field) {
@@ -27,33 +35,25 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow read: if true;
-      
-      allow create: if isAuthenticated() 
-        && request.auth.uid == userId
-        && request.resource.data.keys().hasAll(['email', 'username', 'createdAt', 'updatedAt'])
-        && request.resource.data.email == request.auth.token.email
-        && isValidString(request.resource.data.username)
-        && !request.resource.data.keys().hasAny(['isAdmin']); // Prevent setting admin status
-
-      allow update: if isOwner(userId)
-        && isValidData(request.resource.data)
-        && request.resource.data.email == request.auth.token.email
-        && isValidString(request.resource.data.username)
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin']) 
-            || isAdmin()); // Only admins can change admin status
-
-      allow delete: if isAdmin();
+      allow read: if isCurrentUser(userId) || isAdmin();
+      allow create, update: if isCurrentUser(userId);
+      allow delete: if isCurrentUser(userId) || isAdmin();
     }
-     
+
+    match /usernames/{username} {
+      allow read: if true;
+      allow create: if request.auth != null && !exists(/databases/$(database)/documents/usernames/$(username));
+      allow delete: if userDoc().data.username == username;
+      allow update: if false;
+    }
+
     match /events/{eventId} {
       allow read: if true;
-      
+
       allow create, update: if isAdmin()
-        && isValidData(request.resource.data)
+        && isValidMetadata(request.resource.data)
         && isValidString(request.resource.data.title)
         && isValidString(request.resource.data.caption)
-        && request.resource.data.price is number
         && request.resource.data.date is timestamp;
 
       allow delete: if isAdmin();
@@ -61,7 +61,8 @@ service cloud.firestore {
 
     match /play/{playId} {
       allow read: if isAdmin(); 
-      allow write: if true;
+      allow write: if isAuthenticated();
+      allow delete: if isAdmin(); 
     }
   }
 }

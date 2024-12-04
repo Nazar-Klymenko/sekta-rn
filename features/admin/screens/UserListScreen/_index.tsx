@@ -11,7 +11,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Pagination } from "@/features/core/components/navigation/Pagination";
 import { Table } from "@/features/core/components/tables/Table";
 import { useUsers } from "@/features/users/hooks/useUsers";
-import { User } from "@/features/users/models/User";
+import { DisplayUser } from "@/features/users/models/User";
 
 import { Check, Minus, Search, Trash2 } from "@tamagui/lucide-icons";
 
@@ -25,7 +25,7 @@ import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<DisplayUser>();
 
 const searchSchema = yup.object().shape({
   searchQuery: yup.string(),
@@ -56,26 +56,17 @@ export default function UserListScreen() {
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
     }),
-    columnHelper.accessor("email", {
+    columnHelper.accessor("auth.email", {
       header: "Email",
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
     }),
-    columnHelper.accessor("fullName", {
-      header: "Full Name",
-      cell: (info) => info.getValue() || "-",
-      sortingFn: "alphanumeric",
-    }),
-    columnHelper.accessor("language", {
-      header: "Language",
-      cell: (info) => info.getValue() || "-",
-      sortingFn: "alphanumeric",
-    }),
-    columnHelper.accessor("agreeTos", {
+
+    columnHelper.accessor("settings.agreeTos", {
       header: "Agree ToS",
       cell: (info) => (info.getValue() ? "✓" : "-"),
     }),
-    columnHelper.accessor("agreeEmail", {
+    columnHelper.accessor("settings.agreeEmail", {
       header: "Agree Email",
       cell: (info) => (info.getValue() ? "✓" : "-"),
     }),
