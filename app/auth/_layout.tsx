@@ -20,8 +20,8 @@ export default function AuthLayout() {
   }
 
   if (isAuthenticated) {
-    const validNext: Href = next ? (decodeURIComponent(next) as Href) : "/";
-    return <Redirect href={validNext} />;
+    // const validNext: Href = next ? (decodeURIComponent(next) as Href) : "/";
+    return <Redirect href={"../"} />;
   }
 
   if (Platform.OS === "web") {

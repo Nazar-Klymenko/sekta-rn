@@ -1,6 +1,8 @@
 import {
   User,
+  UserCredential,
   createUserWithEmailAndPassword,
+  deleteUser,
   sendEmailVerification,
 } from "firebase/auth";
 import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
@@ -16,59 +18,21 @@ export const signUp = async ({
   username,
   agreeTos,
   agreeEmail = false,
-}: SignUpSchemaType): Promise<User> => {
-  // Validate username format before even trying
-  const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
-  if (!usernameRegex.test(username)) {
-    throw new Error(
-      "Invalid username format. Use 3-30 characters, letters, numbers or _"
-    );
-  }
+}: SignUpSchemaType) => {
+  let userCredential: UserCredential | null = null;
+  const usernameDocRef = doc(db, "usernames", username);
 
-  if (!agreeTos) {
-    throw new Error("You must agree to the Terms of Service");
-  }
-
-  let userCredential;
+  userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const user = userCredential.user;
   try {
-    // First create the authentication user
-    userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-
-    // Run transaction to create user documents
     await runTransaction(db, async (transaction) => {
-      // Check if username is already taken
-      const usernameDocRef = doc(db, "usernames", username.toLowerCase());
-      const usernameDoc = await transaction.get(usernameDocRef);
-
-      if (usernameDoc.exists()) {
-        throw new Error("Username already taken");
-      }
-
-      // Get user document reference
       const userDocRef = doc(db, "users", user.uid);
-      const userDoc = await transaction.get(userDocRef);
 
-      if (userDoc.exists()) {
-        throw new Error("User document already exists");
-      }
-
-      const timestamp = serverTimestamp();
-
-      if (!user.email) {
-        throw new Error("Email is required but not provided");
-      }
-
-      // Create user document
       const userData: FirestoreUser = {
         uid: user.uid,
-        username,
+        username: username,
         auth: {
-          email: user.email,
+          email: user.email || "",
           emailVerified: false,
         },
         settings: {
@@ -76,30 +40,23 @@ export const signUp = async ({
           agreeEmail,
         },
         metadata: {
-          createdAt: timestamp,
-          updatedAt: timestamp,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
         },
         isAdmin: false,
       };
+      const usernameData = {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
 
-      // Set both documents
       transaction.set(userDocRef, userData);
-      transaction.set(usernameDocRef, {});
+      transaction.set(usernameDocRef, usernameData);
     });
-
-    // Send email verification after successful transaction
     await sendEmailVerification(user);
-
-    return user;
   } catch (error) {
-    // If anything fails after auth user creation, clean up
     if (userCredential?.user) {
-      await userCredential.user.delete();
-    }
-
-    // Rethrow with more specific error messages
-    if (error instanceof Error) {
-      throw new Error(`Signup failed: ${error.message}`);
+      await deleteUser(userCredential.user);
     }
     throw error;
   }
