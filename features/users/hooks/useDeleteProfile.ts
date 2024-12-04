@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
-
-import { deleteProfile } from "../api/deleteProfile";
+import { deleteProfile } from "@/features/users/api/deleteProfile";
 
 export const useDeleteProfile = () => {
   const queryClient = useQueryClient();

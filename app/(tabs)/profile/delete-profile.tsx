@@ -1,3 +1,3 @@
-import DeleteProfileScreen from "@/features/profile/screens/DeleteProfileScreen";
+import DeleteProfileScreen from "@/features/users/screens/DeleteProfileScreen";
 
 export default DeleteProfileScreen;

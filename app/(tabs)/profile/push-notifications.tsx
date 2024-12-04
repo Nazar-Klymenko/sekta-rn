@@ -1,3 +1,3 @@
-import PushNotificationScreen from "@/features/profile/screens/PushNotificationsScreen";
+import PushNotificationScreen from "@/features/users/screens/PushNotificationsScreen";
 
 export default PushNotificationScreen;
