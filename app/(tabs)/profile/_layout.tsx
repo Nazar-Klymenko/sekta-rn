@@ -47,14 +47,6 @@ export default function HomeLayout() {
             ),
         })}
       />
-
-      <Stack.Screen
-        name="change-username"
-        redirect={!isAuthenticated}
-        options={{
-          title: "Change username",
-        }}
-      />
       <Stack.Screen
         name="change-password"
         redirect={!isAuthenticated}

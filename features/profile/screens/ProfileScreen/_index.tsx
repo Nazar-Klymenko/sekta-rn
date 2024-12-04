@@ -52,11 +52,6 @@ export default function ProfileScreen() {
 
             <SectionTitle>Account</SectionTitle>
             <MenuItem
-              title="Change username"
-              onPress={() => router.navigate("/profile/change-username")}
-              icon={User2}
-            />
-            <MenuItem
               title="Change Password"
               onPress={() => router.navigate("/profile/change-password")}
               icon={Lock}
