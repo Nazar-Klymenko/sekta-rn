@@ -11,34 +11,49 @@ export interface EventImageFile {
   uri: string;
 }
 
-interface EventTimestamps<T> {
-  createdAt: T;
-  updatedAt: T;
-  deletedAt: T | null;
-}
-
-interface EventBase<TImage, TDate> {
+export interface CommonEventFields {
   title: string;
-  title_lowercase: string;
   caption: string;
-  date: TDate;
   location: string;
   price: number;
   genres: string[];
   lineup: string[];
-  image: TImage;
 }
 
-export type DisplayEvent = EventBase<EventImage, Timestamp> &
-  EventTimestamps<Timestamp> & { id: string };
+export interface EventTimestamps {
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  deletedAt: Timestamp | null;
+}
 
-export type DocumentEvent = EventBase<EventImage, FieldValue> &
-  EventTimestamps<FieldValue>;
+export interface EventDocumentTimestamps {
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
+  deletedAt: FieldValue | null;
+}
+export interface DocumentEventBase
+  extends CommonEventFields,
+    EventDocumentTimestamps {
+  title_lowercase: string;
+  date: FieldValue;
+  image: EventImage;
+}
 
-export interface EventForm
-  extends Omit<EventBase<EventImageFile, Date>, "title_lowercase"> {}
+//final intefaces
+export interface DisplayEvent extends CommonEventFields, EventTimestamps {
+  id: string;
+  title_lowercase: string;
+  date: Timestamp;
+  image: EventImage;
+}
 
-export interface EventCreateDocument extends Omit<DocumentEvent, "deletedAt"> {}
+export interface EventForm extends CommonEventFields {
+  date: Date;
+  image: EventImageFile;
+}
+
+export interface EventCreateDocument
+  extends Omit<DocumentEventBase, "deletedAt"> {}
 
 export interface EventUpdateDocument
-  extends Omit<DocumentEvent, "createdAt" | "deletedAt"> {}
+  extends Omit<DocumentEventBase, "createdAt" | "deletedAt"> {}
