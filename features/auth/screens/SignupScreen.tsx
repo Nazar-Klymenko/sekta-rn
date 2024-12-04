@@ -12,7 +12,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { SizableText, YStack } from "tamagui";
 
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,27 +20,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpSchemaType, signUpSchema } from "../utils/schemas";
 
 export default function SignupScreen() {
-  const router = useRouter();
-
+  const { mutate, isPending } = useSignUp();
   const { tempUsername } = useUsername();
 
-  const methods = useForm<SignUpSchemaType>({
+  const methods = useForm({
     resolver: yupResolver(signUpSchema),
-    shouldFocusError: true,
     defaultValues: {
       ...signUpSchema.getDefault(),
       username: tempUsername,
     },
+    shouldFocusError: true,
   });
   const { handleSubmit, watch } = methods;
-  const { mutate, isPending } = useSignUp();
 
   const onSubmit = (data: SignUpSchemaType) => {
-    mutate(data, {
-      onSuccess: () => {
-        router.replace("../");
-      },
-    });
+    mutate(data);
   };
 
   return (
