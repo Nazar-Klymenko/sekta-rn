@@ -38,9 +38,8 @@ type FormValues = yup.InferType<typeof signUpSchema>;
 
 export default function SignupScreen() {
   const router = useRouter();
-  const { username = "", next = "/" } = useLocalSearchParams<{
+  const { username = "" } = useLocalSearchParams<{
     username: string;
-    next: "/";
   }>();
 
   const methods = useForm<FormValues>({
@@ -58,11 +57,7 @@ export default function SignupScreen() {
   const onSubmit = (data: FormValues) => {
     mutate(data, {
       onSuccess: () => {
-        if (next) {
-          router.replace({ pathname: next });
-        } else {
-          router.replace("/");
-        }
+        router.replace("../");
       },
     });
   };
@@ -120,7 +115,7 @@ export default function SignupScreen() {
         </YStack>
 
         <YStack alignItems="center" padding="$4">
-          <Link href={`/auth/login?next=${next}`}>
+          <Link href={`/auth/login`}>
             <Paragraph textAlign="center">
               Already have an account?
               <Paragraph color="$accentColor"> Log in</Paragraph>

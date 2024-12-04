@@ -21,7 +21,7 @@ export default function PlayScreen() {
   const router = useRouter();
 
   const handleLogin = useCallback(() => {
-    router.push(`/auth/login?next=${pathname}`);
+    router.push(`/auth/login`);
   }, [router, pathname]);
 
   return (

@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useUsernameAvailability } from "@/features/auth/hooks/useUsernameAvailability";
 import { HelloWave } from "@/features/core/components/HelloWave";
@@ -14,7 +14,7 @@ import { Info } from "@tamagui/lucide-icons";
 
 import { H1, Paragraph, XStack, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -32,9 +32,6 @@ const TEMP_USERNAME_KEY = "temporaryUsername";
 export default function UsernameBridgeScreen() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { next } = useLocalSearchParams<{
-    next?: string;
-  }>();
 
   const methods = useForm<FormValues>({
       resolver: yupResolver(usernameBridgeSchema),
@@ -65,7 +62,6 @@ export default function UsernameBridgeScreen() {
           pathname: "/auth/signup",
           params: {
             username: data.username,
-            next: next,
           },
         });
       } else {
@@ -113,7 +109,7 @@ export default function UsernameBridgeScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/login?next=${next}`}>
+          <Link href={`/auth/login`}>
             <Paragraph textAlign="center">
               Already have an account?
               <Paragraph color="$accentColor"> Log in</Paragraph>

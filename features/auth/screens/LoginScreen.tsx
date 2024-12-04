@@ -10,7 +10,7 @@ import { emailSchema } from "@/utils/validationSchemas";
 
 import { Paragraph, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -25,7 +25,6 @@ type FormValues = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
-  const { next } = useLocalSearchParams<{ next: "/" }>();
   const router = useRouter();
 
   const methods = useForm({
@@ -42,11 +41,7 @@ export default function LoginScreen() {
       { email: data.email, password: data.password },
       {
         onSuccess: () => {
-          if (next) {
-            router.replace({ pathname: next });
-          } else {
-            router.replace("/");
-          }
+          router.replace("../");
         },
       }
     );
@@ -69,7 +64,7 @@ export default function LoginScreen() {
           secureTextEntry
         />
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/forgot-password?next=${next}`}>
+          <Link href={`/auth/forgot-password`}>
             <Paragraph color="$accentColor" textAlign="center" fontSize="$3">
               Forgot password?
             </Paragraph>
@@ -84,12 +79,7 @@ export default function LoginScreen() {
           Log in
         </ButtonCTA>
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link
-            href={{
-              pathname: "/auth/username-bridge",
-              params: { next },
-            }}
-          >
+          <Link href={"/auth/username-bridge"}>
             <Paragraph textAlign="center" fontSize="$3">
               Don't have an account?
               <Paragraph color="$accentColor" fontSize="$3">

@@ -8,7 +8,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { H1, SizableText, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
@@ -21,8 +21,6 @@ const forgotPasswordSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordScreen() {
-  const { next } = useLocalSearchParams<{ next?: string }>();
-
   const router = useRouter();
   const methods = useForm<FormValues>({
     resolver: yupResolver(forgotPasswordSchema),
@@ -37,10 +35,7 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (data: FormValues) => {
     mutate(data.email, {
       onSuccess: () => {
-        router.push({
-          pathname: "/auth/forgot-password-success",
-          params: { next },
-        });
+        router.push("/auth/forgot-password-success");
       },
     });
   };
@@ -69,7 +64,7 @@ export default function ForgotPasswordScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={`/auth/login?next=${next}`}>
+          <Link href={`/auth/login`}>
             <SizableText color="$accentColor" textAlign="center">
               Go back to login
             </SizableText>

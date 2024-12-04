@@ -7,20 +7,18 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 
 import { useTheme } from "tamagui";
 
-import { Href, Redirect, Slot, Stack, useLocalSearchParams } from "expo-router";
+import { Redirect, Slot, Stack } from "expo-router";
 
 export default function AuthLayout() {
   const theme = useTheme();
   const { isAuthenticated, isLoading } = useAuth();
-  const { next } = useLocalSearchParams<{ next?: string }>();
 
   if (isLoading) {
     return <FullPageLoading />;
   }
 
   if (isAuthenticated) {
-    const validNext: Href = next ? (decodeURIComponent(next) as Href) : "/";
-    return <Redirect href={validNext} />;
+    return <Redirect href={"/"} />;
   }
 
   if (Platform.OS === "web") {
