@@ -9,18 +9,10 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import {
-  emailSchema,
-  passwordSchema,
-  usernameSchema,
-} from "@/utils/validationSchemas";
-
-import { H1, Paragraph, YStack } from "tamagui";
-
 
 import { SizableText, YStack } from "tamagui";
 
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,12 +22,7 @@ import { SignUpSchemaType, signUpSchema } from "../utils/schemas";
 export default function SignupScreen() {
   const router = useRouter();
 
-  const toast = useToastController();
   const { tempUsername } = useUsername();
-  const handleFirebaseError = useFirebaseErrorHandler();
-  const { next = "/" } = useLocalSearchParams<{
-    username: string;
-  }>();
 
   const methods = useForm<SignUpSchemaType>({
     resolver: yupResolver(signUpSchema),
@@ -111,6 +98,7 @@ export default function SignupScreen() {
 
         <YStack alignItems="center" padding="$4">
           <Link href={`/auth/login`}>
+            <SizableText>
               Already have an account?
               <SizableText color="$accentColor"> Log in</SizableText>
             </SizableText>

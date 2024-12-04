@@ -22,7 +22,6 @@ import {
 
 export default function UsernameBridgeScreen() {
   const router = useRouter();
-  const { next } = useLocalSearchParams<{ next?: string }>();
   const { tempUsername, setTempUsername } = useUsername();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,13 +45,11 @@ export default function UsernameBridgeScreen() {
 
   const onSubmit = async (data: UsernameBridgeSchemaType) => {
     try {
-
       setIsLoading(true);
       const usernameAvailable = await isUsernameAvailable(data.username);
 
       if (usernameAvailable) {
         router.push("/auth/signup");
-
       } else {
         setError("username", { message: "Username is taken" });
       }
@@ -90,9 +87,8 @@ export default function UsernameBridgeScreen() {
         </ButtonCTA>
 
         <YStack alignItems="center" padding="$4" gap="$4">
-
           <Link href={`/auth/login`}>
-            <Paragraph textAlign="center">
+            <SizableText textAlign="center">
               Already have an account?
               <SizableText color="$accentColor"> Log in</SizableText>
             </SizableText>
