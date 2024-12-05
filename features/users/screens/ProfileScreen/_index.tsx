@@ -1,13 +1,9 @@
 import React from "react";
 
-import { RefreshControl } from "react-native";
-
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { MenuItem } from "@/features/core/components/buttons/MenuItem";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useUserData } from "@/features/users/hooks/useUserData";
-import { DisplayUser } from "@/features/users/models/User";
 
 import {
   Bell,
@@ -30,21 +26,11 @@ import { VerifyEmail } from "./VerifyEmail";
 
 export default function ProfileScreen() {
   const { user, isAuthenticated } = useAuth();
-  const {
-    data: userData,
-    isLoading,
-    isRefetching,
-    refetch,
-  } = useUserData(user?.uid || "");
   const router = useRouter();
 
   return (
-    <PageContainer
-      refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-      }
-    >
-      <ProfileHeader userData={userData as DisplayUser} isLoading={isLoading} />
+    <PageContainer>
+      <ProfileHeader />
       <VerifyEmail user={user} />
       <YStack gap="$2">
         {isAuthenticated && (

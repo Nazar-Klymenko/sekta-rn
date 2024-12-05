@@ -1,33 +1,41 @@
 import React from "react";
 
 import fallbackImage from "@/assets/images/logo-big.png";
-import { DisplayUser } from "@/features/users/models/User";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { Avatar, SizableText, XStack, YStack } from "tamagui";
 
-interface ProfileHeaderProps {
-  userData: DisplayUser;
-  isLoading: boolean;
-}
+export function ProfileHeader() {
+  const { displayUser, isLoading } = useAuth();
 
-export function ProfileHeader({ userData, isLoading }: ProfileHeaderProps) {
-  let context;
+  let content;
   if (isLoading) {
-    context = (
+    content = (
       <YStack>
         <SizableText fontSize="$6" fontWeight={700}>
           Setting up your profile...
         </SizableText>
       </YStack>
     );
-  } else {
-    context = (
+  } else if (displayUser) {
+    content = (
       <YStack>
         <SizableText fontSize="$6" fontWeight={700}>
-          {userData?.username || "Guest"}
+          {displayUser.username}
         </SizableText>
         <SizableText fontSize="$4" color="$gray10Light">
-          {userData?.auth?.email || "Not logged in"}
+          {displayUser.auth.email}
+        </SizableText>
+      </YStack>
+    );
+  } else {
+    content = (
+      <YStack>
+        <SizableText fontSize="$6" fontWeight={700}>
+          Guest
+        </SizableText>
+        <SizableText fontSize="$4" color="$gray10Light">
+          Not logged in
         </SizableText>
       </YStack>
     );
@@ -42,7 +50,7 @@ export function ProfileHeader({ userData, isLoading }: ProfileHeaderProps) {
       >
         <Avatar.Image src={fallbackImage} />
       </Avatar>
-      {context}
+      {content}
     </XStack>
   );
 }
