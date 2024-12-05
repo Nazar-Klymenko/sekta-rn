@@ -1,3 +1,3 @@
-import EmailNotificationScreen from "@/features/profile/screens/EmailNotificationsScreen";
+import EmailNotificationScreen from "@/features/users/screens/EmailNotificationsScreen";
 
 export default EmailNotificationScreen;

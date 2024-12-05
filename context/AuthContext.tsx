@@ -1,6 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
-import React, { ReactNode, createContext, useEffect } from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 
 import { User, onIdTokenChanged } from "firebase/auth";
 
@@ -20,30 +18,25 @@ const ANONYMOUS_USER: AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>(ANONYMOUS_USER);
 
-const USER_QUERY_KEY = ["user"];
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const queryClient = useQueryClient();
-
-  const { data: user = null, isLoading } = useQuery({
-    queryKey: USER_QUERY_KEY,
-    queryFn: () => auth.currentUser,
-    staleTime: Infinity,
-    retry: false,
-  });
+  const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     try {
       const unsubscribe = onIdTokenChanged(auth, (user) => {
-        queryClient.setQueryData(USER_QUERY_KEY, user);
+        setUser(user);
+        setIsLoading(false);
       });
+
       return () => {
         unsubscribe();
       };
     } catch (error) {
       console.error("Failed to subscribe to auth changes:", error);
+      setIsLoading(false);
     }
-  }, [queryClient]);
+  }, []);
 
   const contextValue = React.useMemo<AuthContextType>(
     () => ({

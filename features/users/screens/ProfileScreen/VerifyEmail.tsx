@@ -3,7 +3,7 @@ import React from "react";
 import { User } from "firebase/auth";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
-import { useVerifyEmail } from "@/features/profile/hooks/useVerifyEmail";
+import { useVerifyEmail } from "@/features/users/hooks/useVerifyEmail";
 
 import { Mail } from "@tamagui/lucide-icons";
 

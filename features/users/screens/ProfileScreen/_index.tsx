@@ -7,6 +7,7 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { MenuItem } from "@/features/core/components/buttons/MenuItem";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useUserData } from "@/features/users/hooks/useUserData";
+import { DisplayUser } from "@/features/users/models/User";
 
 import {
   Bell,
@@ -16,7 +17,6 @@ import {
   Mail,
   ShieldCheck,
   Trash2,
-  User2,
 } from "@tamagui/lucide-icons";
 
 import { Separator, YStack } from "tamagui";
@@ -32,6 +32,7 @@ export default function ProfileScreen() {
   const { user, isAuthenticated } = useAuth();
   const {
     data: userData,
+    isLoading,
     isRefetching,
     refetch,
   } = useUserData(user?.uid || "");
@@ -43,7 +44,7 @@ export default function ProfileScreen() {
         <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
       }
     >
-      <ProfileHeader userData={userData} />
+      <ProfileHeader userData={userData as DisplayUser} isLoading={isLoading} />
       <VerifyEmail user={user} />
       <YStack gap="$2">
         {isAuthenticated && (
@@ -51,11 +52,6 @@ export default function ProfileScreen() {
             <Separator />
 
             <SectionTitle>Account</SectionTitle>
-            <MenuItem
-              title="Change username"
-              onPress={() => router.navigate("/profile/change-username")}
-              icon={User2}
-            />
             <MenuItem
               title="Change Password"
               onPress={() => router.navigate("/profile/change-password")}

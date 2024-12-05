@@ -1,8 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
-
-import { changePassword } from "../api/changePassword";
+import { changePassword } from "@/features/users/api/changePassword";
 
 export function useChangePassword() {
   const handleToastMessage = useOperationStatusHelper();

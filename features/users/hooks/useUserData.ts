@@ -1,20 +1,22 @@
-// useUserData.ts
 import { useQuery } from "@tanstack/react-query";
 
-import { DisplayUser } from "@/features/users/models/User";
+import { doc, getDoc } from "firebase/firestore";
 
-import { getUserData } from "../repository/getUserData";
+import { DisplayUser } from "@/features/users/models/User";
+import { db } from "@/lib/firebase/firebase";
 
 export const useUserData = (userId: string) => {
-  const result = useQuery<DisplayUser | null, Error>({
-    queryKey: ["userData", userId],
-    queryFn: () => getUserData(userId),
-    enabled: !!userId,
-    retry: false,
-  });
+  return useQuery({
+    queryKey: ["user", userId],
+    queryFn: async () => {
+      const docRef = doc(db, "users", userId);
 
-  return {
-    ...result,
-    data: result.data ?? null,
-  };
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data() as DisplayUser;
+      }
+      throw new Error("User document not found after multiple attempts");
+    },
+    retry: true,
+  });
 };

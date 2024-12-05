@@ -1,16 +1,7 @@
-import { User, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "@/lib/firebase/firebase";
 
-export const signIn = async (
-  email: string,
-  password: string,
-): Promise<User> => {
-  const userCredential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password,
-  );
-  const token = await userCredential.user.getIdToken();
-  return userCredential.user;
+export const signIn = async (email: string, password: string) => {
+  await signInWithEmailAndPassword(auth, email, password);
 };

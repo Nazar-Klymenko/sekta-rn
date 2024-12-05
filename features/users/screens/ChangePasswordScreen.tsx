@@ -5,7 +5,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { useChangePassword } from "@/features/profile/hooks/useChangePassword";
+import { useChangePassword } from "@/features/users/hooks/useChangePassword";
 import { passwordSchema } from "@/utils/validationSchemas";
 
 import { useForm } from "react-hook-form";

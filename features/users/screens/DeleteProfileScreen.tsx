@@ -10,6 +10,7 @@ import { Form } from "@/features/core/components/form/Form";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Sheet } from "@/features/core/components/panels/Sheet";
+import { useDeleteProfile } from "@/features/users/hooks/useDeleteProfile";
 
 import { UserRoundX } from "@tamagui/lucide-icons";
 import { useToastController } from "@tamagui/toast";
@@ -21,8 +22,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { useDeleteProfile } from "../hooks/useDeleteProfile";
 
 const deleteProfileSchema = yup.object().shape({
   password: yup

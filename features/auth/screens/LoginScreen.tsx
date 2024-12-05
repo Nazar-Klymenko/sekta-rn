@@ -9,7 +9,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import { Paragraph, YStack } from "tamagui";
 
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,7 +18,6 @@ import { LoginSchemaType, loginSchema } from "../utils/schemas";
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
-  const router = useRouter();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -29,14 +28,7 @@ export default function LoginScreen() {
   });
 
   const onSubmit = async (data: LoginSchemaType) => {
-    mutate(
-      { email: data.email, password: data.password },
-      {
-        onSuccess: () => {
-          router.replace("../");
-        },
-      }
-    );
+    mutate(data);
   };
 
   return (
