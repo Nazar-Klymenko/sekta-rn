@@ -1,50 +1,75 @@
-import React, { ReactNode, createContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { User, onIdTokenChanged } from "firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
 
-import { auth } from "@/lib/firebase/firebase";
+import { DisplayUser } from "@/features/users/models/User";
+import { auth, db } from "@/lib/firebase/firebase";
 
 export type AuthContextType = {
   user: User | null;
+  displayUser: DisplayUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
 };
 
-const ANONYMOUS_USER: AuthContextType = {
-  user: null,
-  isLoading: true,
-  isAuthenticated: false,
-} as const;
-
-export const AuthContext = createContext<AuthContextType>(ANONYMOUS_USER);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [displayUser, setdisplayUser] = useState<DisplayUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const unsubscribe = onIdTokenChanged(auth, (user) => {
-        setUser(user);
+    const unsubscribeAuth = onIdTokenChanged(auth, (user) => {
+      setUser(user);
+      if (!user) {
+        setdisplayUser(null);
         setIsLoading(false);
-      });
+      }
+    });
 
-      return () => {
-        unsubscribe();
-      };
-    } catch (error) {
-      console.error("Failed to subscribe to auth changes:", error);
-      setIsLoading(false);
-    }
+    return () => unsubscribeAuth();
   }, []);
 
-  const contextValue = React.useMemo<AuthContextType>(
+  useEffect(() => {
+    let unsubscribeFirestore: () => void;
+
+    if (user) {
+      unsubscribeFirestore = onSnapshot(
+        doc(db, "users", user.uid),
+        (doc) => {
+          setdisplayUser(doc.exists() ? (doc.data() as DisplayUser) : null);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.error("Error fetching user document:", error);
+          setIsLoading(false);
+        }
+      );
+    }
+
+    return () => {
+      if (unsubscribeFirestore) {
+        unsubscribeFirestore();
+      }
+    };
+  }, [user]);
+
+  const contextValue = useMemo<AuthContextType>(
     () => ({
       user,
+      displayUser,
       isLoading,
       isAuthenticated: !!user,
     }),
-    [user, isLoading]
+    [user, displayUser, isLoading]
   );
 
   return (

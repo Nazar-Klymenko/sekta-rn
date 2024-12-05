@@ -12,13 +12,13 @@ import { Redirect, Slot, Stack } from "expo-router";
 
 export default function AuthLayout() {
   const theme = useTheme();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, displayUser, isLoading } = useAuth();
 
   if (isLoading) {
     return <FullPageLoading />;
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && displayUser) {
     return <Redirect href={"../"} />;
   }
 
