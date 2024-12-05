@@ -20,31 +20,24 @@ export interface CommonEventFields {
   lineup: string[];
 }
 
-export interface EventTimestamps {
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  deletedAt: Timestamp | null;
-}
-
-export interface EventDocumentTimestamps {
+export interface DocumentEventBase extends CommonEventFields {
+  title_lowercase: string;
+  date: FieldValue;
+  image: EventImage;
   createdAt: FieldValue;
   updatedAt: FieldValue;
   deletedAt: FieldValue | null;
 }
-export interface DocumentEventBase
-  extends CommonEventFields,
-    EventDocumentTimestamps {
-  title_lowercase: string;
-  date: FieldValue;
-  image: EventImage;
-}
 
 //final intefaces
-export interface DisplayEvent extends CommonEventFields, EventTimestamps {
+export interface DisplayEvent extends CommonEventFields {
   id: string;
   title_lowercase: string;
   date: Timestamp;
   image: EventImage;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  deletedAt: Timestamp | null;
 }
 
 export interface EventForm extends CommonEventFields {
