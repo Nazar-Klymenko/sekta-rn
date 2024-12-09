@@ -3,7 +3,7 @@ import React from "react";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { XStack, YStack } from "tamagui";
+import { H1, XStack, YStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -28,18 +28,20 @@ export default function WebEventListScreen() {
   if (isLoading) return <FullPageLoading />;
 
   return (
-    <PageContainer>
-      <XStack flex={1} gap="$4" flexWrap="wrap">
+    <PageContainer gap="$4">
+      <H1>Upcoming Events</H1>
+      <GridContainer>
         {data &&
-          data.map((event, idx) => {
-            return (
-              <>
-                <UpcomingEventCard event={event} key={idx} verticalView />
-                <UpcomingEventCard event={event} key={idx} verticalView />
-              </>
-            );
-          })}
-      </XStack>
+          data.map((event, idx) => (
+            <UpcomingEventCard event={event} key={idx} />
+          ))}
+      </GridContainer>
     </PageContainer>
   );
 }
+const GridContainer = styled(XStack, {
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  gap: "$4",
+  width: "100%",
+});

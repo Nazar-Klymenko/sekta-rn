@@ -10,12 +10,16 @@ import { usePushNotifications } from "@/features/core/hooks/usePushNotifications
 
 import { ToastViewport } from "@tamagui/toast";
 
+import { useTheme } from "tamagui";
+
 import { Slot, Stack } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function AppNavigator() {
   const { user } = useAuth();
   const { left, top, right } = useSafeAreaInsets();
+  const theme = useTheme();
+  const bg = theme.background.get();
 
   if (Platform.OS !== "web") {
     usePushNotifications();
@@ -23,8 +27,15 @@ export function AppNavigator() {
 
   if (Platform.OS === "web") {
     return (
-      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        {/* <CustomHeader title="Sekta Selekta" user={user} /> */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          backgroundColor: bg,
+        }}
+      >
+        <CustomHeader title="Sekta Selekta" user={user} />
         <Slot />
         <Footer />
         <CurrentToast />

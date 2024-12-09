@@ -25,14 +25,7 @@ interface UpcomingEventCardProps {
   verticalView?: boolean;
 }
 
-const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
-  event,
-  verticalView,
-}) => {
-  const { width: windowWidth } = useWindowDimensions();
-
-  const cardWidth = (windowWidth - 32) * 0.9;
-
+const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -41,13 +34,13 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   return (
     <CardContainer
-      width={verticalView ? "100%" : cardWidth}
+      width={"100%"}
       onPress={() => router.push(`/events/${event.id}`)}
     >
       <ImageContainer>
         <Image
           source={{ uri: event.image.publicUrl }}
-          width={verticalView ? "100%" : cardWidth}
+          width={"100%"}
           aspectRatio={1}
           borderRadius="$2"
         />
@@ -99,7 +92,14 @@ const CardContainer = styled(YStack, {
   borderRadius: "$2",
   overflow: "hidden",
   marginVertical: 10,
-  maxWidth: 450,
+  flexBasis: "100%",
+  maxWidth: "100%",
+  $gtMd: {
+    maxWidth: "calc(33.333% - 16px)",
+  },
+  $gtSm: {
+    maxWidth: "calc(50% - 16px)",
+  },
 });
 
 const ImageContainer = styled(Stack, {
@@ -109,7 +109,6 @@ const ImageContainer = styled(Stack, {
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
   paddingHorizontal: 4,
-
   gap: 8,
 });
 

@@ -75,7 +75,7 @@ export default function WebEventDetailsScreen() {
           </YStack>
         </YStack>
       </PageContainer>
-      {showBottomButtom && <StickyBottomButton targetDate={event.date} />}
+      {/* {showBottomButtom && <StickyBottomButton targetDate={event.date} />} */}
     </>
   );
 }

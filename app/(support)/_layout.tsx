@@ -1,12 +1,16 @@
 import React from "react";
 
+import { Platform } from "react-native";
+
 import { useTheme } from "tamagui";
 
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
 
 export default function SupportLayout() {
   const theme = useTheme();
-
+  if (Platform.OS === "web") {
+    return <Slot />;
+  }
   return (
     <Stack
       screenOptions={{
