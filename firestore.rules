@@ -24,14 +24,26 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid));
     }
 
-    function isValidMetadata(data) {
-      return data.keys().hasAll(['createdAt', 'updatedAt']) 
-        && data.createdAt is timestamp 
-        && data.updatedAt is timestamp;
+    function isValidTimestamps(timestamps) {
+      return timestamps.createdAt is timestamp 
+        && timestamps.updatedAt is timestamp;
     }
 
     function isValidString(field) {
       return field is string && field.size() <= 1000;
+    }
+
+    function isValidImage(image) {
+      return image.publicUrl is string 
+        && image.path is string 
+        && image.altText is string
+        && isValidTimestamps(image.timestamps)
+    }
+
+    function isValidPrice(price) {
+      return price.type in ['flat'] 
+        && price.amount is number 
+        && price.amount >= 0;
     }
 
     match /users/{userId} {
@@ -51,10 +63,16 @@ service cloud.firestore {
       allow read: if true;
 
       allow create, update: if isAdmin()
-        && isValidMetadata(request.resource.data)
-        && isValidString(request.resource.data.title)
+        && isValidTimestamps(request.resource.data.timestamps)
+        && isValidString(request.resource.data.title.display)
+        && isValidString(request.resource.data.title.lowercase)
         && isValidString(request.resource.data.caption)
-        && request.resource.data.date is timestamp;
+        && request.resource.data.date is timestamp
+        && isValidImage(request.resource.data.image)
+        && isValidPrice(request.resource.data.price)
+        && request.resource.data.genres is list
+        && request.resource.data.lineup is list
+        && request.resource.data.deletedAt == null;
 
       allow delete: if isAdmin();
     }

@@ -1,35 +1,56 @@
-import { Timestamp } from "firebase/firestore";
+import { FieldValue, Timestamp } from "firebase/firestore";
+
+import { Timestamps } from "@/features/core/models/Core";
+
+export interface EventImage {
+  publicUrl: string; // Full URL for display
+  path: string; // Storage path
+  altText: string; // For accessibility
+  timestamps: Timestamps<Timestamp>; // Metadata
+}
+
+interface EventTitle {
+  display: string;
+  lowercase: string;
+}
+
+interface FlatEventPrice {
+  type: "flat";
+  amount: number;
+}
+
+// interface ConditionalEventPrice {
+//   type: "conditional";
+//   price: {
+//     from: Date | string | null;
+//     to: Date | string | null;
+//     amount: number;
+//   }[];
+// }
+
+export type EventPrice = FlatEventPrice; //| ConditionalEventPrice;
 
 // Base interface for common fields
 export interface BaseEvent {
-  title: string;
+  uid: string;
+  image: EventImage;
+  title: EventTitle;
   caption: string;
-  date: Date | Timestamp;
+  date: Timestamp;
   location: string;
-  price: number;
+  price: EventPrice;
   genres: string[];
   lineup: string[];
+  deletedAt: Timestamp | null;
+  metadata: Record<string, any>;
 }
 
 // Interface for form data
-export interface EventFormData extends BaseEvent {
-  date: Date; // Override to be specifically Date for forms
+export interface FirestoreEvent extends BaseEvent {
+  timestamps: Timestamps<FieldValue>;
 }
-export interface EventImage {
-  id: string;
-  publicUrl: string;
-  path: string;
-  altText: string;
-}
+
 // Interface for stored data
-export interface Event extends Omit<BaseEvent, "date"> {
-  id: string;
-  title_lowercase: string;
-  date: Timestamp; // Override to be specifically Timestamp for stored data
-  image: EventImage;
-  attendeeCount: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  deletedAt: Timestamp | null;
-  metadata: Record<string, any>;
+export interface DisplayEvent extends BaseEvent {
+  timestamps: Timestamps<Timestamp>;
 }
