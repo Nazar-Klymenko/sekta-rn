@@ -11,6 +11,7 @@ export default function EventHero({ event }: { event: DisplayEvent }) {
         source={{ uri: event.image.publicUrl }}
         aspectRatio={1 / 1}
         objectFit="cover"
+        maxWidth={724}
       />
     </YStack>
   );

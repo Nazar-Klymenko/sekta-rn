@@ -3,17 +3,25 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 
 import { Tag } from "@/features/core/components/Tag";
-import { DisplayEvent } from "@/features/event/models/Event";
+import { Event } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Clock, MapPin } from "@tamagui/lucide-icons";
 
-import { Image, Paragraph, Stack, XStack, YStack, styled } from "tamagui";
+import {
+  Image,
+  Paragraph,
+  Stack,
+  XStack,
+  YStack,
+  styled,
+  useTheme,
+} from "tamagui";
 
 import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
-  event: DisplayEvent;
+  event: Event;
   verticalView?: boolean;
 }
 
@@ -25,6 +33,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
 
   const cardWidth = (windowWidth - 32) * 0.9;
 
+  const theme = useTheme();
   const router = useRouter();
 
   const formattedDate = formatFirestoreTimestamp(event.date, "EEE, MMM d");
@@ -33,7 +42,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
   return (
     <CardContainer
       width={verticalView ? "100%" : cardWidth}
-      onPress={() => router.navigate(`/events/${event.uid}`)}
+      onPress={() => router.push(`/events/${event.id}`)}
     >
       <ImageContainer>
         <Image
@@ -49,18 +58,19 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
           lineHeight={24}
           fontWeight="700"
           numberOfLines={2}
+          color="$color"
         >
-          {event.title.display}
+          {event.title}
         </Paragraph>
-        <XStack alignItems="center">
-          <Clock size={16} color="grey" marginEnd={8} />
-          <Paragraph fontSize={15} color="grey">
+        <XStack alignItems="center" gap="$2">
+          <Clock size={16} color={theme.gray11Light.get()} />
+          <Paragraph fontSize={15} color="$gray11Light">
             {formattedDate} • {formattedTime}
           </Paragraph>
         </XStack>
-        <XStack alignItems="center">
-          <MapPin size={16} color="grey" marginEnd={8} />
-          <Paragraph fontSize={15} color="grey">
+        <XStack alignItems="center" gap="$2">
+          <MapPin size={16} color={theme.gray11Light.get()} />
+          <Paragraph fontSize={15} color="$gray11Light">
             {event.location || "Venue TBA"}
           </Paragraph>
         </XStack>
@@ -89,12 +99,7 @@ const CardContainer = styled(YStack, {
   borderRadius: "$2",
   overflow: "hidden",
   marginVertical: 10,
-  pressStyle: {
-    scale: 0.98,
-  },
-  hoverStyle: {
-    scale: 1.02,
-  },
+  maxWidth: 450,
 });
 
 const ImageContainer = styled(Stack, {
@@ -104,6 +109,7 @@ const ImageContainer = styled(Stack, {
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
   paddingHorizontal: 4,
+
   gap: 8,
 });
 
