@@ -3,7 +3,7 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 
 import { Tag } from "@/features/core/components/Tag";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Clock, MapPin } from "@tamagui/lucide-icons";
@@ -21,7 +21,7 @@ import {
 import { useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
-  event: Event;
+  event: DisplayEvent;
   verticalView?: boolean;
 }
 
@@ -35,7 +35,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
   return (
     <CardContainer
       width={"100%"}
-      onPress={() => router.push(`/events/${event.id}`)}
+      onPress={() => router.push(`/events/${event.uid}`)}
     >
       <ImageContainer>
         <Image
@@ -53,7 +53,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
           numberOfLines={2}
           color="$color"
         >
-          {event.title}
+          {event.title.display}
         </Paragraph>
         <XStack alignItems="center" gap="$2">
           <Clock size={16} color={theme.gray11Light.get()} />

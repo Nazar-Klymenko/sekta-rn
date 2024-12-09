@@ -5,20 +5,17 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer.w
 
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { Separator, View, YStack, styled } from "tamagui";
+import { Separator, YStack } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
 
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
 import { useFetchEvent } from "../../hooks/useFetchEvent";
-import { StickyBottomButton } from "../EventDetailsScreen/StickyBottomButton";
+import EventDescription from "../EventDetailsScreen/EventDescription";
+import EventHero from "../EventDetailsScreen/EventHero";
+import EventInfo from "../EventDetailsScreen/EventInfo";
 import { TagSection } from "../EventDetailsScreen/TagSection";
-import {
-  EventDescription,
-  EventHero,
-  EventInfo,
-} from "../EventDetailsScreen/index";
 
 export default function WebEventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
