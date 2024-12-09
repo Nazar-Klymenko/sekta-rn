@@ -4,10 +4,7 @@ import React from "react";
 
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { ArrowLeft } from "@tamagui/lucide-icons";
-
 import { useTheme } from "tamagui";
-import { Stack as TamaguiStack } from "tamagui";
 
 import { Stack, useNavigation } from "expo-router";
 import Animated, {
@@ -22,10 +19,7 @@ interface EventHeaderProps {
   title?: string;
 }
 
-const EventHeader: React.FC<EventHeaderProps> = ({
-  scrollY,
-  title = "Event",
-}) => {
+const EventHeader: React.FC<EventHeaderProps> = ({ scrollY }) => {
   const theme = useTheme();
   const navigation = useNavigation();
   const bg = theme.background.get();

@@ -1,12 +1,18 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { Timestamp } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  Timestamp,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 
-import { Event, EventFormData } from "@/features/event/models/Event";
-import { db, storage } from "@/lib/firebase/firebase";
+import { EventFormValues } from "@/features/admin/utils/schemas";
+import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
+import { FirestoreEvent } from "@/features/event/models/Event";
+import { db } from "@/lib/firebase/firebase";
 
 export const createEvent = async (
-  data: EventFormData,
+  data: EventFormValues,
   image: string | null
 ) => {
   if (!image) {
@@ -14,43 +20,43 @@ export const createEvent = async (
   }
 
   try {
-    const eventId = doc(collection(db, "events")).id;
+    const titleLowercase = data.title.toLowerCase();
+    const serverTimestampVar = serverTimestamp();
 
-    const fileName = `${Date.now()}-${data.title
-      .toLowerCase()
-      .replace(/\s+/g, "-")}`;
-    const imagePath = `events/${eventId}/${fileName}`;
-    const imageRef = ref(storage, imagePath);
-    const response = await fetch(image);
-    const blob = await response.blob();
+    const eventUid = doc(collection(db, "events")).id;
 
-    const uploadResult = await uploadBytes(imageRef, blob);
+    const title = data.title;
+    const uploadedImage = await uploadEventImage({
+      image,
+      eventUid,
+      title,
+    });
 
-    const imageUrl = await getDownloadURL(uploadResult.ref);
-
-    const eventData: Omit<Event, "id"> = {
-      title: data.title,
-      title_lowercase: data.title?.toLowerCase() ?? "",
-      caption: data.caption,
-      price: data.price,
-      date: Timestamp.fromDate(new Date(data.date as unknown as string)),
-      location: data.location,
-      genres: data.genres ?? [],
-      lineup: data.lineup ?? [],
-      image: {
-        id: imageRef.name,
-        publicUrl: imageUrl,
-        path: imageRef.fullPath,
-        altText: data.title,
+    const eventData: FirestoreEvent = {
+      uid: eventUid,
+      title: {
+        display: data.title,
+        lowercase: titleLowercase,
       },
-      attendeeCount: 0,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
+      caption: data.caption,
+      price: {
+        type: "flat",
+        amount: data.price,
+      },
+      date: Timestamp.fromDate(data.date),
+      location: data.location,
+      genres: data.genres,
+      lineup: data.lineup,
+      image: uploadedImage,
+      timestamps: {
+        createdAt: serverTimestampVar,
+        updatedAt: serverTimestampVar,
+      },
       deletedAt: null,
       metadata: {},
     };
 
-    const docRef = doc(db, "events", eventId);
+    const docRef = doc(db, "events", eventUid);
     await setDoc(docRef, eventData);
     return { success: true, id: docRef.id };
   } catch (error) {

@@ -1,62 +1,69 @@
-import { Timestamp, doc, updateDoc } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Timestamp, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
-import { Event, EventFormData } from "@/features/event/models/Event";
-import { db, storage } from "@/lib/firebase/firebase";
+import { EventFormValues } from "@/features/admin/utils/schemas";
+import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
+import { DisplayEvent, FirestoreEvent } from "@/features/event/models/Event";
+import { db } from "@/lib/firebase/firebase";
 
 interface UpdateEventParams {
-  eventId: string;
-  data: EventFormData;
+  eventUid: string;
+  data: EventFormValues;
   image: string | null;
-  originalData: Event;
+  originalData: DisplayEvent;
 }
 
 export const updateEvent = async ({
-  eventId,
+  eventUid,
   data,
   image,
   originalData,
 }: UpdateEventParams) => {
   try {
-    let imageUrl = originalData.image.publicUrl;
-    let imageRefPath = originalData.image.path;
-    let imageId = originalData.image.id;
+    const titleLowercase = data.title.toLowerCase();
+    const serverTimestampVar = serverTimestamp();
 
+    let uploadedImage = originalData.image;
     // Check if the image has changed
-    if (image && image !== originalData.image.publicUrl) {
-      const imageRef = ref(storage, `events/${eventId}/${imageId}`);
-
-      const response = await fetch(image);
-      const blob = await response.blob();
-      await uploadBytes(imageRef, blob);
-      imageUrl = await getDownloadURL(imageRef);
-      imageRefPath = imageRef.fullPath;
-      imageId = imageRef.name;
+    if (image !== null && image !== uploadedImage.publicUrl) {
+      const title = data.title;
+      uploadedImage = await uploadEventImage({
+        image,
+        eventUid,
+        title,
+        ...uploadedImage,
+      });
     }
 
-    const eventData: Partial<Event> = {
-      title: data.title,
-      title_lowercase: data.title?.toLowerCase() ?? "",
-      caption: data.caption,
-      price: data.price,
-      date: Timestamp.fromDate(new Date(data.date as unknown as string)),
-      location: data.location,
-      genres: data.genres ?? [],
-      lineup: data.lineup ?? [],
-      image: {
-        id: imageId,
-        publicUrl: imageUrl,
-        path: imageRefPath,
-        altText: data.title,
+    const eventData: FirestoreEvent = {
+      uid: eventUid,
+      title: {
+        display: data.title,
+        lowercase: titleLowercase,
       },
-      updatedAt: Timestamp.now(),
+      caption: data.caption,
+      price: {
+        type: "flat",
+        amount: data.price,
+      },
+      date: Timestamp.fromDate(data.date),
+      location: data.location,
+      genres: data.genres,
+      lineup: data.lineup,
+      image: uploadedImage,
+      timestamps: {
+        createdAt: originalData.timestamps.createdAt,
+        updatedAt: serverTimestampVar,
+      },
+      deletedAt: null,
+      metadata: {},
     };
 
-    await updateDoc(doc(db, "events", eventId), eventData);
+    const docRef = doc(db, "events", eventUid);
+    await updateDoc(docRef, { ...eventData });
 
-    return { success: true, id: eventId };
+    return { success: true, id: eventUid };
   } catch (error) {
-    console.error("Error updating event: ", error);
+    console.error("Error adding document: ", error);
     return { success: false };
   }
 };

@@ -29,4 +29,5 @@ export const eventSchema = yup.object().shape({
     .min(1, "At least one lineup member is required")
     .defined(),
 });
-export type FormValues = yup.InferType<typeof eventSchema>;
+
+export type EventFormValues = yup.InferType<typeof eventSchema>;

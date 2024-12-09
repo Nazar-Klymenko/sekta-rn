@@ -11,7 +11,6 @@ import { TextArea } from "@/features/core/components/form/TextArea";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
-import { EventFormData } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
@@ -28,37 +27,42 @@ import {
   DEFAULT_LOCATION,
   DEFAULT_PRICE,
 } from "../../utils/constants";
-import { eventSchema } from "../../utils/schemas";
+import { EventFormValues, eventSchema } from "../../utils/schemas";
 
 export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading } = useFetchEvent(id || "");
   const { mutate, isPending } = useUpdateEvent(id);
   const router = useRouter();
-  const methods = useForm<EventFormData>({
+  const methods = useForm({
     resolver: yupResolver(eventSchema),
     defaultValues: {
-      title: event?.title || "",
+      title: event?.title.display || "",
       caption: event?.caption || "",
       location: event?.location || DEFAULT_LOCATION,
       date: event?.date.toDate() || DEFAULT_DATE,
       genres: event?.genres || [],
       lineup: event?.lineup || [],
-      price: event?.price || DEFAULT_PRICE,
+      price: event?.price.amount || DEFAULT_PRICE,
     },
   });
-  const { handleSubmit, setValue, reset } = methods;
+  const { handleSubmit, reset } = methods;
 
   const { image, setImage, pickImage } = useImagePicker();
 
   useEffect(() => {
     if (!isLoading && event) {
       setImage(event.image.publicUrl);
-      reset({ ...event, date: event.date.toDate() });
+      reset({
+        ...event,
+        title: event.title.display,
+        date: event.date.toDate(),
+        price: event.price.amount,
+      });
     }
   }, [isLoading]);
 
-  const onSubmit = async (data: EventFormData) => {
+  const onSubmit = async (data: EventFormValues) => {
     if (!event) return;
 
     if (!image) {
@@ -68,10 +72,10 @@ export default function EventUpdateScreen() {
 
     mutate(
       {
-        eventId: id,
+        eventUid: id,
+        originalData: event,
         data,
         image,
-        originalData: event,
       },
       {
         onSuccess: () => {
@@ -114,13 +118,13 @@ export default function EventUpdateScreen() {
 
         <MultiTagInput
           name={"genres"}
-          label={"Select genres"}
-          placeholder={"type a genre and press enter"}
+          label={"Select Genres"}
+          placeholder={"Type a genre and press enter"}
         />
         <MultiTagInput
           name={"lineup"}
           label={"Select Artists"}
-          placeholder={"type an artist name and press enter"}
+          placeholder={"Type an artist name and press enter"}
         />
         <Input
           name="price"
