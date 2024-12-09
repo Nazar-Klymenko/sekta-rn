@@ -3,18 +3,14 @@ import React, { useId, useState } from "react";
 import { X } from "@tamagui/lucide-icons";
 
 import {
-  Button,
   Circle,
   Label,
-  Paragraph,
   Separator,
-  Stack,
+  SizableText,
   InputProps as TamaguiInputProps,
-  Text,
   Theme,
   XStack,
   YStack,
-  useTheme,
 } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";
@@ -32,12 +28,11 @@ export function MultiTagInput({
   label,
   placeholder,
   maxLength,
-  ...props
 }: InputProps) {
   const id = useId();
   const { control } = useFormContext();
   const {
-    field: { value, onChange, onBlur, ref },
+    field: { value, onChange, onBlur },
     fieldState: { error },
   } = useController({
     name,
@@ -124,13 +119,13 @@ export function MultiTagInput({
         </YStack>
 
         <XStack marginTop="$2">
-          <Paragraph
+          <SizableText
             flex={1}
             color={error ? "$red10Light" : "$colorTransparent"}
             fontSize="$2"
           >
             {error ? error?.message : ""}
-          </Paragraph>
+          </SizableText>
           {maxLength && (
             <MaxLength length={value?.length || 0} maxLength={maxLength} />
           )}
@@ -147,29 +142,29 @@ interface PillProps {
   icon?: React.ReactNode;
 }
 
-export const Pill = ({ tag, onPress, selected, icon }: PillProps) => {
+const Pill = ({ tag, onPress, selected, icon }: PillProps) => {
   return (
     <XStack
       theme={"surface3"}
       gap="$2"
       borderRadius="$9"
-      paddingVertical="$1"
-      paddingHorizontal="$2"
+      paddingVertical={8}
+      paddingHorizontal={12}
       backgroundColor={"$background"}
       onPress={onPress}
       cursor={selected ? "pointer" : "unset"}
       alignItems="center"
       justifyContent="space-between"
     >
-      <Paragraph
+      <SizableText
         lineHeight="$1"
         color="$accentColor"
         fontWeight="400"
         fontSize={"$5"}
       >
         {tag}
-      </Paragraph>
-      <Circle size={"$1"}>{icon}</Circle>
+      </SizableText>
+      <Circle size={6}>{icon}</Circle>
     </XStack>
   );
 };
