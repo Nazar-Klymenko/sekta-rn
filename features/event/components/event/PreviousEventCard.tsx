@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Tag } from "@/features/core/components/Tag";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
@@ -9,7 +9,7 @@ import { Image, Paragraph, SizableText, XStack, YStack, styled } from "tamagui";
 import { useRouter } from "expo-router";
 
 interface PreviousEventCardProps {
-  event: Event;
+  event: DisplayEvent;
 }
 
 const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
@@ -18,7 +18,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
   const formattedDate = formatFirestoreTimestamp(event.date, "dd MMM yyyy");
 
   return (
-    <CardContainer onPress={() => router.push(`/events/${event.id}`)}>
+    <CardContainer onPress={() => router.push(`/events/${event.uid}`)}>
       <Image
         source={{ uri: event.image.publicUrl }}
         width={120}
@@ -29,7 +29,7 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
       <ContentContainer>
         <YStack>
           <SizableText fontSize="$8" fontWeight="700" numberOfLines={1}>
-            {event.title}
+            {event.title.display}
           </SizableText>
           <Paragraph fontSize="$3" color="$gray10Light">
             {formattedDate}

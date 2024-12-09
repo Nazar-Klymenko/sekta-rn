@@ -2,7 +2,7 @@ import React from "react";
 
 import { Tag } from "@/features/core/components/Tag";
 
-import { H2, H3, XStack, YStack } from "tamagui";
+import { H3, XStack, YStack } from "tamagui";
 
 interface TagListProps {
   title: string;

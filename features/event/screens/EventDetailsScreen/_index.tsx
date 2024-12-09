@@ -15,9 +15,11 @@ import { useLocalSearchParams } from "expo-router";
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
 import { useFetchEvent } from "../../hooks/useFetchEvent";
+import EventDescription from "./EventDescription";
+import EventHero from "./EventHero";
+import EventInfo from "./EventInfo";
 import { StickyBottomButton } from "./StickyBottomButton";
 import { TagSection } from "./TagSection";
-import { EventDescription, EventHero, EventInfo } from "./index";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
