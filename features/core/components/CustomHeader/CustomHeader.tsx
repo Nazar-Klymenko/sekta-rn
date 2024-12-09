@@ -60,12 +60,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
 
   const navLinks = [
     { href: "/", icon: <Home size={24} color="$color" />, label: "Home" },
-    {
-      href: "/residents",
-      icon: <BoomBox size={24} color="$color" />,
-      label: "Residents",
-    },
-    { href: "/play", icon: <Play size={24} color="$color" />, label: "Play" },
+
     ...(userData?.isAdmin
       ? [
           {
@@ -120,45 +115,7 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
               </XStack>
             </Link>
 
-            {!isSmallScreen && (
-              <XStack alignItems="center" gap="$6">
-                {navLinks.map((link) => (
-                  <NavLink key={link.href} href={link.href}>
-                    {link.label}
-                  </NavLink>
-                ))}
-              </XStack>
-            )}
-
             <XStack alignItems="center" gap="$4">
-              <Tooltip content="Notifications">
-                <IconButton onPress={() => router.push("/")}>
-                  <Bell size={24} color="$color" />
-                </IconButton>
-              </Tooltip>
-
-              {!isSmallScreen && (
-                <Tooltip content="Profile">
-                  <Avatar
-                    circular
-                    cursor="pointer"
-                    size="$4"
-                    onPress={() => router.push("/profile")}
-                  >
-                    {user?.photoURL ? (
-                      <Avatar.Image src={user.photoURL} />
-                    ) : (
-                      <Avatar.Fallback
-                        backgroundColor="$blue10Light"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <User size={24} color="$color" />
-                      </Avatar.Fallback>
-                    )}
-                  </Avatar>
-                </Tooltip>
-              )}
               {isSmallScreen && (
                 <IconButton onPress={() => setIsMenuOpen(!isMenuOpen)}>
                   {isMenuOpen ? (
@@ -192,30 +149,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
               enterStyle={{ x: 300, opacity: 0, scale: 1 }}
               exitStyle={{ x: 300, opacity: 0, scale: 1 }}
             >
-              <UserPreview>
-                <Avatar circular size="$5">
-                  {user?.photoURL ? (
-                    <Avatar.Image src={user.photoURL} />
-                  ) : (
-                    <Avatar.Fallback
-                      backgroundColor="$blue10Light"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      <User size={24} color="$color" />
-                    </Avatar.Fallback>
-                  )}
-                </Avatar>
-                <YStack>
-                  <Paragraph fontSize="$4" fontWeight="bold">
-                    {user?.displayName || "Guest"}
-                  </Paragraph>
-                  <Paragraph fontSize="$3" color="$gray10Light">
-                    {user?.email || "Not logged in"}
-                  </Paragraph>
-                </YStack>
-              </UserPreview>
-
               {navLinks.map((link) => (
                 <NavLink
                   key={link.href}
@@ -226,31 +159,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
                   {link.label}
                 </NavLink>
               ))}
-
-              <NavLink
-                href="/profile"
-                icon={<Settings size={24} color="$color" />}
-                onPress={() => setIsMenuOpen(false)}
-              >
-                Settings
-              </NavLink>
-
-              {user ? (
-                <NavLinkButton
-                  onPress={handleSignOut}
-                  icon={<LogOut size={24} color="$color" />}
-                >
-                  Sign Out
-                </NavLinkButton>
-              ) : (
-                <NavLink
-                  href="/auth/login"
-                  icon={<LogIn size={24} color="$color" />}
-                  onPress={() => setIsMenuOpen(false)}
-                >
-                  Sign In
-                </NavLink>
-              )}
             </MobileMenu>
           </>
         )}

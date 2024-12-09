@@ -1,5 +1,4 @@
-import { ScrollViewStyleReset } from "expo-router/html";
-
+import React from "react";
 import { type PropsWithChildren } from "react";
 
 /**
@@ -16,7 +15,7 @@ export default function Root({ children }: PropsWithChildren) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
 
         {/*
           Disable body scrolling on web. This makes ScrollView components work closer to how they do on native.
@@ -27,6 +26,16 @@ export default function Root({ children }: PropsWithChildren) {
         {/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
         <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
         {/* Add any additional <head> elements that you want globally available on web... */}
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+          rel="stylesheet"
+        ></link>
       </head>
       <body>{children}</body>
     </html>
@@ -39,6 +48,9 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: "League Spartan", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 body {
   overflow-y: auto;

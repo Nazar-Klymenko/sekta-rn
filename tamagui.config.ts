@@ -1,4 +1,4 @@
-import { animations, config, tokens } from "@tamagui/config/v3";
+import { animations, config, media, tokens } from "@tamagui/config/v3";
 
 import { createFont, createTamagui } from "tamagui";
 
@@ -46,6 +46,7 @@ const extendedTheme = {
 export const tamaguiConfig = createTamagui({
   tokens,
   animations,
+  media: media,
   themes: extendedTheme,
   fonts: {
     heading: headingFont,

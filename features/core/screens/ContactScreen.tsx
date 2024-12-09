@@ -14,7 +14,7 @@ type ContactInfoProps = {
 
 export default function ContactScreen() {
   return (
-    <PageContainer>
+    <PageContainer maxWidth={640}>
       <YStack gap="$6" padding="$6">
         <Paragraph fontSize="$8" fontWeight="700" alignSelf="center">
           Contact Us

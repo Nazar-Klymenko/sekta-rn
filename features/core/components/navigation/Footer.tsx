@@ -15,9 +15,6 @@ import {
 import { Link } from "expo-router";
 
 export const Footer = () => {
-  const theme = useTheme();
-  const media = useMedia();
-
   return (
     <YStack
       backgroundColor="$background"
@@ -45,8 +42,7 @@ export const Footer = () => {
 
           <FooterColumn title="Explore">
             <FooterLink href="/">Home</FooterLink>
-            <FooterLink href="/">Events</FooterLink>
-            <FooterLink href="/">About Us</FooterLink>
+            <FooterLink href="/contact">Contact us</FooterLink>
           </FooterColumn>
 
           <FooterColumn title="Contact">
@@ -62,7 +58,6 @@ export const Footer = () => {
             <XStack gap="$4">
               <SocialIcon Icon={Facebook} />
               <SocialIcon Icon={Instagram} />
-              <SocialIcon Icon={Twitter} />
             </XStack>
           </FooterColumn>
         </XStack>
@@ -70,16 +65,10 @@ export const Footer = () => {
         <Separator marginVertical="$5" />
 
         <XStack justifyContent="space-between" flexWrap="wrap" gap="$4">
-          <Paragraph fontSize="$2" color="$color8Light">
-            © 2024 Sekta Selekta
-          </Paragraph>
+          <Paragraph color="$color8Light">© 2024 Sekta Selekta</Paragraph>
           <XStack gap="$4">
-            <FooterLink href="/privacy-policy" small>
-              Privacy Policy
-            </FooterLink>
-            <FooterLink href="/tos" small>
-              Terms of Service
-            </FooterLink>
+            <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+            <FooterLink href="/tos">Terms of Service</FooterLink>
           </XStack>
         </XStack>
       </Stack>
