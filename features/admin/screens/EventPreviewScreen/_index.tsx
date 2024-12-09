@@ -6,13 +6,11 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
-import {
-  EventDescription,
-  EventHero,
-  EventInfo,
-  TagSection,
-} from "@/features/event/screens/EventDetailsScreen";
+import EventDescription from "@/features/event/screens/EventDetailsScreen/EventDescription";
+import EventHero from "@/features/event/screens/EventDetailsScreen/EventHero";
+import EventInfo from "@/features/event/screens/EventDetailsScreen/EventInfo";
 import { InfoItem } from "@/features/event/screens/EventDetailsScreen/InfoItem";
+import { TagSection } from "@/features/event/screens/EventDetailsScreen/TagSection";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import {
@@ -24,7 +22,6 @@ import {
   Link2,
   MoreHorizontal,
 } from "@tamagui/lucide-icons";
-import { useToastController } from "@tamagui/toast";
 
 import { H6, Paragraph, YStack } from "tamagui";
 import { Separator } from "tamagui";
@@ -46,7 +43,6 @@ export default function EventPreviewScreen() {
     refetch,
   } = useFetchEvent(id || "");
   const { mutate, isPending } = useDeleteEvent(id);
-  const toast = useToastController();
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   const [innershowConfirmSheet, setInnerShowConfirmSheet] = useState(false);
   const router = useRouter();
@@ -66,32 +62,35 @@ export default function EventPreviewScreen() {
     );
 
   const handleDelete = () => {
-    mutate(
-      { eventId: event.id, imageId: event.image.id },
-      {
-        onSuccess: () => {
-          setShowConfirmSheet(false);
-          setInnerShowConfirmSheet(false);
-          router.back();
-        },
-        onError: () => {
-          setShowConfirmSheet(false);
-          setInnerShowConfirmSheet(false);
-        },
-      }
-    );
+    mutate(event, {
+      onSuccess: () => {
+        setShowConfirmSheet(false);
+        setInnerShowConfirmSheet(false);
+        router.back();
+      },
+      onError: () => {
+        setShowConfirmSheet(false);
+        setInnerShowConfirmSheet(false);
+      },
+    });
   };
   const createdAtDate = formatFirestoreTimestamp(
-    event.createdAt,
+    event.timestamps.createdAt,
     "EEEE, MMMM do yyyy"
   );
-  const createdAtTime = formatFirestoreTimestamp(event.createdAt, "HH:mm");
+  const createdAtTime = formatFirestoreTimestamp(
+    event.timestamps.createdAt,
+    "HH:mm"
+  );
 
   const updatedAtDate = formatFirestoreTimestamp(
-    event.updatedAt,
+    event.timestamps.updatedAt,
     "EEEE, MMMM do yyyy"
   );
-  const createdTime = formatFirestoreTimestamp(event.updatedAt, "HH:mm");
+  const createdTime = formatFirestoreTimestamp(
+    event.timestamps.updatedAt,
+    "HH:mm"
+  );
 
   return (
     <>
@@ -131,7 +130,7 @@ export default function EventPreviewScreen() {
             <InfoItem
               icon={<Hash color="$accentColor" size={24} />}
               title="Event id:"
-              value={event.id}
+              value={event.uid}
             />
             <InfoItem
               icon={<CalendarPlus color="$accentColor" size={24} />}
@@ -144,11 +143,6 @@ export default function EventPreviewScreen() {
               value={`${updatedAtDate} • ${createdTime}`}
             />
             <H6>Image debugging</H6>
-            <InfoItem
-              icon={<Hash color="$accentColor" size={24} />}
-              title="Image id:"
-              value={event.image.id}
-            />
             <InfoItem
               icon={<Link2 color="$accentColor" size={24} />}
               title="Image Path:"

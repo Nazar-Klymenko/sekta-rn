@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Sheet } from "@/features/core/components/panels/Sheet";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 import { Edit3, X } from "@tamagui/lucide-icons";
 
@@ -26,7 +26,7 @@ export function OuterMenuSheet({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   setInnerShowConfirmSheet: (open: boolean) => void;
-  id: Event["id"];
+  id: DisplayEvent["uid"];
 }) {
   const router = useRouter();
   return (

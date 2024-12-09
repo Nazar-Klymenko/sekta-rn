@@ -2,21 +2,18 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import React from "react";
 
-import { View } from "react-native";
-
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Table } from "@/features/core/components/tables/Table";
 import { useFetchEvents } from "@/features/event/hooks/useFetchEvents";
-import { Event } from "@/features/event/models/Event";
+import { DisplayEvent } from "@/features/event/models/Event";
 import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Paragraph, YStack } from "tamagui";
 
 import { useRouter } from "expo-router";
-import { size } from "lodash";
 
-const columnHelper = createColumnHelper<Event>();
+const columnHelper = createColumnHelper<DisplayEvent>();
 
 export default function EventListScreen() {
   const router = useRouter();
@@ -27,10 +24,10 @@ export default function EventListScreen() {
       id: "index",
       header: "#",
       cell: (props) => props.row.index + 1,
-      footer: ({ table }) => `Total: ${events?.length}`,
+      footer: () => `Total: ${events?.length}`,
       size: 60,
     }),
-    columnHelper.accessor("title", {
+    columnHelper.accessor("title.display", {
       header: "Title",
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
@@ -58,7 +55,7 @@ export default function EventListScreen() {
       invertSorting: true,
     }),
 
-    columnHelper.accessor("price", {
+    columnHelper.accessor("price.amount", {
       header: "Price",
       cell: (info) => "PLN " + info.getValue() || "-",
       sortingFn: "alphanumeric",
@@ -68,11 +65,11 @@ export default function EventListScreen() {
 
   if (isLoading) return <FullPageLoading />;
   if (isError) return <Paragraph>Error loading events</Paragraph>;
-  const handleRowClick = (event: Event) => {
+  const handleRowClick = (event: DisplayEvent) => {
     router.push({
       pathname: "/admin/events/[id]",
       params: {
-        id: event.id,
+        id: event.uid,
       },
     });
   };

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
+import { EventFormValues, eventSchema } from "@/features/admin/utils/schemas";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
@@ -7,7 +8,6 @@ import { Input } from "@/features/core/components/form/Input";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { EventFormData } from "@/features/event/models/Event";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
@@ -18,32 +18,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CustomImagePicker } from "../../components/events/ImagePicker";
 import { useCreateEvent } from "../../hooks/useCreateEvent";
 import { useImagePicker } from "../../hooks/useImagePicker";
-import {
-  DEFAULT_DATE,
-  DEFAULT_LOCATION,
-  DEFAULT_PRICE,
-} from "../../utils/constants";
-import { eventSchema } from "../../utils/schemas";
+import { DEFAULT_LOCATION, DEFAULT_PRICE } from "../../utils/constants";
 
 export default function EventCreateScreen() {
-  const methods = useForm<EventFormData>({
+  const methods = useForm({
     resolver: yupResolver(eventSchema),
     defaultValues: {
-      title: "",
-      caption: "",
       location: DEFAULT_LOCATION,
-      // date: DEFAULT_DATE,
+      price: DEFAULT_PRICE,
       genres: [],
       lineup: [],
-      price: DEFAULT_PRICE,
     },
   });
-  const { handleSubmit, setValue, reset } = methods;
+  const { handleSubmit } = methods;
 
   const { image, pickImage } = useImagePicker();
   const { mutate, isPending } = useCreateEvent();
 
-  const onSubmit = (data: EventFormData) => {
+  const onSubmit = (data: EventFormValues) => {
     mutate({ data: data, image: image });
   };
 
@@ -79,12 +71,12 @@ export default function EventCreateScreen() {
         <MultiTagInput
           name={"genres"}
           label={"Select genres"}
-          placeholder={"type a genre and press enter"}
+          placeholder={"Type a genre and press enter"}
         />
         <MultiTagInput
           name={"lineup"}
           label={"Select Artists"}
-          placeholder={"type an artist name and press enter"}
+          placeholder={"Type an artist name and press enter"}
         />
         <Input
           name="price"
