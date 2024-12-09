@@ -1,5 +1,7 @@
 import { FieldValue, Timestamp } from "firebase/firestore";
 
+import { Timestamps } from "@/features/core/models/Core";
+
 interface AuthData {
   email: string;
   emailVerified: boolean;
@@ -16,18 +18,13 @@ interface BaseUser {
   auth: AuthData;
   settings: UserSettings;
   isAdmin: boolean;
+  metadata: Record<string, any>;
 }
 
 export interface FirestoreUser extends BaseUser {
-  metadata: {
-    createdAt: FieldValue;
-    updatedAt: FieldValue;
-  };
+  timestamps: Timestamps<FieldValue>;
 }
 
 export interface DisplayUser extends BaseUser {
-  metadata: {
-    createdAt: Timestamp;
-    updatedAt: Timestamp;
-  };
+  timestamps: Timestamps<Timestamp>;
 }
