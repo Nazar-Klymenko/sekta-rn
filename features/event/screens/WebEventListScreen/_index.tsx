@@ -41,7 +41,7 @@ export default function WebEventListScreen() {
 }
 const GridContainer = styled(XStack, {
   flexWrap: "wrap",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
   gap: "$4",
   width: "100%",
 });
