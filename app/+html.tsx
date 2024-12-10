@@ -51,6 +51,7 @@ html, body, #root {
   font-family: "League Spartan", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+   background-color: #000;
 }
 body {
   overflow-y: auto;
