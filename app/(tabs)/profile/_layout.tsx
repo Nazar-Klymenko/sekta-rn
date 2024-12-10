@@ -8,7 +8,7 @@ import { useUserData } from "@/features/users/hooks/useUserData";
 
 import { SizableText, useTheme } from "tamagui";
 
-import { Slot, Stack } from "expo-router";
+import { Redirect, Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
@@ -16,7 +16,7 @@ export default function HomeLayout() {
   const { data: userData } = useUserData(user?.uid || "");
 
   if (Platform.OS === "web") {
-    return <Slot />;
+    return <Redirect href={"./"} />;
   }
 
   return (

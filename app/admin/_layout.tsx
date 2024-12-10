@@ -24,7 +24,7 @@ export default function HomeLayout() {
   }
 
   if (Platform.OS === "web") {
-    return <Slot />;
+    return <Redirect href={"./"} />;
   }
   return (
     <Stack

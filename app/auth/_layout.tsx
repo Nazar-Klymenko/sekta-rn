@@ -23,7 +23,7 @@ export default function AuthLayout() {
   }
 
   if (Platform.OS === "web") {
-    return <Slot />;
+    return <Redirect href={"./"} />;
   }
 
   return (
