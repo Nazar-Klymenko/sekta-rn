@@ -6,7 +6,7 @@ import { Redirect, Slot, Stack } from "expo-router";
 
 export default function HomeLayout() {
   if (Platform.OS === "web") {
-    return <Redirect href={"./"} />;
+    return <Redirect href={"/"} />;
   }
   return (
     <Stack

@@ -14,7 +14,9 @@ export default function HomeLayout() {
   const theme = useTheme();
   const { user } = useAuth();
   const { data: userData, isLoading } = useUserData(user?.uid || "");
-
+  if (Platform.OS === "web") {
+    return <Redirect href={"/"} />;
+  }
   if (isLoading) {
     return <FullPageLoading />;
   }
@@ -23,9 +25,6 @@ export default function HomeLayout() {
     return <Redirect href={"/"} />;
   }
 
-  if (Platform.OS === "web") {
-    return <Redirect href={"./"} />;
-  }
   return (
     <Stack
       screenOptions={{

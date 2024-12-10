@@ -16,7 +16,7 @@ export default function HomeLayout() {
   const { data: userData } = useUserData(user?.uid || "");
 
   if (Platform.OS === "web") {
-    return <Redirect href={"./"} />;
+    return <Redirect href={"/"} />;
   }
 
   return (
