@@ -28,6 +28,7 @@ import {
   Button,
   Image,
   Paragraph,
+  SizableText,
   Stack,
   StackProps,
   XStack,
@@ -36,7 +37,7 @@ import {
   useMedia,
 } from "tamagui";
 
-import { Link, useRouter } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
 
 import { Tooltip } from "../panels/Tooltip";
 import { NavLink, NavLinkButton } from "./NavLink";
@@ -52,11 +53,13 @@ interface HeaderProps {
 export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
   const router = useRouter();
   const media = useMedia();
-  const signOutMutation = useSignOut();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user: _user } = useAuth();
   const { data: userData } = useUserData(_user?.uid || "");
   const isSmallScreen = !media.gtMd;
+  const pathname = usePathname();
+  const isEventDetailPage =
+    pathname.startsWith("/events/") && pathname !== "/events";
 
   const navLinks = [
     { href: "/", icon: <Home size={24} color="$color" />, label: "Home" },
@@ -71,17 +74,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
         ]
       : []),
   ];
-
-  const handleSignOut = async () => {
-    try {
-      signOutMutation.mutate();
-      setIsMenuOpen(false);
-      router.replace("/");
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
-  // useDisableScroll(isMenuOpen);
 
   return (
     <HeaderWrapper
@@ -114,7 +106,11 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
                 <LogoText>{title}</LogoText>
               </XStack>
             </Link>
-
+            {/* {isEventDetailPage && (
+              <Button onPress={() => router.push("/events")}>
+                Back to Events
+              </Button>
+            )} */}
             <XStack alignItems="center" gap="$4">
               {isSmallScreen && (
                 <IconButton onPress={() => setIsMenuOpen(!isMenuOpen)}>
@@ -209,15 +205,6 @@ const MobileMenu = styled(YStack, {
   padding: "$4",
   gap: "$4",
   zIndex: 1000,
-});
-
-const UserPreview = styled(XStack, {
-  alignItems: "center",
-  gap: "$3",
-  paddingVertical: "$4",
-  paddingHorizontal: "$2",
-  borderBottomWidth: 1,
-  borderBottomColor: "$borderColor",
 });
 
 const Overlay = styled(Stack, {

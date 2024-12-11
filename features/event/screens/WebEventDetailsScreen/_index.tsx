@@ -5,7 +5,7 @@ import { PageContainer } from "@/features/core/components/layout/PageContainer.w
 
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { Separator, YStack } from "tamagui";
+import { Image, Separator, Stack, XStack, YStack, useMedia } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
 
@@ -26,7 +26,8 @@ export default function WebEventDetailsScreen() {
     refetch,
     isRefetching,
   } = useFetchEvent(id || "");
-
+  const media = useMedia();
+  const gtMd = media.gtMd;
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
@@ -47,32 +48,41 @@ export default function WebEventDetailsScreen() {
         />
       </PageContainer>
     );
-  const showBottomButtom = true;
   return (
-    <>
-      <PageContainer>
-        <YStack gap="$4">
-          <EventHero event={event} />
-          <YStack
-            paddingHorizontal="$4"
-            paddingBottom={showBottomButtom ? "$13" : "$4"}
-            gap="$4"
-          >
-            <EventInfo event={event} />
-            <Separator />
-            <EventDescription description={event.caption} />
-            <Separator />
-            {event.lineup.length > 0 && (
-              <TagSection title="Lineup" tags={event.lineup} />
-            )}
-            <Separator />
-            {event.genres.length > 0 && (
-              <TagSection title="Genres" tags={event.genres} />
-            )}
-          </YStack>
+    <PageContainer>
+      <XStack
+        gap="$4"
+        flex={1}
+        flexWrap="wrap" // Allows wrapping for responsiveness
+        justifyContent="center" // Centers the content on smaller screens
+      >
+        <Stack gap="$4" flex={gtMd ? 1 : 2} width={gtMd ? "60%" : "100%"}>
+          <Image
+            source={{ uri: event.image.publicUrl }}
+            aspectRatio={1 / 1}
+            objectFit="cover"
+          />
+        </Stack>
+        <YStack
+          paddingHorizontal={gtMd ? "$4" : 0}
+          paddingBottom="$4"
+          gap="$4"
+          flex={gtMd ? 2 : 1}
+          width={gtMd ? "35%" : "100%"}
+        >
+          <EventInfo event={event} />
+          <Separator />
+          <EventDescription description={event.caption} />
+          <Separator />
+          {event.lineup.length > 0 && (
+            <TagSection title="Lineup" tags={event.lineup} />
+          )}
+          <Separator />
+          {event.genres.length > 0 && (
+            <TagSection title="Genres" tags={event.genres} />
+          )}
         </YStack>
-      </PageContainer>
-      {/* {showBottomButtom && <StickyBottomButton targetDate={event.date} />} */}
-    </>
+      </XStack>
+    </PageContainer>
   );
 }

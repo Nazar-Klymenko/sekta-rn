@@ -16,7 +16,7 @@ export const FullPageLoading: React.FC<PropsWithChildren<{}>> = ({
   };
 
   return (
-    <YStack flex={1} backgroundColor="$background">
+    <YStack flex={1} backgroundColor="$background" minHeight={"100dvh"}>
       <YStack
         {...containerStyle}
         flex={1}

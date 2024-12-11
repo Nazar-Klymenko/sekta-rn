@@ -1,18 +1,17 @@
 import React from "react";
 
-import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { H1, XStack, YStack, styled } from "tamagui";
+import { H1, XStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
 import ErrorEventList from "../../components/ErrorEventList";
+import { SkeletonUpcomingEventCard } from "../../components/event/SkeletonUpcomingEventCard";
 import UpcomingEventCard from "../../components/event/UpcomingEventCard";
 import { useFetchEvents } from "../../hooks/useFetchEvents";
 
 export default function WebEventListScreen() {
-  const router = useRouter();
   const { data, isLoading, isError, isRefetching, refetch } = useFetchEvents();
 
   if (isError) {
@@ -25,16 +24,18 @@ export default function WebEventListScreen() {
       />
     );
   }
-  if (isLoading) return <FullPageLoading />;
 
   return (
     <PageContainer gap="$4">
       <H1>Upcoming Events</H1>
       <GridContainer>
-        {data &&
-          data.map((event, idx) => (
-            <UpcomingEventCard event={event} key={idx} />
-          ))}
+        {isLoading
+          ? Array(5)
+              .fill(null)
+              .map((_, index) => <SkeletonUpcomingEventCard key={index} />)
+          : data?.map((event, idx) => (
+              <UpcomingEventCard event={event} key={idx} />
+            ))}
       </GridContainer>
     </PageContainer>
   );
