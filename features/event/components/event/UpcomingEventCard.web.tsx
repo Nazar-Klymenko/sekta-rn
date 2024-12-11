@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "tamagui";
 
-import { useRouter } from "expo-router";
+import { Href, Link, useRouter } from "expo-router";
 
 interface UpcomingEventCardProps {
   event: DisplayEvent;
@@ -35,7 +35,8 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
   return (
     <CardContainer
       width={"100%"}
-      onPress={() => router.push(`/events/${event.uid}`)}
+      href={`/events/${event.uid}` as Href<string>}
+      style={{ fontFamily: "League Spartan" }}
     >
       <ImageContainer>
         <Image
@@ -87,18 +88,23 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ event }) => {
     </CardContainer>
   );
 };
-
-const CardContainer = styled(YStack, {
+const CardContainer = styled(Link, {
+  cursor: "pointer",
   borderRadius: "$2",
   overflow: "hidden",
   marginVertical: 10,
   flexBasis: "100%",
   maxWidth: "100%",
+
   $gtMd: {
     maxWidth: "calc(33.333% - 16px)",
   },
   $gtSm: {
     maxWidth: "calc(50% - 16px)",
+  },
+  transition: "transform 0.3s ease",
+  hoverStyle: {
+    transform: "scale(0.98)",
   },
 });
 

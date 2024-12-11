@@ -22,6 +22,7 @@ export function PageContainer({ children, ...props }: PageContainerProps) {
         width={"100%"}
         marginHorizontal={"auto"}
         overflow="hidden"
+        height={"100%"}
         minHeight={"100dvh"}
         {...props}
       >

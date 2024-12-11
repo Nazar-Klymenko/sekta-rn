@@ -2,9 +2,7 @@ import React from "react";
 
 import { GestureResponderEvent } from "react-native";
 
-import { X } from "@tamagui/lucide-icons";
-
-import { Button, ButtonProps, Paragraph, SizableText, Spinner } from "tamagui";
+import { Button, ButtonProps, Spinner } from "tamagui";
 
 interface ButtonCTAProps extends ButtonProps {
   isLoading?: boolean;

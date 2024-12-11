@@ -18,13 +18,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CustomImagePicker } from "../../components/events/ImagePicker";
 import { useCreateEvent } from "../../hooks/useCreateEvent";
 import { useImagePicker } from "../../hooks/useImagePicker";
-import { DEFAULT_LOCATION, DEFAULT_PRICE } from "../../utils/constants";
+import {
+  DEFAULT_DATE,
+  DEFAULT_LOCATION,
+  DEFAULT_PRICE,
+} from "../../utils/constants";
 
 export default function EventCreateScreen() {
   const methods = useForm({
     resolver: yupResolver(eventSchema),
     defaultValues: {
       location: DEFAULT_LOCATION,
+      date: DEFAULT_DATE,
       price: DEFAULT_PRICE,
       genres: [],
       lineup: [],

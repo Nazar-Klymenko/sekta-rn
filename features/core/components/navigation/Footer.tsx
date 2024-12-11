@@ -56,8 +56,20 @@ export const Footer = () => {
 
           <FooterColumn title="Follow Us">
             <XStack gap="$4">
-              <SocialIcon Icon={Facebook} />
-              <SocialIcon Icon={Instagram} />
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://www.facebook.com/sektaselekta"}
+              >
+                <SocialIcon Icon={Facebook} />
+              </Link>
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href={"https://www.instagram.com/sektaselekta/"}
+              >
+                <SocialIcon Icon={Instagram} />
+              </Link>
             </XStack>
           </FooterColumn>
         </XStack>
@@ -116,6 +128,7 @@ const SocialIcon = ({ Icon }: any) => (
     backgroundColor="$color2Light"
     padding="$2"
     borderRadius="$3"
+    cursor="pointer"
     hoverStyle={{
       backgroundColor: "$color3Light",
       transform: [{ scale: 1.1 }],
