@@ -15,7 +15,7 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput, MaxLength } from "./shared/BaseInput";
+import { BaseInput, MaxLength } from "./ui";
 
 interface InputProps extends TamaguiInputProps {
   name: string;

@@ -11,7 +11,7 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseTextArea, MaxLength } from "./shared/BaseInput";
+import { BaseTextArea, MaxLength } from "./ui";
 
 interface TextAreaProps extends TamaguiTextAreaProps {
   name: string;
