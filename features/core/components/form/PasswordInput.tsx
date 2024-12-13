@@ -1,36 +1,34 @@
 import React, { useId, useState } from "react";
 
-import { TextInputProps } from "react-native";
-
-import { Eye, EyeOff } from "@tamagui/lucide-icons";
-
 import {
-  Button,
   Label,
-  Paragraph,
-  Input as TamaguiInput,
+  InputProps as TamaguiInputProps,
+  Text,
   XStack,
   YStack,
-  useTheme,
 } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput, MaxLength } from "./ui";
+import { BaseInput } from "./ui";
+import { FormError } from "./ui/FormError";
+import { PasswordIcon } from "./ui/PasswordIcon";
 
-interface InputProps extends TextInputProps {
+interface InputProps extends TamaguiInputProps {
   name: string;
   label: string;
   placeholder: string;
 }
 
-export function PasswordInput(
-  { name, label, placeholder }: InputProps,
-  props: TextInputProps
-) {
+export function PasswordInput({
+  name,
+  label,
+  placeholder,
+  ...props
+}: InputProps) {
   const { control } = useFormContext();
   const {
-    field,
+    field: { value, onChange, ref },
     fieldState: { error },
   } = useController({
     name,
@@ -38,10 +36,7 @@ export function PasswordInput(
   });
   const id = useId();
 
-  const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const theme = useTheme();
-
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
@@ -53,38 +48,20 @@ export function PasswordInput(
         <BaseInput
           id={`${id}-${name}`}
           placeholder={placeholder}
-          value={field.value}
-          onChangeText={field.onChange}
+          value={value}
+          onChangeText={onChange}
           secureTextEntry={!isPasswordVisible}
-          onBlur={() => {
-            field.onBlur();
-            setIsFocused(false);
-          }}
-          borderColor={
-            error ? "$red10Light" : isFocused ? "$accentBackground" : undefined
-          }
-          hoverStyle={{
-            borderColor: error ? "$red10Dark" : undefined,
-          }}
-          onFocus={() => setIsFocused(true)}
-          ref={field.ref}
+          ref={ref}
           {...props}
         />
-        <Button
-          size="$2"
-          icon={isPasswordVisible ? EyeOff : Eye}
+        <PasswordIcon
           onPress={togglePasswordVisibility}
-          marginLeft="$-6"
-          backgroundColor="transparent"
+          isVisible={isPasswordVisible}
         />
       </XStack>
-      <Paragraph
-        color={error ? "$red10Light" : "$colorTransparent"}
-        marginTop="$2"
-        fontSize="$2"
-      >
-        {error ? error?.message : "*"}
-      </Paragraph>
+      <XStack marginTop="$2">
+        <FormError error={error} />
+      </XStack>
     </YStack>
   );
 }
