@@ -50,6 +50,7 @@ export function Input({
   };
 
   const showClearIcon = clearable && Boolean(value);
+  const displayValue = value?.toString() || "";
 
   return (
     <YStack>
@@ -67,7 +68,7 @@ export function Input({
           <BaseInput
             id={`${id}-${name}`}
             placeholder={placeholder}
-            value={value}
+            value={displayValue}
             onChangeText={onChange}
             hasError={Boolean(error)}
             isPaddedLeft={Boolean(icon || leftAdornment)}

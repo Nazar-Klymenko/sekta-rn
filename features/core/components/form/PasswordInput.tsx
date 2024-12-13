@@ -40,6 +40,7 @@ export function PasswordInput({
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
+  const displayValue = value?.toString() || "";
 
   return (
     <YStack>
@@ -48,7 +49,7 @@ export function PasswordInput({
         <BaseInput
           id={`${id}-${name}`}
           placeholder={placeholder}
-          value={value}
+          value={displayValue}
           onChangeText={onChange}
           secureTextEntry={!isPasswordVisible}
           ref={ref}

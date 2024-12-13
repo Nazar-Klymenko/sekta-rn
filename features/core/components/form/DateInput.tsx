@@ -19,6 +19,8 @@ import {
 import { useController, useFormContext } from "react-hook-form";
 
 import { BaseInput } from "./ui";
+import { FormError } from "./ui/FormError";
+import { InputIcon } from "./ui/InputIcon";
 
 interface DateInputProps extends TamaguiInputProps {
   name: string;
@@ -34,7 +36,7 @@ export function DateInput({
   name,
   label,
   placeholder,
-  icon: Icon,
+  icon,
   mode = "date",
   minimumDate,
   maximumDate,
@@ -49,10 +51,8 @@ export function DateInput({
     control,
   });
 
-  const [isFocused, setIsFocused] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const isPaddedLeft = !!Icon;
   const id = useId();
 
   const formatDateTime = (date: Date) => {
@@ -113,43 +113,15 @@ export function DateInput({
               flex={1}
               position="relative"
             >
-              {Icon && (
-                <Icon
-                  style={{
-                    position: "absolute",
-                    left: 16,
-                    color: "grey",
-                    pointerEvents: "none",
-                    userSelect: "none",
-                    zIndex: 1,
-                    size: 16,
-                  }}
-                />
-              )}
+              {icon && <InputIcon icon={icon} />}
 
               <BaseInput
                 id={`${id}-${name}`}
                 placeholder={placeholder}
                 value={value ? formatDateTime(new Date(value)) : ""}
-                paddingHorizontal={isPaddedLeft ? "$8" : "$3.5"}
-                onBlur={() => {
-                  onBlur();
-                  setIsFocused(false);
-                }}
-                onFocus={() => setIsFocused(true)}
+                isPaddedLeft={Boolean(icon)}
                 editable={false}
-                borderColor={
-                  error
-                    ? "$red10Light"
-                    : isFocused
-                    ? "$accentBackground"
-                    : undefined
-                }
-                hoverStyle={{
-                  borderColor: error ? "$red10Dark" : undefined,
-                }}
                 ref={ref}
-                disabledStyle={{ color: "grey" }}
                 {...props}
               />
             </Stack>
@@ -169,13 +141,7 @@ export function DateInput({
         )}
 
         <XStack marginTop="$2">
-          <Paragraph
-            flex={1}
-            color={error ? "$red10Light" : "$colorTransparent"}
-            fontSize="$2"
-          >
-            {error ? error?.message : ""}
-          </Paragraph>
+          <FormError error={error} />
         </XStack>
       </YStack>
     </Theme>
