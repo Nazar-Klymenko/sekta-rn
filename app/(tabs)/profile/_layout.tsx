@@ -4,16 +4,14 @@ import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useUserData } from "@/features/users/hooks/useUserData";
 
 import { SizableText, useTheme } from "tamagui";
 
-import { Redirect, Slot, Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
-  const { user, isAuthenticated } = useAuth();
-  const { data: userData } = useUserData(user?.uid || "");
+  const { displayUser, isAuthenticated } = useAuth();
 
   if (Platform.OS === "web") {
     return <Redirect href={"/"} />;
@@ -40,7 +38,7 @@ export default function HomeLayout() {
           title: "Profile",
           animation: "fade_from_bottom",
           headerRight: () =>
-            userData?.isAdmin && (
+            displayUser?.isAdmin && (
               <TouchableOpacity onPress={() => navigation.push("admin")}>
                 <SizableText>Admin</SizableText>
               </TouchableOpacity>

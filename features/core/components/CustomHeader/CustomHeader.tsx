@@ -1,33 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { User as FirebaseUser } from "firebase/auth";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useSignOut } from "@/features/auth/hooks/useSignOut";
-import { useDisableScroll } from "@/features/core/hooks/useDisableScroll";
-import { useUserData } from "@/features/users/hooks/useUserData";
 
-import {
-  Bell,
-  BoomBox,
-  Heart,
-  Home,
-  LogIn,
-  LogOut,
-  Menu,
-  Play,
-  Settings,
-  User,
-  UserRoundCheck,
-  X,
-} from "@tamagui/lucide-icons";
+import { Home, Menu, UserRoundCheck, X } from "@tamagui/lucide-icons";
 
 import {
   AnimatePresence,
-  Avatar,
   Button,
   Image,
-  Paragraph,
   SizableText,
   Stack,
   StackProps,
@@ -37,34 +19,25 @@ import {
   useMedia,
 } from "tamagui";
 
-import { Link, usePathname, useRouter } from "expo-router";
+import { Link } from "expo-router";
 
-import { Tooltip } from "../panels/Tooltip";
-import { NavLink, NavLinkButton } from "./NavLink";
+import { NavLink } from "./NavLink";
 
-// Interfaces
 interface HeaderProps {
   title: string;
   user?: FirebaseUser | null;
 }
 
-// Components
-
 export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
-  const router = useRouter();
   const media = useMedia();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user: _user } = useAuth();
-  const { data: userData } = useUserData(_user?.uid || "");
+  const { displayUser } = useAuth();
   const isSmallScreen = !media.gtMd;
-  const pathname = usePathname();
-  const isEventDetailPage =
-    pathname.startsWith("/events/") && pathname !== "/events";
 
   const navLinks = [
     { href: "/", icon: <Home size={24} color="$color" />, label: "Home" },
 
-    ...(userData?.isAdmin
+    ...(displayUser?.isAdmin
       ? [
           {
             href: "/admin",
@@ -106,11 +79,6 @@ export const CustomHeader: React.FC<HeaderProps> = ({ title, user }) => {
                 <LogoText>{title}</LogoText>
               </XStack>
             </Link>
-            {/* {isEventDetailPage && (
-              <Button onPress={() => router.push("/events")}>
-                Back to Events
-              </Button>
-            )} */}
             <XStack alignItems="center" gap="$4">
               {isSmallScreen && (
                 <IconButton onPress={() => setIsMenuOpen(!isMenuOpen)}>
@@ -179,7 +147,7 @@ const HeaderContainer = styled(XStack, {
   height: 60,
 });
 
-const LogoText = styled(Paragraph, {
+const LogoText = styled(SizableText, {
   fontSize: "$5",
   fontWeight: "bold",
   color: "$color",

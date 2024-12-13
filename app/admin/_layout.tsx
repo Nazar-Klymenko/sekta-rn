@@ -4,16 +4,14 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
-import { useUserData } from "@/features/users/hooks/useUserData";
 
 import { useTheme } from "tamagui";
 
-import { Redirect, Slot, Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 
 export default function HomeLayout() {
   const theme = useTheme();
-  const { user } = useAuth();
-  const { data: userData, isLoading } = useUserData(user?.uid || "");
+  const { user, displayUser, isLoading } = useAuth();
   if (Platform.OS === "web") {
     return <Redirect href={"/"} />;
   }
@@ -21,7 +19,7 @@ export default function HomeLayout() {
     return <FullPageLoading />;
   }
 
-  if (!userData?.isAdmin) {
+  if (!displayUser?.isAdmin) {
     return <Redirect href={"/"} />;
   }
 
