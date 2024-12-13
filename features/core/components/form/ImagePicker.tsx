@@ -8,7 +8,7 @@ import { Image, Label, SizableText, Stack, XStack, YStack } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { FormError } from "./ui/FormError";
+import { FormError } from "./shared/FormError";
 
 interface ImagePickerProps {
   name: string;

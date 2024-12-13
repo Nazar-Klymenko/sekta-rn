@@ -18,9 +18,9 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput } from "./ui";
-import { FormError } from "./ui/FormError";
-import { InputIcon } from "./ui/InputIcon";
+import { BaseInput } from "./shared";
+import { FormError } from "./shared/FormError";
+import { InputIcon } from "./shared/InputIcon";
 
 interface DateInputProps extends TamaguiInputProps {
   name: string;

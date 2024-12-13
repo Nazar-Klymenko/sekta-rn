@@ -14,7 +14,7 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { FormError } from "./ui/FormError";
+import { FormError } from "./shared/FormError";
 
 interface CustomCheckboxProps
   extends Omit<CheckboxProps, "checked" | "onCheckedChange"> {

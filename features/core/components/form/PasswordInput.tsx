@@ -10,9 +10,9 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput } from "./ui";
-import { FormError } from "./ui/FormError";
-import { PasswordIcon } from "./ui/PasswordIcon";
+import { BaseInput } from "./shared";
+import { FormError } from "./shared/FormError";
+import { PasswordIcon } from "./shared/PasswordIcon";
 
 interface InputProps extends TamaguiInputProps {
   name: string;

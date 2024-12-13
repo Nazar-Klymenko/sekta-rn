@@ -9,11 +9,11 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput, MaxLength } from "./ui";
-import { ClearIcon } from "./ui/ClearIcon";
-import { FormError } from "./ui/FormError";
-import { InputIcon } from "./ui/InputIcon";
-import { LeftAdornment } from "./ui/LeftAdornment";
+import { BaseInput, MaxLength } from "./shared";
+import { ClearIcon } from "./shared/ClearIcon";
+import { FormError } from "./shared/FormError";
+import { InputIcon } from "./shared/InputIcon";
+import { LeftAdornment } from "./shared/LeftAdornment";
 
 interface InputProps extends TamaguiInputProps {
   name: string;

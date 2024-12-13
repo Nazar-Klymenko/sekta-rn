@@ -10,10 +10,10 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseTextArea, MaxLength } from "./ui";
-import { FormError } from "./ui/FormError";
-import { InputIcon } from "./ui/InputIcon";
-import { LeftAdornment } from "./ui/LeftAdornment";
+import { BaseTextArea, MaxLength } from "./shared";
+import { FormError } from "./shared/FormError";
+import { InputIcon } from "./shared/InputIcon";
+import { LeftAdornment } from "./shared/LeftAdornment";
 
 interface TextAreaProps extends TamaguiTextAreaProps {
   name: string;
