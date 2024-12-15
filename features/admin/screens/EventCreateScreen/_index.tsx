@@ -4,6 +4,7 @@ import { EventFormValues, eventSchema } from "@/features/admin/utils/schemas";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
+import { ImagePicker } from "@/features/core/components/form/ImagePicker";
 import { Input } from "@/features/core/components/form/Input";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
@@ -15,39 +16,29 @@ import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { CustomImagePicker } from "../../components/events/ImagePicker";
 import { useCreateEvent } from "../../hooks/useCreateEvent";
-import { useImagePicker } from "../../hooks/useImagePicker";
-import {
-  DEFAULT_DATE,
-  DEFAULT_LOCATION,
-  DEFAULT_PRICE,
-} from "../../utils/constants";
 
 export default function EventCreateScreen() {
   const methods = useForm({
     resolver: yupResolver(eventSchema),
-    defaultValues: {
-      location: DEFAULT_LOCATION,
-      date: DEFAULT_DATE,
-      price: DEFAULT_PRICE,
-      genres: [],
-      lineup: [],
-    },
+    defaultValues: { ...eventSchema.getDefault() },
   });
   const { handleSubmit } = methods;
 
-  const { image, pickImage } = useImagePicker();
   const { mutate, isPending } = useCreateEvent();
 
   const onSubmit = (data: EventFormValues) => {
-    mutate({ data: data, image: image });
+    mutate({ data });
   };
 
   return (
     <PageContainer>
       <Form methods={methods}>
-        <CustomImagePicker onPress={pickImage} image={image} />
+        <ImagePicker
+          name="image"
+          label="Event Image"
+          placeholder="Tap to select event image"
+        />
         <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
           name="caption"
@@ -58,7 +49,6 @@ export default function EventCreateScreen() {
           maxLength={1000}
           multiline
         />
-
         <DateInput
           name="date"
           label="Event date"
@@ -72,7 +62,6 @@ export default function EventCreateScreen() {
           label="Event location"
           placeholder="Nowa 3/3, Kraków"
         />
-
         <MultiTagInput
           name={"genres"}
           label={"Select genres"}
@@ -91,7 +80,6 @@ export default function EventCreateScreen() {
           leftAdornment="PLN"
           keyboardType="numeric"
         />
-
         <ButtonCTA
           theme="accent"
           disabled={isPending}
