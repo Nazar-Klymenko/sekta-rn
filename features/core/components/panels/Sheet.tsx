@@ -29,8 +29,9 @@ export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
       justifyContent="center"
       alignItems="center"
       gap="$5"
+      theme={"surface1"}
     >
-      <YStack gap="$4" width="100%">
+      <YStack gap="$4" width="100%" theme={"surface2"}>
         {children}
       </YStack>
     </ReusableSheet.Frame>
