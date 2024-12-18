@@ -32,7 +32,6 @@ export function ImagePicker({ name, label, placeholder }: ImagePickerProps) {
   const handleImagePick = async () => {
     const result = await pickImage();
     if (result !== undefined) {
-      console.log(result);
       onChange(result);
     }
   };
@@ -69,7 +68,7 @@ export function ImagePicker({ name, label, placeholder }: ImagePickerProps) {
           <YStack alignItems="center" gap="$2">
             <Camera size="$6" color="$secondary" />
             <SizableText size="$4" color="$secondary">
-              {placeholder || "Tap to pick an image"}
+              {placeholder}
             </SizableText>
           </YStack>
         )}

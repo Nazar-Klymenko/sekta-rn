@@ -8,14 +8,12 @@ import { db } from "@/lib/firebase/firebase";
 interface UpdateEventParams {
   eventUid: string;
   data: EventFormValues;
-  image: string | null;
   originalData: DisplayEvent;
 }
 
 export const updateEvent = async ({
   eventUid,
   data,
-  image,
   originalData,
 }: UpdateEventParams) => {
   try {
@@ -23,14 +21,15 @@ export const updateEvent = async ({
     const serverTimestampVar = serverTimestamp();
 
     let uploadedImage = originalData.image;
+    let image = data.image.uri;
     // Check if the image has changed
     if (image !== null && image !== uploadedImage.publicUrl) {
       const title = data.title;
       uploadedImage = await uploadEventImage({
-        image,
         eventUid,
         title,
         ...uploadedImage,
+        image,
       });
     }
 
