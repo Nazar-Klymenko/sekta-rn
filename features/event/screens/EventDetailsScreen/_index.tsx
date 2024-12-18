@@ -5,6 +5,7 @@ import { RefreshControl } from "react-native";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
+import { useCountdown } from "@/features/core/hooks/useCountdown";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
@@ -31,7 +32,7 @@ export default function EventDetailsScreen() {
     isRefetching,
   } = useFetchEvent(id || "");
   const { scrollHandler, scrollEventThrottle } = useAnimatedScroll();
-
+  const { hasEventPassed } = useCountdown(event!.date);
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
@@ -52,7 +53,9 @@ export default function EventDetailsScreen() {
         />
       </ReanimatedPageContainer>
     );
-  const showBottomButtom = true;
+
+  const showBottomButtom = !hasEventPassed();
+
   return (
     <>
       <ReanimatedPageContainer
@@ -83,7 +86,7 @@ export default function EventDetailsScreen() {
       </ReanimatedPageContainer>
       {showBottomButtom && (
         <StickyButtonWrap>
-          <StickyBottomButton targetDate={event.date} />
+          <StickyBottomButton />
         </StickyButtonWrap>
       )}
     </>
