@@ -100,7 +100,6 @@ const PlayForm = React.memo(() => {
         inputMode="tel"
         icon={Phone}
       />
-      <Separator marginBottom={16} />
 
       <H2>Portfolio Links (Optional)</H2>
 
