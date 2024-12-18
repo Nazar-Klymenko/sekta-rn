@@ -1,4 +1,3 @@
-import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
@@ -11,9 +10,7 @@ import {
   Image,
   Paragraph,
   SizableText,
-  TextStyle,
   YStack,
-  styled,
   useWindowDimensions,
 } from "tamagui";
 
@@ -61,7 +58,7 @@ export const HeroSection = () => {
               )}
               <YStack>
                 <SizableText
-                  lineHeight={72}
+                  lineHeight={64}
                   fontSize={72}
                   fontWeight={800}
                   textTransform="uppercase"

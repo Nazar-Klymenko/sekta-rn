@@ -5,10 +5,11 @@ import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
-import { H1, Paragraph, Separator, YStack } from "tamagui";
+import { Separator, YStack } from "tamagui";
 
 import { usePathname, useRouter } from "expo-router";
 
+import { Apply } from "./Apply";
 import { PlayForm } from "./Form";
 import Header from "./Header";
 import { HeroSection } from "./Hero";
@@ -33,15 +34,10 @@ export default function PlayScreen() {
         scrollEventThrottle={scrollEventThrottle}
       >
         <HeroSection />
-        <YStack padding="$4" gap="$4">
+        <YStack>
           <VenueInfoSection />
           <Separator />
-          <YStack gap="$2">
-            <H1>Apply to Play</H1>
-            <Paragraph fontSize="$5" color="$gray10Light">
-              Share your details and we'll be in touch
-            </Paragraph>
-          </YStack>
+          <Apply />
           {isAuthenticated ? (
             <PlayForm key="play-form" />
           ) : (

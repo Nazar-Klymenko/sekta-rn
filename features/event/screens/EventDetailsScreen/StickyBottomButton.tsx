@@ -1,33 +1,14 @@
 import React from "react";
 
-import { Timestamp } from "firebase/firestore";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
-import { useCountdown } from "@/features/core/hooks/useCountdown";
 
 import { Ticket } from "@tamagui/lucide-icons";
 
-type StickyButtonBottomProps = {
-  onPress?: () => void;
-  targetDate: Timestamp;
-};
-export const StickyBottomButton = ({ targetDate }: StickyButtonBottomProps) => {
-  const { hasEventPassed, hasEventStarted } = useCountdown(targetDate);
-
-  if (hasEventPassed()) {
-    return null;
-  }
-  if (hasEventStarted()) {
-    return (
-      <ButtonCTA theme="accent" onPress={() => {}}>
-        <Ticket /> I'm Going!
-      </ButtonCTA>
-    );
-  } else {
-    return (
-      <ButtonCTA theme="accent" onPress={() => {}}>
-        <Ticket /> I'm Going!
-      </ButtonCTA>
-    );
-  }
+export const StickyBottomButton = () => {
+  return (
+    <ButtonCTA theme="accent" onPress={() => {}}>
+      <Ticket /> I'm Going!
+    </ButtonCTA>
+  );
 };
