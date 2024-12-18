@@ -3,10 +3,8 @@ import React, { useId, useState } from "react";
 import { X } from "@tamagui/lucide-icons";
 
 import {
-  Circle,
   Label,
   Separator,
-  SizableText,
   InputProps as TamaguiInputProps,
   Theme,
   XStack,
@@ -15,7 +13,9 @@ import {
 
 import { useController, useFormContext } from "react-hook-form";
 
-import { BaseInput, MaxLength } from "./shared/BaseInput";
+import { BaseInput, MaxLength } from "./shared";
+import { FormError } from "./shared/FormError";
+import { Pill } from "./shared/Pill";
 
 interface InputProps extends TamaguiInputProps {
   name: string;
@@ -89,8 +89,8 @@ export function MultiTagInput({
                 setIsFocused(false);
               }}
               onFocus={() => setIsFocused(true)}
-              onSubmitEditing={handleAddTag} // Use this instead of onKeyPress
-              returnKeyType="done" // Add this line
+              onSubmitEditing={handleAddTag}
+              returnKeyType="done"
               blurOnSubmit={false}
               paddingVertical={10}
               verticalAlign="top"
@@ -119,13 +119,7 @@ export function MultiTagInput({
         </YStack>
 
         <XStack marginTop="$2">
-          <SizableText
-            flex={1}
-            color={error ? "$red10Light" : "$colorTransparent"}
-            fontSize="$2"
-          >
-            {error ? error?.message : ""}
-          </SizableText>
+          <FormError error={error} />
           {maxLength && (
             <MaxLength length={value?.length || 0} maxLength={maxLength} />
           )}
@@ -134,37 +128,3 @@ export function MultiTagInput({
     </Theme>
   );
 }
-
-interface PillProps {
-  tag: string;
-  onPress?: () => void;
-  selected?: boolean;
-  icon?: React.ReactNode;
-}
-
-const Pill = ({ tag, onPress, selected, icon }: PillProps) => {
-  return (
-    <XStack
-      theme={"surface3"}
-      gap="$2"
-      borderRadius="$9"
-      paddingVertical={8}
-      paddingHorizontal={12}
-      backgroundColor={"$background"}
-      onPress={onPress}
-      cursor={selected ? "pointer" : "unset"}
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <SizableText
-        lineHeight="$1"
-        color="$accentColor"
-        fontWeight="400"
-        fontSize={"$5"}
-      >
-        {tag}
-      </SizableText>
-      <Circle size={6}>{icon}</Circle>
-    </XStack>
-  );
-};

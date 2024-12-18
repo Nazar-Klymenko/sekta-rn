@@ -1,6 +1,6 @@
-import { Input as TamaguiInput, styled } from "tamagui";
+import { TextArea as TamaguiTextArea, styled } from "tamagui";
 
-export const BaseInput = styled(TamaguiInput, {
+export const BaseTextArea = styled(TamaguiTextArea, {
   flex: 1,
   borderRadius: "$2",
   borderWidth: 2,

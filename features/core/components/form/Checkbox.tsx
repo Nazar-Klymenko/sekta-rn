@@ -1,5 +1,7 @@
 import React, { useId } from "react";
 
+import { Check } from "@tamagui/lucide-icons";
+
 import {
   CheckboxProps,
   Label,
@@ -7,9 +9,12 @@ import {
   Checkbox as TamaguiCheckbox,
   XStack,
   YStack,
+  styled,
 } from "tamagui";
 
 import { useController, useFormContext } from "react-hook-form";
+
+import { FormError } from "./shared/FormError";
 
 interface CustomCheckboxProps
   extends Omit<CheckboxProps, "checked" | "onCheckedChange"> {
@@ -18,15 +23,10 @@ interface CustomCheckboxProps
   label?: string;
 }
 
-export function Checkbox({
-  name,
-  label,
-  children,
-  ...props
-}: CustomCheckboxProps) {
+export function Checkbox({ name, children, ...props }: CustomCheckboxProps) {
   const { control } = useFormContext();
   const {
-    field,
+    field: { value, onChange, ref },
     fieldState: { error },
   } = useController({
     name,
@@ -35,33 +35,54 @@ export function Checkbox({
   const id = useId();
 
   return (
-    <YStack gap="$2" marginBottom="$4">
-      <XStack alignItems="flex-start" gap="$2">
-        <TamaguiCheckbox
+    <YStack>
+      <XStack alignItems="flex-start" gap="$3" display="flex">
+        <BaseCheckbox
           id={`${id}-${name}`}
-          checked={field.value}
-          onCheckedChange={(checked) => {
-            field.onChange(checked);
-          }}
-          ref={field.ref}
+          checked={value}
+          onCheckedChange={onChange}
+          ref={ref}
+          hasError={Boolean(error)}
           {...props}
         >
           <TamaguiCheckbox.Indicator>
-            <Paragraph>✓</Paragraph>
+            <Check />
           </TamaguiCheckbox.Indicator>
-        </TamaguiCheckbox>
-        <Label fontSize={12} htmlFor={`${id}-${name}`} lineHeight={"$1"}>
+        </BaseCheckbox>
+
+        <Label htmlFor={`${id}-${name}`} flexShrink={1} lineHeight="$1">
           {children}
         </Label>
       </XStack>
-      {error && (
-        <Paragraph
-          color={error ? "$red10Light" : "$colorTransparent"}
-          fontSize="$2"
-        >
-          {error?.message}
-        </Paragraph>
-      )}
+
+      <XStack marginTop="$2">
+        <FormError error={error} />
+      </XStack>
     </YStack>
   );
 }
+export const BaseCheckbox = styled(TamaguiCheckbox, {
+  borderWidth: 2,
+  borderRadius: "$2",
+
+  variants: {
+    hasError: {
+      true: {
+        borderColor: "$red10Light",
+        hoverStyle: {
+          borderColor: "$red10Dark",
+        },
+      },
+    },
+    checked: {
+      true: {
+        backgroundColor: "$accentBackground",
+        borderColor: "$accentBackground",
+      },
+    },
+  },
+
+  focusStyle: {
+    borderColor: "$accentBackground",
+  },
+});

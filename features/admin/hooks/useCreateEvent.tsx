@@ -11,14 +11,8 @@ export const useCreateEvent = () => {
   const router = useRouter();
   const handleToastMessage = useOperationStatusHelper();
   return useMutation({
-    mutationFn: async ({
-      data,
-      image,
-    }: {
-      data: EventFormValues;
-      image: string | null;
-    }) => {
-      return await createEvent(data, image);
+    mutationFn: async ({ data }: { data: EventFormValues }) => {
+      return await createEvent(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });

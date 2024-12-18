@@ -8,7 +8,9 @@ export interface EventImage {
   altText: string; // For accessibility
   timestamps: Timestamps<Timestamp>; // Metadata
 }
-
+export interface EventImageFile {
+  uri: string | Blob;
+}
 interface EventTitle {
   display: string;
   lowercase: string;

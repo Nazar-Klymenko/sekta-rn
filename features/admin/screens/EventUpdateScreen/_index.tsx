@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-
-import { Alert } from "react-native";
+import React from "react";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
+import { ImagePicker } from "@/features/core/components/form/ImagePicker";
 import { Input } from "@/features/core/components/form/Input";
 import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
@@ -19,14 +18,7 @@ import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { CustomImagePicker } from "../../components/events/ImagePicker";
-import { useImagePicker } from "../../hooks/useImagePicker";
 import { useUpdateEvent } from "../../hooks/useUpdateEvent";
-import {
-  DEFAULT_DATE,
-  DEFAULT_LOCATION,
-  DEFAULT_PRICE,
-} from "../../utils/constants";
 import { EventFormValues, eventSchema } from "../../utils/schemas";
 
 export default function EventUpdateScreen() {
@@ -35,47 +27,26 @@ export default function EventUpdateScreen() {
   const { mutate, isPending } = useUpdateEvent(id);
   const router = useRouter();
   const methods = useForm({
-    resolver: yupResolver(eventSchema),
-    defaultValues: {
-      title: event?.title.display || "",
-      caption: event?.caption || "",
-      location: event?.location || DEFAULT_LOCATION,
-      date: event?.date.toDate() || DEFAULT_DATE,
-      genres: event?.genres || [],
-      lineup: event?.lineup || [],
-      price: event?.price.amount || DEFAULT_PRICE,
-    },
-  });
-  const { handleSubmit, reset } = methods;
-
-  const { image, setImage, pickImage } = useImagePicker();
-
-  useEffect(() => {
-    if (!isLoading && event) {
-      setImage(event.image.publicUrl);
-      reset({
+      resolver: yupResolver(eventSchema),
+      defaultValues: {
+        ...eventSchema.getDefault(),
         ...event,
-        title: event.title.display,
-        date: event.date.toDate(),
-        price: event.price.amount,
-      });
-    }
-  }, [isLoading]);
+        image: { uri: event?.image.publicUrl || "" },
+        date: event?.date.toDate(),
+        title: event?.title.display,
+        price: event?.price.amount,
+      },
+    }),
+    { handleSubmit } = methods;
 
   const onSubmit = async (data: EventFormValues) => {
     if (!event) return;
-
-    if (!image) {
-      Alert.alert("Error", "Please select an image");
-      return;
-    }
 
     mutate(
       {
         eventUid: id,
         originalData: event,
         data,
-        image,
       },
       {
         onSuccess: () => {
@@ -90,7 +61,11 @@ export default function EventUpdateScreen() {
   return (
     <PageContainer>
       <Form methods={methods}>
-        <CustomImagePicker onPress={pickImage} image={image} />
+        <ImagePicker
+          name="image"
+          label="Event Image"
+          placeholder="Tap to select event image"
+        />
         <Input name="title" label="Event title" placeholder="Title" />
         <TextArea
           name="caption"

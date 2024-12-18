@@ -58,20 +58,17 @@ export default function ChangePasswordScreen() {
           name="currentPassword"
           label="Current Password"
           placeholder="Enter your current password"
-          secureTextEntry
         />
         <PasswordInput
           name="newPassword"
           label="New Password"
           placeholder="Enter your new password"
-          secureTextEntry
         />
         <PasswordRequirements password={watch("newPassword")} />
         <PasswordInput
           name="confirmPassword"
           label="Confirm Password"
           placeholder="Confirm your new password"
-          secureTextEntry
         />
 
         <ButtonCTA

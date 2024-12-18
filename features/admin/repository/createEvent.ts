@@ -11,14 +11,7 @@ import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
 import { FirestoreEvent } from "@/features/event/models/Event";
 import { db } from "@/lib/firebase/firebase";
 
-export const createEvent = async (
-  data: EventFormValues,
-  image: string | null
-) => {
-  if (!image) {
-    throw new Error("Please select an image");
-  }
-
+export const createEvent = async (data: EventFormValues) => {
   try {
     const titleLowercase = data.title.toLowerCase();
     const serverTimestampVar = serverTimestamp();
@@ -27,7 +20,7 @@ export const createEvent = async (
 
     const title = data.title;
     const uploadedImage = await uploadEventImage({
-      image,
+      image: data.image.uri,
       eventUid,
       title,
     });
