@@ -63,11 +63,12 @@ export const signUp = async ({
           agreeTos,
           agreeEmail,
         },
-        metadata: {
+        isAdmin: false,
+        timestamps: {
           createdAt: timestamp,
           updatedAt: timestamp,
         },
-        isAdmin: false,
+        metadata: {},
       };
 
       transaction.set(userDocRef, userData);
