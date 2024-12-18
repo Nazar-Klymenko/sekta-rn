@@ -8,7 +8,7 @@ import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { Separator, View, YStack, styled } from "tamagui";
+import { View, YStack, styled } from "tamagui";
 
 import { useLocalSearchParams } from "expo-router";
 
@@ -71,13 +71,10 @@ export default function EventDetailsScreen() {
             gap="$4"
           >
             <EventInfo event={event} />
-            <Separator />
             <EventDescription description={event.caption} />
-            <Separator />
             {event.lineup.length > 0 && (
               <TagSection title="Lineup" tags={event.lineup} />
             )}
-            <Separator />
             {event.genres.length > 0 && (
               <TagSection title="Genres" tags={event.genres} />
             )}
