@@ -32,7 +32,6 @@ export default function EventDetailsScreen() {
     isRefetching,
   } = useFetchEvent(id || "");
   const { scrollHandler, scrollEventThrottle } = useAnimatedScroll();
-  const { hasEventPassed } = useCountdown(event!.date);
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
@@ -53,6 +52,8 @@ export default function EventDetailsScreen() {
         />
       </ReanimatedPageContainer>
     );
+
+  const { hasEventPassed } = useCountdown(event!.date);
 
   const showBottomButtom = !hasEventPassed();
 
