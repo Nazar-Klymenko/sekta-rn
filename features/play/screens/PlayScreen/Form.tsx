@@ -14,9 +14,8 @@ import {
   Phone,
   Youtube,
 } from "@tamagui/lucide-icons";
-import { useToastController } from "@tamagui/toast";
 
-import { H2, Paragraph, Separator } from "tamagui";
+import { H2, Separator } from "tamagui";
 
 import { useForm } from "react-hook-form";
 
@@ -72,15 +71,6 @@ const PlayForm = React.memo(() => {
   const { mutate, isPending } = useSubmitPlay();
   const methods = useForm<FormValues>({
     resolver: yupResolver(playSchema),
-    defaultValues: {
-      email: "",
-      phone: "",
-      soundcloud: "",
-      youtube: "",
-      instagram: "",
-      facebook: "",
-      additionalInfo: "",
-    },
     mode: "onTouched",
   });
 
@@ -93,7 +83,7 @@ const PlayForm = React.memo(() => {
   };
 
   return (
-    <Form methods={methods} maxWidth={740} flex={1}>
+    <Form methods={methods} maxWidth={740} flex={1} padding={16}>
       <H2>Contact Information</H2>
       <Input
         name="email"
@@ -110,7 +100,6 @@ const PlayForm = React.memo(() => {
         inputMode="tel"
         icon={Phone}
       />
-      <Separator />
 
       <H2>Portfolio Links (Optional)</H2>
 
@@ -139,6 +128,7 @@ const PlayForm = React.memo(() => {
         onPress={methods.handleSubmit(onSubmit)}
         isLoading={isPending}
         disabled={isPending}
+        marginTop={16}
       >
         Send application
       </ButtonCTA>

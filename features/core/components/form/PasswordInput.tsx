@@ -52,6 +52,7 @@ export function PasswordInput({
           value={displayValue}
           onChangeText={onChange}
           secureTextEntry={!isPasswordVisible}
+          hasError={Boolean(error)}
           ref={ref}
           {...props}
         />

@@ -53,6 +53,9 @@ const PreviousEventCard: React.FC<PreviousEventCardProps> = ({ event }) => {
 const CardContainer = styled(XStack, {
   padding: "$1",
   marginBottom: "$2",
+  animation: {
+    type: "quickest",
+  },
   pressStyle: {
     scale: 0.98,
   },
