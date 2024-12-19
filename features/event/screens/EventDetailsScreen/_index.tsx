@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { RefreshControl } from "react-native";
 
@@ -55,7 +55,7 @@ export default function EventDetailsScreen() {
 
   const { hasEventPassed } = useCountdown(event!.date);
 
-  const showBottomButtom = !hasEventPassed();
+  const showBottomButtom = useState(!hasEventPassed());
 
   return (
     <>
