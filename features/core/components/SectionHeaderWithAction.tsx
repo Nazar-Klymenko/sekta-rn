@@ -34,12 +34,7 @@ const SectionHeaderWithAction = ({
         onPress={onActionPress}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
-        <XStack
-          alignItems="center"
-          gap="$2"
-          pressStyle={{ opacity: 0.7 }}
-          animation="quickest"
-        >
+        <XStack alignItems="center" gap="$2">
           <Paragraph>{actionText}</Paragraph>
           <Icon size={20} />
         </XStack>
