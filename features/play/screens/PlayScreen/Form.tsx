@@ -128,6 +128,7 @@ const PlayForm = React.memo(() => {
         onPress={methods.handleSubmit(onSubmit)}
         isLoading={isPending}
         disabled={isPending}
+        marginTop={16}
       >
         Send application
       </ButtonCTA>
