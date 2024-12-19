@@ -89,11 +89,11 @@ const CardContainer = styled(YStack, {
   borderRadius: "$2",
   overflow: "hidden",
   marginVertical: 10,
+  animation: {
+    type: "quickest",
+  },
   pressStyle: {
     scale: 0.98,
-  },
-  hoverStyle: {
-    scale: 1.02,
   },
 });
 
