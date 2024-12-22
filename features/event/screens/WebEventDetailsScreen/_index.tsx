@@ -48,17 +48,19 @@ export default function WebEventDetailsScreen() {
         />
       </PageContainer>
     );
+  const eventDescription =
+    event?.caption?.slice(0, 200) + (event?.caption?.length > 200 ? "..." : "");
+
   return (
     <>
-      <PageHead customTitle={event?.title.display} />
-
+      <PageHead
+        customTitle={event?.title.display}
+        description={eventDescription}
+        image={event?.image?.publicUrl}
+        type="event"
+      />
       <PageContainer>
-        <XStack
-          gap="$4"
-          flex={1}
-          flexWrap="wrap" // Allows wrapping for responsiveness
-          justifyContent="center" // Centers the content on smaller screens
-        >
+        <XStack gap="$4" flex={1} flexWrap="wrap" justifyContent="center">
           <Stack gap="$4" flex={gtMd ? 1 : 2} width={gtMd ? "60%" : "100%"}>
             <Image
               source={{ uri: event.image.publicUrl }}
