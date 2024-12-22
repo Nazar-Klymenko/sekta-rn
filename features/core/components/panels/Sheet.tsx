@@ -14,7 +14,7 @@ export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
     onOpenChange={onOpenChange}
     dismissOnSnapToBottom
     dismissOnOverlayPress
-    animation="medium"
+    animation="quicker"
     snapPointsMode="fit"
     modal
   >
@@ -23,14 +23,15 @@ export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
       enterStyle={{ opacity: 0 }}
       exitStyle={{ opacity: 0 }}
     />
-    <ReusableSheet.Handle />
+    <ReusableSheet.Handle theme={"surface2"} />
     <ReusableSheet.Frame
       padding="$4"
       justifyContent="center"
       alignItems="center"
       gap="$5"
+      theme={"surface1"}
     >
-      <YStack gap="$4" width="100%">
+      <YStack gap="$4" width="100%" theme={"surface2"}>
         {children}
       </YStack>
     </ReusableSheet.Frame>

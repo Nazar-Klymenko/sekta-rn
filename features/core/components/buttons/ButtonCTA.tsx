@@ -24,11 +24,12 @@ export const ButtonCTA = ({
     size={"$5"}
     borderWidth={0}
     icon={isLoading ? <Spinner color="$color" /> : null}
+    animation={"quickest"}
     disabledStyle={{ opacity: 0.5 }}
+    pressStyle={{ opacity: 0.7 }}
+    key={`${disabled}`}
     {...props}
   >
     {children}
   </Button>
 );
-
-ButtonCTA.displayName = "ButtonCTA";

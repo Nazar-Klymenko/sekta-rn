@@ -12,7 +12,7 @@ export const MenuItem = ({ title, icon: Icon, onPress }: MenuItemProps) => (
   <ResponsiveStack onPress={onPress}>
     <Icon size="$1" />
     <Paragraph size="$6" fontWeight={500}>
-      {title}
+      {title}s
     </Paragraph>
   </ResponsiveStack>
 );
@@ -24,6 +24,7 @@ const ResponsiveStack = styled(XStack, {
   gap: "$3",
   paddingVertical: "$3",
   paddingHorizontal: "$2",
+  animation: "quickest",
   pressStyle: {
     opacity: 0.7,
   },

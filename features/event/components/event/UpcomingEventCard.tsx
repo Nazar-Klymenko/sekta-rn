@@ -8,7 +8,7 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import { Clock, MapPin } from "@tamagui/lucide-icons";
 
-import { Image, Paragraph, Stack, XStack, YStack, styled } from "tamagui";
+import { Image, SizableText, Stack, XStack, YStack, styled } from "tamagui";
 
 import { useRouter } from "expo-router";
 
@@ -44,34 +44,34 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
         />
       </ImageContainer>
       <ContentContainer>
-        <Paragraph
+        <SizableText
           fontSize={24}
-          lineHeight={24}
+          lineHeight={28}
           fontWeight="700"
           numberOfLines={2}
         >
           {event.title.display}
-        </Paragraph>
+        </SizableText>
         <XStack alignItems="center">
           <Clock size={16} color="grey" marginEnd={8} />
-          <Paragraph fontSize={15} color="grey">
+          <SizableText fontSize={15} color="grey">
             {formattedDate} • {formattedTime}
-          </Paragraph>
+          </SizableText>
         </XStack>
         <XStack alignItems="center">
           <MapPin size={16} color="grey" marginEnd={8} />
-          <Paragraph fontSize={15} color="grey">
+          <SizableText fontSize={15} color="grey">
             {event.location || "Venue TBA"}
-          </Paragraph>
+          </SizableText>
         </XStack>
-        <Paragraph
+        <SizableText
           fontSize={14}
           color="$gray11Light"
           numberOfLines={2}
           marginTop="$2"
         >
           {event.caption}
-        </Paragraph>
+        </SizableText>
         <XStack flexWrap="wrap" gap="$2" marginTop="$3">
           {event.genres.slice(0, 3).map((genre, index) => (
             <Tag key={genre + index} tag={genre} />
@@ -89,11 +89,11 @@ const CardContainer = styled(YStack, {
   borderRadius: "$2",
   overflow: "hidden",
   marginVertical: 10,
+  animation: {
+    type: "quickest",
+  },
   pressStyle: {
     scale: 0.98,
-  },
-  hoverStyle: {
-    scale: 1.02,
   },
 });
 
