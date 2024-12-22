@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CustomHeader } from "@/features/core/components/CustomHeader/CustomHeader";
+import { PageHead } from "@/features/core/components/PageHead";
 import { Footer } from "@/features/core/components/layout/Footer";
 import { CurrentToast } from "@/features/core/components/panels/Toast";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
@@ -35,6 +36,7 @@ export function AppNavigator() {
           backgroundColor: bg,
         }}
       >
+        <PageHead />
         <CustomHeader title="Sekta Selekta" user={user} />
         <Slot />
         <Footer />

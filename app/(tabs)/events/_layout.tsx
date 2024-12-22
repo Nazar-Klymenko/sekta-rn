@@ -9,7 +9,6 @@ import { Slot, Stack } from "expo-router";
 export default function EventsLayout() {
   const theme = useTheme();
 
-  const { tokens } = theme;
   if (Platform.OS === "web") {
     return <Slot />;
   }

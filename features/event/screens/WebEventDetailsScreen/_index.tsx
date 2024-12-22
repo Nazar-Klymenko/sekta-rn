@@ -1,5 +1,6 @@
 import React from "react";
 
+import { PageHead } from "@/features/core/components/PageHead";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer.web";
 
@@ -13,7 +14,6 @@ import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
 import { useFetchEvent } from "../../hooks/useFetchEvent";
 import EventDescription from "../EventDetailsScreen/EventDescription";
-import EventHero from "../EventDetailsScreen/EventHero";
 import EventInfo from "../EventDetailsScreen/EventInfo";
 import { TagSection } from "../EventDetailsScreen/TagSection";
 
@@ -49,40 +49,44 @@ export default function WebEventDetailsScreen() {
       </PageContainer>
     );
   return (
-    <PageContainer>
-      <XStack
-        gap="$4"
-        flex={1}
-        flexWrap="wrap" // Allows wrapping for responsiveness
-        justifyContent="center" // Centers the content on smaller screens
-      >
-        <Stack gap="$4" flex={gtMd ? 1 : 2} width={gtMd ? "60%" : "100%"}>
-          <Image
-            source={{ uri: event.image.publicUrl }}
-            aspectRatio={1 / 1}
-            objectFit="cover"
-          />
-        </Stack>
-        <YStack
-          paddingHorizontal={gtMd ? "$4" : 0}
-          paddingBottom="$4"
+    <>
+      <PageHead customTitle={event?.title.display} />
+
+      <PageContainer>
+        <XStack
           gap="$4"
-          flex={gtMd ? 2 : 1}
-          width={gtMd ? "35%" : "100%"}
+          flex={1}
+          flexWrap="wrap" // Allows wrapping for responsiveness
+          justifyContent="center" // Centers the content on smaller screens
         >
-          <EventInfo event={event} />
-          <Separator />
-          <EventDescription description={event.caption} />
-          <Separator />
-          {event.lineup.length > 0 && (
-            <TagSection title="Lineup" tags={event.lineup} />
-          )}
-          <Separator />
-          {event.genres.length > 0 && (
-            <TagSection title="Genres" tags={event.genres} />
-          )}
-        </YStack>
-      </XStack>
-    </PageContainer>
+          <Stack gap="$4" flex={gtMd ? 1 : 2} width={gtMd ? "60%" : "100%"}>
+            <Image
+              source={{ uri: event.image.publicUrl }}
+              aspectRatio={1 / 1}
+              objectFit="cover"
+            />
+          </Stack>
+          <YStack
+            paddingHorizontal={gtMd ? "$4" : 0}
+            paddingBottom="$4"
+            gap="$4"
+            flex={gtMd ? 2 : 1}
+            width={gtMd ? "35%" : "100%"}
+          >
+            <EventInfo event={event} />
+            <Separator />
+            <EventDescription description={event.caption} />
+            <Separator />
+            {event.lineup.length > 0 && (
+              <TagSection title="Lineup" tags={event.lineup} />
+            )}
+            <Separator />
+            {event.genres.length > 0 && (
+              <TagSection title="Genres" tags={event.genres} />
+            )}
+          </YStack>
+        </XStack>
+      </PageContainer>
+    </>
   );
 }
