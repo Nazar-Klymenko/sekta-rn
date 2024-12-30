@@ -12,7 +12,7 @@ export const MenuItem = ({ title, icon: Icon, onPress }: MenuItemProps) => (
   <ResponsiveStack onPress={onPress}>
     <Icon size="$1" />
     <Paragraph size="$6" fontWeight={500}>
-      {title}s
+      {title}
     </Paragraph>
   </ResponsiveStack>
 );

@@ -16,6 +16,9 @@
     "generate-router-types": "npx expo-router typegen",
     "emulators": "firebase emulators:start --import=./firebase-data --export-on-exit"
   },
+  "eslintConfig": {
+    "extends": "./config/eslint/eslint.config.js"
+  },
   "jest": {
     "preset": "jest-expo"
   },
@@ -78,5 +81,6 @@
     "@types/react": "~18.3.11",
     "typescript": "~5.6.3"
   },
-  "private": true
+  "private": true,
+  "prettier": "./config/prettier/prettier.config.js"
 }
