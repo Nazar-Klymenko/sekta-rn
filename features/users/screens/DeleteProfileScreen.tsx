@@ -1,8 +1,14 @@
 import React, { useCallback, useState } from "react";
 
+import { Keyboard, Pressable } from "react-native";
+
 import { FirebaseError } from "firebase/app";
 
-import { Keyboard, Pressable } from "react-native";
+import { useForm } from "react-hook-form";
+import { Separator, SizableText, Theme, XStack, YStack } from "tamagui";
+
+import { UserRoundX } from "@tamagui/lucide-icons";
+import { useToastController } from "@tamagui/toast";
 
 import { Hint } from "@/features/core/components/Hint";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
@@ -11,13 +17,6 @@ import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Sheet } from "@/features/core/components/panels/Sheet";
 import { useDeleteProfile } from "@/features/users/hooks/useDeleteProfile";
-
-import { UserRoundX } from "@tamagui/lucide-icons";
-import { useToastController } from "@tamagui/toast";
-
-import { Separator, SizableText, Theme, XStack, YStack } from "tamagui";
-
-import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 
@@ -119,7 +118,6 @@ export default function DeleteProfileScreen() {
                   label="Confirm Password"
                   placeholder="Enter your password"
                 />
-                <Separator />
 
                 <XStack flex={1} width="100%" gap="$4">
                   <ButtonCTA

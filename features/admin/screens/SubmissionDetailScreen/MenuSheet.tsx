@@ -1,11 +1,11 @@
 import React from "react";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
-import { Sheet } from "@/features/core/components/panels/Sheet";
+import { Paragraph, Separator, Theme, XStack, YStack } from "tamagui";
 
 import { Play } from "@tamagui/lucide-icons";
 
-import { Paragraph, Separator, Theme, XStack, YStack } from "tamagui";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
+import { Sheet } from "@/features/core/components/panels/Sheet";
 
 interface MenuSheetProps {
   open: boolean;
@@ -20,7 +20,7 @@ export function MenuSheet({
   confirmFunction,
 }: MenuSheetProps) {
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange} insideModal>
       <YStack gap="$4" width="100%">
         <YStack gap="$4" alignItems="center">
           <Play size={48} color="$color" />

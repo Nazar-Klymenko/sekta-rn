@@ -1,10 +1,6 @@
 import React from "react";
 
-import { Sheet } from "@/features/core/components/panels/Sheet";
-import { DisplayEvent } from "@/features/event/models/Event";
-
-import { Edit3, X } from "@tamagui/lucide-icons";
-
+import { useRouter } from "expo-router";
 import {
   Button,
   Paragraph,
@@ -15,7 +11,10 @@ import {
   YStack,
 } from "tamagui";
 
-import { useRouter } from "expo-router";
+import { Edit3, X } from "@tamagui/lucide-icons";
+
+import { Sheet } from "@/features/core/components/panels/Sheet";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 export function OuterMenuSheet({
   open,
@@ -30,7 +29,7 @@ export function OuterMenuSheet({
 }) {
   const router = useRouter();
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange} insideModal>
       <TStack flex={1} width="100%">
         <Button
           size={"$6"}

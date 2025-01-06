@@ -5,10 +5,16 @@ import { Sheet as ReusableSheet, YStack } from "tamagui";
 interface ReusableSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  insideModal?: boolean;
   children: React.ReactNode;
 }
 
-export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
+export const Sheet = ({
+  open,
+  onOpenChange,
+  insideModal = false,
+  children,
+}: ReusableSheetProps) => (
   <ReusableSheet
     open={open}
     onOpenChange={onOpenChange}
@@ -16,7 +22,7 @@ export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
     dismissOnOverlayPress
     animation="quicker"
     snapPointsMode="fit"
-    modal
+    modal={!insideModal}
   >
     <ReusableSheet.Overlay
       animation="medium"
@@ -31,7 +37,7 @@ export const Sheet = ({ open, onOpenChange, children }: ReusableSheetProps) => (
       gap="$5"
       theme={"surface1"}
     >
-      <YStack gap="$4" width="100%" theme={"surface2"}>
+      <YStack gap="$4" width="100%" theme={"surface2"} paddingBottom="$4">
         {children}
       </YStack>
     </ReusableSheet.Frame>

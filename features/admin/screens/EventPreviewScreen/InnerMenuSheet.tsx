@@ -1,10 +1,5 @@
 import React from "react";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
-import { Sheet } from "@/features/core/components/panels/Sheet";
-
-import { TicketX } from "@tamagui/lucide-icons";
-
 import {
   Button,
   Paragraph,
@@ -14,6 +9,11 @@ import {
   XStack,
   YStack,
 } from "tamagui";
+
+import { TicketX } from "@tamagui/lucide-icons";
+
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
+import { Sheet } from "@/features/core/components/panels/Sheet";
 
 export function InnerMenuSheet({
   open,
@@ -27,7 +27,7 @@ export function InnerMenuSheet({
   isPending: boolean;
 }) {
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange} insideModal>
       <YStack gap="$4" width="100%">
         <YStack gap="$4" alignItems="center">
           <TicketX size={48} color="$color" />
