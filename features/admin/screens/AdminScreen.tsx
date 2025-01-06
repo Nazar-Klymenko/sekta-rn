@@ -1,13 +1,12 @@
 import React from "react";
 
-import { MenuItem } from "@/features/core/components/buttons/MenuItem";
-import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { useRouter } from "expo-router";
+import { YStack } from "tamagui";
 
 import { Play, Ticket, Users } from "@tamagui/lucide-icons";
 
-import { YStack } from "tamagui";
-
-import { useRouter } from "expo-router";
+import { MenuItem } from "@/features/core/components/buttons/MenuItem";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 export default function AdminScreen() {
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function AdminScreen() {
       <YStack gap="$2">
         <MenuItem
           title="All Events"
-          onPress={() => router.navigate("/admin/events")}
+          onPress={() => router.push("/admin/events")}
           icon={Ticket}
         />
         <MenuItem

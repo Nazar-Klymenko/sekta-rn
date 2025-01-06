@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
+
+import React, { useEffect, useState } from "react";
 
 import { RefreshControl, TouchableOpacity } from "react-native";
 
-import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
-import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
-import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
-import EventDescription from "@/features/event/screens/EventDetailsScreen/EventDescription";
-import EventHero from "@/features/event/screens/EventDetailsScreen/EventHero";
-import EventInfo from "@/features/event/screens/EventDetailsScreen/EventInfo";
-import { InfoItem } from "@/features/event/screens/EventDetailsScreen/InfoItem";
-import { TagSection } from "@/features/event/screens/EventDetailsScreen/TagSection";
-import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
+import {
+  Stack,
+  useLocalSearchParams,
+  useNavigation,
+  useRouter,
+} from "expo-router";
+import { H6, Paragraph, Portal, YStack } from "tamagui";
+import { Separator } from "tamagui";
 
 import {
   CalendarCog,
@@ -23,10 +23,16 @@ import {
   MoreHorizontal,
 } from "@tamagui/lucide-icons";
 
-import { H6, Paragraph, YStack } from "tamagui";
-import { Separator } from "tamagui";
-
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
+import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
+import EventDescription from "@/features/event/screens/EventDetailsScreen/EventDescription";
+import EventHero from "@/features/event/screens/EventDetailsScreen/EventHero";
+import EventInfo from "@/features/event/screens/EventDetailsScreen/EventInfo";
+import { InfoItem } from "@/features/event/screens/EventDetailsScreen/InfoItem";
+import { TagSection } from "@/features/event/screens/EventDetailsScreen/TagSection";
 
 import { useDeleteEvent } from "../../hooks/useDeleteEvent";
 import { InnerMenuSheet } from "./InnerMenuSheet";
@@ -46,7 +52,19 @@ export default function EventPreviewScreen() {
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   const [innershowConfirmSheet, setInnerShowConfirmSheet] = useState(false);
   const router = useRouter();
-
+  const navigation = useNavigation();
+  useEffect(() => {
+    if (event) {
+      navigation.setOptions({
+        title: event.title.display,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => setShowConfirmSheet(true)}>
+            <MoreHorizontal color="$accentColor" />
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [navigation, event]);
   if (!id || isLoading) return <FullPageLoading />;
   if (isError)
     return (
@@ -94,22 +112,18 @@ export default function EventPreviewScreen() {
 
   return (
     <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          headerRight: () => (
-            <TouchableOpacity onPress={() => setShowConfirmSheet(true)}>
-              <MoreHorizontal color="$accentColor" />
-            </TouchableOpacity>
-          ),
-        }}
-      />
       <ReanimatedPageContainer
         fullWidth={false}
         refreshControl={
           <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
         }
       >
+        <Stack.Screen
+          options={{
+            title: event.title.display,
+            headerShown: true,
+          }}
+        />
         <YStack gap="$4">
           <EventHero event={event} />
           <YStack paddingHorizontal="$4" paddingBottom={"$4"} gap="$4">
@@ -161,7 +175,6 @@ export default function EventPreviewScreen() {
           </YStack>
         </YStack>
       </ReanimatedPageContainer>
-
       <OuterMenuSheet
         key={id + "outer"}
         open={showConfirmSheet}
@@ -169,7 +182,6 @@ export default function EventPreviewScreen() {
         setInnerShowConfirmSheet={setInnerShowConfirmSheet}
         id={id}
       />
-
       <InnerMenuSheet
         key={id + "inner"}
         open={innershowConfirmSheet}
