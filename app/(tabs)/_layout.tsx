@@ -2,11 +2,10 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Home, Play, Ticket, User } from "@tamagui/lucide-icons";
-
+import { Slot, Tabs } from "expo-router";
 import { useTheme } from "tamagui";
 
-import { Slot, Tabs } from "expo-router";
+import { Home, Play, User } from "@tamagui/lucide-icons";
 
 export default function TabLayout() {
   const theme = useTheme();
@@ -22,6 +21,7 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarActiveTintColor: "$accentColor",
         tabBarStyle: {
+          borderTopWidth: 0,
           borderColor: theme.borderColor.get(),
           backgroundColor: theme.background.get(),
         },
