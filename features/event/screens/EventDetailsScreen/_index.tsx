@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { RefreshControl } from "react-native";
+
+import { useLocalSearchParams } from "expo-router";
+import { View, YStack, styled } from "tamagui";
+
+import { Calendar } from "@tamagui/lucide-icons";
 
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
 import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
-import { useCountdown } from "@/features/core/hooks/useCountdown";
-
-import { Calendar } from "@tamagui/lucide-icons";
-
-import { View, YStack, styled } from "tamagui";
-
-import { useLocalSearchParams } from "expo-router";
 
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
@@ -32,7 +30,9 @@ export default function EventDetailsScreen() {
     isRefetching,
   } = useFetchEvent(id || "");
   const { scrollHandler, scrollEventThrottle } = useAnimatedScroll();
+
   if (!id || isLoading) return <FullPageLoading />;
+
   if (isError)
     return (
       <ErrorEventList
@@ -53,9 +53,7 @@ export default function EventDetailsScreen() {
       </ReanimatedPageContainer>
     );
 
-  const { hasEventPassed } = useCountdown(event!.date);
-
-  const showBottomButtom = useState(!hasEventPassed());
+  const showBottomButton = event.date.toDate() > new Date();
 
   return (
     <>
@@ -71,7 +69,7 @@ export default function EventDetailsScreen() {
           <EventHero event={event} />
           <YStack
             paddingHorizontal="$4"
-            paddingBottom={showBottomButtom ? "$13" : "$4"}
+            paddingBottom={showBottomButton ? "$13" : "$4"}
             gap="$4"
           >
             <EventInfo event={event} />
@@ -85,7 +83,7 @@ export default function EventDetailsScreen() {
           </YStack>
         </YStack>
       </ReanimatedPageContainer>
-      {showBottomButtom && (
+      {showBottomButton && (
         <StickyButtonWrap>
           <StickyBottomButton />
         </StickyButtonWrap>
@@ -93,6 +91,7 @@ export default function EventDetailsScreen() {
     </>
   );
 }
+
 export const StickyButtonWrap = styled(View, {
   position: "absolute",
   bottom: 0,
