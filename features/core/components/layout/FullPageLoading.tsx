@@ -1,27 +1,27 @@
 import React, { PropsWithChildren } from "react";
 
-import { Spinner, Stack, StackProps, YStack, useTheme } from "tamagui";
+import { Spinner, YStack } from "tamagui";
 
-export const FullPageLoading: React.FC<PropsWithChildren<{}>> = ({
-  children,
-}) => {
-  const theme = useTheme();
-
-  const containerStyle: StackProps = {
-    backgroundColor: theme.background.get(),
-    minHeight: "100%",
-    width: "100%",
-    maxWidth: "100%",
-    marginHorizontal: "auto",
-  };
-
+export const FullPageLoading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <YStack flex={1} backgroundColor="$background" minHeight={"100dvh"}>
+    <YStack
+      flex={1}
+      backgroundColor="$background"
+      height="100%"
+      position="absolute"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+    >
       <YStack
-        {...containerStyle}
         flex={1}
+        backgroundColor="$background"
+        height="100%"
+        width="100%"
+        maxWidth="100%"
+        marginHorizontal="auto"
         gap="$4"
-        display="flex"
         justifyContent="center"
         alignItems="center"
       >
