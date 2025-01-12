@@ -2,9 +2,9 @@ import { LinearGradient } from "tamagui/linear-gradient";
 
 import React from "react";
 
-import { Info } from "@tamagui/lucide-icons";
-
 import { Paragraph, Theme, XStack, YStack } from "tamagui";
+
+import { Info } from "@tamagui/lucide-icons";
 
 export default function InfoBanner() {
   return (
@@ -22,7 +22,6 @@ export default function InfoBanner() {
             padding="$3"
             borderRadius="$3"
             alignItems="center"
-            blockSize="border-box"
           >
             <Info size={20} marginEnd="$3" />
             <YStack flex={1} minWidth={0}>
