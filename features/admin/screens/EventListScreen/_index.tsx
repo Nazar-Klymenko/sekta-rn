@@ -1,23 +1,27 @@
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import React from "react";
 
+import { Link, useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Circle, Paragraph, YStack } from "tamagui";
+
+import { Plus } from "@tamagui/lucide-icons";
+
+import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { Table } from "@/features/core/components/tables/Table";
 import { useFetchEvents } from "@/features/event/hooks/useFetchEvents";
 import { DisplayEvent } from "@/features/event/models/Event";
-import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
-
-import { Paragraph, YStack } from "tamagui";
-
-import { useRouter } from "expo-router";
 
 const columnHelper = createColumnHelper<DisplayEvent>();
 
 export default function EventListScreen() {
   const router = useRouter();
   const { data: events, isLoading, isError } = useFetchEvents();
+  const { left, top, right, bottom } = useSafeAreaInsets();
 
   const columns = [
     columnHelper.display({
@@ -74,13 +78,28 @@ export default function EventListScreen() {
     });
   };
   return (
-    <PageContainer>
-      <Table
-        data={events || []}
-        columns={columns}
-        pageSize={10}
-        onRowClick={handleRowClick}
-      />
-    </PageContainer>
+    <YStack flex={1}>
+      <PageContainer>
+        <Table
+          data={events || []}
+          columns={columns}
+          pageSize={10}
+          onRowClick={handleRowClick}
+        />
+      </PageContainer>
+      <Link href={"/admin/events/create"} asChild>
+        <Circle
+          position="absolute"
+          bottom={bottom}
+          right={right}
+          size={"$6"}
+          backgroundColor="$accentColor"
+          elevation={4}
+          pressStyle={{ scale: 0.97 }}
+        >
+          <Plus color="white" size="$2" />
+        </Circle>
+      </Link>
+    </YStack>
   );
 }

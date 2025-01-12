@@ -2,16 +2,16 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
-
+import { Redirect, Stack } from "expo-router";
 import { useTheme } from "tamagui";
 
-import { Redirect, Stack } from "expo-router";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ClearIcon } from "@/features/core/components/form/shared/ClearIcon";
+import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 
 export default function HomeLayout() {
-  const theme = useTheme();
-  const { user, displayUser, isLoading } = useAuth();
+  const theme = useTheme({ name: "surface1" });
+  const { displayUser, isLoading } = useAuth();
   if (Platform.OS === "web") {
     return <Redirect href={"/"} />;
   }
@@ -48,19 +48,22 @@ export default function HomeLayout() {
         name="events"
         options={{
           headerShown: false,
+          presentation: "fullScreenModal",
         }}
       />
 
       <Stack.Screen
         name="submissions"
         options={{
-          headerShown: false,
+          title: "All Submissions",
+          presentation: "fullScreenModal",
         }}
       />
       <Stack.Screen
         name="users"
         options={{
           title: "All users",
+          presentation: "fullScreenModal",
         }}
       />
     </Stack>

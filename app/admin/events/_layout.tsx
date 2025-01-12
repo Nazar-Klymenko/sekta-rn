@@ -1,60 +1,63 @@
 import React from "react";
 
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
 
-import { SizableText, useTheme } from "tamagui";
+import { Slot, Stack, useRouter } from "expo-router";
+import { useTheme } from "tamagui";
 
-import { Slot, Stack } from "expo-router";
+import { ClearIcon } from "@/features/core/components/form/shared/ClearIcon";
 
 export default function AdminEventsLayout() {
-  const theme = useTheme();
+  const theme = useTheme({ name: "surface1" });
+  const router = useRouter();
   if (Platform.OS === "web") {
     return <Slot />;
   }
+
   return (
     <Stack
       screenOptions={{
         headerTitleAlign: "center",
+        headerTintColor: theme.color.get(),
         headerStyle: {
           backgroundColor: theme.background.get(),
         },
-        headerTintColor: theme.color.get(),
         headerTitleStyle: {
           fontFamily: "LeagueSpartan_700Bold",
           fontSize: 25,
         },
         animation: "slide_from_right",
+        headerRight: () => (
+          <ClearIcon
+            onPress={() => {
+              router.navigate("/admin");
+            }}
+          />
+        ),
       }}
     >
       <Stack.Screen
         name="index"
-        options={({ navigation }) => ({
-          title: "All Events",
+        options={{ headerShown: true, title: "All Events" }}
+      />
+      <Stack.Screen
+        name="[id]/index"
+        options={{
           headerShown: true,
-          headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.push("create")}>
-              <SizableText
-                theme={"accent"}
-                color="$background"
-                style={{ marginRight: 10 }}
-              >
-                Create
-              </SizableText>
-            </TouchableOpacity>
-          ),
-        })}
+        }}
+      />
+      <Stack.Screen
+        name="[id]/update"
+        options={{
+          headerShown: true,
+          title: "Edit Event",
+        }}
       />
       <Stack.Screen
         name="create"
         options={{
           title: "Create Event",
-        }}
-      />
-      <Stack.Screen
-        name="[id]"
-        options={{
-          headerShown: false,
-          title: "Event Details",
+          headerShown: true,
         }}
       />
     </Stack>
