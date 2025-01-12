@@ -4,8 +4,8 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Disc } from "@tamagui/lucide-icons";
-
+import { BlurView } from "expo-blur";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import {
   Image,
   Paragraph,
@@ -14,8 +14,7 @@ import {
   useWindowDimensions,
 } from "tamagui";
 
-import { BlurView } from "expo-blur";
-import Animated, { FadeInDown } from "react-native-reanimated";
+import { Disc } from "@tamagui/lucide-icons";
 
 export const HeroSection = () => {
   const { width, height } = useWindowDimensions();
@@ -47,7 +46,7 @@ export const HeroSection = () => {
         >
           <Animated.View entering={FadeInDown.duration(400)}>
             <YStack gap="$4" alignItems="center">
-              {Platform.OS !== "android" && (
+              {Platform.OS == "web" && (
                 <BlurView
                   intensity={80}
                   tint="dark"
