@@ -22,7 +22,6 @@ export default function TabLayout() {
         tabBarActiveTintColor: "$accentColor",
         tabBarStyle: {
           borderTopWidth: 0,
-          borderColor: theme.borderColor.get(),
           backgroundColor: theme.background.get(),
         },
       }}
