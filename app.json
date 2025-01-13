@@ -18,11 +18,10 @@
         "origin": false
       },
       "eas": {
-        "projectId": "cbbc3e11-d451-4301-87cb-7f62b5a989f4"
+        "projectId": "76284c86-cf58-4f49-92e0-eabbdfc7fe6e"
       }
     },
     "ios": {
-      "supportsTablet": true,
       "bundleIdentifier": "com.sektaselekta.app"
     },
     "android": {
@@ -40,6 +39,13 @@
     "plugins": [
       "expo-router",
       "expo-font",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#ffffff"
+        }
+      ],
       [
         "@react-native-community/datetimepicker",
         {
@@ -83,6 +89,6 @@
     "experiments": {
       "typedRoutes": true
     },
-    "owner": "nk888888"
+    "owner": "sekta-selekta"
   }
 }
