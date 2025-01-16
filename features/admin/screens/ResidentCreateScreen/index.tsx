@@ -20,7 +20,11 @@ import { useCreateResident } from "../../hooks/useCreateResident";
 export default function ResidentCreateScreen() {
   const methods = useForm({
     resolver: yupResolver(residentSchema),
-    defaultValues: { ...residentSchema.getDefault() },
+    defaultValues: {
+      ...residentSchema.getDefault(),
+      //@ts-ignore
+      image: null,
+    },
   });
   const { handleSubmit } = methods;
 
