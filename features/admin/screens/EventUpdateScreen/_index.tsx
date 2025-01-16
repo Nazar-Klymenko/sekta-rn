@@ -72,9 +72,6 @@ export default function EventUpdateScreen() {
         <DateInput
           name="date"
           label="Event date"
-          placeholder="Select date"
-          icon={Calendar}
-          mode="datetime"
           minimumDate={new Date(1900, 0, 1)}
         />
         <Input

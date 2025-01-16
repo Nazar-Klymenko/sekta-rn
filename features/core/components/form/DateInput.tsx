@@ -1,11 +1,7 @@
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 
-import React, { useId, useState } from "react";
-
-import { Platform, Pressable } from "react-native";
+import React, { useId } from "react";
 
 import { useController, useFormContext } from "react-hook-form";
 import {
@@ -18,30 +14,16 @@ import {
   YStack,
 } from "tamagui";
 
-import { BaseInput } from "./shared";
 import { FormError } from "./shared/FormError";
-import { InputIcon } from "./shared/InputIcon";
 
 interface DateInputProps extends TamaguiInputProps {
   name: string;
   label: string;
-  placeholder: string;
-  icon?: React.ElementType;
-  mode?: "date" | "time" | "datetime";
   minimumDate?: Date;
   maximumDate?: Date;
 }
 
-export function DateInput({
-  name,
-  label,
-  placeholder,
-  icon,
-  mode = "date",
-  minimumDate,
-  maximumDate,
-  ...props
-}: DateInputProps) {
+export function DateInput({ name, label, minimumDate }: DateInputProps) {
   const { control } = useFormContext();
   const {
     field: { value, onChange, onBlur, ref },
@@ -60,6 +42,7 @@ export function DateInput({
       onChange(selectedDate.toISOString());
     }
   };
+  console.log({ error });
 
   return (
     <YStack flex={1} marginTop="$4">

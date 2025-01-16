@@ -1,5 +1,9 @@
 import React from "react";
 
+import { useForm } from "react-hook-form";
+
+import { Calendar } from "@tamagui/lucide-icons";
+
 import { EventFormValues, eventSchema } from "@/features/admin/utils/schemas";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
@@ -10,10 +14,6 @@ import { MultiTagInput } from "@/features/core/components/form/MultiTagInput";
 import { TextArea } from "@/features/core/components/form/TextArea";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
-import { Calendar } from "@tamagui/lucide-icons";
-
-import { useForm } from "react-hook-form";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useCreateEvent } from "../../hooks/useCreateEvent";
@@ -21,15 +21,23 @@ import { useCreateEvent } from "../../hooks/useCreateEvent";
 export default function EventCreateScreen() {
   const methods = useForm({
     resolver: yupResolver(eventSchema),
-    defaultValues: { ...eventSchema.getDefault() },
+    defaultValues: {
+      ...eventSchema.getDefault(),
+      // @ts-ignore
+      image: null,
+    },
   });
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { mutate, isPending } = useCreateEvent();
 
   const onSubmit = (data: EventFormValues) => {
     mutate({ data });
   };
+  console.log({ errors });
 
   return (
     <PageContainer>
@@ -52,9 +60,6 @@ export default function EventCreateScreen() {
         <DateInput
           name="date"
           label="Event date"
-          placeholder="Select date"
-          icon={Calendar}
-          mode="datetime"
           minimumDate={new Date(1900, 0, 1)}
         />
         <Input
