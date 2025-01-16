@@ -63,7 +63,6 @@ const ResidentPreviewScreen = () => {
     );
   }
 
-  console.log({ resident });
   const handleSocialMediaPress = (url: string) => {
     Linking.openURL(url);
   };

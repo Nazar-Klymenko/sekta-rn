@@ -66,6 +66,7 @@ export const residentSchema = yup.object().shape({
         url: yup.string().required().url(),
       })
     )
+    .defined()
     .default([]),
 });
 

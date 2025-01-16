@@ -63,7 +63,7 @@ const getHost = () => {
 };
 const HOST = getHost();
 
-if (false) {
+if (__DEV__) {
   console.debug("Connecting to firebase emulators.");
   connectAuthEmulator(auth, `http://${HOST}:9099`);
   connectFirestoreEmulator(db, HOST, 8080);

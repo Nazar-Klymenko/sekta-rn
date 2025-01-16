@@ -28,13 +28,15 @@ export default function ResidentUpdateScreen() {
         ...resident,
         image: { uri: resident?.image.publicUrl || "" },
         name: resident?.name.display,
+        socialMedia: Array.isArray(resident?.socialMedia)
+          ? resident.socialMedia
+          : [],
       },
     }),
     { handleSubmit } = methods;
 
   const onSubmit = async (data: ResidentFormValues) => {
     if (!resident) return;
-
     mutate({
       residentId: id,
       originalData: resident,

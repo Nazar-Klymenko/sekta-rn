@@ -4,15 +4,15 @@ import React from "react";
 
 import { ScrollView } from "react-native";
 
-import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
-import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
-import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
-import { Event } from "@/features/event/models/Event";
+import { YStack } from "tamagui";
 
 import { getTokens } from "@tamagui/core";
 import { Calendar } from "@tamagui/lucide-icons";
 
-import { YStack } from "tamagui";
+import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
+import { SkeletonUpcomingEventCard } from "@/features/event/components/event/SkeletonUpcomingEventCard";
+import UpcomingEventCard from "@/features/event/components/event/UpcomingEventCard";
+import { Event } from "@/features/event/models/Event";
 
 import EmptyEventList from "../../components/EmptyEventList";
 
