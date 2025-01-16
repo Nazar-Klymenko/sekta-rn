@@ -1,16 +1,17 @@
+import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
+
 import React from "react";
 
 import { useWindowDimensions } from "react-native";
 
-import { Tag } from "@/features/core/components/Tag";
-import { DisplayEvent } from "@/features/event/models/Event";
-import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
+import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import { SizableText, Stack, XStack, YStack, styled } from "tamagui";
 
 import { Clock, MapPin } from "@tamagui/lucide-icons";
 
-import { Image, SizableText, Stack, XStack, YStack, styled } from "tamagui";
-
-import { useRouter } from "expo-router";
+import { Tag } from "@/features/core/components/Tag";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 interface UpcomingEventCardProps {
   event: DisplayEvent;
@@ -36,11 +37,13 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({
       onPress={() => router.navigate(`/events/${event.uid}`)}
     >
       <ImageContainer>
-        <Image
-          source={{ uri: event.image.publicUrl }}
-          width={verticalView ? "100%" : cardWidth}
-          aspectRatio={1}
-          borderRadius="$2"
+        <ImageStyled
+          source={{
+            uri: event?.image?.publicUrl,
+          }}
+          style={{
+            width: verticalView ? "100%" : cardWidth,
+          }}
         />
       </ImageContainer>
       <ContentContainer>
@@ -100,7 +103,12 @@ const CardContainer = styled(YStack, {
 const ImageContainer = styled(Stack, {
   position: "relative",
 });
-
+const ImageStyled = styled(Image, {
+  aspectRatio: 1,
+  objectFit: "cover",
+  maxWidth: 724,
+  borderRadius: "$2",
+});
 const ContentContainer = styled(YStack, {
   paddingVertical: 24,
   paddingHorizontal: 4,

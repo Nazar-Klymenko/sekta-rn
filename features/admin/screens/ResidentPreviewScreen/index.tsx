@@ -4,15 +4,16 @@ import React, { useState } from "react";
 
 import { Linking, TouchableOpacity } from "react-native";
 
+import { Image } from "expo-image";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
   Button,
   H6,
-  Image,
   Separator,
   SizableText,
   XStack,
   YStack,
+  styled,
 } from "tamagui";
 
 import {
@@ -63,9 +64,6 @@ const ResidentPreviewScreen = () => {
     );
   }
 
-  const handleSocialMediaPress = (url: string) => {
-    Linking.openURL(url);
-  };
   const handleDelete = () => {
     mutate(resident, {
       onSuccess: () => {
@@ -109,14 +107,7 @@ const ResidentPreviewScreen = () => {
       />
       <PageContainer>
         <YStack gap="$4">
-          <Image
-            source={{ uri: resident?.image?.publicUrl }}
-            aspectRatio={1 / 1}
-            objectFit="cover"
-            maxWidth={724}
-            flex={1}
-            width={"100%"}
-          />
+          <ImageStyled source={{ uri: resident?.image?.publicUrl }} />
           <YStack>
             <H6>name:</H6>
             <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
@@ -224,3 +215,10 @@ const SkeletonResidentDetails = () => {
     </YStack>
   );
 };
+const ImageStyled = styled(Image, {
+  aspectRatio: 1,
+  objectFit: "cover",
+  maxWidth: 724,
+  width: "100%",
+  flex: 1,
+});
