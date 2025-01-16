@@ -2,10 +2,10 @@ import React from "react";
 
 import { Pressable } from "react-native";
 
-import { Eye, EyeOff } from "@tamagui/lucide-icons";
-
 import { styled } from "tamagui";
 import { Circle, XStack, YStack } from "tamagui";
+
+import { Eye, EyeOff } from "@tamagui/lucide-icons";
 
 interface PasswordIconProps {
   onPress: () => void;

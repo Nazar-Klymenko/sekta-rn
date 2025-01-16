@@ -70,7 +70,7 @@ export function MultiTagInput({
             position="relative"
             minHeight={108}
             borderRadius="$2"
-            borderWidth={2}
+            borderWidth={0}
             borderColor={
               error
                 ? "$red10Light"
@@ -99,6 +99,7 @@ export function MultiTagInput({
               backgroundColor={"$background"}
               borderWidth={0}
               paddingHorizontal={0}
+              focusStyle={{ borderWidth: 0 }}
             />
 
             <Separator backgroundColor="$borderColor" flex={1} width="100%" />

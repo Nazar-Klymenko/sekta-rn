@@ -2,18 +2,13 @@ import { Input as TamaguiInput, styled } from "tamagui";
 
 export const BaseInput = styled(TamaguiInput, {
   flex: 1,
+  size: "$5",
   borderRadius: "$2",
-  borderWidth: 2,
-  minHeight: 54,
-  fontSize: 16,
-  paddingHorizontal: "$3.5",
-
-  borderColor: "$gray7",
-  outlineColor: "$accentBackground",
-
+  borderColor: "transparent",
   variants: {
     hasError: {
       true: {
+        borderWidth: 2,
         borderColor: "$red10Light",
         hoverStyle: {
           borderColor: "$red10Dark",

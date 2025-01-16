@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "expo-router";
 import { useForm } from "react-hook-form";
-import { Paragraph, Separator, YStack } from "tamagui";
+import { Paragraph, Separator, SizableText, YStack } from "tamagui";
 
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
@@ -38,7 +38,11 @@ export default function LoginScreen() {
           label="Email"
           placeholder="Your email"
           inputMode="email"
+          autoComplete="email"
           autoCapitalize="none"
+          importantForAutofill="yes"
+          textContentType="emailAddress"
+          keyboardType="email-address"
         />
         <PasswordInput
           name="password"
@@ -54,6 +58,25 @@ export default function LoginScreen() {
         </YStack>
 
         <Separator marginTop={48} />
+        <ButtonCTA
+          theme="accent"
+          onPress={methods.handleSubmit(onSubmit)}
+          isLoading={isPending}
+          disabled={isPending}
+        >
+          Log in
+        </ButtonCTA>
+        <YStack alignItems="center" padding="$4" gap="$4">
+          <Link href={"/auth/username-bridge"}>
+            <SizableText textAlign="center" fontSize="$3">
+              Don't have an account?
+              <SizableText color="$accentColor" fontSize="$3">
+                {" "}
+                Sign Up
+              </SizableText>
+            </SizableText>
+          </Link>
+        </YStack>
         <ButtonCTA
           theme="accent"
           onPress={methods.handleSubmit(onSubmit)}
