@@ -30,10 +30,32 @@ export default function ResidentListScreen() {
       footer: () => `Total: ${residents?.length}`,
       size: 60,
     }),
-    columnHelper.accessor("name", {
+    columnHelper.accessor("name.display", {
       header: "Name",
       cell: (info) => info.getValue() || "-",
       sortingFn: "alphanumeric",
+    }),
+    columnHelper.accessor("timestamps.createdAt", {
+      header: "Created At",
+      cell: (info) => {
+        const eventTimestamp = info.getValue();
+        const formattedDate = eventTimestamp
+          ? formatFirestoreTimestamp(eventTimestamp, "dd.MM.yyyy")
+          : "-";
+        const timeAndDay = eventTimestamp
+          ? formatFirestoreTimestamp(eventTimestamp, "EEEE, HH:mm")
+          : "-";
+        return (
+          <YStack flex={1}>
+            <Paragraph>{formattedDate}</Paragraph>
+            <Paragraph fontSize={12} color="$color10">
+              {timeAndDay}
+            </Paragraph>
+          </YStack>
+        );
+      },
+      sortingFn: "datetime",
+      invertSorting: true,
     }),
   ];
 

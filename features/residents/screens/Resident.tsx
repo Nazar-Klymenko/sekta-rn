@@ -1,21 +1,12 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import { Linking } from "react-native";
 
-import {
-  Stack,
-  useLocalSearchParams,
-  usePathname,
-  useRouter,
-} from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { Button, Image, Separator, SizableText, XStack, YStack } from "tamagui";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import Skeleton from "@/features/core/components/Skeleton";
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
-import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
 
 import { useFetchResident } from "../hooks/useFetchResident";
 
@@ -66,26 +57,6 @@ const ResidentScreen = () => {
           {resident?.bio}
         </SizableText>
       </YStack>
-      {/* Social Media Links
-      {Object.entries(resident.socialMedia).length > 0 && (
-        <YStack gap="$2">
-          <SizableText fontSize="$6" fontWeight="600">
-            Connect
-          </SizableText>
-          <XStack flexWrap="wrap" gap="$2">
-            {Object.entries(resident.socialMedia).map(([platform, url]) => (
-              <Button
-                key={platform}
-                size="$3"
-                variant="outlined"
-                onPress={() => handleSocialMediaPress(url)}
-              >
-                {platform}
-              </Button>
-            ))}
-          </XStack>
-        </YStack>
-      )} */}
     </PageContainer>
   );
 };
