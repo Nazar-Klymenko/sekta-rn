@@ -16,7 +16,8 @@ export const createResident = async (data: ResidentFormValues) => {
     const title = data.name;
     const uploadedImage = await uploadEventImage({
       image: data.image.uri,
-      eventUid: residentUid,
+      folder: "residents",
+      documentId: residentUid,
       title,
     });
 

@@ -10,8 +10,8 @@ export const fetchAllResidents = async (
   sortDirection: "asc" | "desc" = "desc"
 ): Promise<DisplayResident[]> => {
   const baseQuery = query(
-    residentsCollection,
-    orderBy("date", sortDirection) // desc will show future dates first
+    residentsCollection
+    // orderBy("timestamps.createdAt", sortDirection) // desc will show future dates first
   );
 
   const snapshot = await getDocs(baseQuery);
