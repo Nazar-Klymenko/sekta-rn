@@ -21,7 +21,7 @@ const ResidentCard = ({ resident }: ResidentCardProps) => {
     >
       <ImageContainer>
         <Image
-          source={{ uri: resident.image.publicUrl }}
+          source={{ uri: resident?.image?.publicUrl }}
           width={"100%"}
           aspectRatio={1}
           borderRadius="$2"

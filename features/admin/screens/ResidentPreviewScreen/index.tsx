@@ -80,20 +80,20 @@ const ResidentPreviewScreen = () => {
     });
   };
   const createdAtDate = formatFirestoreTimestamp(
-    resident.timestamps.createdAt,
+    resident?.timestamps?.createdAt,
     "EEEE, MMMM do yyyy"
   );
   const createdAtTime = formatFirestoreTimestamp(
-    resident.timestamps.createdAt,
+    resident?.timestamps?.createdAt,
     "HH:mm"
   );
 
   const updatedAtDate = formatFirestoreTimestamp(
-    resident.timestamps.updatedAt,
+    resident?.timestamps?.updatedAt,
     "EEEE, MMMM do yyyy"
   );
   const createdTime = formatFirestoreTimestamp(
-    resident.timestamps.updatedAt,
+    resident?.timestamps?.updatedAt,
     "HH:mm"
   );
   return (
@@ -111,7 +111,7 @@ const ResidentPreviewScreen = () => {
       <PageContainer>
         <YStack gap="$4">
           <Image
-            source={{ uri: resident?.image.publicUrl }}
+            source={{ uri: resident?.image?.publicUrl }}
             aspectRatio={1 / 1}
             objectFit="cover"
             maxWidth={724}
@@ -121,7 +121,7 @@ const ResidentPreviewScreen = () => {
           <YStack>
             <H6>name:</H6>
             <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
-              {resident?.name.display}
+              {resident?.name?.display}
             </SizableText>
           </YStack>
           <YStack>
@@ -136,7 +136,7 @@ const ResidentPreviewScreen = () => {
           <InfoItem
             icon={<Hash color="$accentColor" size={24} />}
             title="Event id:"
-            value={resident.id}
+            value={resident?.id}
           />
           <InfoItem
             icon={<CalendarPlus color="$accentColor" size={24} />}
@@ -152,17 +152,17 @@ const ResidentPreviewScreen = () => {
           <InfoItem
             icon={<Link2 color="$accentColor" size={24} />}
             title="Image Path:"
-            value={resident.image.path}
+            value={resident?.image?.path}
           />
           <InfoItem
             icon={<Link color="$accentColor" size={24} />}
             title="Public Image URL:"
-            value={resident.image.publicUrl}
+            value={resident?.image?.publicUrl}
           />
           <InfoItem
             icon={<Captions color="$accentColor" size={24} />}
             title="Alt Text Image:"
-            value={resident.image.altText || "No alt text provided"}
+            value={resident?.image?.altText || "No alt text provided"}
           />
         </YStack>
         {/* Social Media Links
