@@ -2,9 +2,8 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { useTheme } from "tamagui";
-
 import { Slot, Stack } from "expo-router";
+import { useTheme } from "tamagui";
 
 export default function EventsLayout() {
   const theme = useTheme();
@@ -19,7 +18,7 @@ export default function EventsLayout() {
       screenOptions={{
         headerTitleAlign: "center",
         headerTintColor: theme.color.get(),
-        headerShadowVisible: true,
+        headerShadowVisible: false,
 
         headerStyle: {
           backgroundColor: theme.background.get(),
@@ -49,6 +48,20 @@ export default function EventsLayout() {
         name="upcoming"
         options={{
           title: "Upcoming events",
+        }}
+      />
+      <Stack.Screen
+        name="residents/index"
+        options={{
+          headerLargeTitle: true,
+          title: "Residents",
+        }}
+      />
+      <Stack.Screen
+        name="residents/[id]/index"
+        options={{
+          headerLargeTitle: true,
+          title: "Resident",
         }}
       />
       <Stack.Screen
