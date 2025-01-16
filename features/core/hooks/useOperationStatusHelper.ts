@@ -1,4 +1,3 @@
-// src/utils/firebaseErrorHandler.ts
 import { FirebaseError } from "firebase/app";
 
 import { useToastController } from "@tamagui/toast";
@@ -11,6 +10,8 @@ type OperationType =
   | "verifyEmail"
   // Profile Operations
   | "changePassword"
+  | "updatePushToken"
+  | "removePushToken"
   | "updateUsername"
   | "deleteAccount"
   | "sendVerifyEmail"
@@ -56,6 +57,14 @@ const operationMessages: Record<
     error: "Couldn't update your password. Please try again.",
     success: "Password updated successfully.",
     info: "You'll need to log in again with your new password.",
+  },
+  updatePushToken: {
+    success: "Push notifications set up successfully",
+    error: "Failed to set up push notifications",
+  },
+  removePushToken: {
+    success: "Push notifications disabled",
+    error: "Failed to disable push notifications",
   },
   updateUsername: {
     error: "Couldn't update your username. Please try again.",

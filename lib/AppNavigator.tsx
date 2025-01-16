@@ -2,18 +2,17 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { Slot, Stack } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "tamagui";
+
+import { ToastViewport } from "@tamagui/toast";
+
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CustomHeader } from "@/features/core/components/CustomHeader/CustomHeader";
 import { Footer } from "@/features/core/components/layout/Footer";
 import { CurrentToast } from "@/features/core/components/panels/Toast";
-import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
-
-import { ToastViewport } from "@tamagui/toast";
-
-import { useTheme } from "tamagui";
-
-import { Slot, Stack } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNotifications } from "@/features/core/hooks/usePushNotifications";
 
 export function AppNavigator() {
   const { user } = useAuth();
@@ -21,9 +20,7 @@ export function AppNavigator() {
   const theme = useTheme();
   const bg = theme.background.get();
 
-  if (Platform.OS !== "web") {
-    usePushNotifications();
-  }
+  useNotifications();
 
   if (Platform.OS === "web") {
     return (

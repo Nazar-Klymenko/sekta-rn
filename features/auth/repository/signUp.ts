@@ -1,3 +1,5 @@
+import { auth, db } from "@/lib/firebase/firebase";
+
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -5,7 +7,6 @@ import {
 import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 
 import { FirestoreUser } from "@/features/users/models/User";
-import { auth, db } from "@/lib/firebase/firebase";
 
 import { SignUpSchemaType } from "../utils/schemas";
 
@@ -68,6 +69,7 @@ export const signUp = async ({
           createdAt: timestamp,
           updatedAt: timestamp,
         },
+        pushTokens: [],
         metadata: {},
       };
 

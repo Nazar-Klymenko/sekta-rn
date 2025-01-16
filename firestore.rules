@@ -72,6 +72,7 @@ service cloud.firestore {
         && isValidPrice(request.resource.data.price)
         && request.resource.data.genres is list
         && request.resource.data.lineup is list
+        && request.resource.data.pushTokens is list
         && request.resource.data.deletedAt == null;
 
       allow delete: if isAdmin();

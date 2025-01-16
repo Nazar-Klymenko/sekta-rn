@@ -19,6 +19,7 @@ interface BaseUser {
   settings: UserSettings;
   isAdmin: boolean;
   metadata: Record<string, any>;
+  pushTokens: string[];
 }
 
 export interface FirestoreUser extends BaseUser {

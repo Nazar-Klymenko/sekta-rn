@@ -21,9 +21,8 @@ export const signUpSchema = yup.object().shape({
   agreeTos: yup
     .boolean()
     .oneOf([true], "You must agree to the terms and conditions")
-    .required("You must agree to the terms and conditions")
-    .default(false),
-  agreeEmail: yup.boolean().optional().default(false),
+    .required("You must agree to the terms and conditions"),
+  agreeEmail: yup.boolean().optional(),
 });
 
 export type SignUpSchemaType = yup.InferType<typeof signUpSchema>;

@@ -1,5 +1,9 @@
 import React from "react";
 
+import { Link } from "expo-router";
+import { useForm } from "react-hook-form";
+import { SizableText, YStack } from "tamagui";
+
 import { useUsername } from "@/features/auth/context/UsernameContext";
 import { useSignUp } from "@/features/auth/hooks/useSignUp";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
@@ -9,11 +13,6 @@ import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PasswordRequirements } from "@/features/core/components/form/PasswordRequirements";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
-import { SizableText, YStack } from "tamagui";
-
-import { Link } from "expo-router";
-import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -26,7 +25,6 @@ export default function SignupScreen() {
   const methods = useForm({
     resolver: yupResolver(signUpSchema),
     defaultValues: {
-      ...signUpSchema.getDefault(),
       username: tempUsername,
     },
     shouldFocusError: true,

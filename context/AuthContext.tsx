@@ -1,3 +1,5 @@
+import { auth, db } from "@/lib/firebase/firebase";
+
 import React, {
   ReactNode,
   createContext,
@@ -10,7 +12,6 @@ import { User, onIdTokenChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 
 import { DisplayUser } from "@/features/users/models/User";
-import { auth, db } from "@/lib/firebase/firebase";
 
 export type AuthContextType = {
   user: User | null;
@@ -19,7 +20,14 @@ export type AuthContextType = {
   isAuthenticated: boolean;
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  displayUser: null,
+  isLoading: true,
+  isAuthenticated: false,
+};
+
+export const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(auth.currentUser);
