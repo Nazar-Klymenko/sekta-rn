@@ -19,7 +19,9 @@ export interface ResidentImage {
   altText: string;
   timestamps: Timestamps<Timestamp>;
 }
-
+export interface ResidentImageFile {
+  uri: string | Blob;
+}
 export interface FirestoreResident extends BaseResident {
   timestamps: Timestamps<FieldValue>;
 }
