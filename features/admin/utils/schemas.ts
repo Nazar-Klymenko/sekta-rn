@@ -11,11 +11,13 @@ export const eventSchema = yup.object().shape({
   title: yup
     .string()
     .required("Title is required")
-    .min(3, "Title must be at least 3 characters"),
+    .min(3, "Title must be at least 3 characters")
+    .default(""),
   caption: yup
     .string()
     .max(1500, "Caption must not exceed 1500 characters")
-    .required("Caption is required"),
+    .required("Caption is required")
+    .default(""),
 
   date: yup.date().required("Date is required").default(DEFAULT_DATE),
   location: yup

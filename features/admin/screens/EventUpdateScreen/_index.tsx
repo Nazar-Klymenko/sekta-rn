@@ -32,8 +32,8 @@ export default function EventUpdateScreen() {
         ...event,
         image: { uri: event?.image.publicUrl || "" },
         date: event?.date.toDate(),
-        title: event?.title.display,
-        price: event?.price.amount,
+        title: event?.title?.display,
+        price: event?.price?.amount,
       },
     }),
     { handleSubmit } = methods;

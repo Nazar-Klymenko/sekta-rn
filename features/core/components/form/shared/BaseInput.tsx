@@ -5,6 +5,7 @@ export const BaseInput = styled(TamaguiInput, {
   size: "$5",
   borderRadius: "$2",
   borderColor: "transparent",
+
   variants: {
     hasError: {
       true: {
