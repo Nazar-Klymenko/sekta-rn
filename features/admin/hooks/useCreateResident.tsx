@@ -19,7 +19,7 @@ export const useCreateResident = () => {
       queryClient.invalidateQueries({ queryKey: ["residents"] });
       queryClient.invalidateQueries({ queryKey: ["allResidents"] });
       handleToastMessage(null, "createEvent", "success");
-      router.replace(`/admin/residents`);
+      router.navigate(`/admin/residents`);
     },
     onError: (error: Error) => {
       handleToastMessage(error, "createEvent", "error");

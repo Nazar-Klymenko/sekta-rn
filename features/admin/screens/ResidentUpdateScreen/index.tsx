@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useForm } from "react-hook-form";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
@@ -21,7 +21,6 @@ export default function ResidentUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: resident, isLoading } = useFetchResident(id);
   const { mutate, isPending } = useUpdateResident(id);
-  const router = useRouter();
   const methods = useForm({
       resolver: yupResolver(residentSchema),
       defaultValues: {
@@ -36,18 +35,11 @@ export default function ResidentUpdateScreen() {
   const onSubmit = async (data: ResidentFormValues) => {
     if (!resident) return;
 
-    mutate(
-      {
-        residentId: id,
-        originalData: resident,
-        data,
-      },
-      {
-        onSuccess: () => {
-          router.back();
-        },
-      }
-    );
+    mutate({
+      residentId: id,
+      originalData: resident,
+      data,
+    });
   };
 
   if (isLoading) return <FullPageLoading />;

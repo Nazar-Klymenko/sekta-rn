@@ -1,5 +1,10 @@
 import React from "react";
 
+import { useLocalSearchParams } from "expo-router";
+import { useForm } from "react-hook-form";
+
+import { Calendar } from "@tamagui/lucide-icons";
+
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { DateInput } from "@/features/core/components/form/DateInput";
 import { Form } from "@/features/core/components/form/Form";
@@ -11,11 +16,6 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { useFetchEvent } from "@/features/event/hooks/useFetchEvent";
 
-import { Calendar } from "@tamagui/lucide-icons";
-
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useForm } from "react-hook-form";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useUpdateEvent } from "../../hooks/useUpdateEvent";
@@ -25,7 +25,6 @@ export default function EventUpdateScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: event, isLoading } = useFetchEvent(id || "");
   const { mutate, isPending } = useUpdateEvent(id);
-  const router = useRouter();
   const methods = useForm({
       resolver: yupResolver(eventSchema),
       defaultValues: {
@@ -42,18 +41,11 @@ export default function EventUpdateScreen() {
   const onSubmit = async (data: EventFormValues) => {
     if (!event) return;
 
-    mutate(
-      {
-        eventUid: id,
-        originalData: event,
-        data,
-      },
-      {
-        onSuccess: () => {
-          router.back();
-        },
-      }
-    );
+    mutate({
+      eventUid: id,
+      originalData: event,
+      data,
+    });
   };
 
   if (isLoading) return <FullPageLoading />;

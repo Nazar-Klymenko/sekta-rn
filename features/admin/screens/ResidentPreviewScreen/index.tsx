@@ -72,7 +72,6 @@ const ResidentPreviewScreen = () => {
       onSuccess: () => {
         setShowConfirmSheet(false);
         setInnerShowConfirmSheet(false);
-        router.back();
       },
       onError: () => {
         setShowConfirmSheet(false);
@@ -108,7 +107,7 @@ const ResidentPreviewScreen = () => {
             </TouchableOpacity>
           ),
         }}
-      ></Stack.Screen>
+      />
       <PageContainer>
         <YStack gap="$4">
           <Image

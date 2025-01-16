@@ -4,12 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { RefreshControl, TouchableOpacity } from "react-native";
 
-import {
-  Stack,
-  useLocalSearchParams,
-  useNavigation,
-  useRouter,
-} from "expo-router";
+import { Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import { H6, Paragraph, Portal, YStack } from "tamagui";
 import { Separator } from "tamagui";
 
@@ -23,7 +18,6 @@ import {
   MoreHorizontal,
 } from "@tamagui/lucide-icons";
 
-import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
@@ -51,7 +45,6 @@ export default function EventPreviewScreen() {
   const { mutate, isPending } = useDeleteEvent(id);
   const [showConfirmSheet, setShowConfirmSheet] = useState(false);
   const [innershowConfirmSheet, setInnerShowConfirmSheet] = useState(false);
-  const router = useRouter();
   const navigation = useNavigation();
   useEffect(() => {
     if (event) {
@@ -84,7 +77,6 @@ export default function EventPreviewScreen() {
       onSuccess: () => {
         setShowConfirmSheet(false);
         setInnerShowConfirmSheet(false);
-        router.back();
       },
       onError: () => {
         setShowConfirmSheet(false);
