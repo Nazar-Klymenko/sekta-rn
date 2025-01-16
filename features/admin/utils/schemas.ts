@@ -43,3 +43,21 @@ export const eventSchema = yup.object().shape({
 });
 
 export type EventFormValues = yup.InferType<typeof eventSchema>;
+
+export const residentSchema = yup.object().shape({
+  image: yup
+    .object({
+      uri: yup.string().required("Image is required"),
+    })
+    .required("Image is required"),
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(1, "Name must be at least 1 character"),
+  bio: yup
+    .string()
+    .max(1500, "Caption must not exceed 1500 characters")
+    .required("Caption is required"),
+});
+
+export type ResidentFormValues = yup.InferType<typeof residentSchema>;

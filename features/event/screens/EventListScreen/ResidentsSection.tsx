@@ -14,7 +14,7 @@ import { ResidentAvatar } from "@/features/residents/components/ResidentAvatar";
 import { DisplayResident } from "@/features/residents/models/Resident";
 
 interface ResidentsSectionProps {
-  residents: InfiniteData<DisplayResident[]> | undefined;
+  residents: DisplayResident[] | undefined;
   isResidentsLoading: boolean;
   onViewAllPress: () => void;
 }
@@ -51,7 +51,7 @@ export const ResidentsSection: React.FC<ResidentsSectionProps> = ({
               .map((_, index) => (
                 <SizableText key={index}>Resident loading..</SizableText>
               ))
-          : residents?.pages[0].map((resident, index) => (
+          : residents?.map((resident, index) => (
               <ResidentAvatar key={index} image={resident.image} />
             ))}
       </ScrollView>
