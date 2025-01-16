@@ -22,7 +22,17 @@
       }
     },
     "ios": {
-      "bundleIdentifier": "com.sektaselekta.app"
+      "bundleIdentifier": "com.sektaselekta.app",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "instagram",
+          "fb",
+          "soundcloud",
+          "twitter",
+          "youtube",
+          "spotify"
+        ]
+      }
     },
     "android": {
       "package": "com.sektaselekta.app",

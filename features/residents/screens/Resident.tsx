@@ -32,9 +32,13 @@ const ResidentScreen = () => {
     );
   }
 
-  console.log({ resident });
-  const handleSocialMediaPress = (url: string) => {
-    Linking.openURL(url);
+  const handleSocialMediaPress = async (url: string) => {
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.error(`Can't handle URL: ${url}`);
+    }
   };
 
   return (
@@ -56,6 +60,13 @@ const ResidentScreen = () => {
         <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
           {resident?.bio}
         </SizableText>
+        <Button
+          onPress={() =>
+            handleSocialMediaPress("instagram://user?username=sektaselekta")
+          }
+        >
+          Open Instagram
+        </Button>
       </YStack>
     </PageContainer>
   );
