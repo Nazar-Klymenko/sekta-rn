@@ -10,7 +10,7 @@ import {
   YStack,
 } from "tamagui";
 
-import { TicketX } from "@tamagui/lucide-icons";
+import { Frown, Laugh, TicketX } from "@tamagui/lucide-icons";
 
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Sheet } from "@/features/core/components/panels/Sheet";
@@ -30,12 +30,12 @@ export function InnerMenuSheet({
     <Sheet open={open} onOpenChange={onOpenChange} insideModal>
       <YStack gap="$4" width="100%">
         <YStack gap="$4" alignItems="center">
-          <TicketX size={48} color="$color" />
+          <Frown size={48} color="$color" />
           <Paragraph size="$8" fontWeight={700}>
-            Delete Event
+            Delete Resident
           </Paragraph>
           <Paragraph>
-            By pressing delete, the event will be deleted permanently.
+            By pressing delete, the resident will be deleted permanently.
           </Paragraph>
           <Separator />
 

@@ -30,7 +30,7 @@ export const updateResident = async ({
     if (image !== null && image !== uploadedImage.publicUrl) {
       const title = data.name;
       uploadedImage = await uploadEventImage({
-        folder: "events",
+        folder: "residents",
         documentId: residentId,
         title,
         ...uploadedImage,
