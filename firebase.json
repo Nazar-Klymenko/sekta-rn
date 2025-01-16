@@ -1,8 +1,18 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
   "hosting": {
     "site": "sekta-selekta-rn",
     "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -10,58 +20,30 @@
       }
     ]
   },
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
-    }
-  ],
   "emulators": {
     "auth": {
       "port": 9099,
       "host": "0.0.0.0",
       "allowExternalAccess": true
     },
-    "functions": {
-      "port": 5001,
-      "allowExternalAccess": true,
-      "host": "0.0.0.0"
-    },
     "firestore": {
-      "rules": "firestore.rules",
-      "port": 8080,
+      "port": 8081,
       "host": "0.0.0.0",
-      "allowExternalAccess": true
-    },
-    "hosting": {
-      "port": 5000
+      "allowExternalAccess": true,
+      "rules": "firestore.rules"
     },
     "storage": {
       "port": 9199,
-      "allowExternalAccess": true,
       "host": "0.0.0.0",
+      "allowExternalAccess": true,
       "rules": "storage.rules"
+    },
+    "hosting": {
+      "port": 5000
     },
     "ui": {
       "enabled": true
     },
     "singleProjectMode": true
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
-  "firestore": {
-    "rules": "firestore.rules"
   }
 }
