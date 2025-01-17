@@ -68,25 +68,6 @@ export default function LoginScreen() {
         </ButtonCTA>
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={"/auth/username-bridge"}>
-            <SizableText textAlign="center" fontSize="$3">
-              Don't have an account?
-              <SizableText color="$accentColor" fontSize="$3">
-                {" "}
-                Sign Up
-              </SizableText>
-            </SizableText>
-          </Link>
-        </YStack>
-        <ButtonCTA
-          theme="accent"
-          onPress={methods.handleSubmit(onSubmit)}
-          isLoading={isPending}
-          disabled={isPending}
-        >
-          Log in
-        </ButtonCTA>
-        <YStack alignItems="center" padding="$4" gap="$4">
-          <Link href={"/auth/username-bridge"}>
             <Paragraph textAlign="center" fontSize="$3">
               Don't have an account?
               <Paragraph color="$accentColor" fontSize="$3">
