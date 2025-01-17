@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import * as Notifications from "expo-notifications";
 import { Subscription } from "expo-notifications";
+import { useRouter } from "expo-router";
 
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { registerForPushNotifications } from "@/features/core/utils/registerForPushNotifications";
@@ -12,6 +13,7 @@ export function useNotifications() {
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
   const { mutate } = useUpdatePushToken();
+  const router = useRouter();
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -37,6 +39,13 @@ export function useNotifications() {
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log("Notification response:", response);
+        const eventId = response.notification.request.content.data.eventId;
+        if (eventId) {
+          // Navigate to event page
+          console.log("Event ID: " + eventId);
+
+          router.push(`/events/${eventId}`);
+        }
       });
 
     return () => {

@@ -1,9 +1,10 @@
+import { db } from "@/lib/firebase/firebase";
+
 import { Timestamp, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 import { EventFormValues } from "@/features/admin/utils/schemas";
 import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
 import { DisplayEvent, FirestoreEvent } from "@/features/event/models/Event";
-import { db } from "@/lib/firebase/firebase";
 
 interface UpdateEventParams {
   eventUid: string;
@@ -60,7 +61,7 @@ export const updateEvent = async ({
     const docRef = doc(db, "events", eventUid);
     await updateDoc(docRef, { ...eventData });
 
-    return { success: true, id: eventUid };
+    return { success: true, event: eventData };
   } catch (error) {
     console.error("Error adding document: ", error);
     return { success: false };
