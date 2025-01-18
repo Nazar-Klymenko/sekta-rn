@@ -32,7 +32,7 @@ export const createResident = async (data: ResidentFormValues) => {
         createdAt: _serverTimestamp,
         updatedAt: _serverTimestamp,
       },
-      socialMedia: {},
+      socialMedia: data.socialMedia,
       metadata: {},
     };
 

@@ -10,7 +10,12 @@ interface BaseResident {
   bio: string;
   image: ResidentImage;
   metadata: Record<string, any>;
-  socialMedia: Record<string, string>;
+  socialMedia: SocialMediaEntry[];
+}
+
+export interface SocialMediaEntry {
+  platform: string;
+  url: string;
 }
 
 export interface ResidentImage {

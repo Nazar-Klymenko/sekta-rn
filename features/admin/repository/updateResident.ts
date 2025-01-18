@@ -50,7 +50,7 @@ export const updateResident = async ({
       },
       metadata: {},
       bio: data.bio,
-      socialMedia: {},
+      socialMedia: data.socialMedia,
     };
 
     const docRef = doc(db, "residents", residentId);
