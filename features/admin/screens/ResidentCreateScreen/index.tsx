@@ -233,7 +233,7 @@ const SOCIAL_MEDIA_OPTIONS = [
   },
   {
     label: "Facebook",
-    value: "fb",
+    value: "facebook",
     instruction:
       "Use the part of the link that comes after the /\nFor example, in facebook.com/userID, take userID only",
   },
