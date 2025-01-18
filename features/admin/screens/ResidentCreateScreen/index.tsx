@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 
 import { useFieldArray, useForm } from "react-hook-form";
 import {
@@ -42,6 +42,7 @@ import { useCreateResident } from "../../hooks/useCreateResident";
 import { SocialMediaFieldArray } from "./SocialMediaFieldArray";
 
 export default function ResidentCreateScreen() {
+  const [isPlatformSheetOpen, setIsPlatformSheetOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const methods = useForm({
@@ -52,7 +53,7 @@ export default function ResidentCreateScreen() {
       image: null,
     },
   });
-  const { handleSubmit, control } = methods;
+  const { handleSubmit, control, setValue, trigger, watch } = methods;
 
   const { mutate, isPending } = useCreateResident();
 
@@ -64,10 +65,23 @@ export default function ResidentCreateScreen() {
     control,
     name: "socialMedia",
   });
-  const [isPlatformSheetOpen, setIsPlatformSheetOpen] = useState(true);
   const handleAddLink = () => {
     append({ platform: "", url: "" });
   };
+  const handlePlatformSelect = (platformValue: string) => {
+    console.log({ platformValue });
+    console.log({ activeIndex });
+    if (activeIndex !== null) {
+      console.log("fires here");
+      setValue(`socialMedia.${activeIndex}.platform`, platformValue);
+      trigger(`socialMedia.${activeIndex}.platform`);
+      setIsPlatformSheetOpen(false);
+    }
+  };
+  const watchSocialMedia = watch("socialMedia");
+  const currentPlatform =
+    activeIndex !== null ? watchSocialMedia[activeIndex]?.platform : "";
+
   return (
     <>
       <PageContainer>
@@ -90,10 +104,12 @@ export default function ResidentCreateScreen() {
           {fields.map((field, index) => (
             <XStack gap="$2" paddingVertical="$3">
               <Separator vertical></Separator>
-              <XStack flex={1} alignItems="center">
+              <XStack flex={1} alignItems="center" gap="$1">
                 <Stack flex={1}>
                   <XStack
-                    theme={field.platform ? "active" : "alt2"}
+                    theme={
+                      watchSocialMedia[index]?.platform ? "active" : "alt2"
+                    }
                     onPress={() => {
                       setIsPlatformSheetOpen(true);
                       setActiveIndex(index);
@@ -101,7 +117,7 @@ export default function ResidentCreateScreen() {
                     alignItems="center"
                   >
                     <SizableText size={"$8"}>
-                      {field.platform || " Platform"}
+                      {watchSocialMedia[index]?.platform || " Platform"}
                     </SizableText>
                     <ChevronDown size={"$1"} />
                   </XStack>
@@ -146,7 +162,8 @@ export default function ResidentCreateScreen() {
       >
         <RadioGroup
           defaultValue="Platform"
-          value="fb"
+          value={currentPlatform}
+          onValueChange={handlePlatformSelect}
           gap="$2"
           theme={"surface2"}
           backgroundColor={"$background"}
@@ -156,31 +173,31 @@ export default function ResidentCreateScreen() {
           paddingHorizontal="$2"
           paddingVertical="$4"
         >
-          {SOCIAL_MEDIA_OPTIONS.map((option, idx) => (
-            <XStack
-              key={option.value}
-              alignItems="center"
-              gap="$2"
-              padding="$2"
-            >
-              <Label unstyled flex={1} htmlFor="" gap={0}>
-                <YStack gap="$0">
-                  <SizableText size={"$6"}>{option.label}</SizableText>
-                  <SizableText size={"$4"} color="gray">
-                    {option.instruction}
-                  </SizableText>
-                </YStack>
-              </Label>
+          {SOCIAL_MEDIA_OPTIONS.map((option, idx) => {
+            const id = useId();
 
-              <RadioGroup.Item
-                size={"$6"}
-                value={option.value}
-                id={`${option.value}-radio-item`}
+            return (
+              <XStack
+                key={option.value}
+                alignItems="center"
+                gap="$2"
+                padding="$2"
               >
-                <RadioGroup.Indicator />
-              </RadioGroup.Item>
-            </XStack>
-          ))}
+                <Label unstyled flex={1} htmlFor={id} gap={0}>
+                  <YStack gap="$0">
+                    <SizableText size={"$6"}>{option.label}</SizableText>
+                    <SizableText size={"$4"} color="gray">
+                      {option.instruction}
+                    </SizableText>
+                  </YStack>
+                </Label>
+
+                <RadioGroup.Item size={"$6"} value={option.value} id={id}>
+                  <RadioGroup.Indicator />
+                </RadioGroup.Item>
+              </XStack>
+            );
+          })}
         </RadioGroup>
       </Sheet>
     </>
@@ -220,5 +237,10 @@ const SOCIAL_MEDIA_OPTIONS = [
     value: "spotify",
     instruction:
       "Use the part of the link that comes after the /user/\nFor example, in spotify.com/user/userID, take userID only",
+  },
+  {
+    label: "Website",
+    value: "website",
+    instruction: "Use the full URL, without https://",
   },
 ];
