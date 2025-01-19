@@ -1,14 +1,14 @@
 import React from "react";
 
+import { Separator, YStack } from "tamagui";
+
 import SectionHeaderWithAction from "@/features/core/components/SectionHeaderWithAction";
 import PreviousEventCard from "@/features/event/components/event/PreviousEventCard";
 import { SkeletonPreviousEventCard } from "@/features/event/components/event/SkeletonPreviousEventCard";
-import { Event } from "@/features/event/models/Event";
-
-import { Separator, YStack } from "tamagui";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 interface PreviousEventsSectionProps {
-  previousEvents: Event[] | undefined;
+  previousEvents: DisplayEvent[] | undefined;
   isPreviousEventsLoading: boolean;
   onViewAllPress: () => void;
 }
@@ -33,7 +33,7 @@ export const PreviousEventsSection: React.FC<PreviousEventsSectionProps> = ({
               .fill(null)
               .map((_, index) => <SkeletonPreviousEventCard key={index} />)
           : previousEvents?.map((event) => (
-              <PreviousEventCard key={event.id} event={event} />
+              <PreviousEventCard key={event.uid} event={event} />
             ))}
       </YStack>
     </YStack>

@@ -1,3 +1,5 @@
+import { db } from "@/lib/firebase/firebase";
+
 import {
   collection,
   doc,
@@ -11,8 +13,7 @@ import {
   startAfter,
 } from "firebase/firestore";
 
-import { Event } from "@/features/event/models/Event";
-import { db } from "@/lib/firebase/firebase";
+import { DisplayEvent } from "@/features/event/models/Event";
 
 const eventsCollection = collection(db, "events");
 
@@ -20,7 +21,7 @@ export const fetchPaginatedEvents = async (
   pageParam: string | null,
   pageSize: number,
   direction: "forward" | "backward" = "forward"
-): Promise<Event[]> => {
+): Promise<DisplayEvent[]> => {
   let baseQuery = query(eventsCollection, orderBy("date", "asc"));
 
   if (pageParam) {
@@ -45,5 +46,7 @@ export const fetchPaginatedEvents = async (
   }
 
   const snapshot = await getDocs(baseQuery);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Event));
+  return snapshot.docs.map(
+    (doc) => ({ uid: doc.id, ...doc.data() } as DisplayEvent)
+  );
 };

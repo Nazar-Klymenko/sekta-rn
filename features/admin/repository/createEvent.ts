@@ -1,3 +1,5 @@
+import { db } from "@/lib/firebase/firebase";
+
 import {
   Timestamp,
   collection,
@@ -9,7 +11,6 @@ import {
 import { EventFormValues } from "@/features/admin/utils/schemas";
 import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
 import { FirestoreEvent } from "@/features/event/models/Event";
-import { db } from "@/lib/firebase/firebase";
 
 export const createEvent = async (data: EventFormValues) => {
   try {
