@@ -58,6 +58,15 @@ export const residentSchema = yup.object().shape({
     .string()
     .max(1500, "Caption must not exceed 1500 characters")
     .required("Caption is required"),
+  socialMedia: yup
+    .array()
+    .of(
+      yup.object().shape({
+        platform: yup.string().required(),
+        url: yup.string().required().url(),
+      })
+    )
+    .default([]),
 });
 
 export type ResidentFormValues = yup.InferType<typeof residentSchema>;
