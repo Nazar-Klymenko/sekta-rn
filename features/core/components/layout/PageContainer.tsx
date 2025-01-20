@@ -18,6 +18,7 @@ export function PageContainer({
       backgroundColor="$background"
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
+      automaticallyAdjustKeyboardInsets={true}
       contentContainerStyle={{
         padding: "$4",
         ...(overflowHorizontal && { paddingHorizontal: 0 }),
