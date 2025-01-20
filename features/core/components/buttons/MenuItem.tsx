@@ -23,7 +23,6 @@ const ResponsiveStack = styled(XStack, {
   alignItems: "center",
   gap: "$3",
   paddingVertical: "$3",
-  paddingHorizontal: "$2",
   animation: "quickest",
   pressStyle: {
     opacity: 0.7,
