@@ -62,11 +62,20 @@ const ResidentScreen = () => {
           </SizableText>
 
           <XStack gap="$3">
-            {portfolioLinks.map((link) => (
-              <Button circular onPress={() => handleSocialMediaPress(link.url)}>
-                <link.icon />
-              </Button>
-            ))}
+            {resident.socialMedia.map((link, index) => {
+              const IconComponent = platformIcons[link.platform] || Facebook;
+              return (
+                <Button
+                  key={index}
+                  circular
+                  onPress={() =>
+                    handleSocialMediaPress(link.platform, link.url)
+                  }
+                >
+                  <IconComponent />
+                </Button>
+              );
+            })}
           </XStack>
         </YStack>
       </YStack>
@@ -102,29 +111,11 @@ const ImageStyled = styled(Image, {
   maxWidth: 724,
 });
 
-const portfolioLinks = [
-  {
-    name: "instagram",
-    label: "Instagram",
-    icon: Instagram,
-    url: "instagram://user?username=sektaselekta",
-  },
-  {
-    name: "soundcloud",
-    label: "Soundcloud",
-    icon: AudioLines,
-    url: "instagram://user?username=sektaselekta",
-  },
-  {
-    name: "youtube",
-    label: "Youtube",
-    icon: Youtube,
-    url: "instagram://user?username=sektaselekta",
-  },
-  {
-    name: "facebook",
-    label: "Facebook",
-    icon: Facebook,
-    url: "instagram://user?username=sektaselekta",
-  },
-];
+const platformIcons: Record<string, React.ElementType> = {
+  instagram: Instagram,
+  facebook: Facebook,
+  soundcloud: AudioLines,
+  youtube: Youtube,
+  twitter: Instagram,
+  spotify: Instagram,
+};
