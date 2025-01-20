@@ -1,5 +1,7 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
+import { Platform } from "react-native";
+
 import { FirebaseApp, getApps, initializeApp } from "firebase/app";
 import {
   Auth,
@@ -14,8 +16,6 @@ import {
 } from "firebase/firestore";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
-
-import { Platform } from "react-native";
 
 import Constants from "expo-constants";
 
@@ -63,7 +63,7 @@ const getHost = () => {
 };
 const HOST = getHost();
 
-if (__DEV__) {
+if (false) {
   console.debug("Connecting to firebase emulators.");
   connectAuthEmulator(auth, `http://${HOST}:9099`);
   connectFirestoreEmulator(db, HOST, 8080);

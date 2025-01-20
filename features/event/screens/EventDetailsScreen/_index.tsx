@@ -3,13 +3,12 @@ import React from "react";
 import { RefreshControl } from "react-native";
 
 import { useLocalSearchParams } from "expo-router";
-import { View, YStack, styled } from "tamagui";
+import { Button, Image, SizableText, View, YStack, styled } from "tamagui";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
 import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
-import { ReanimatedPageContainer } from "@/features/core/components/layout/ReanimatedPageContainer";
-import { useAnimatedScroll } from "@/features/core/hooks/useAnimatedScroll";
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
 import EmptyEventList from "../../components/EmptyEventList";
 import ErrorEventList from "../../components/ErrorEventList";
@@ -22,51 +21,38 @@ import { TagSection } from "./TagSection";
 
 export default function EventDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const {
-    data: event,
-    isLoading,
-    isError,
-    refetch,
-    isRefetching,
-  } = useFetchEvent(id || "");
-  const { scrollHandler, scrollEventThrottle } = useAnimatedScroll();
+  const { data: event, isLoading, isError } = useFetchEvent(id);
 
-  if (!id || isLoading) return <FullPageLoading />;
-
-  if (isError)
+  if (isLoading)
     return (
-      <ErrorEventList
-        onRetry={refetch}
-        errorMessage={"Error loading this event."}
-        isRefetching={isRefetching}
-        onRefresh={refetch}
-      />
+      <PageContainer>
+        <FullPageLoading />
+      </PageContainer>
     );
-  if (!event)
+
+  if (isError || !event)
     return (
-      <ReanimatedPageContainer>
-        <EmptyEventList
-          icon={Calendar}
-          title="Event not found"
-          description="Pull to refresh or check back later."
-        />
-      </ReanimatedPageContainer>
+      <YStack padding="$4" alignItems="center" gap="$4">
+        <SizableText>Failed to load resident details.</SizableText>
+        <Button>Retry</Button>
+      </YStack>
     );
 
   const showBottomButton = event.date.toDate() > new Date();
-
   return (
     <>
-      <ReanimatedPageContainer
-        fullWidth={false}
-        onScroll={scrollHandler}
-        scrollEventThrottle={scrollEventThrottle}
-        refreshControl={
-          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
-        }
-      >
+      <PageContainer contentContainerStyle={{ padding: 0 }}>
         <YStack gap="$4">
-          <EventHero event={event} />
+          <Image
+            source={{
+              uri: event?.image?.publicUrl,
+            }}
+            aspectRatio={1 / 1}
+            objectFit="cover"
+            maxWidth={724}
+            flex={1}
+            width={"100%"}
+          />
           <YStack
             paddingHorizontal="$4"
             paddingBottom={showBottomButton ? "$13" : "$4"}
@@ -82,7 +68,7 @@ export default function EventDetailsScreen() {
             )}
           </YStack>
         </YStack>
-      </ReanimatedPageContainer>
+      </PageContainer>
       {showBottomButton && (
         <StickyButtonWrap>
           <StickyBottomButton />

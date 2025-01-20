@@ -5,6 +5,13 @@ import { Linking } from "react-native";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Button, Image, Separator, SizableText, XStack, YStack } from "tamagui";
 
+import {
+  AudioLines,
+  Facebook,
+  Instagram,
+  Youtube,
+} from "@tamagui/lucide-icons";
+
 import Skeleton from "@/features/core/components/Skeleton";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
 
@@ -12,7 +19,6 @@ import { useFetchResident } from "../hooks/useFetchResident";
 
 const ResidentScreen = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  console.log({ id });
   const { data: resident, isLoading, isError } = useFetchResident(id);
 
   if (isLoading) {
@@ -42,7 +48,7 @@ const ResidentScreen = () => {
   };
 
   return (
-    <PageContainer>
+    <PageContainer contentContainerStyle={{ padding: 0 }}>
       <Stack.Screen
         options={{
           title: resident.name.display,
@@ -50,23 +56,26 @@ const ResidentScreen = () => {
       />
       <YStack gap="$4">
         <Image
-          source={{ uri: resident?.image.publicUrl }}
+          source={{ uri: resident?.image?.publicUrl }}
           aspectRatio={1 / 1}
           objectFit="cover"
           maxWidth={724}
           flex={1}
           width={"100%"}
         />
-        <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
-          {resident?.bio}
-        </SizableText>
-        <Button
-          onPress={() =>
-            handleSocialMediaPress("instagram://user?username=sektaselekta")
-          }
-        >
-          Open Instagram
-        </Button>
+        <YStack gap="$4" paddingHorizontal="$4">
+          <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
+            {resident?.bio}
+          </SizableText>
+
+          <XStack gap="$3">
+            {portfolioLinks.map((link) => (
+              <Button circular onPress={() => handleSocialMediaPress(link.url)}>
+                <link.icon />
+              </Button>
+            ))}
+          </XStack>
+        </YStack>
       </YStack>
     </PageContainer>
   );
@@ -93,3 +102,29 @@ const SkeletonResidentDetails = () => {
     </YStack>
   );
 };
+const portfolioLinks = [
+  {
+    name: "instagram",
+    label: "Instagram",
+    icon: Instagram,
+    url: "instagram://user?username=sektaselekta",
+  },
+  {
+    name: "soundcloud",
+    label: "Soundcloud",
+    icon: AudioLines,
+    url: "instagram://user?username=sektaselekta",
+  },
+  {
+    name: "youtube",
+    label: "Youtube",
+    icon: Youtube,
+    url: "instagram://user?username=sektaselekta",
+  },
+  {
+    name: "facebook",
+    label: "Facebook",
+    icon: Facebook,
+    url: "instagram://user?username=sektaselekta",
+  },
+];
