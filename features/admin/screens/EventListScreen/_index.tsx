@@ -69,7 +69,6 @@ export default function EventListScreen() {
 
   if (isLoading) return <FullPageLoading />;
   if (isError) return <Paragraph>Error loading events</Paragraph>;
-  console.log(events);
   const handleRowClick = (event: DisplayEvent) => {
     router.push({
       pathname: "/admin/events/[id]",
