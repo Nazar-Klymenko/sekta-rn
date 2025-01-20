@@ -7,7 +7,8 @@ export const eventSchema = yup.object().shape({
     .object({
       uri: yup.string().required("Image is required"),
     })
-    .required("Image is required"),
+    .required("Image is required")
+    .default(null),
   title: yup
     .string()
     .required("Title is required")
