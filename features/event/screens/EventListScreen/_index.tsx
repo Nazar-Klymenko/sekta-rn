@@ -5,6 +5,7 @@ import { RefreshControl } from "react-native";
 import { useRouter } from "expo-router";
 
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { useFetchAllResidents } from "@/features/residents/hooks/useFetchAllResidents";
 import { useFetchResidents } from "@/features/residents/hooks/useFetchResidents";
 
 import ErrorEventList from "../../components/ErrorEventList";
@@ -28,7 +29,7 @@ export default function EventListScreen() {
     isError: isResidentsError,
     isRefetching: isResidentsRefetching,
     refetch: refetchResidents,
-  } = useFetchResidents();
+  } = useFetchAllResidents();
   const {
     data: previousEvents,
     isLoading: isPreviousEventsLoading,

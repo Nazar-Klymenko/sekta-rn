@@ -3,7 +3,10 @@ import { FieldValue, Timestamp } from "firebase/firestore";
 import { Timestamps } from "@/features/core/models/Core";
 
 interface BaseResident {
-  name: string;
+  name: {
+    display: string;
+    lowercase: string;
+  };
   bio: string;
   image: ResidentImage;
   metadata: Record<string, any>;

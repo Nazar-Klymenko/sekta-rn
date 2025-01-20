@@ -66,6 +66,13 @@ export default function HomeLayout() {
           presentation: "fullScreenModal",
         }}
       />
+      <Stack.Screen
+        name="residents"
+        options={{
+          headerShown: false,
+          presentation: "fullScreenModal",
+        }}
+      />
     </Stack>
   );
 }
