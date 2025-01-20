@@ -1,13 +1,12 @@
 import React, { useId, useState } from "react";
 
+import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
   InputProps as TamaguiInputProps,
   XStack,
   YStack,
 } from "tamagui";
-
-import { useController, useFormContext } from "react-hook-form";
 
 import { BaseInput, MaxLength } from "./shared";
 import { ClearIcon } from "./shared/ClearIcon";
@@ -70,6 +69,7 @@ export function Input({
             onChangeText={onChange}
             hasError={Boolean(error)}
             isPaddedLeft={Boolean(icon || leftAdornment)}
+            value={displayValue}
             ref={ref}
             {...props}
           />
