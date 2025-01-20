@@ -60,7 +60,6 @@ export default function EventListScreen() {
     );
   }
 
-  console.log(residents);
   return (
     <PageContainer
       overflowHorizontal

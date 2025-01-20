@@ -15,5 +15,7 @@ export const fetchAllResidents = async (
   );
 
   const snapshot = await getDocs(baseQuery);
-  return snapshot.docs.map((doc) => ({ ...doc.data() } as DisplayResident));
+  return snapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() } as DisplayResident)
+  );
 };

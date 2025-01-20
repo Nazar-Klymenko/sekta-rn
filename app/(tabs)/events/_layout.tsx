@@ -58,7 +58,7 @@ export default function EventsLayout() {
         }}
       />
       <Stack.Screen
-        name="residents/[id]/index"
+        name="residents/[id]"
         options={{
           headerLargeTitle: true,
           title: "Resident",
