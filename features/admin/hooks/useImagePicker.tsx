@@ -1,8 +1,8 @@
 import { Alert } from "react-native";
 
-import { EventImageFile } from "@/features/event/models/Event";
-
 import * as ImagePicker from "expo-image-picker";
+
+import { EventImageFile } from "@/features/event/models/Event";
 
 export function useImagePicker() {
   const requestMediaLibraryPermissions = async () => {

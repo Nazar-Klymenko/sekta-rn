@@ -49,7 +49,7 @@ export const updateResident = async ({
         updatedAt: _serverTimestamp,
       },
       metadata: {},
-      bio: "",
+      bio: data.bio,
       socialMedia: {},
     };
 

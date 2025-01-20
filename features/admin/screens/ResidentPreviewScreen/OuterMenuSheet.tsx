@@ -36,7 +36,7 @@ export function OuterMenuSheet({
           onPress={() => {
             onOpenChange(false);
             router.push({
-              pathname: "/admin/events/[id]/update",
+              pathname: "/admin/residents/[id]/update",
               params: { id: id },
             });
           }}
