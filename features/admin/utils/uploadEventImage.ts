@@ -1,9 +1,12 @@
+import { storage } from "@/lib/firebase/firebase";
+
+import { Platform } from "react-native";
+
 import { Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { sanitizeTitle } from "@/features/core/utils/sanitizeTitle";
 import { EventImage } from "@/features/event/models/Event";
-import { storage } from "@/lib/firebase/firebase";
 
 interface UploadEventImageParams {
   image: string | Blob;
@@ -33,6 +36,13 @@ export const uploadEventImage = async ({
 
   const blob =
     image instanceof Blob ? image : await fetch(image).then((r) => r.blob());
+  console.log({
+    size: blob.size,
+    type: blob.type,
+    uri: image,
+    platform: Platform.OS,
+    version: Platform.Version,
+  });
 
   await uploadBytes(imageRef, blob);
   const imageUrl = await getDownloadURL(imageRef);
