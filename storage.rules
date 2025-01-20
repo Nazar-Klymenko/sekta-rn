@@ -7,5 +7,9 @@ service firebase.storage {
       allow read: if true;
       allow write, delete: if firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
     }
+    match /residents/{residentId}/{imageName} {
+      allow read: if true;
+      allow write, delete: if firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+    }
   }
 }       

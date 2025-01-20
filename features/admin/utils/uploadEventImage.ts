@@ -10,23 +10,25 @@ import { EventImage } from "@/features/event/models/Event";
 
 interface UploadEventImageParams {
   image: string | Blob;
-  eventUid: string;
+  folder: string;
+  documentId: string;
   title: string;
   existingImage?: EventImage; // Pass this for updates
 }
 
-const getImagePath = (eventUid: string, title: string) => {
+const getImagePath = (folder: string, documentId: string, title: string) => {
   const sanitizedTitle = sanitizeTitle(title);
-  return `events/${eventUid}/main-${sanitizedTitle}`; // events/abc123/main-my-cool-event
+  return `${folder}/${documentId}/main-${sanitizedTitle}`; // events/abc123/main-my-cool-event
 };
 
 export const uploadEventImage = async ({
   image,
-  eventUid,
+  folder,
+  documentId,
   title,
   existingImage,
 }: UploadEventImageParams): Promise<EventImage> => {
-  const imagePath = getImagePath(eventUid, title);
+  const imagePath = getImagePath(folder, documentId, title);
   const imageRef = ref(storage, imagePath);
 
   // Skip if same image URL

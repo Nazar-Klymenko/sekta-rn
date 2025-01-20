@@ -1,9 +1,10 @@
+import { db } from "@/lib/firebase/firebase";
+
 import { Timestamp, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 import { EventFormValues } from "@/features/admin/utils/schemas";
 import { uploadEventImage } from "@/features/admin/utils/uploadEventImage";
 import { DisplayEvent, FirestoreEvent } from "@/features/event/models/Event";
-import { db } from "@/lib/firebase/firebase";
 
 interface UpdateEventParams {
   eventUid: string;
@@ -26,7 +27,8 @@ export const updateEvent = async ({
     if (image !== null && image !== uploadedImage.publicUrl) {
       const title = data.title;
       uploadedImage = await uploadEventImage({
-        eventUid,
+        folder: "events",
+        documentId: eventUid,
         title,
         ...uploadedImage,
         image,

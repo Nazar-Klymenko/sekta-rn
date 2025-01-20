@@ -5,6 +5,7 @@ import React from "react";
 
 import { ScrollView } from "react-native";
 
+import { useRouter } from "expo-router";
 import { Avatar, SizableText, YStack } from "tamagui";
 
 import { View, getTokens } from "@tamagui/core";
@@ -25,7 +26,7 @@ export const ResidentsSection: React.FC<ResidentsSectionProps> = ({
   onViewAllPress,
 }) => {
   const padding = getTokens().space.$4.val;
-
+  const router = useRouter();
   return (
     <YStack>
       <SectionHeaderWithAction
@@ -52,7 +53,13 @@ export const ResidentsSection: React.FC<ResidentsSectionProps> = ({
                 <SizableText key={index}>Resident loading..</SizableText>
               ))
           : residents?.map((resident, index) => (
-              <ResidentAvatar key={index} image={resident.image} />
+              <ResidentAvatar
+                key={index}
+                resident={resident}
+                onPress={() =>
+                  router.navigate(`/events/residents/${resident.id}`)
+                }
+              />
             ))}
       </ScrollView>
     </YStack>

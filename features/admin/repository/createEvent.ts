@@ -22,7 +22,8 @@ export const createEvent = async (data: EventFormValues) => {
     const title = data.title;
     const uploadedImage = await uploadEventImage({
       image: data.image.uri,
-      eventUid,
+      folder: "events",
+      documentId: eventUid,
       title,
     });
 
