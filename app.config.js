@@ -35,6 +35,16 @@ export default ({ config }) => {
       },
       ios: {
         bundleIdentifier,
+        infoPlist: {
+          LSApplicationQueriesSchemes: [
+            "instagram",
+            "fb",
+            "soundcloud",
+            "twitter",
+            "youtube",
+            "spotify",
+          ],
+        },
       },
       android: {
         package: bundleIdentifier,
