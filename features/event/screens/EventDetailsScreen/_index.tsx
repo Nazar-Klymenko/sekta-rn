@@ -2,8 +2,9 @@ import React from "react";
 
 import { RefreshControl } from "react-native";
 
+import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import { Button, Image, SizableText, View, YStack, styled } from "tamagui";
+import { Button, SizableText, View, YStack, styled } from "tamagui";
 
 import { Calendar } from "@tamagui/lucide-icons";
 
@@ -43,15 +44,10 @@ export default function EventDetailsScreen() {
     <>
       <PageContainer contentContainerStyle={{ padding: 0 }}>
         <YStack gap="$4">
-          <Image
+          <ImageStyled
             source={{
               uri: event?.image?.publicUrl,
             }}
-            aspectRatio={1 / 1}
-            objectFit="cover"
-            maxWidth={724}
-            flex={1}
-            width={"100%"}
           />
           <YStack
             paddingHorizontal="$4"
@@ -77,6 +73,14 @@ export default function EventDetailsScreen() {
     </>
   );
 }
+const ImageStyled = styled(Image, {
+  aspectRatio: 1,
+  objectFit: "cover",
+  maxWidth: 724,
+  borderRadius: "$2",
+  width: "100%",
+  flex: 1,
+});
 
 export const StickyButtonWrap = styled(View, {
   position: "absolute",

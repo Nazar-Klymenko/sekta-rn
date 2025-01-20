@@ -2,8 +2,16 @@ import React from "react";
 
 import { Linking } from "react-native";
 
+import { Image } from "expo-image";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { Button, Image, Separator, SizableText, XStack, YStack } from "tamagui";
+import {
+  Button,
+  Separator,
+  SizableText,
+  XStack,
+  YStack,
+  styled,
+} from "tamagui";
 
 import {
   AudioLines,
@@ -14,6 +22,7 @@ import {
 
 import Skeleton from "@/features/core/components/Skeleton";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { handleSocialMediaPress } from "@/features/core/utils/handleSocialMediaPress";
 
 import { useFetchResident } from "../hooks/useFetchResident";
 
@@ -38,15 +47,6 @@ const ResidentScreen = () => {
     );
   }
 
-  const handleSocialMediaPress = async (url: string) => {
-    const supported = await Linking.canOpenURL(url);
-    if (supported) {
-      await Linking.openURL(url);
-    } else {
-      console.error(`Can't handle URL: ${url}`);
-    }
-  };
-
   return (
     <PageContainer contentContainerStyle={{ padding: 0 }}>
       <Stack.Screen
@@ -55,14 +55,7 @@ const ResidentScreen = () => {
         }}
       />
       <YStack gap="$4">
-        <Image
-          source={{ uri: resident?.image?.publicUrl }}
-          aspectRatio={1 / 1}
-          objectFit="cover"
-          maxWidth={724}
-          flex={1}
-          width={"100%"}
-        />
+        <ImageStyled source={{ uri: resident?.image?.publicUrl }} />
         <YStack gap="$4" paddingHorizontal="$4">
           <SizableText fontSize="$6" color="$gray11" fontWeight={700}>
             {resident?.bio}
@@ -102,6 +95,13 @@ const SkeletonResidentDetails = () => {
     </YStack>
   );
 };
+
+const ImageStyled = styled(Image, {
+  aspectRatio: 1,
+  objectFit: "cover",
+  maxWidth: 724,
+});
+
 const portfolioLinks = [
   {
     name: "instagram",

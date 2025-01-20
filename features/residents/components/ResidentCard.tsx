@@ -2,8 +2,9 @@ import { formatFirestoreTimestamp } from "@/utils/formatFirestoreTimestamp";
 
 import React from "react";
 
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { Image, SizableText, Stack, XStack, YStack, styled } from "tamagui";
+import { SizableText, Stack, XStack, YStack, styled } from "tamagui";
 
 import { DisplayResident } from "../models/Resident";
 
@@ -20,12 +21,7 @@ const ResidentCard = ({ resident }: ResidentCardProps) => {
       onPress={() => router.navigate(`/events/residents/${resident.id}`)}
     >
       <ImageContainer>
-        <Image
-          source={{ uri: resident?.image?.publicUrl }}
-          width={"100%"}
-          aspectRatio={1}
-          borderRadius="$2"
-        />
+        <ImageStyled source={{ uri: resident?.image?.publicUrl }} />
       </ImageContainer>
       <ContentContainer>
         <SizableText
@@ -55,6 +51,14 @@ const CardContainer = styled(YStack, {
 
 const ImageContainer = styled(Stack, {
   position: "relative",
+});
+const ImageStyled = styled(Image, {
+  aspectRatio: 1,
+  objectFit: "cover",
+  maxWidth: 724,
+  borderRadius: "$2",
+  width: "100%",
+  flex: 1,
 });
 
 const ContentContainer = styled(YStack, {
