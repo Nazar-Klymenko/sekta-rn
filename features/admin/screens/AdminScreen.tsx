@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "expo-router";
 import { YStack } from "tamagui";
 
-import { Play, Ticket, Users } from "@tamagui/lucide-icons";
+import { Laugh, Play, Ticket, Users } from "@tamagui/lucide-icons";
 
 import { MenuItem } from "@/features/core/components/buttons/MenuItem";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
@@ -28,6 +28,11 @@ export default function AdminScreen() {
           title="All users"
           onPress={() => router.push("/admin/users")}
           icon={Users}
+        />
+        <MenuItem
+          title="All residents"
+          onPress={() => router.push("/admin/residents")}
+          icon={Laugh}
         />
       </YStack>
     </PageContainer>

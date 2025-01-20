@@ -49,7 +49,7 @@ export default function UsernameBridgeScreen() {
       const usernameAvailable = await isUsernameAvailable(data.username);
 
       if (usernameAvailable) {
-        router.push("/auth/signup");
+        router.navigate("/auth/signup");
       } else {
         setError("username", { message: "Username is taken" });
       }
@@ -70,6 +70,8 @@ export default function UsernameBridgeScreen() {
           autoCapitalize="none"
           inputMode="text"
           maxLength={20}
+          textContentType="username"
+          keyboardType="default"
         />
 
         <Hint>
@@ -88,7 +90,7 @@ export default function UsernameBridgeScreen() {
 
         <YStack alignItems="center" padding="$4" gap="$4">
           <Link href={`/auth/login`}>
-            <SizableText textAlign="center">
+            <SizableText textAlign="center" fontSize={16}>
               Already have an account?
               <SizableText color="$accentColor"> Log in</SizableText>
             </SizableText>

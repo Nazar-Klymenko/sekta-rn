@@ -2,13 +2,16 @@ import React from "react";
 
 import { RefreshControl } from "react-native";
 
-import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
 import { useRouter } from "expo-router";
+
+import { PageContainer } from "@/features/core/components/layout/PageContainer";
+import { useFetchAllResidents } from "@/features/residents/hooks/useFetchAllResidents";
+import { useFetchResidents } from "@/features/residents/hooks/useFetchResidents";
 
 import ErrorEventList from "../../components/ErrorEventList";
 import { usePreviousEventsPreview } from "../../hooks/usePreviousEvents";
 import { useUpcomingEvents } from "../../hooks/useUpcomingEvents";
+import { ResidentsSection } from "./ResidentsSection";
 import { PreviousEventsSection, UpcomingEventsSection } from "./index";
 
 export default function EventListScreen() {
@@ -20,7 +23,13 @@ export default function EventListScreen() {
     isRefetching: isUpcomingEventsRefetching,
     refetch: refetchUpcoming,
   } = useUpcomingEvents();
-
+  const {
+    data: residents,
+    isLoading: isResidentsLoading,
+    isError: isResidentsError,
+    isRefetching: isResidentsRefetching,
+    refetch: refetchResidents,
+  } = useFetchAllResidents();
   const {
     data: previousEvents,
     isLoading: isPreviousEventsLoading,
@@ -29,7 +38,7 @@ export default function EventListScreen() {
     refetch: refetchPrevious,
   } = usePreviousEventsPreview(4);
 
-  if (isUpcomingEventsError || isPreviousEventsError) {
+  if (isUpcomingEventsError || isPreviousEventsError || isResidentsError) {
     return (
       <ErrorEventList
         onRetry={() => {
@@ -37,10 +46,15 @@ export default function EventListScreen() {
           refetchPrevious();
         }}
         errorMessage={"Error loading Home"}
-        isRefetching={isUpcomingEventsRefetching || isPreviousEventsRefetching}
+        isRefetching={
+          isUpcomingEventsRefetching ||
+          isPreviousEventsRefetching ||
+          isResidentsRefetching
+        }
         onRefresh={() => {
           refetchUpcoming();
           refetchPrevious();
+          refetchResidents();
         }}
       />
     );
@@ -51,7 +65,11 @@ export default function EventListScreen() {
       overflowHorizontal
       refreshControl={
         <RefreshControl
-          refreshing={isUpcomingEventsError || isPreviousEventsError}
+          refreshing={
+            isUpcomingEventsRefetching ||
+            isPreviousEventsRefetching ||
+            isResidentsRefetching
+          }
           onRefresh={() => {
             refetchUpcoming();
             refetchPrevious();
@@ -64,6 +82,11 @@ export default function EventListScreen() {
         upcomingEvents={upcomingEvents}
         isUpcomingLoading={isUpcomingLoading}
         onViewAllPress={() => router.navigate("/events/upcoming")}
+      />
+      <ResidentsSection
+        residents={residents}
+        isResidentsLoading={isResidentsLoading}
+        onViewAllPress={() => router.navigate("/events/residents")}
       />
       <PreviousEventsSection
         previousEvents={previousEvents}

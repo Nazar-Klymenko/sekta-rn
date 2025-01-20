@@ -2,22 +2,21 @@ import React from "react";
 
 import { Platform } from "react-native";
 
+import { Slot, Stack } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "tamagui";
+
+import { ToastViewport } from "@tamagui/toast";
+
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CustomHeader } from "@/features/core/components/CustomHeader/CustomHeader";
 import { Footer } from "@/features/core/components/layout/Footer";
 import { CurrentToast } from "@/features/core/components/panels/Toast";
 import { usePushNotifications } from "@/features/core/hooks/usePushNotifications";
 
-import { ToastViewport } from "@tamagui/toast";
-
-import { useTheme } from "tamagui";
-
-import { Slot, Stack } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 export function AppNavigator() {
   const { user } = useAuth();
-  const { left, top, right } = useSafeAreaInsets();
+  const { left, top, right, bottom } = useSafeAreaInsets();
   const theme = useTheme();
   const bg = theme.background.get();
 
@@ -88,11 +87,12 @@ export function AppNavigator() {
       </Stack>
       <CurrentToast />
       <ToastViewport
+        portalToRoot
         flexDirection="column"
-        top={top + 10}
+        top={undefined}
         left={left}
         right={right}
-        bottom={undefined}
+        bottom={bottom + 10}
       />
     </>
   );

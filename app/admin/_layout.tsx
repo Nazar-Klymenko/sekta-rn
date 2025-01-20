@@ -55,14 +55,21 @@ export default function HomeLayout() {
       <Stack.Screen
         name="submissions"
         options={{
-          title: "All Submissions",
+          headerShown: false,
           presentation: "fullScreenModal",
         }}
       />
       <Stack.Screen
         name="users"
         options={{
-          title: "All users",
+          headerShown: false,
+          presentation: "fullScreenModal",
+        }}
+      />
+      <Stack.Screen
+        name="residents"
+        options={{
+          headerShown: false,
           presentation: "fullScreenModal",
         }}
       />

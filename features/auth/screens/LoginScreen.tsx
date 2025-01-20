@@ -1,16 +1,15 @@
 import React from "react";
 
+import { Link } from "expo-router";
+import { useForm } from "react-hook-form";
+import { Paragraph, Separator, SizableText, YStack } from "tamagui";
+
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
-import { Paragraph, YStack } from "tamagui";
-
-import { Link } from "expo-router";
-import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -39,7 +38,11 @@ export default function LoginScreen() {
           label="Email"
           placeholder="Your email"
           inputMode="email"
+          autoComplete="email"
           autoCapitalize="none"
+          importantForAutofill="yes"
+          textContentType="emailAddress"
+          keyboardType="email-address"
         />
         <PasswordInput
           name="password"
@@ -53,6 +56,8 @@ export default function LoginScreen() {
             </Paragraph>
           </Link>
         </YStack>
+
+        <Separator marginTop={48} />
         <ButtonCTA
           theme="accent"
           onPress={methods.handleSubmit(onSubmit)}

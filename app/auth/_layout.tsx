@@ -3,7 +3,10 @@ import React from "react";
 import { Platform } from "react-native";
 
 import { Redirect, Slot, Stack, useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Theme, useTheme } from "tamagui";
+
+import { ToastViewport } from "@tamagui/toast";
 
 import { UsernameProvider } from "@/features/auth/context/UsernameContext";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -14,6 +17,9 @@ import { FullPageLoading } from "@/features/core/components/layout/FullPageLoadi
 export default function AuthLayout() {
   const theme = useTheme({ name: "surface1" });
   const { isAuthenticated, displayUser, isLoading } = useAuth();
+
+  const { left, top, right, bottom } = useSafeAreaInsets();
+
   if (Platform.OS === "web") {
     return <Redirect href={"/"} />;
   }
@@ -80,6 +86,13 @@ export default function AuthLayout() {
           }}
         />
       </Stack>
+      <ToastViewport
+        flexDirection="column"
+        top={undefined}
+        left={left}
+        right={right}
+        bottom={bottom + 10}
+      />
     </UsernameProvider>
   );
 }

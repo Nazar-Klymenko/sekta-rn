@@ -2,14 +2,10 @@ import { TextArea as TamaguiTextArea, styled } from "tamagui";
 
 export const BaseTextArea = styled(TamaguiTextArea, {
   flex: 1,
+  size: "$5",
   borderRadius: "$2",
-  borderWidth: 2,
-  minHeight: 54,
-  fontSize: 16,
-  paddingHorizontal: "$3.5",
-
-  borderColor: "$gray7",
-  outlineColor: "$accentBackground",
+  borderColor: "transparent",
+  minHeight: 64,
 
   variants: {
     hasError: {

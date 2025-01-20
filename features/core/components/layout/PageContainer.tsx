@@ -16,6 +16,9 @@ export function PageContainer({
   return (
     <ScrollView
       backgroundColor="$background"
+      contentInsetAdjustmentBehavior="automatic"
+      showsVerticalScrollIndicator={false}
+      automaticallyAdjustKeyboardInsets={true}
       contentContainerStyle={{
         padding: "$4",
         ...(overflowHorizontal && { paddingHorizontal: 0 }),

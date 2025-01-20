@@ -1,12 +1,11 @@
 import React, { useId } from "react";
 
-import { useImagePicker } from "@/features/admin/hooks/useImagePicker";
+import { useController, useFormContext } from "react-hook-form";
+import { Image, Label, SizableText, Stack, XStack, YStack } from "tamagui";
 
 import { Camera } from "@tamagui/lucide-icons";
 
-import { Image, Label, SizableText, Stack, XStack, YStack } from "tamagui";
-
-import { useController, useFormContext } from "react-hook-form";
+import { useImagePicker } from "@/features/admin/hooks/useImagePicker";
 
 import { FormError } from "./shared/FormError";
 
@@ -40,12 +39,11 @@ export function ImagePicker({ name, label, placeholder }: ImagePickerProps) {
     <YStack>
       <Label htmlFor={`${id}-${name}`}>{label}</Label>
       <Stack
-        ref={ref}
         onPress={handleImagePick}
         width="100%"
         aspectRatio={1}
-        borderWidth={2}
-        borderColor={error ? "$red10Light" : "$borderColor"}
+        borderWidth={1}
+        borderColor={error ? "$red10Light" : "transparent"}
         alignItems="center"
         justifyContent="center"
         backgroundColor="$backgroundHover"

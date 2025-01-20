@@ -7,15 +7,18 @@ export const eventSchema = yup.object().shape({
     .object({
       uri: yup.string().required("Image is required"),
     })
-    .required("Image is required"),
+    .required("Image is required")
+    .default(null),
   title: yup
     .string()
     .required("Title is required")
-    .min(3, "Title must be at least 3 characters"),
+    .min(3, "Title must be at least 3 characters")
+    .default(""),
   caption: yup
     .string()
     .max(1500, "Caption must not exceed 1500 characters")
-    .required("Caption is required"),
+    .required("Caption is required")
+    .default(""),
 
   date: yup.date().required("Date is required").default(DEFAULT_DATE),
   location: yup
@@ -43,3 +46,31 @@ export const eventSchema = yup.object().shape({
 });
 
 export type EventFormValues = yup.InferType<typeof eventSchema>;
+
+export const residentSchema = yup.object().shape({
+  image: yup
+    .object({
+      uri: yup.string().required("Image is required"),
+    })
+    .required("Image is required"),
+  name: yup
+    .string()
+    .required("Name is required")
+    .min(1, "Name must be at least 1 character"),
+  bio: yup
+    .string()
+    .max(1500, "Caption must not exceed 1500 characters")
+    .required("Caption is required"),
+  socialMedia: yup
+    .array()
+    .of(
+      yup.object().shape({
+        platform: yup.string().required(),
+        url: yup.string().required(),
+      })
+    )
+    .defined()
+    .default([]),
+});
+
+export type ResidentFormValues = yup.InferType<typeof residentSchema>;

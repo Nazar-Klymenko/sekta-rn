@@ -1,7 +1,6 @@
 import React, { useId, useState } from "react";
 
-import { X } from "@tamagui/lucide-icons";
-
+import { useController, useFormContext } from "react-hook-form";
 import {
   Label,
   Separator,
@@ -11,7 +10,7 @@ import {
   YStack,
 } from "tamagui";
 
-import { useController, useFormContext } from "react-hook-form";
+import { X } from "@tamagui/lucide-icons";
 
 import { BaseInput, MaxLength } from "./shared";
 import { FormError } from "./shared/FormError";
@@ -61,7 +60,19 @@ export function MultiTagInput({
     <Theme name="Input">
       <YStack flex={1}>
         <Label htmlFor={id}>{label}</Label>
-        <YStack alignItems="center" backgroundColor="$background">
+        <YStack
+          alignItems="center"
+          backgroundColor="$background"
+          borderRadius="$2"
+          borderWidth={1}
+          borderColor={
+            error
+              ? "$red10Light"
+              : isFocused
+              ? "$accentBackground"
+              : "transparent"
+          }
+        >
           <YStack
             paddingHorizontal="$3.5"
             width="100%"
@@ -69,15 +80,7 @@ export function MultiTagInput({
             flex={1}
             position="relative"
             minHeight={108}
-            borderRadius="$2"
-            borderWidth={2}
-            borderColor={
-              error
-                ? "$red10Light"
-                : isFocused
-                ? "$accentBackground"
-                : "$borderColor"
-            }
+            borderWidth={0}
           >
             <BaseInput
               id={`${id}-${name}`}
@@ -99,6 +102,7 @@ export function MultiTagInput({
               backgroundColor={"$background"}
               borderWidth={0}
               paddingHorizontal={0}
+              focusStyle={{ borderWidth: 0 }}
             />
 
             <Separator backgroundColor="$borderColor" flex={1} width="100%" />
