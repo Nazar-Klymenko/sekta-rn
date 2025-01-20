@@ -9,7 +9,6 @@ export const BaseInput = styled(TamaguiInput, {
   variants: {
     hasError: {
       true: {
-        borderWidth: 2,
         borderColor: "$red10Light",
         hoverStyle: {
           borderColor: "$red10Dark",

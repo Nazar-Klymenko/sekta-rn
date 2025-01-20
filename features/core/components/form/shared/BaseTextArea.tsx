@@ -10,7 +10,6 @@ export const BaseTextArea = styled(TamaguiTextArea, {
   variants: {
     hasError: {
       true: {
-        borderWidth: 2,
         borderColor: "$red10Light",
         hoverStyle: {
           borderColor: "$red10Dark",

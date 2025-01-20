@@ -8,6 +8,7 @@ import {
   RadioGroup,
   Separator,
   SizableText,
+  Spacer,
   Stack,
   XStack,
   YStack,
@@ -52,8 +53,16 @@ export default function ResidentCreateScreen() {
       //@ts-ignore
       image: null,
     },
+    mode: "onChange",
   });
-  const { handleSubmit, control, setValue, trigger, watch } = methods;
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    trigger,
+    watch,
+    formState: { errors },
+  } = methods;
 
   const { mutate, isPending } = useCreateResident();
 
@@ -66,15 +75,13 @@ export default function ResidentCreateScreen() {
     name: "socialMedia",
   });
   const handleAddLink = () => {
-    append({ platform: "", url: "" });
+    append({ platform: "", url: "" }, { shouldFocus: false });
   };
   const handlePlatformSelect = (platformValue: string) => {
-    console.log({ platformValue });
-    console.log({ activeIndex });
     if (activeIndex !== null) {
-      console.log("fires here");
-      setValue(`socialMedia.${activeIndex}.platform`, platformValue);
-      trigger(`socialMedia.${activeIndex}.platform`);
+      setValue(`socialMedia.${activeIndex}.platform`, platformValue, {
+        shouldValidate: true,
+      });
       setIsPlatformSheetOpen(false);
     }
   };
@@ -91,7 +98,12 @@ export default function ResidentCreateScreen() {
             label="Resident Image"
             placeholder="Tap to select resident image"
           />
-          <Input name="name" label="Name" placeholder="Name" />
+          <Input
+            name="name"
+            label="Name"
+            placeholder="Name"
+            autoCorrect={false}
+          />
           <TextArea
             name="bio"
             label="Resident bio"
@@ -100,10 +112,10 @@ export default function ResidentCreateScreen() {
             verticalAlign="top"
             maxLength={1000}
             multiline
+            autoCorrect={false}
           />
           {fields.map((field, index) => (
-            <XStack gap="$2" paddingVertical="$3">
-              <Separator vertical></Separator>
+            <XStack gap="$2" paddingVertical="$3" key={field.id}>
               <XStack flex={1} alignItems="center" gap="$1">
                 <Stack flex={1}>
                   <XStack
@@ -116,7 +128,14 @@ export default function ResidentCreateScreen() {
                     }}
                     alignItems="center"
                   >
-                    <SizableText size={"$8"}>
+                    <SizableText
+                      size={"$8"}
+                      color={
+                        errors.socialMedia?.[index]?.platform
+                          ? "$red10Light"
+                          : "$color"
+                      }
+                    >
                       {watchSocialMedia[index]?.platform || " Platform"}
                     </SizableText>
                     <ChevronDown size={"$1"} />
@@ -126,6 +145,8 @@ export default function ResidentCreateScreen() {
                     label={""}
                     placeholder="Enter username or userID..."
                     autoFocus={false}
+                    autoCorrect={false}
+                    autoCapitalize="none"
                   />
                 </Stack>
 
@@ -145,6 +166,7 @@ export default function ResidentCreateScreen() {
             icon={CircleFadingPlus}
             onPress={handleAddLink}
           />
+          <Spacer />
           <ButtonCTA
             theme="accent"
             disabled={isPending}

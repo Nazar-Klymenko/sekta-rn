@@ -66,7 +66,7 @@ export const residentSchema = yup.object().shape({
     .of(
       yup.object().shape({
         platform: yup.string().required(),
-        url: yup.string().required().url(),
+        url: yup.string().required(),
       })
     )
     .defined()

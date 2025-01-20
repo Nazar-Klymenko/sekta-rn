@@ -42,7 +42,7 @@ export function ImagePicker({ name, label, placeholder }: ImagePickerProps) {
         onPress={handleImagePick}
         width="100%"
         aspectRatio={1}
-        borderWidth={2}
+        borderWidth={1}
         borderColor={error ? "$red10Light" : "transparent"}
         alignItems="center"
         justifyContent="center"
