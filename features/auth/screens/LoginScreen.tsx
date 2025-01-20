@@ -1,16 +1,16 @@
 import React from "react";
 
+import { Link } from "expo-router";
+import { useForm } from "react-hook-form";
+import { Paragraph, Separator, YStack } from "tamagui";
+
 import { useSignIn } from "@/features/auth/hooks/useSignIn";
 import { ButtonCTA } from "@/features/core/components/buttons/ButtonCTA";
 import { Form } from "@/features/core/components/form/Form";
 import { Input } from "@/features/core/components/form/Input";
 import { PasswordInput } from "@/features/core/components/form/PasswordInput";
 import { PageContainer } from "@/features/core/components/layout/PageContainer";
-
-import { Paragraph, YStack } from "tamagui";
-
-import { Link } from "expo-router";
-import { useForm } from "react-hook-form";
+import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -18,6 +18,7 @@ import { LoginSchemaType, loginSchema } from "../utils/schemas";
 
 export default function LoginScreen() {
   const { mutate, isPending } = useSignIn();
+  const handleToastMessage = useOperationStatusHelper();
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
@@ -53,6 +54,15 @@ export default function LoginScreen() {
             </Paragraph>
           </Link>
         </YStack>
+        <ButtonCTA
+          theme="accent"
+          onPress={() => handleToastMessage(null, "login", "success")}
+          isLoading={isPending}
+          disabled={isPending}
+        >
+          Show Toast
+        </ButtonCTA>
+        <Separator marginTop={48} />
         <ButtonCTA
           theme="accent"
           onPress={methods.handleSubmit(onSubmit)}
