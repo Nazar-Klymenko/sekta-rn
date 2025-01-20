@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { useRouter } from "expo-router";
+
 import { createEvent } from "@/features/admin/repository/createEvent";
 import { EventFormValues } from "@/features/admin/utils/schemas";
 import { useOperationStatusHelper } from "@/features/core/hooks/useOperationStatusHelper";
-
-import { useRouter } from "expo-router";
 
 export const useCreateEvent = () => {
   const queryClient = useQueryClient();
@@ -19,7 +19,7 @@ export const useCreateEvent = () => {
       queryClient.invalidateQueries({ queryKey: ["paginatedEvents"] });
       queryClient.invalidateQueries({ queryKey: ["upcomingEvents"] });
       handleToastMessage(null, "createEvent", "success");
-      router.replace(`/admin/events`);
+      router.navigate(`/admin/events`);
     },
     onError: (error: Error) => {
       handleToastMessage(error, "createEvent", "error");
