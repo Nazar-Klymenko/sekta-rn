@@ -70,7 +70,7 @@ export function MultiTagInput({
               ? "$red10Light"
               : isFocused
               ? "$accentBackground"
-              : "$borderColor"
+              : "transparent"
           }
         >
           <YStack
