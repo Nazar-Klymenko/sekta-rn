@@ -2,25 +2,16 @@ import React from "react";
 
 import { Platform } from "react-native";
 
-import { Redirect, Stack } from "expo-router";
+import { Slot, Stack, useRouter } from "expo-router";
 import { useTheme } from "tamagui";
 
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ClearIcon } from "@/features/core/components/form/shared/ClearIcon";
-import { FullPageLoading } from "@/features/core/components/layout/FullPageLoading";
 
-export default function HomeLayout() {
+export default function AdminResidentsLayout() {
   const theme = useTheme({ name: "surface1" });
-  const { displayUser, isLoading } = useAuth();
+  const router = useRouter();
   if (Platform.OS === "web") {
-    return <Redirect href={"/"} />;
-  }
-  if (isLoading) {
-    return <FullPageLoading />;
-  }
-
-  if (!displayUser?.isAdmin) {
-    return <Redirect href={"/"} />;
+    return <Slot />;
   }
 
   return (
@@ -36,34 +27,37 @@ export default function HomeLayout() {
           fontSize: 25,
         },
         animation: "slide_from_right",
+        headerRight: () => (
+          <ClearIcon
+            onPress={() => {
+              router.navigate("/admin");
+            }}
+          />
+        ),
       }}
     >
       <Stack.Screen
         name="index"
+        options={{ headerShown: true, title: "All Residents" }}
+      />
+      <Stack.Screen
+        name="[id]/index"
         options={{
-          title: "Admin",
+          headerShown: true,
         }}
       />
       <Stack.Screen
-        name="events"
+        name="[id]/update"
         options={{
-          headerShown: false,
-          presentation: "fullScreenModal",
-        }}
-      />
-
-      <Stack.Screen
-        name="submissions"
-        options={{
-          headerShown: false,
-          presentation: "fullScreenModal",
+          headerShown: true,
+          title: "Edit Resident",
         }}
       />
       <Stack.Screen
-        name="users"
+        name="create"
         options={{
-          headerShown: false,
-          presentation: "fullScreenModal",
+          title: "Create Resident",
+          headerShown: true,
         }}
       />
     </Stack>

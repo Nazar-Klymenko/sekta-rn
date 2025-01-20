@@ -1,18 +1,19 @@
 import React from "react";
 
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
 
 import { Slot, Stack, useRouter } from "expo-router";
-import { SizableText, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
 
 import { ClearIcon } from "@/features/core/components/form/shared/ClearIcon";
 
-export default function HomeLayout() {
+export default function AdminEventsLayout() {
   const theme = useTheme({ name: "surface1" });
   const router = useRouter();
   if (Platform.OS === "web") {
     return <Slot />;
   }
+
   return (
     <Stack
       screenOptions={{
@@ -37,17 +38,7 @@ export default function HomeLayout() {
     >
       <Stack.Screen
         name="index"
-        options={{
-          title: "All Play Submissions",
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="[id]"
-        options={{
-          title: "Submission Details",
-          headerShown: true,
-        }}
+        options={{ headerShown: true, title: "All Users" }}
       />
     </Stack>
   );
