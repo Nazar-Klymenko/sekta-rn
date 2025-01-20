@@ -3,9 +3,10 @@ import { TextArea as TamaguiTextArea, styled } from "tamagui";
 export const BaseTextArea = styled(TamaguiTextArea, {
   flex: 1,
   borderRadius: "$2",
-  borderWidth: 2,
-  minHeight: 54,
-  fontSize: 16,
+  borderWidth: 0,
+  minHeight: 64,
+  fontSize: 26,
+  fontWeight: 600,
   paddingHorizontal: "$3.5",
 
   borderColor: "$gray7",
@@ -14,6 +15,7 @@ export const BaseTextArea = styled(TamaguiTextArea, {
   variants: {
     hasError: {
       true: {
+        borderWidth: 2,
         borderColor: "$red10Light",
         hoverStyle: {
           borderColor: "$red10Dark",
@@ -34,11 +36,13 @@ export const BaseTextArea = styled(TamaguiTextArea, {
   },
 
   focusStyle: {
+    borderWidth: 2,
     outlineColor: "$accentBackground",
     borderColor: "$accentBackground",
   },
 
   hoverStyle: {
+    borderWidth: 2,
     borderColor: "$gray8",
   },
 });

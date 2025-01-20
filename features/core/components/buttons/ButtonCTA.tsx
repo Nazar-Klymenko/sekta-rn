@@ -17,11 +17,10 @@ export const ButtonCTA = ({
   ...props
 }: ButtonCTAProps) => (
   <Button
-    elevation={"$4"}
+    // elevation={"$4"}
     onPress={onPress}
     disabled={disabled || isLoading}
     borderRadius="$2"
-    size={"$5"}
     borderWidth={0}
     icon={isLoading ? <Spinner color="$color" /> : null}
     animation={"quickest"}
@@ -29,6 +28,8 @@ export const ButtonCTA = ({
     pressStyle={{ opacity: 0.7 }}
     key={`${disabled}`}
     {...props}
+    size={"$5"}
+    fontSize={"$6"}
   >
     {children}
   </Button>

@@ -46,12 +46,16 @@ export default function SignupScreen() {
           placeholder="Your email"
           inputMode="email"
           autoCapitalize="none"
+          textContentType="emailAddress"
+          autoComplete="email"
         />
         <YStack gap="$0">
           <PasswordInput
             name="password"
             label="Password"
             placeholder="New password"
+            textContentType="newPassword"
+            autoComplete="off"
           />
           <PasswordRequirements password={watch("password")} />
         </YStack>

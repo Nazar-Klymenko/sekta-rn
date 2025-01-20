@@ -38,7 +38,7 @@ export function Input({
 
   const { control } = useFormContext();
   const {
-    field: { value, onChange, onBlur, ref },
+    field: { value, onChange, ref },
     fieldState: { error },
   } = useController({
     name,
@@ -55,7 +55,7 @@ export function Input({
   return (
     <YStack>
       <XStack justifyContent="space-between">
-        <Label htmlFor={`${id}-${name}`}>{label}</Label>
+        <Label htmlFor={id}>{label}</Label>
         {maxLength && (
           <MaxLength length={value?.length || 0} maxLength={maxLength} />
         )}
@@ -64,11 +64,9 @@ export function Input({
         <XStack width="100%" alignItems="center" flex={1} position="relative">
           {leftAdornment && <LeftAdornment>{leftAdornment}</LeftAdornment>}
           {!leftAdornment && icon && <InputIcon icon={icon} />}
-
           <BaseInput
-            id={`${id}-${name}`}
+            id={id}
             placeholder={placeholder}
-            value={displayValue}
             onChangeText={onChange}
             hasError={Boolean(error)}
             isPaddedLeft={Boolean(icon || leftAdornment)}

@@ -62,12 +62,13 @@ export function Checkbox({ name, children, ...props }: CustomCheckboxProps) {
   );
 }
 export const BaseCheckbox = styled(TamaguiCheckbox, {
-  borderWidth: 2,
+  borderWidth: 0,
   borderRadius: "$2",
-
+  size: "$5",
   variants: {
     hasError: {
       true: {
+        borderWidth: 2,
         borderColor: "$red10Light",
         hoverStyle: {
           borderColor: "$red10Dark",

@@ -41,10 +41,6 @@ export default function ForgotPasswordScreen() {
   return (
     <PageContainer>
       <Form methods={methods}>
-        <H1 fontWeight="bold" textAlign="center">
-          Forgot Password
-        </H1>
-
         <Input
           name="email"
           label="Email"
